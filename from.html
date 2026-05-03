@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Book Order</h1>
+    <form action="custumerAdd.php" method="get">
+        <label for="cus-name">Name</label>
+        <input type="text" name="name" id="cus-name" placeholder="THK"> <!--hint ပေးချင်ရင် placeholder="-" စာပေါ်နေစေချင်ရင် value="-"-->
+        <br><br>
+        <label for="cus-address">Address</label>
+        <textarea name="Address" id="cus-address" rows="10" cols="50"></textarea>
+        <br><br>
+        <label for="contact1">Contact 1</label>
+        <input type="number" name="contact1" id="contact1">
+        <br><br>
+        <label for="contact2">Contact 2</label>
+        <input type="number" name="contact2" id="contact2">
+        <br><br>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+        <br><br>
+        <label for="">passward</label>
+        <input type="password" name="passward" id="">
+        <br><br>
+        <label for="stu-dob">date of birth</label>
+        <input type="date" name="dob" id="stu-dob">
+        <br><br>
+        <label for="stu-passport-photo">passport photo</label>
+        <input type="file" accept=".docs, .ppt, .xlsx, .jpg, .png, .jpeg" name="passport" id="stu-passport-photo">
+        <br><br>
+        <label for="stu-year">Year</label>
+        <select name="year" id="stu-year">
+            <option value="">Choose year</option>
+            <option value="First">First year</option>
+            <option value="Second">Second year</option>
+            <option value="Third">Third year</option>
+        </select>
+        <br><br>
+        <label for="">Gender</label>
+        <input type="radio" name="gender" id="male" value="male"><label for="male">Male</label>
+        <input type="radio" name="gender" id="female" value="female"><label for="female">Female</label>
+        <br><br>
+        <label for="">Hobby</label>
+        <input type="checkbox" name="Hobby" id="travelling" value="travelling"><label for="travelling">Travelling</label>
+        <input type="checkbox" name="Hobby" id="reading" value="reading"><label for="reading">Reading</label>
+        <br><br>
+        <input type="time" name="time" id="">
+        <input type="week" name="week" id="">
+        <input type="color" name="color" id="">
+        <input type="range" name="Range" id="" max="100" min="0">
+        <br><br>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
