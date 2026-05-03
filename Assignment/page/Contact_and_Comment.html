@@ -8,14 +8,91 @@
 <body>
         <nav align="right">
             <a href="../index.html">Home</a> |
-            <a href="">Description</a> | 
-            <a href="">Educational Achievements</a> | 
-            <a href="">Work Experience</a> | 
-            <a href="">Contact & Comment</a>
+            <a href="description.html">Description</a> | 
+            <a href="EducationalAchievements.html">Educational Achievements</a> | 
+            <a href="WorkExperience.html">Work Experience</a> | 
+            <a href="Contact_and_Comment.html">Contact & Comment</a>
     </nav>
+    <h3>Contact & Comment</h3>
+    <p>ကျွန်တော့်ရဲ့ သင်ကြားရေးလုပ်ငန်းတွေနဲ့ စာအုပ်များအကြောင်း အသေးစိတ်သိရှိလိုပါက အောက်ပါ Form တွင် ဖြည့်စွက်၍ မေးမြန်းနိုင်ပါတယ်ခင်ဗျာ။</p>
 
+    <form action="custumerAdd.php" method="post">
+        <table border="1" cellspacing="0" cellpadding="10" width="50%" align="center">
+            <thead>
+                <tr><th colspan="2" align="justify">အကြံပြုစာရေးလိုပါက (သို့မဟုတ်) ဆွေးနွေးတိုင်ပင်လိုကပါ အမည်၊ ဖုန်းနံပါတ်ကိုဖြည့်စွက်ကာ မှတ်ချက်ရေးသောနေရာတွင် သင်ကြားရေးအတွက်ဖြစ်စေ၊ လေ့ကျင့်ရေးအတွက်ဖြစ်စေ ဆွေးနွေးလိုသောအကြောင်းအရာကို ရေးသားနိုင်ပါတယ်ခင်ဗျ။ လိပ်စာမဖြည့်လည်း ရပါတယ်ဗျ။ <br>
+                အကယ် စာအုပ်မှာယူလိုပါက လိပ်စာအပြည့်အစုံ ဖြည့်စွက်ပေရမှာဖြစ်ပါတယ် ခင်ဗျ။</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td width="15%"><label for="Cus-Name">Name :</label></td>
+                    <td><input type="text" name="name" id="Cus-Name" placeholder="အမည်ရေးပါ"></td>
+                </tr>
+                <tr>
+                    <td><label for="Cus-Address">Address :</label></td>
+                    <td><input type="text" name="address" id="Cus-Address" placeholder="မြို့၊ ရပ်ကွက်၊ လမ်း"></td>
+                </tr>
+                <tr>
+                    <td><label for="Cus-Contact">Contact :</label></td>
+                    <td><input type="number" name="contact" id="Cus-Contact" placeholder="09xxxxxxxxx"></td>
+                </tr>
+                <tr>
+                    <td><label for="Cus-mail"></label>Email :</td>
+                    <td><input type="email" name="email" id="Cus-mail" placeholder="example@gmail.com"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+        <table border="1" cellspacing="0" cellpadding="10" width="50%" align="center">
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <select name="about" id="about">
+                            <option value="book order">စာအုပ်မှာယူရန်</option>
+                            <option value="discussion">ဆွေးနွေးတိုင်ပင်ရန်</option>
+                            <option value="feedback">အကြံပြုရန်</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="generalFeedback">အကြံပြုစာ</label></td>
+                    <td><textarea name="generalFeedback" id="generalFeedback" row="1" clos="5"></textarea></td>
+                </tr>
+               <tr>
+                    <td width="35%"><label for="specialNumber"></label>သင်ရိုးကုန်စာအုပ်အရေအတွက်</td>
+                    <td><input type="number" name="specialNumber" id="specialNumber"></td>
+                </tr>
+                <tr>
+                    <td><label for="practiceNumber"></label>Practice book အရေအတွက်</td>
+                    <td><input type="number" name="practiceNumber" id="practiceNumber"></td>
+                </tr>
+                <tr>
+                    <td><label for="OQNumber"></label>မေးခွန်းဟောင်းအရေအတွက်</td>
+                    <td><input type="number" name="OQNumber" id="OQNumber"></td>
+                </tr>
+                <tr>
+                    <td><label for="Grade11H"></label>Grade 11 handbook</td>
+                    <td><input type="number" name="Grade11H" id="Grade11H"></td>
+                </tr>
+                <tr>
+                    <td><label for="Grade11O"></label>Grade 11 Objectice</td>
+                    <td><input type="number" name="Grade11O" id="Grade11O"></td>
+                </tr>
+                <tr>
+                    <td><label for="Grade10H"></label>Grade 10 handbook</td>
+                    <td><input type="number" name="Grade10H" id="Grade10H"></td>
+                </tr>
+                <tr>
+                    <td><label for="Grade10O"></label>Grade 10 Objective</td>
+                    <td><input type="number" name="Grade10O" id="Grade10O"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form> <br>
+    <button type="submit">ပေးပို့မည်</button>
+    <button type="reset">ပယ်ဖျက်မည်</button>
+    <br>
 
-
+    <hr>
     <footer>
         <p align="center">
             <b>ဆက်သွယ်ရန်</b><br>
