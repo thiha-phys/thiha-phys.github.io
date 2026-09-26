@@ -1,35 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHYSICS @Myanmar Goverment School</title>
+    <title>PHYSICS @Myanmar Government School</title>
+    
+    <!-- CSS ဖိုင် ချိတ်ဆက်ခြင်း -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <H1 align="center">ရူပဗေဒ</H1>
-    <H1 align="center">Grade 12, Grade 11, Grade 10</H1>
-    <H2 align="center">အတွက် မေးခွန်းများ သိမှတ်ဖွယ်ရာများကို လေ့လာနိုင်မယ့် app တစ်ခုဖြစ်ပါတယ်။</H2>
-    <H2 align="center">အခမဲ့ ဖြစ်ပါတယ်။ အင်တာနက် မလိုဘဲ အသုံးပြုနိုင်ပါတယ်။</H2>
 
-    <nav align="right">
-        <a href="index.html">Home</a> |
-        <a href="page/G10.html">Grade 10</a> |
-        <a href="page/G11.html">Grade 11</a> |
-        <a href="page/G12.html">Grade 12</a> |
-    </nav>
+    <!-- Header / Hero Section -->
+    <header class="header-section">
+        <h1>ရူပဗေဒ</h1>
+        <h2>Grade 12, Grade 11, Grade 10</h2>
+        <p>အတွက် မေးခွန်းများ၊ သိမှတ်ဖွယ်ရာများကို လေ့လာနိုင်မည့် app တစ်ခုဖြစ်ပါတယ်။</p>
+        <p class="badge-text">အခမဲ့ ဖြစ်ပါတယ်။ အင်တာနက် မလိုဘဲ အသုံးပြုနိုင်ပါတယ်။</p>
+    </header>
 
+    <!-- Course Category Section (Grade Box ၃ ခု) -->
+    <main class="main-content">
+        <section class="category-section">
+            <h3>Course Category</h3>
+            <div class="category-boxes">
+                <!-- Grade 10 Box -->
+                <a href="page/G10.html" class="category-box">
+                    <span>Grade 10</span>
+                </a>
 
-    <hr>
-    <footer>
-        <p align="center">
-            <b>ဆက်သွယ်ရန်</b><br>
-            phone - 09 258 554 839 <br>
-            email - thihakyawphys73@gmail.com <br>
-            address - Pyin Oo Lwin, VEA private high school
-        </p>
-        <p align="center">
-            <small>&COPY; 2026 Physics Educator & Publisher. All Rights Reserved.</small>
-        </p>
+                <!-- Grade 11 Box -->
+                <a href="page/G11.html" class="category-box">
+                    <span>Grade 11</span>
+                </a>
+
+                <!-- Grade 12 Box -->
+                <a href="page/G12.html" class="category-box">
+                    <span>Grade 12</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <hr>
+            <p><b>ဆက်သွယ်ရန်</b></p>
+            <p>phone – 09 258 554 839</p>
+            <p>email – thihakyawphys73@gmail.com</p>
+            <p>address – Pyin Oo Lwin, VEA private high school</p>
+            <p class="copyright">&copy; 2026 Physics Educator & Publisher. All Rights Reserved.</p>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation Footer -->
+    <footer class="bottom-nav">
+        <!-- Home (active class ဖြုတ်ထားပါသည်) -->
+        <a href="index.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span>Home</span>
+        </a>
+
+        <!-- Announcement -->
+        <a href="page/announcement.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"/>
+            </svg>
+            <span>Announcement</span>
+        </a>
+
+        <!-- Knowledge -->
+        <a href="page/knowledge.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+            </svg>
+            <span>Knowledge</span>
+        </a>
+
+        <!-- Account -->
+        <a href="page/account.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            <span>Account</span>
+        </a>
     </footer>
+
 </body>
 </html>
