@@ -2,62 +2,74 @@
 body {
     font-family: 'Pyidaungsu', Arial, sans-serif;
     margin: 0;
-    padding: 20px 20px 100px 20px;
-    background-color: #f4f6f9;
-    color: #333333;
+    padding: 16px 16px 100px 16px;
+    background-color: #f8fafc;
+    color: #1e293b;
     line-height: 1.6;
 }
 
-/* Header / Hero Section */
-.header-section {
-    margin-bottom: 25px;
+/* Modern Hero Card Header */
+.hero-card {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    padding: 24px 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(239, 68, 68, 0.2);
+    margin-bottom: 24px;
 }
 
-.header-section h1 {
-    font-size: 28px;
-    margin-bottom: 5px;
-    color: #1a202c;
+.hero-content h1 {
+    font-size: 24px;
+    margin: 10px 0 6px 0;
+    font-weight: 700;
 }
 
-.header-section h2 {
-    font-size: 18px;
-    color: #4a5568;
-    margin-top: 0;
+.hero-content p {
+    font-size: 13px;
+    margin: 0;
+    opacity: 0.9;
+    line-height: 1.5;
 }
 
-.badge-text {
-    font-size: 14px;
-    color: #4b5563;
-    background-color: #e5e7eb;
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 6px;
-    margin-top: 5px;
+.badge-pill {
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Course Category Section */
 .category-section h3 {
-    font-size: 18px;
-    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 14px;
 }
 
 .category-boxes {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     margin-top: 10px;
-    flex-wrap: wrap;
 }
 
 .category-box {
+    flex: 1;
+    text-align: center;
     background-color: #ffffff;
-    color: #333333;
-    padding: 10px 20px;
-    border-radius: 12px;
+    color: #334155;
+    padding: 12px 10px;
+    border-radius: 14px;
     text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     transition: all 0.2s ease;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #f1f5f9;
 }
 
 /* Grade Box: Hover သို့မဟုတ် Active လုပ်လျှင် အနီရောင်ပြောင်းမည် */
@@ -66,12 +78,15 @@ body {
     background-color: #ef4444;
     color: #ffffff;
     border-color: #ef4444;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(239, 68, 68, 0.25);
 }
 
 /* Contact Section */
 .contact-section {
-    margin-top: 30px;
-    font-size: 14px;
+    margin-top: 32px;
+    font-size: 13px;
+    color: #64748b;
 }
 
 .contact-section hr {
@@ -85,9 +100,9 @@ body {
 }
 
 .copyright {
-    font-size: 12px;
-    color: #718096;
-    margin-top: 15px !important;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 16px !important;
 }
 
 /* Floating Bottom Navigation Bar */
@@ -104,17 +119,17 @@ body {
     align-items: center;
     padding: 10px 12px;
     border-radius: 40px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     z-index: 9999;
 }
 
-/* Nav Item (ပုံမှန် မီးခိုးရောင်) */
+/* Nav Item */
 .nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    color: #8e8e93;
+    color: #94a3b8;
     font-size: 11px;
     padding: 6px 12px;
     border-radius: 12px;
@@ -126,15 +141,14 @@ body {
     width: 22px;
     height: 22px;
     margin-bottom: 3px;
-    fill: #8e8e93;
+    fill: #94a3b8;
     transition: fill 0.2s ease;
 }
 
-/* Hover လုပ်လျှင် (လက်တင်လိုက်လျှင်) သို့မဟုတ် Active/Click လုပ်ချိန်တွင်သာ အနီရောင် ပြောင်းမည် */
 .nav-item:hover,
 .nav-item:active {
     color: #ef4444;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .nav-item:hover .nav-icon,
