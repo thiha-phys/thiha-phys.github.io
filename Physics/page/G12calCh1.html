@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 Physics - Chapter 1 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax ထည့်ရန် -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="page-header">
+      <a href="calG12.html" class="back-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <h1 class="page-title">Chapter 1 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Sub Banner -->
+    <div class="grade-banner">
+      <h2>Chapter 1 - Rotational Motion</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၄ ပုဒ်)</p>
+    </div>
+
+    <!-- Problems List Container -->
+    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
+      
+      <!-- Problem 1 (Eg.1.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.1.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The Ferris wheel starts from rest and reaches an angular velocity of 1.5 rad s<sup>-1</sup> over a 10 s period under the constant angular acceleration. (i) Find the angular acceleration of the Ferris wheel. (ii) How many revolutions does it make during 10 s?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\omega_0 = 0 \text{ (from rest)}$, $\omega = 1.5 \text{ rad s}^{-1}$, $t = 10 \text{ s}$</p>
+              <p style="margin-left: 15px;">(i) $\alpha = ?$ &nbsp;&nbsp;&nbsp; (ii) $\theta = ?$</p>
+              <p><strong>(i)</strong> &nbsp;&nbsp; $\alpha = \frac{\omega - \omega_0}{t}$</p>
+              <p style="margin-left: 25px;">$= \frac{1.5 - 0}{10}$</p>
+              <p style="margin-left: 25px;">$\mathbf{\alpha = 0.15 \text{ rad s}^{-2}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> &nbsp;&nbsp; $\theta = \omega_0 t + \frac{1}{2} \alpha t^2$</p>
+              <p style="margin-left: 25px;">$= 0 + \frac{1}{2} \times 0.15 \times 10^2$</p>
+              <p style="margin-left: 25px;">$\mathbf{\theta = 7.5 \text{ rad}}$</p>
+              <p style="margin-top: 10px;">$1 \text{ rev} = 2\pi \text{ rad}$</p>
+              <p style="margin-left: 25px;">$\theta = 7.5 \text{ rad} \times \frac{1 \text{ rev}}{2\pi \text{ rad}}$</p>
+              <p style="margin-left: 25px;">$= \frac{7.5}{2\pi} \text{ rev} = \mathbf{1.19 \text{ rev}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 2 (No.5.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.5.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The angular velocity of a rotating rigid body increases from 500 rpm to 1500 rpm in 2 min. (i) What is the angular acceleration of the body? (ii) What angle does it turn through in this 2 min?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\omega_0 = 500 \text{ rpm (rev min}^{-1}\text{)}$,</p>
+              <p style="margin-left: 35px;">$\omega = 1500 \text{ rpm (rev min}^{-1}\text{)}$, $t = 2 \text{ min}$</p>
+              <p style="margin-left: 15px;">(i) $\alpha = ?$ &nbsp;&nbsp;&nbsp; (ii) $\theta = ?$</p>
+              <p><strong>(i)</strong> &nbsp;&nbsp; $\alpha = \frac{\omega - \omega_0}{t}$</p>
+              <p style="margin-left: 25px;">$= \frac{1500 - 500}{2}$</p>
+              <p style="margin-left: 25px;">$\mathbf{\alpha = 500 \text{ rev min}^{-2}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> &nbsp;&nbsp; $\theta = \omega_0 t + \frac{1}{2} \alpha t^2$</p>
+              <p style="margin-left: 25px;">$\theta = 500(2) + \frac{1}{2}(500)(2)^2$</p>
+              <p style="margin-left: 25px;">$\mathbf{\theta = 2000 \text{ rev}}$</p>
+              <p style="margin-top: 10px;">$\theta = 2\pi \times 2000 \text{ rad} = \mathbf{4000\pi \text{ rad}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 3 (No.6.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A centrifuge rotor is accelerated from rest to 20 000 rpm in 30 s. (i) What is its average angular acceleration? (ii) Through how many revolutions has the centrifuge rotor turned during its acceleration period, assuming constant angular acceleration?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\omega_0 = 0 \text{ (from rest)}$,</p>
+              <p style="margin-left: 35px;">$\omega = 20\,000 \text{ rpm (rev min}^{-1}\text{)}$</p>
+              <p style="margin-left: 35px;">$t = 30 \text{ s} = 30 \times \frac{1 \text{ min}}{60 \text{ s}} = 0.5 \text{ min}$</p>
+              <p style="margin-left: 15px;">(i) $\alpha = ?$ &nbsp;&nbsp;&nbsp; (ii) $\theta = ?$</p>
+              <p><strong>(i)</strong> &nbsp;&nbsp; $\alpha = \frac{\omega - \omega_0}{t}$</p>
+              <p style="margin-left: 25px;">$= \frac{20\,000 - 0}{0.5} = \mathbf{40\,000 \text{ rev min}^{-2}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> &nbsp;&nbsp; $\theta = \omega_0 t + \frac{1}{2} \alpha t^2$</p>
+              <p style="margin-left: 25px;">$\theta = 0 + \frac{1}{2} (40\,000) \left(\frac{1}{2}\right)^2$</p>
+              <p style="margin-left: 25px;">$= \mathbf{5000 \text{ rev}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 4 (Rev.2.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A ball is whirled with constant angular acceleration. From rest, it attains an angular velocity of 25 rad s<sup>-1</sup> after traversing an angular displacement of 41 rad. What is the angular acceleration of the ball?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\omega_0 = 0 \text{ (from rest)}$, $\omega = 25 \text{ rad s}^{-1}$,</p>
+              <p style="margin-left: 35px;">$\theta = 41 \text{ rad}$, $\alpha = ?$</p>
+              <p style="margin-left: 15px;">$\omega^2 = \omega_0^2 + 2\alpha\theta$</p>
+              <p style="margin-left: 25px;">$25^2 = 0 + 2\alpha(41)$</p>
+              <p style="margin-left: 25px;">$25^2 = 82\alpha$</p>
+              <p style="margin-left: 25px;">$\alpha = \frac{25^2}{82} = \mathbf{7.62 \text{ rad s}^{-2}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 5 (No.7.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.7.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A figure skater is spinning with an angular velocity of 15 rad s<sup>-1</sup>. She then comes to a stop over a brief period of time. During this time, her angular displacement is 5.1 rad. Assuming constant angular acceleration, find (i) her angular acceleration, and (ii) the time during which she comes to rest.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\omega_0 = 15 \text{ rad s}^{-1}$, $\omega = 0 \text{ (stop)}$,</p>
+              <p style="margin-left: 35px;">$\theta = 5.1 \text{ rad}$</p>
+              <p style="margin-left: 15px;">(i) $\alpha = ?$ &nbsp;&nbsp;&nbsp; (ii) $t = ?$</p>
+              <p><strong>(i)</strong> &nbsp;&nbsp; $\omega^2 = \omega_0^2 + 2\alpha\theta$</p>
+              <p style="margin-left: 25px;">$0 = 15^2 + 2\alpha(5.1)$</p>
+              <p style="margin-left: 25px;">$10.2\alpha = -15^2$</p>
+              <p style="margin-left: 25px;">$\alpha = \frac{-15^2}{10.2} = \mathbf{-22.06 \text{ rad s}^{-2}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> &nbsp;&nbsp; $\omega = \omega_0 + \alpha t \implies t = \frac{\omega - \omega_0}{\alpha}$</p>
+              <p style="margin-left: 25px;">$t = \frac{0 - 15}{-22.06} = \mathbf{0.68 \text{ s}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 6 (Eg.3.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The wheel of a car with radius 20 cm starts moving. The angular acceleration provided by the engine is 12 rad s<sup>-2</sup>. What is the tangential acceleration of the rim of the wheel?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 20 \text{ cm} = 20 \times 10^{-2} \text{ m}$,</p>
+              <p style="margin-left: 35px;">$\alpha = 12 \text{ rad s}^{-2}$, $a_T = ?$</p>
+              <p style="margin-left: 15px;">$a_T = r\alpha$</p>
+              <p style="margin-left: 25px;">$= 20 \times 10^{-2} \times 12 = \mathbf{2.4 \text{ m s}^{-2}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 7 (No.8.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.8.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A tire has a radius of 0.33 m, and its centre moves forward with a linear speed of 15 m s<sup>-1</sup>. (i) What is the angular velocity of the wheel? (ii) Relative to the axel, what is linear speed of a point located 0.175 m from the axel?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 0.33 \text{ m}$, $v = 15 \text{ m s}^{-1}$</p>
+              <p style="margin-left: 15px;">(i) $\omega = ?$ &nbsp;&nbsp; (ii) $v' = ?$ at $r' = 0.175 \text{ m}$</p>
+              <p><strong>(i)</strong> &nbsp;&nbsp; $v = r\omega \implies \omega = \frac{v}{r}$</p>
+              <p style="margin-left: 25px;">$= \frac{15}{0.33} = \mathbf{45.45 \text{ rad s}^{-1}}$</p>
+              <p style="margin-top: 10px; font-style: italic; color: #64748b;">(All the points on the tire have the same angular velocity.)</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> &nbsp;&nbsp; $v' = r'\omega$</p>
+              <p style="margin-left: 25px;">$= 0.175 \times 45.45 = \mathbf{7.95 \text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 8 (No.9.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.9.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A child spins a toy top, applying a force to the peg in the middle. The force applied results a tangential acceleration of the peg. If the radius of the peg is 0.5 cm, and the tangential acceleration applied is 0.54 m s<sup>-2</sup>, what is the angular acceleration of the top?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 0.5 \text{ cm} = 0.5 \times 10^{-2} \text{ m}$,</p>
+              <p style="margin-left: 35px;">$a_T = 0.54 \text{ m s}^{-2}$, $\alpha = ?$</p>
+              <p style="margin-left: 15px;">$a_T = r\alpha \implies \alpha = \frac{a_T}{r}$</p>
+              <p style="margin-left: 25px;">$= \frac{0.54}{5 \times 10^{-3}} = \mathbf{108 \text{ rad s}^{-2}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 9 (Eg.2.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A boy steps on a merry-go-round which has a radius of 5 m and is at rest. It starts accelerating at a constant rate up to an angular velocity of 5 rad s<sup>-1</sup> in 20 s. What is the distance traversed by the boy?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\omega_0 = 0 \text{ (from rest)}$, $\omega = 5 \text{ rad s}^{-1}$,</p>
+              <p style="margin-left: 35px;">$r = 5 \text{ m}$, $t = 20 \text{ s}$, $s = ?$</p>
+              <p style="margin-left: 15px;">$\alpha = \frac{\omega - \omega_0}{t} = \frac{5 - 0}{20} = 0.25 \text{ rad s}^{-2}$</p>
+              <p style="margin-left: 15px;">$\theta = \omega_0 t + \frac{1}{2}\alpha t^2 = 0 + \frac{1}{2} \times 0.25 \times 20^2 = 50 \text{ rad}$</p>
+              <p style="margin-top: 10px;">$s = r\theta$</p>
+              <p style="margin-left: 25px;">$= 5 \times 50 = \mathbf{250 \text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 10 (Rev.6.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A stone tied to a string is moving in a circle of radius 1.5 m at a constant speed 8 m s<sup>-1</sup>. Calculate the magnitude of the centripetal acceleration of the stone.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 1.5 \text{ m}$, $v = 8 \text{ m s}^{-1}$, $a_c = ?$</p>
+              <p style="margin-left: 15px;">$a_c = \frac{v^2}{r}$</p>
+              <p style="margin-left: 25px;">$= \frac{8^2}{1.5} = \mathbf{42.67 \text{ m s}^{-2}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 11 (No.10.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.10.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A 150 g ball at the end of a string is revolving uniformly in a horizontal circle of radius 0.6 m. The ball makes 2 revolutions in a second. What is its centripetal acceleration?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 0.6 \text{ m}$, $m = 150 \text{ g}$, $t = 1 \text{ s}$</p>
+              <p style="margin-left: 15px;">$\omega = 2 \text{ rev s}^{-1} = 4\pi \text{ rad s}^{-1}$, $a_c = ?$</p>
+              <p style="margin-left: 15px;">$a_c = r\omega^2$</p>
+              <p style="margin-left: 25px;">$= 0.6 \times (4\pi)^2$</p>
+              <p style="margin-left: 25px;">$= \mathbf{94.8 \text{ m s}^{-2}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 12 (No.11.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.11.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A carousel is initially at rest. It is given a constant angular acceleration $0.06 \text{ rad s}^{-2}$, which increases its angular velocity for $8 \text{ s}$. At $t = 8 \text{ s}$, determine the magnitude of the following quantities: (i) the angular velocity of the carousel, (ii) the linear velocity of a child located $2.5 \text{ m}$ from the centre, (iii) the tangential acceleration of the child, (iv) the centripetal acceleration of the child, and (v) the total linear acceleration of the child.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\omega_0 = 0$, $\alpha = 0.06 \text{ rad s}^{-2}$, $t = 8 \text{ s}$</p>
+              <p style="margin-left: 15px;">(i) $\omega = ?$, (ii) $v = ?$ at $r = 2.5 \text{ m}$,</p>
+              <p style="margin-left: 15px;">(iii) $a_T = ?$, (iv) $a_c = ?$, (v) $a = ?$</p>
+              
+              <p style="margin-top: 10px;"><strong>(i)</strong> $\omega = \omega_0 + \alpha t = 0 + 0.06(8) = \mathbf{0.48 \text{ rad s}^{-1}}$</p>
+              <p><strong>(ii)</strong> $v = r\omega = 2.5 \times 0.48 = \mathbf{1.2 \text{ m s}^{-1}}$</p>
+              <p><strong>(iii)</strong> $a_T = r\alpha = 2.5 \times 0.06 = \mathbf{0.15 \text{ m s}^{-2}}$</p>
+              <p><strong>(iv)</strong> $a_c = r\omega^2 = 2.5 \times (0.48)^2 = \mathbf{0.576 \text{ m s}^{-2}}$</p>
+              <p><strong>(v)</strong> $a = \sqrt{a_c^2 + a_T^2} = \sqrt{(0.576)^2 + (0.15)^2} = \mathbf{0.5952 \text{ m s}^{-2}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 13 (Eg.4.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The platter of the hard drive of a computer uniformly rotates at 7200 rpm. If the reading head of the drive is located 3 cm from the rotational axis, what is the linear speed and the centripetal acceleration of the point on the platter just below the reading head? If a single bit requires $0.5 \text{ }\mu\text{m}$ of length along the direction of motion, how many bits per second can the writing head writes when it is 3 cm from the axis?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 3 \text{ cm} = 3 \times 10^{-2} \text{ m}$</p>
+              <p style="margin-left: 15px;">$\omega = 7200 \text{ rpm} = 7200 \times \frac{2\pi}{60} = \mathbf{240\pi \text{ rad s}^{-1}}$</p>
+              <p style="margin-top: 10px;">$v = r\omega = 3 \times 10^{-2} \times 240\pi = \mathbf{22.62 \text{ m s}^{-1}}$</p>
+              <p style="margin-top: 10px;">$a_c = \frac{v^2}{r} = \frac{22.62^2}{3 \times 10^{-2}} = \mathbf{1.705 \times 10^4 \text{ m s}^{-2}}$</p>
+              <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 10px 0;">
+              <p>Distance per second moved = $22.62 \text{ m}$</p>
+              <p>Distance per bit = $0.5 \text{ }\mu\text{m} = 0.5 \times 10^{-6} \text{ m}$</p>
+              <p style="margin-top: 10px;">Number of bits per second</p>
+              <p style="margin-left: 25px;">$= \frac{\text{distance per second moved}}{\text{distance per bit}}$</p>
+              <p style="margin-left: 25px;">$= \frac{22.62}{5 \times 10^{-7}} = \mathbf{4.5245 \times 10^7 \text{ bits}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Problem 14 (Eg.5.) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.5.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A centrifuge has a radius of 20 cm, and decelerates from a maximum rotational rate of $7.2 \times 10^3 \text{ rpm}$ to rest in 30 s under constant angular acceleration. It is rotating counter clockwise. What is the magnitude of the resultant acceleration of a point at the tip of the centrifuge at 10 s? What is the direction of the resultant acceleration vector?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 20 \text{ cm} = 20 \times 10^{-2} \text{ m}$</p>
+              <p style="margin-left: 15px;">$\omega_0 = 7.2 \times 10^3 \text{ rpm} = \mathbf{240\pi \text{ rad s}^{-1}}$</p>
+              <p style="margin-left: 15px;">$\omega = 0$ at $t = 30 \text{ s}$</p>
+              <p style="margin-top: 10px;"><strong>At $t = 30 \text{ s}$:</strong> $\alpha = \frac{0 - 240\pi}{30} = \mathbf{-8\pi \text{ rad s}^{-2}}$</p>
+              <p style="margin-top: 10px;"><strong>At $t = 10 \text{ s}$:</strong></p>
+              <p style="margin-left: 15px;">$a_T = r\alpha = 20 \times 10^{-2} \times (-8\pi) = \mathbf{-5.03 \text{ m s}^{-2}}$</p>
+              <p style="margin-left: 15px;">$\omega = 240\pi + (-8\pi)(10) = \mathbf{160\pi \text{ rad s}^{-1}}$</p>
+              <p style="margin-left: 15px;">$a_c = r\omega^2 = 20 \times 10^{-2} \times (160\pi)^2 = \mathbf{5.054 \times 10^4 \text{ m s}^{-2}}$</p>
+              <p style="margin-top: 10px;"><strong>Magnitude:</strong> $a = \sqrt{a_c^2 + a_T^2} = \mathbf{5.054 \times 10^4 \text{ m s}^{-2}}$</p>
+              <p style="margin-top: 10px;"><strong>Direction:</strong> $\phi = \tan^{-1} \left(\frac{a_T}{a_c}\right) = \mathbf{0.0057^\circ}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>
