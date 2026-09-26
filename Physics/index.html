@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHYSICS @Myanmar Government School</title>
-    
-    <!-- CSS ဖိုင် ချိတ်ဆက်ခြင်း -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Modern Dark Glass Hero Header -->
+    <!-- Header Section -->
     <header class="hero-card">
         <div class="hero-text">
             <div class="greeting-row">
@@ -20,81 +18,141 @@
             <h1>Physics Learning Hub</h1>
             <p>ယနေ့ ဘာသင်ခန်းစာ လေ့လာမလဲ</p>
         </div>
-        
-        <!-- Right Side Physics Icon Graphic -->
         <div class="hero-icon-container">
-            <svg class="physics-atom-icon" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="2" />
-                <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)" />
-                <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(90 12 12)" />
-                <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(150 12 12)" />
+            <svg class="physics-atom-icon" viewBox="0 0 24 24" width="40" height="40" style="width: 40px; height: 40px;">
+                <circle cx="12" cy="12" r="2" fill="#ef4444" />
+                <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(30 12 12)" stroke="#ef4444" stroke-width="1.5" fill="none" />
+                <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(90 12 12)" stroke="#ef4444" stroke-width="1.5" fill="none" />
+                <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(150 12 12)" stroke="#ef4444" stroke-width="1.5" fill="none" />
             </svg>
         </div>
     </header>
 
-    <!-- Course Category Section (Grade Box ၃ ခု) -->
     <main class="main-content">
+        <!-- 1. Course Category -->
         <section class="category-section">
             <h3>Course Category</h3>
             <div class="category-boxes">
-                <!-- Grade 10 Box -->
-                <a href="page/G10.html" class="category-box">
-                    <span>Grade 10</span>
-                </a>
+                <a href="page/G10.html" class="category-box">Grade 10</a>
+                <a href="page/G11.html" class="category-box">Grade 11</a>
+                <a href="page/G12.html" class="category-box">Grade 12</a>
+            </div>
+        </section>
 
-                <!-- Grade 11 Box -->
-                <a href="page/G11.html" class="category-box">
-                    <span>Grade 11</span>
+        <!-- 2. Services Icon Grid -->
+        <section class="services-section">
+            <div class="services-grid">
+                <!-- Icon 1 -->
+                <a href="page/books.html" class="service-item">
+                    <div class="icon-box red-bg">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                    </div>
+                    <span>ထုတ်ဝေထားပြီး စာအုပ်များ</span>
                 </a>
-
-                <!-- Grade 12 Box -->
-                <a href="page/G12.html" class="category-box">
-                    <span>Grade 12</span>
+                <!-- Icon 2 -->
+                <a href="page/order.html" class="service-item">
+                    <div class="icon-box blue-bg">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    </div>
+                    <span>မှာယူမည်</span>
+                </a>
+                <!-- Icon 3 -->
+                <a href="page/bookstores.html" class="service-item">
+                    <div class="icon-box green-bg">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+                    </div>
+                    <span>စာအုပ်ဆိုင်များ</span>
+                </a>
+                <!-- Icon 4 -->
+                <a href="page/feedback.html" class="service-item">
+                    <div class="icon-box orange-bg">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg>
+                    </div>
+                    <span>အကြံပြုစာ ပေးပို့မည်</span>
+                </a>
+                <!-- Icon 5 -->
+                <a href="page/discussion.html" class="service-item">
+                    <div class="icon-box purple-bg">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                    </div>
+                    <span>စာပို့ကာ ဆွေးနွေးမည်</span>
+                </a>
+                <!-- Icon 6 -->
+                <a href="page/contact.html" class="service-item">
+                    <div class="icon-box teal-bg">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    </div>
+                    <span>ဆက်သွယ်ရန်</span>
                 </a>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section class="contact-section">
-            <hr>
-            <p><b>ဆက်သွယ်ရန်</b></p>
-            <p>phone – 09 258 554 839</p>
-            <p>email – thihakyawphys73@gmail.com</p>
-            <p>address – Pyin Oo Lwin, VEA private high school</p>
-            <p class="copyright">&copy; 2026 Physics Educator & Publisher. All Rights Reserved.</p>
+        <!-- 3. Books Promo Slider Frame -->
+        <section class="banner-section">
+            <div class="banner-frame">
+                <div class="banner-placeholder">
+                    <p>📚 စာအုပ်ကြော်ငြာ Slide Frame</p>
+                </div>
+            </div>
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </section>
+
+        <!-- 4. Chapter End Tests -->
+        <section class="chapter-test-section">
+            <h3>Chapter End Tests</h3>
+            <a href="page/test-g10.html" class="test-card">
+                <div class="test-info">
+                    <h4>Chapter End Test (Ch-1)</h4>
+                    <span class="grade-tag">Grade 10</span>
+                </div>
+                <div class="arrow-icon">›</div>
+            </a>
+
+            <a href="page/test-g11.html" class="test-card">
+                <div class="test-info">
+                    <h4>Chapter End Test (Ch-1)</h4>
+                    <span class="grade-tag">Grade 11</span>
+                </div>
+                <div class="arrow-icon">›</div>
+            </a>
+
+            <a href="page/test-g12.html" class="test-card">
+                <div class="test-info">
+                    <h4>Chapter End Test (Ch-1)</h4>
+                    <span class="grade-tag">Grade 12</span>
+                </div>
+                <div class="arrow-icon">›</div>
+            </a>
         </section>
     </main>
 
     <!-- Bottom Navigation Footer -->
     <footer class="bottom-nav">
-        <!-- Home -->
         <a href="index.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-            </svg>
+            <svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="width: 20px; height: 20px;"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             <span>Home</span>
         </a>
-
-        <!-- Announcement -->
         <a href="page/announcement.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"/>
-            </svg>
+            <svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="width: 20px; height: 20px;"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"/></svg>
             <span>Announcement</span>
         </a>
-
-        <!-- Knowledge -->
         <a href="page/knowledge.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
-            </svg>
+            <svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="width: 20px; height: 20px;"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
             <span>Knowledge</span>
         </a>
-
-        <!-- Account -->
+        <!-- Account Icon -->
         <a href="page/account.html" class="nav-item">
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            <svg class="nav-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-3.8-.85-5.05-2.2.03-1.68 3.37-2.6 5.05-2.6s5.02.92 5.05 2.6C15.8 19.15 14.03 20 12 20z"/>
             </svg>
             <span>Account</span>
         </a>

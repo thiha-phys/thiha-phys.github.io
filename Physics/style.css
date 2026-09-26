@@ -1,161 +1,258 @@
-/* General Setup */
+/* Base Layout Setup */
 body {
     font-family: 'Pyidaungsu', Arial, sans-serif;
-    margin: 0;
+    margin: 0 auto;
+    max-width: 480px;
     padding: 16px 16px 100px 16px;
     background-color: #f8fafc;
     color: #1e293b;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
-/* Modern Dark Hero Card */
+/* Global SVG Safety Fix (SVG ကြီး ထွက်မလာစေရန်) */
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Header UI */
 .hero-card {
     background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     color: #ffffff;
-    padding: 22px 20px;
-    border-radius: 24px;
-    box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.25);
-    margin-bottom: 24px;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-text {
-    z-index: 2;
-    flex: 1;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
 }
 
 .greeting-row {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
-.greeting-text {
-    font-size: 13px;
-    color: #94a3b8;
-}
-
+.greeting-text { font-size: 12px; color: #94a3b8; }
 .status-badge {
     font-size: 10px;
     background: rgba(239, 68, 68, 0.2);
     color: #f87171;
     border: 1px solid rgba(239, 68, 68, 0.4);
     padding: 2px 8px;
-    border-radius: 20px;
+    border-radius: 12px;
     font-weight: 600;
 }
 
-.hero-text h1 {
-    font-size: 20px;
-    margin: 0 0 4px 0;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: -0.3px;
-}
+.hero-text h1 { font-size: 18px; margin: 0; font-weight: 700; color: #fff; }
+.hero-text p { font-size: 12px; margin: 2px 0 0 0; color: #cbd5e1; }
 
-.hero-text p {
-    font-size: 13px;
-    margin: 0;
-    color: #cbd5e1;
-}
-
-/* Right Side Atom Icon */
 .hero-icon-container {
-    z-index: 2;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px;
-    border-radius: 18px;
+    padding: 10px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 12px;
+    width: 32px;
+    height: 32px;
 }
 
+/* Atom Icon Styling Fix */
 .physics-atom-icon {
-    width: 36px;
-    height: 36px;
+    width: 32px !important;
+    height: 32px !important;
     fill: none;
     stroke: #ef4444;
     stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+}
+.physics-atom-icon circle { 
+    fill: #ef4444; 
+}
+.physics-atom-icon ellipse {
+    stroke: #ef4444;
+    fill: none;
 }
 
-.physics-atom-icon circle {
-    fill: #ef4444;
-}
-
-/* Course Category Section */
-.category-section h3 {
-    font-size: 16px;
+/* 1. Category Section */
+.category-section { margin-bottom: 24px; }
+.category-section h3, .chapter-test-section h3 {
+    font-size: 15px;
     font-weight: 700;
-    color: #334155;
-    margin-bottom: 14px;
+    color: #1e293b;
+    margin-bottom: 12px;
 }
+.category-boxes { display: flex; gap: 8px; }
 
-.category-boxes {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
+/* Grade Box Active/Hover Color Change */
 .category-box {
     flex: 1;
     text-align: center;
     background-color: #ffffff;
     color: #334155;
-    padding: 12px 10px;
-    border-radius: 14px;
+    padding: 10px;
+    border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 14px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    font-size: 13px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     transition: all 0.2s ease;
-    border: 1px solid #f1f5f9;
+    cursor: pointer;
 }
 
-.category-box:hover, 
+.category-box:hover,
 .category-box:active {
     background-color: #ef4444;
     color: #ffffff;
     border-color: #ef4444;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(239, 68, 68, 0.25);
 }
 
-/* Contact Section */
-.contact-section {
-    margin-top: 32px;
-    font-size: 13px;
-    color: #64748b;
+/* 2. Services Grid (6 Clickable Items) */
+.services-section { margin-bottom: 24px; }
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 12px;
+}
+.service-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #334155;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
-.contact-section hr {
-    border: none;
-    border-top: 1px solid #e2e8f0;
-    margin-bottom: 20px;
+.service-item:hover,
+.service-item:active {
+    transform: translateY(-3px);
 }
 
-.contact-section p {
-    margin: 6px 0;
+.icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.copyright {
+.service-item:hover .icon-box {
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.icon-box svg { 
+    width: 24px !important; 
+    height: 24px !important; 
+    fill: #ffffff; 
+}
+
+/* Icon Colors */
+.red-bg { background-color: #ef4444; }
+.blue-bg { background-color: #3b82f6; }
+.green-bg { background-color: #10b981; }
+.orange-bg { background-color: #f97316; }
+.purple-bg { background-color: #8b5cf6; }
+.teal-bg { background-color: #14b8a6; }
+
+.service-item span {
     font-size: 11px;
-    color: #94a3b8;
-    margin-top: 16px !important;
+    font-weight: 600;
+    line-height: 1.3;
 }
 
-/* Floating Bottom Navigation Bar */
+/* 3. Banner Frame & Dots */
+.banner-section { margin-bottom: 24px; }
+.banner-frame {
+    width: 100%;
+    height: 130px;
+    background: #ffffff;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+.banner-placeholder p {
+    color: #94a3b8;
+    font-size: 13px;
+    margin: 0;
+    font-weight: 600;
+}
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+.dot {
+    width: 6px;
+    height: 6px;
+    background-color: #cbd5e1;
+    border-radius: 50%;
+}
+.dot.active {
+    width: 16px;
+    background-color: #ef4444;
+    border-radius: 10px;
+}
+
+/* 4. Chapter End Test Horizontal Bars */
+.chapter-test-section { margin-bottom: 20px; }
+.test-card {
+    background-color: #ffffff;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    transition: all 0.2s ease;
+}
+.test-card:hover,
+.test-card:active {
+    border-color: #ef4444;
+    transform: translateY(-2px);
+}
+.test-info h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    color: #0f172a;
+    font-weight: 600;
+}
+.grade-tag {
+    font-size: 11px;
+    color: #ef4444;
+    background-color: #fef2f2;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.arrow-icon {
+    font-size: 20px;
+    color: #94a3b8;
+    font-weight: 300;
+}
+
+/* Floating Bottom Nav Bar */
 .bottom-nav {
     position: fixed;
-    bottom: 20px;
+    bottom: 16px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
@@ -163,41 +260,25 @@ body {
     background-color: #ffffff;
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    padding: 10px 12px;
-    border-radius: 40px;
+    padding: 8px 10px;
+    border-radius: 30px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     z-index: 9999;
 }
-
 .nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-decoration: none;
     color: #94a3b8;
-    font-size: 11px;
-    padding: 6px 12px;
-    border-radius: 12px;
-    transition: all 0.2s ease;
+    font-size: 10px;
     flex: 1;
 }
-
-.nav-icon {
-    width: 22px;
-    height: 22px;
-    margin-bottom: 3px;
-    fill: #94a3b8;
-    transition: fill 0.2s ease;
+.nav-icon { 
+    width: 20px !important; 
+    height: 20px !important; 
+    margin-bottom: 2px; 
+    fill: #94a3b8; 
 }
-
-.nav-item:hover,
-.nav-item:active {
-    color: #ef4444;
-    font-weight: 600;
-}
-
-.nav-item:hover .nav-icon,
-.nav-item:active .nav-icon {
-    fill: #ef4444;
-}
+.nav-item:hover, .nav-item:active { color: #ef4444; }
+.nav-item:hover .nav-icon, .nav-item:active .nav-icon { fill: #ef4444; }
