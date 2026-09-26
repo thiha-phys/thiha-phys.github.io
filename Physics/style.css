@@ -1,12 +1,29 @@
 /* Base Layout Setup */
 body {
     font-family: 'Pyidaungsu', Arial, sans-serif;
-    margin: 0 auto;
+    margin: 20px auto; /* အပေါ်အောက် အကွာအဝေး အနည်းငယ်ပေးခြင်း */
     max-width: 480px;
     padding: 16px 16px 100px 16px;
-    background-color: #f8fafc;
+    background-color: #ffffff; /* မူလ Background */
     color: #1e293b;
     line-height: 1.5;
+    
+    /* Desktop တွင် App Card ပုံစံ ပေါ်စေရန် Border နှင့် Shadow ထည့်ခြင်း */
+    border-radius: 28px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+/* Background တစ်ခုလုံးကို မီးခိုးရောင်နု ပေးခြင်း (Desktop မှာ ကြည့်လျှင် App ပိုပေါ်လွင်စေသည်) */
+html {
+    background-color: #0f172a; /* Fallback Color */
+    background-image: url('images/physics-bg.jpg'); /* သင့် Background Image လမ်းကြောင်း */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Scroll ဆွဲရင် Background ငြိမ်နေစေရန် */
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    min-height: 100vh;
 }
 
 /* Global SVG Safety Fix (SVG ကြီး ထွက်မလာစေရန်) */
@@ -49,32 +66,36 @@ svg {
 .hero-text h1 { font-size: 18px; margin: 0; font-weight: 700; color: #fff; }
 .hero-text p { font-size: 12px; margin: 2px 0 0 0; color: #cbd5e1; }
 
+/* Hero Icon Box - ပိုမိုကျယ်ဝန်းပြီး Glow Effect ထည့်ထားသည် */
 .hero-icon-container {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
     padding: 10px;
     border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
 }
 
-/* Atom Icon Styling Fix */
+/* Atom SVG - လိုင်း အမျှင်လေးများကို သိမ်သိမ်မွေ့မွေ့ ပြုလုပ်ထားသည် */
 .physics-atom-icon {
     width: 32px !important;
     height: 32px !important;
-    fill: none;
-    stroke: #ef4444;
-    stroke-width: 1.5;
 }
-.physics-atom-icon circle { 
-    fill: #ef4444; 
+
+.atom-core {
+    fill: #ef4444;
+    filter: drop-shadow(0 0 4px #ef4444);
 }
-.physics-atom-icon ellipse {
-    stroke: #ef4444;
+
+.atom-orbit {
     fill: none;
+    stroke: #f87171;
+    stroke-width: 1.2;
+    opacity: 0.85;
 }
 
 /* 1. Category Section */
