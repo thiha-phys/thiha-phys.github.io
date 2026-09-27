@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 Physics - Chapter 6 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax ထည့်ရန် -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <h1 class="page-title">Chapter 6 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Sub Banner -->
+    <div class="grade-banner">
+      <h2>Chapter 6 - Effect and Characteristics of Sound</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၂၀ ပုဒ်)</p>
+    </div>
+
+    <!-- Problems List Container -->
+    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
+      
+      <!-- Eg. 1 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.1.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> What is the speed of sound in (i) a steel rod (ii) water? Young's modulus of steel is $20 \times 10^{10}\text{ N m}^{-2}$ and density of steel is $7.8 \times 10^3\text{ kg m}^{-3}$. The bulk modulus of water is $0.22 \times 10^{10}\text{ N m}^{-2}$ and density of water is $10^3\text{ kg m}^{-3}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong></p>
+              <p><strong>(i)</strong> $Y = 20 \times 10^{10}\text{ N m}^{-2}$, $\rho = 7.8 \times 10^3\text{ kg m}^{-3}$</p>
+              <p style="margin-left: 25px;">$v = \sqrt{\frac{Y}{\rho}} = \sqrt{\frac{20 \times 10^{10}}{7.8 \times 10^3}} = \mathbf{5.06 \times 10^3\text{ m s}^{-1}\text{ (or) } 5063\text{ m s}^{-1}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> $B = 0.22 \times 10^{10}\text{ N m}^{-2}$, $\rho = 10^3\text{ kg m}^{-3}$</p>
+              <p style="margin-left: 25px;">$v = \sqrt{\frac{B}{\rho}} = \sqrt{\frac{0.22 \times 10^{10}}{10^3}} = \mathbf{1.48 \times 10^3\text{ m s}^{-1}\text{ (or) } 1483\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The speed of sound in a particular liquid is $1.6 \times 10^3\text{ m s}^{-1}$. If the bulk modulus of the liquid is $0.15 \times 10^{10}\text{ N m}^{-2}$, what is the density of the liquid?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $B = 0.15 \times 10^{10}\text{ N m}^{-2}$, $v = 1.6 \times 10^3\text{ m s}^{-1}$, $\rho = ?$</p>
+              <p style="margin-top: 10px;">$\rho = \frac{B}{v^2} = \frac{0.15 \times 10^{10}}{(1.6 \times 10^3)^2} = \mathbf{585.94\text{ kg m}^{-3}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Calculate the velocity of sound in air at STP. The density of air at STP is $1.29\text{ kg m}^{-3}$. Assume air to be diatomic with $\gamma = 1.4$. Also calculate the velocity of sound in air at $27^\circ\text{C}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> At STP: $p = 1.01 \times 10^5\text{ Pa}$, $T_1 = 273\text{ K}$, $\rho = 1.29\text{ kg m}^{-3}$, $\gamma = 1.4$</p>
+              <p style="margin-top: 10px;">$v_1 = \sqrt{\frac{\gamma p}{\rho}} = \sqrt{\frac{1.4 \times 1.01 \times 10^5}{1.29}} = \mathbf{331.077\text{ m s}^{-1}\text{ (at STP)}}$</p>
+              <p style="margin-top: 10px;">At $27^\circ\text{C}$ ($T_2 = 27 + 273 = 300\text{ K}$):</p>
+              <p style="margin-left: 25px;">$\frac{v_2}{v_1} = \sqrt{\frac{T_2}{T_1}} \implies v_2 = v_1 \sqrt{\frac{300}{273}} = 331.077 \times \sqrt{\frac{300}{273}} = \mathbf{347.06\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> At a busy street corner, the intensity level of sound is $70\text{ dB}$. What is intensity of sound in $\text{W m}^{-2}$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\beta = 70\text{ dB}$, $I_0 = 10^{-12}\text{ W m}^{-2}$</p>
+              <p style="margin-top: 10px;">$\beta = 10 \log_{10}\left(\frac{I}{I_0}\right) \implies 70 = 10 \log_{10}\left(\frac{I}{10^{-12}}\right)$</p>
+              <p style="margin-left: 25px;">$\frac{I}{10^{-12}} = 10^7 \implies I = 10^{-12} \times 10^7 = \mathbf{10^{-5}\text{ W m}^{-2}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> What value of sound intensity in $\text{dB}$ increases by a factor of $1000$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\frac{I_2}{I_1} = 1000$, $\beta = ?$</p>
+              <p style="margin-top: 10px;">$\beta = 10 \log_{10}\left(\frac{I_2}{I_1}\right) = 10 \log_{10}(1000) = 10 \times 3 = \mathbf{30\text{ dB}}$</p>
+              <p>The sound level will increase $30\text{ dB}$.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> If the intensity of sound is doubled, by how many decibels does the sound level increase?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\frac{I_2}{I_1} = 2$, $\beta = ?$</p>
+              <p style="margin-top: 10px;">$\beta = 10 \log_{10}(2) = 10 \times 0.3010 = \mathbf{3\text{ dB}}$</p>
+              <p>The sound level will increase $3\text{ dB}$.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 11 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.11.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A sonar echo returns to a submarine $1.2\text{ s}$ after being emitted. What is the distance to the object creating the echo? (Assume that the submarine is in the ocean, not in fresh water and the velocity of sound in water is $1500\text{ m s}^{-1}$.)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $t = 1.2\text{ s}$, $v = 1500\text{ m s}^{-1}$, $d = ?$</p>
+              <p style="margin-top: 10px;">$d = \frac{v t}{2} = \frac{1500 \times 1.2}{2} = \mathbf{900\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 5 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.5.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A bat flying at a speed of $20\text{ m s}^{-1}$ towards a stationary moth emits sound wave of $340\text{ m s}^{-1}$. The bat hears the echoes $0.4\text{ s}$ later. (i) Calculate the distance travelled by the bat in $0.4\text{ s}$. (ii) Calculate the distance travelled by the sound wave in $0.4\text{ s}$. (iii) Determine the initial distance between the bat and the moth.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $v_b = 20\text{ m s}^{-1}$, $v_s = 340\text{ m s}^{-1}$, $t = 0.4\text{ s}$</p>
+              <p style="margin-top: 10px;"><strong>(i)</strong> Distance travelled by bat ($d_b$) $= v_b t = 20 \times 0.4 = \mathbf{8\text{ m}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> Distance travelled by sound wave ($d_s$) $= v_s t = 340 \times 0.4 = \mathbf{136\text{ m}}$</p>
+              <p style="margin-top: 10px;"><strong>(iii)</strong> Initial distance $= \frac{d_s + d_b}{2}$ or total distance / 2 $= \frac{8 + 136}{2} = \mathbf{72\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- Rev. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The sole survivor of a shipwreck swim to an island, which is $3000\text{ m}$ from a vertical cliff. He sees a ship anchored between the island and the cliff. A blast from the ship horn is heard twice with the time elapse of $4\text{ s}$. Calculate distance between the ship and the survivor. (Speed of sound in air = $330\text{ m s}^{-1}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> Distance between survivor and ship $= d$</p>
+              <p>Distance between survivor and cliff $= 3000\text{ m}$, Distance between ship and cliff $= 3000 - d$</p>
+              <p>$v = 330\text{ m s}^{-1}$, $t_2 - t_1 = 4\text{ s}$</p>
+              <p style="margin-top: 10px;">Time for original sound ($t_1$) $= \frac{d}{v}$</p>
+              <p>Time for echo ($t_2$) $= \frac{3000 + (3000 - d)}{v} = \frac{6000 - d}{v}$</p>
+              <p style="margin-top: 10px;">$t_2 - t_1 = \frac{6000 - d}{v} - \frac{d}{v} \implies 4 = \frac{6000 - 2d}{330}$</p>
+              <p style="margin-left: 25px;">$1320 = 6000 - 2d \implies 2d = 4680 \implies d = \mathbf{2340\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A piezoelectric transducer produces ultrasound at a frequency of $10\text{ MHz}$. Calculate the wavelength of this ultrasound in blood if the speed of ultrasound in blood is $1560\text{ m s}^{-1}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $f = 10\text{ MHz} = 10 \times 10^6\text{ Hz}$, $v = 1560\text{ m s}^{-1}$, $\lambda = ?$</p>
+              <p style="margin-top: 10px;">$\lambda = \frac{v}{f} = \frac{1560}{10 \times 10^6} = \mathbf{1.56 \times 10^{-4}\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 5 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.5.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> (i) Why the ultrasound is used in medical imaging rather than sound wave of audible frequencies or lower? (ii) The frequencies used in imaging are typically in the range of $1\text{ to } 15\text{ MHz}$. What is the range of wavelengths in human tissue where the velocity of sound is $1540\text{ m s}^{-1}$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong></p>
+              <p><strong>(i)</strong> Because ultrasound has higher frequency and shorter wavelength. Shorter wavelengths are more easily reflected or refracted in the superficial tissues than longer wavelengths, giving better resolution.</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> $v = 1540\text{ m s}^{-1}$, $f_1 = 1\text{ MHz} = 10^6\text{ Hz}$, $f_2 = 15\text{ MHz} = 15 \times 10^6\text{ Hz}$</p>
+              <p style="margin-left: 25px;">$\lambda_1 = \frac{v}{f_1} = \frac{1540}{1 \times 10^6} = 1.54 \times 10^{-3}\text{ m}$</p>
+              <p style="margin-left: 25px;">$\lambda_2 = \frac{v}{f_2} = \frac{1540}{15 \times 10^6} = 0.103 \times 10^{-3}\text{ m}$</p>
+              <p style="margin-top: 5px;">The range of wavelengths is between $\mathbf{0.103 \times 10^{-3}\text{ m} \text{ and } 1.54 \times 10^{-3}\text{ m}}$.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The velocity of ultrasound in lung (inclusive air), fat and skull bone are $600\text{ m s}^{-1}$, $1450\text{ m s}^{-1}$ and $4080\text{ m s}^{-1}$ respectively, what are the wavelengths of ultrasound if the sound waves at $2\text{ MHz}$ are used?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $f = 2\text{ MHz} = 2 \times 10^6\text{ Hz}$</p>
+              <p style="margin-top: 10px;">- In lung ($v_1 = 600\text{ m s}^{-1}$): $\lambda_1 = \frac{v_1}{f} = \frac{600}{2 \times 10^6} = \mathbf{3 \times 10^{-4}\text{ m}}$</p>
+              <p style="margin-top: 5px;">- In fat ($v_2 = 1450\text{ m s}^{-1}$): $\lambda_2 = \frac{v_2}{f} = \frac{1450}{2 \times 10^6} = \mathbf{7.25 \times 10^{-4}\text{ m}}$</p>
+              <p style="margin-top: 5px;">- In skull ($v_3 = 4080\text{ m s}^{-1}$): $\lambda_3 = \frac{v_3}{f} = \frac{4080}{2 \times 10^6} = \mathbf{2.04 \times 10^{-3}\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- No. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.7.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> To get the better resolution, higher frequencies ultrasound are used but at the expense of less penetration because sound waves are attenuated within the distance about $50\lambda$ in tissue. If the velocity of sound in soft tissue is $1500\text{ m s}^{-1}$ and mean depth of thyroid is $0.75\text{ cm}$. What is the most suitable frequency of ultrasound to diagnose thyroid?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $v = 1500\text{ m s}^{-1}$, $50\lambda = \text{mean depth} = 0.75\text{ cm} = 0.75 \times 10^{-2}\text{ m}$</p>
+              <p style="margin-top: 10px;">$\lambda = \frac{0.75 \times 10^{-2}}{50} = 1.5 \times 10^{-4}\text{ m}$</p>
+              <p style="margin-top: 10px;">$f = \frac{v}{\lambda} = \frac{1500}{1.5 \times 10^{-4}} = \mathbf{10 \times 10^6\text{ Hz} = 10\text{ MHz}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.7.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An ambulance travelling at $44\text{ m s}^{-1}$ approaches a car heading in a same direction at the speed of $28\text{ m s}^{-1}$. The ambulance driver has a siren sounding at $550\text{ Hz}$. At what frequency does the driver of the car hear the siren? (Speed of siren sound $= v = 330\text{ m s}^{-1}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> For ambulance (source): $f_s = 550\text{ Hz}$, $v_s = 44\text{ m s}^{-1}$</p>
+              <p>For car (observer): $v_o = 28\text{ m s}^{-1}$, $v = 330\text{ m s}^{-1}$</p>
+              <p style="margin-top: 10px;">$f_o = f_s \left(\frac{v - v_o}{v - v_s}\right) = 550 \left(\frac{330 - 28}{330 - 44}\right) = 550 \left(\frac{302}{286}\right) = \mathbf{580.77\text{ Hz}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.7.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> In example 7, what will be the frequency of the siren heard by the driver of the car when the ambulance overtakes his car?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> For ambulance (source): $f_s = 550\text{ Hz}$, $v_s = 44\text{ m s}^{-1}$</p>
+              <p>For car (observer): $v_o = 28\text{ m s}^{-1}$, $v = 330\text{ m s}^{-1}$</p>
+              <p style="margin-top: 10px;">$f_o = f_s \left(\frac{v + v_o}{v + v_s}\right) = 550 \left(\frac{330 + 28}{330 + 44}\right) = 550 \left(\frac{358}{374}\right) = \mathbf{526.47\text{ Hz}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 8 (Old) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.8 (Old).</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A monorail approaches a platform at a speed of $50\text{ m s}^{-1}$ which it blows its whistle. A man standing on the platform hears the whistle with frequency $261\text{ Hz}$. There is no wind and temperature is chilly $0^\circ\text{C}$. What is the observed frequency of the whistle when the train is at rest? (The speed of sound in air at $0^\circ\text{C}$ is $332\text{ m s}^{-1}$.)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> For man (observer): $f_o = 261\text{ Hz}$, $v_o = 0$, $v = 332\text{ m s}^{-1}$</p>
+              <p>For train (source): $v_s = 50\text{ m s}^{-1}$, $f_s = ?$</p>
+              <p style="margin-top: 10px;">$f_o = f_s \left(\frac{v}{v - v_s}\right) \implies 261 = f_s \left(\frac{332}{332 - 50}\right) = f_s \left(\frac{332}{282}\right)$</p>
+              <p style="margin-left: 25px;">$f_s = \frac{261 \times 282}{332} = \mathbf{221.69\text{ Hz}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 8 (New) -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.8 (New).</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A car is travelling at $29\text{ m s}^{-1}$ towards a stationary whistle with a frequency of $625\text{ Hz}$. If the speed of sound is $337\text{ m s}^{-1}$, what is the apparent frequency of the whistle as heard by the driver of the car?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> For whistle (source): $v_s = 0$, $f_s = 625\text{ Hz}$</p>
+              <p>For car driver (observer): $v_o = 29\text{ m s}^{-1}$, $v = 337\text{ m s}^{-1}$</p>
+              <p style="margin-top: 10px;">$f_o = f_s \left(\frac{v + v_o}{v}\right) = 625 \left(\frac{337 + 29}{337}\right) = 625 \left(\frac{366}{337}\right) = \mathbf{679\text{ Hz}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- No. 12 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.12.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> (i) What frequency is received by a person watching an oncoming ambulance moving at $110\text{ km h}^{-1}$ and emitting a steady $800\text{ Hz}$ sound from its siren? The speed of sound on this day is $345\text{ m s}^{-1}$. (ii) What frequency does she receive after the ambulance has passed?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> For ambulance (source): $f_s = 800\text{ Hz}$, $v_s = 110\text{ km h}^{-1} = 110 \times \frac{10^3}{3600} = 30.56\text{ m s}^{-1}$</p>
+              <p>For person (observer): $v_o = 0$, $v = 345\text{ m s}^{-1}$</p>
+              <p style="margin-top: 10px;"><strong>(i)</strong> Approaching ($-v_s$):</p>
+              <p style="margin-left: 25px;">$f_o = f_s \left(\frac{v + v_o}{v - v_s}\right) = 800 \left(\frac{345 + 0}{345 - 30.56}\right) = \mathbf{877.75\text{ Hz}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> Receding ($+v_s$):</p>
+              <p style="margin-left: 25px;">$f_o = f_s \left(\frac{v + v_o}{v + v_s}\right) = 800 \left(\frac{345 + 0}{345 + 30.56}\right) = \mathbf{734.9\text{ Hz}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 13 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.13.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A $5000\text{ Hz}$ sound wave is emitted by a stationary source. This sound reflects from an object moving $3.5\text{ m s}^{-1}$ toward the source. What is the frequency of the wave reflected by moving object as detected by a detector at rest near the source?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> <u>Step 1:</u> Moving object acts as observer moving towards stationary source.</p>
+              <p>$f_s = 5000\text{ Hz}$, $v_s = 0$, $v_o = 3.5\text{ m s}^{-1}$, $v = 345\text{ m s}^{-1}$</p>
+              <p style="margin-left: 25px;">$f_o = f_s \left(\frac{v + v_o}{v - v_s}\right) = 5000 \left(\frac{345 + 3.5}{345 + 0}\right) = 5050.7\text{ Hz}$</p>
+              <p style="margin-top: 10px;"><u>Step 2:</u> Moving object acts as source ($f_s' = 5050.7\text{ Hz}$, $v_s' = 3.5\text{ m s}^{-1}$) and detector is at rest ($v_o' = 0$).</p>
+              <p style="margin-left: 25px;">$f_o' = f_s' \left(\frac{v + v_o'}{v - v_s'}\right) = 5050.7 \left(\frac{345 + 0}{345 - 3.5}\right) = \mathbf{5102.5\text{ Hz}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 8 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.8.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Calculate the displacement of air molecules (amplitude) for a sound having a frequency of $1000\text{ Hz}$ at the threshold of hearing. The speed of sound in air is $343\text{ m s}^{-1}$ at $20^\circ\text{C}$ and density of air is $1.29\text{ kg m}^{-3}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $f = 1000\text{ Hz}$, $v = 343\text{ m s}^{-1}$, $\rho = 1.29\text{ kg m}^{-3}$, $I = 1 \times 10^{-12}\text{ W m}^{-2}$</p>
+              <p style="margin-top: 10px;">$\omega = 2\pi f = 2 \times 3.142 \times 1000 = 6284\text{ rad s}^{-1}$</p>
+              <p style="margin-top: 10px;">$I = \frac{1}{2} \rho v \omega^2 A^2 \implies 1 \times 10^{-12} = \frac{1}{2} \times 1.29 \times 343 \times (6284)^2 \times A^2$</p>
+              <p style="margin-left: 25px;">$A^2 = \frac{2 \times 10^{-12}}{1.29 \times 343 \times (6284)^2}$</p>
+              <p style="margin-left: 25px;">$A = \mathbf{10.7 \times 10^{-12}\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+
+
+    </main>
+  </div>
+
+</body>
+</html>

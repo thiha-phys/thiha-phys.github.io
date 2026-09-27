@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 Physics - Chapter 4 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax ထည့်ရန် -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <h1 class="page-title">Chapter 4 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Sub Banner -->
+    <div class="grade-banner">
+      <h2>Soruces of energy and environmental impacts</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၁ ပုဒ်)</p>
+    </div>
+
+    <!-- Problems List Container -->
+    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
+      
+      <!-- Eg. 1 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.1.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> At present day, the rate of formation of fossil fuels (coal, petroleum, natural gas) is estimated to be about $4\text{ billion kW}$ ($4 \times 10^9\text{ kW}$) and the world's consumption of energy is of the order of $10^{17}\text{ Btu/year}$. Show that the rate of consumption of fossil fuel is of the same order of magnitude as the rate of their formation and these energy sources are therefore non-renewable.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $1\text{ Btu} = 1055\text{ J}$, $1\text{ year} = 365 \times 24 \times 3600 = 3.15 \times 10^7\text{ s}$</p>
+              <p>The rate of formation of fossil fuel $= 4\text{ billion kW} = 4 \times 10^9 \times 10^3\text{ W} = \mathbf{4 \times 10^{12}\text{ J s}^{-1}}$</p>
+              <p style="margin-top: 10px;">The world's consumption of energy $= 10^{17}\text{ Btu/year} = \frac{10^{17} \times 1055\text{ J}}{1 \times 3.15 \times 10^7\text{ s}} = \mathbf{3.35 \times 10^{12}\text{ J s}^{-1}}$</p>
+              <p style="margin-top: 10px;">Hence, the rate of consumption of fossil fuel is of the same order of magnitude as the rate of their formation and these energy sources are therefore non-renewable.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A home requires $62\text{ kWh}$ of heat on winter day to maintain a constant indoor temperature of $20^\circ\text{C}$. Assume that the temperature of hot water outlet is $60^\circ\text{C}$. (i) How much collector surface area does it need for a solar heating system that has a $20\%$ efficiency? (ii) How large does the storage tank have to be to provide this much energy? (The average solar radiation per day in winter is about $6.5\text{ kWh m}^{-2}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\Delta Q_{\text{req}} = 62\text{ kWh}$, $\Delta Q_{\text{input}} = 6.5\text{ kWh m}^{-2}$, $\eta = 20\% = 0.2$</p>
+              <p style="margin-top: 10px;"><strong>(i)</strong> $\eta = \frac{\Delta Q_{\text{output}}}{\Delta Q_{\text{input}}} \implies \Delta Q_{\text{output}} = 6.5 \times 0.2 = 1.3\text{ kWh m}^{-2}$</p>
+              <p style="margin-left: 25px;">Collector surface area $= \frac{\Delta Q_{\text{req}}}{\Delta Q_{\text{output}}} = \frac{62}{1.3} = \mathbf{47.69 \approx 48\text{ m}^2}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> $1\text{ kWh} = 3.6 \times 10^6\text{ J}$, $\Delta T = 60 - 20 = 40^\circ\text{C}$, $c = 4184\text{ J kg}^{-1}\text{ K}^{-1}$</p>
+              <p style="margin-left: 25px;">$\Delta Q_{\text{req}} = m c \Delta T \implies m = \frac{\Delta Q_{\text{req}}}{c \Delta T} = \frac{62 \times 3.6 \times 10^6}{4184 \times 40} = 1333.6\text{ kg}$</p>
+              <p style="margin-left: 25px;">Volume of storage tank should be $\mathbf{1334\text{ L}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Determine the input power of the wind if the wind speed is $20\text{ m s}^{-1}$ and blade length is $20\text{ m}$. Density of air is $1.3\text{ kg m}^{-3}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $v = 20\text{ m s}^{-1}$, $\rho = 1.3\text{ kg m}^{-3}$, $r = 20\text{ m}$, $P = ?$</p>
+              <p>$A = \pi r^2 = 3.142 \times (20)^2 = 1256.8\text{ m}^2$</p>
+              <p style="margin-top: 10px;">$P = \frac{1}{2}\rho A v^3 = \frac{1}{2} \times 1.3 \times 1256.8 \times (20)^3 = \mathbf{6.535 \times 10^6\text{ W} = 6.535\text{ MW}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> At a hydroelectric power plant, the water pressure head is at a height of $300\text{ m}$ and the water flow available is $100\text{ m}^3\text{ s}^{-1}$. If the turbine generator efficiency is $60\%$, estimate the electric power available from the plant. ($g = 9.8\text{ m s}^{-2}$, $\rho = 1000\text{ kg m}^{-3}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $h = 300\text{ m}$, $\dot{V} = 100\text{ m}^3\text{ s}^{-1}$, $\eta = 60\% = 0.6$, $g = 9.8\text{ m s}^{-2}$</p>
+              <p style="margin-top: 10px;">$P = \eta \rho \dot{V} g h = 0.6 \times 1000 \times 100 \times 9.8 \times 300 = \mathbf{176.4 \times 10^6\text{ W} = 176.4\text{ MW}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The band gap of GaAs is $1.4\text{ eV}$. Calculate the minimum wavelength of light for photovoltaic generation in a GaAs solar cell.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $E = 1.4\text{ eV} = 1.4 \times 1.6 \times 10^{-19}\text{ J}$, $h = 6.626 \times 10^{-34}\text{ J s}$, $c = 3 \times 10^8\text{ m s}^{-1}$</p>
+              <p style="margin-top: 10px;">$\lambda = \frac{h c}{E} = \frac{6.626 \times 10^{-34} \times 3 \times 10^8}{1.4 \times 1.6 \times 10^{-19}} = \mathbf{8.87 \times 10^{-7}\text{ m} = 887\text{ nm}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 5 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.5.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A $100\text{ ft} \times 50\text{ ft}$ building has a flat roof. What is the average solar energy received by the roof in a month? (The solar radiation per day in winter is about $1600\text{ Btu ft}^{-2}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $A = 100 \times 50 = 5000\text{ ft}^2$, $t = 30\text{ days}$, Radiation $= 1600\text{ Btu ft}^{-2}\text{ day}^{-1}$</p>
+              <p style="margin-top: 10px;">Total Energy $= 1600 \times 5000 \times 30 = \mathbf{2.4 \times 10^8\text{ Btu}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Calculate the solar energy received by a standard hot water collector of dimensions $1\text{ m} \times 2\text{ m}$, over one hour at around noon, if the irradiance stays fairly constant at about $800\text{ W m}^{-2}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $A = 1 \times 2 = 2\text{ m}^2$, $t = 1\text{ h} = 3600\text{ s}$, Irradiance $= 800\text{ W m}^{-2}$</p>
+              <p style="margin-top: 10px;">Energy $= \text{Irradiance} \times A \times t = 800 \times 2 \times 3600 = \mathbf{5.76 \times 10^6\text{ J}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 10 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.10.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An important hydroelectric plant has a head of $100\text{ m}$ and water volumetric flow rate of $10\,000\text{ m}^3\text{ s}^{-1}$. The turbine generator efficiency is $60\%$. What is the maximum power that the plant can produce? (Density of water = $1000\text{ kg m}^{-3}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $h = 100\text{ m}$, $\dot{V} = 10\,000\text{ m}^3\text{ s}^{-1}$, $\eta = 60\% = 0.6$, $\rho = 1000\text{ kg m}^{-3}$</p>
+              <p style="margin-top: 10px;">$P = \eta \rho \dot{V} g h = 0.6 \times 1000 \times 10\,000 \times 9.8 \times 100 = \mathbf{5880 \times 10^6\text{ W} = 5880\text{ MW}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 11 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.11.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A dam which maximum head of $200\text{ m}$ produces $2000\text{ MW}$ electrical power. What is the rate of falling water on the turbines? The turbine generator efficiency is $50\%$. (Density of water = $1000\text{ kg m}^{-3}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $h = 200\text{ m}$, $P = 2000\text{ MW} = 2000 \times 10^6\text{ W}$, $\eta = 50\% = 0.5$</p>
+              <p style="margin-top: 10px;">$\dot{V} = \frac{P}{\eta \rho g h} = \frac{2000 \times 10^6}{0.5 \times 1000 \times 9.8 \times 200} = \mathbf{2040\text{ m}^3\text{ s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 12 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.12.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The wind is blowing at $10\text{ m s}^{-1}$, how much total power produced by the wind turbine if the blades are $45\text{ m}$ long? Density of air is $1.3\text{ kg m}^{-3}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $v = 10\text{ m s}^{-1}$, $\rho = 1.3\text{ kg m}^{-3}$, $r = 45\text{ m}$</p>
+              <p>$A = \pi r^2 = 3.142 \times (45)^2\text{ m}^2$</p>
+              <p style="margin-top: 10px;">$P = \frac{1}{2}\rho A v^3 = \frac{1}{2} \times 1.3 \times 3.142 \times (45)^2 \times (10)^3 = \mathbf{4.136 \times 10^6\text{ W} = 4.136\text{ MW}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 8 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.8.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The hydro turbine receives water from a reservoir at an elevation of $100\text{ m}$ above it. What is the minimum water flow in $\text{kg s}^{-1}$ to produce a steady turbine output of $50\text{ MW}$ if the turbine generator efficiency is $75\%$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $h = 100\text{ m}$, $\eta = 75\% = 0.75$, $P = 50\text{ MW} = 50 \times 10^6\text{ W}$</p>
+              <p style="margin-top: 10px;">$P = \eta \left(\frac{m}{t}\right) g h \implies \frac{m}{t} = \frac{P}{\eta g h}$</p>
+              <p style="margin-left: 25px;">$\frac{m}{t} = \frac{50 \times 10^6}{0.75 \times 9.8 \times 100} = \mathbf{68027\text{ kg s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 Physics - Chapter 5 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax ထည့်ရန် -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <h1 class="page-title">Chapter 5 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Sub Banner -->
+    <div class="grade-banner">
+      <h2>Chapter 5 - Heat Transfer & Thermodynamics</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၈ ပုဒ်)</p>
+    </div>
+
+    <!-- Problems List Container -->
+    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
+      
+      <!-- Eg. 1 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.1.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A person walking at a regular speed generations heat at the rate of $0.07\text{ W}$. If the surface area of the body is $1.5\text{ m}^2$ and heat is to be generated $0.03\text{ m}$ below the skin, what should be the temperature difference between the skin and interior of the body if the heat is to be conducted to the surface of the skin? ($k = 5 \times 10^{-5}\text{ W m}^{-1}\text{ K}^{-1}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $H = 0.07\text{ W}$, $A = 1.5\text{ m}^2$, $l = 0.03\text{ m}$, $k = 5 \times 10^{-5}\text{ W m}^{-1}\text{ K}^{-1}$</p>
+              <p style="margin-top: 10px;">By rate of heat conduction, $H = \frac{k A (T_2 - T_1)}{l}$</p>
+              <p style="margin-left: 25px;">$T_2 - T_1 = \frac{H l}{k A} = \frac{0.07 \times 0.03}{5 \times 10^{-5} \times 1.5} = \mathbf{28\text{ K (or) } 28^\circ\text{C}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 9 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.9.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The area and thickness of a glass plate of a window are $0.25\text{ m}^2$ and $4\text{ mm}$ respectively. The temperature of inside surface of glass plate is $25^\circ\text{C}$ and its outside temperature is $26^\circ\text{C}$. Find the amount of heat that passes through the glass plate in one hour. The thermal conductivity of glass is $0.78\text{ W m}^{-1}\text{ K}^{-1}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $A = 0.25\text{ m}^2$, $l = 4\text{ mm} = 4 \times 10^{-3}\text{ m}$, $t = 3600\text{ s}$</p>
+              <p>$T_2 = 26^\circ\text{C} = 299\text{ K}$, $T_1 = 25^\circ\text{C} = 298\text{ K}$, $k = 0.78\text{ W m}^{-1}\text{ K}^{-1}$</p>
+              <p style="margin-top: 10px;">$\Delta Q = \frac{k A (T_2 - T_1) t}{l} = \frac{0.78 \times 0.25 \times (299 - 298) \times 3600}{4 \times 10^{-3}} = \mathbf{175\,500\text{ J}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 10 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.10.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> How much heat per second is conducted through a wooden wall of area $25\text{ m}^2$ and thickness $0.04\text{ m}$ if the temperature inside is $20^\circ\text{C}$ and the temperature outside is $-10^\circ\text{C}$? The thermal conductivity of wood is $8.37 \times 10^{-2}\text{ W m}^{-1}\text{ K}^{-1}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $A = 25\text{ m}^2$, $l = 0.04\text{ m}$, $T_2 = 293\text{ K}$, $T_1 = 263\text{ K}$, $k = 8.37 \times 10^{-2}\text{ W m}^{-1}\text{ K}^{-1}$</p>
+              <p style="margin-top: 10px;">$H = \frac{k A (T_2 - T_1)}{l} = \frac{8.37 \times 10^{-2} \times 25 \times (293 - 263)}{0.04} = \mathbf{1569.38\text{ J s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A new computer chip with a surface area of $1\text{ cm}^2$ generate $10\text{ W}$ of heat. Determine the convective heat transfer coefficient of the material needed to keep the temperature of the chip less than $20^\circ\text{C}$ above the environmental temperature. Can the chip be cooled with air, or will it require forced convection? Convective heat transfer coefficient of air is $2.5\text{ to } 25\text{ W m}^{-2}\text{ K}^{-1}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $A = 1\text{ cm}^2 = 1 \times 10^{-4}\text{ m}^2$, $H = 10\text{ W}$, $\Delta T = 20\text{ K}$</p>
+              <p style="margin-top: 10px;">$q = \frac{H}{A \Delta T} = \frac{10}{1 \times 10^{-4} \times 20} = \mathbf{5000\text{ W m}^{-2}\text{ K}^{-1}}$</p>
+              <p style="margin-top: 10px;">Since convective heat transfer coefficient of air is very much less than $5000\text{ W m}^{-2}\text{ K}^{-1}$, the chip cannot be cooled with air. Therefore, it will require the forced convection.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> In a room, the temperature of water in a kettle is $80^\circ\text{C}$. The room temperature is $30^\circ\text{C}$ and the surface area of the kittle is $0.02\text{ m}^2$. If the emissivity is $0.9$. Find the rate of heat loss due to radiation. ($\sigma = 5.685 \times 10^{-8}\text{ W m}^{-2}\text{ K}^{-4}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $T_2 = 353\text{ K}$, $T_1 = 303\text{ K}$, $A = 0.02\text{ m}^2$, $e = 0.9$, $\sigma = 5.685 \times 10^{-8}\text{ W m}^{-2}\text{ K}^{-4}$</p>
+              <p style="margin-top: 10px;">$H = e \sigma A (T_2^4 - T_1^4) = 0.9 \times 5.685 \times 10^{-8} \times 0.02 \times (353^4 - 303^4) = \mathbf{7.26\text{ W}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 11 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.11.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The filament of a $100\text{ W}$ electric bulb is made of tungsten. The emissivity of tungsten is $0.3$ and its length is $0.2\text{ m}$. Find the diameter of the filament, if its temperature is $3000\text{ K}$ when the bulb is switched on. ($\sigma = 5.685 \times 10^{-8}\text{ W m}^{-2}\text{ K}^{-4}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $H = 100\text{ W}$, $e = 0.3$, $l = 0.2\text{ m}$, $T = 3000\text{ K}$</p>
+              <p style="margin-top: 10px;">$H = e \sigma (\pi d l) T^4 \implies d = \frac{H}{e \sigma \pi l T^4} = \mathbf{1.153 \times 10^{-4}\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 12 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.12.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The temperature of the filament is $2500\text{ K}$ when the bulb is switched on. The diameter of the filament is $0.1\text{ mm}$ and it is made of metal of emissivity $0.35$. If the power is $40\text{ W}$, find the length of the filament.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $T = 2500\text{ K}$, $d = 0.1\text{ mm} = 0.1 \times 10^{-3}\text{ m}$, $e = 0.35$, $H = 40\text{ W}$</p>
+              <p style="margin-top: 10px;">$l = \frac{H}{e \sigma \pi d T^4} = \mathbf{0.1638\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 14 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.14.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> If the rate of energy radiation from a blackbody of area $100\text{ cm}^2$ is $42\text{ W}$, find the temperature of that blackbody.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $A = 100\text{ cm}^2 = 100 \times 10^{-4}\text{ m}^2$, $H = 42\text{ W}$, $e = 1$</p>
+              <p style="margin-top: 10px;">$T = \left(\frac{H}{e \sigma A}\right)^{\frac{1}{4}} = \mathbf{521.35\text{ K}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 15 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.15.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Compare the rates of energy radiation of a blackbody at temperatures $327^\circ\text{C}$ and at $27^\circ\text{C}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $T_2 = 600\text{ K}$, $T_1 = 300\text{ K}$</p>
+              <p style="margin-top: 10px;">$\frac{H_2}{H_1} = \left(\frac{T_2}{T_1}\right)^4 = \left(\frac{600}{300}\right)^4 = \mathbf{16}$ (or $H_2 = 16 H_1$)</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 13 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.13.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> From calculations based on the radiation measurement of solar energy falling on the earth it is found that sun is radiating energy at a rate of $62.5\text{ M W m}^{-2}$. Assuming that the sun is emitting energy as a blackbody, find the temperature of the surface of the sun.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\varepsilon_0 = 62.5\text{ MW m}^{-2} = 62.5 \times 10^6\text{ W m}^{-2}$, $\sigma = 5.685 \times 10^{-8}\text{ W m}^{-2}\text{ K}^{-4}$</p>
+              <p style="margin-top: 10px;">$T = \left(\frac{\varepsilon_0}{\sigma}\right)^{\frac{1}{4}} = \left(\frac{62.5 \times 10^6}{5.685 \times 10^{-8}}\right)^{\frac{1}{4}} = \mathbf{5758\text{ K}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 18 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.18.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An insulated system takes in $6.5\text{ kcal}$ of heat and has $2000\text{ J}$ of work done on it. What is the change in internal energy of the system? ($1\text{ kcal} = 4184\text{ J}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $Q = +6.5\text{ kcal} = 6.5 \times 4184\text{ J} = +27196\text{ J}$, $W = -2000\text{ J}$ (work done on system)</p>
+              <p style="margin-top: 10px;">$\Delta U = Q - W = 27196 - (-2000) = \mathbf{+29196\text{ J} = +2.92 \times 10^4\text{ J}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 19 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.19.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A heat engine undergoes a process in which its internal energy increases by $275\text{ J}$ while it is doing $360\text{ J}$ of work. How much heat is taken in (or given out) by the engine during this process?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\Delta U = +275\text{ J}$, $W = +360\text{ J}$ (work done by the system)</p>
+              <p style="margin-top: 10px;">$Q = \Delta U + W = 275 + 360 = \mathbf{+635\text{ J}}$ (heat is taken in)</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Find the change in internal energy of one mole of an ideal gas when its temperature change from $0^\circ\text{C}$ to $100^\circ\text{C}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $n = 1\text{ mole}$, $\Delta T = 100 - 0 = 100\text{ K}$, $R = 8.3143\text{ J mol}^{-1}\text{ K}^{-1}$</p>
+              <p style="margin-top: 10px;">$\Delta U = \frac{3}{2} n R \Delta T = \frac{3}{2} \times 1 \times 8.3143 \times 100 = \mathbf{1247.145\text{ J} = 1.25 \times 10^3\text{ J}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> In an isobaric pressure, a volume of a gas is expressed by absorption of heat constant pressure $2\text{ atm}$. If the increment in volume is $0.5\text{ m}^3$, then find the work done by system.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $p = 2\text{ atm} = 2 \times 1.013 \times 10^5\text{ Pa}$, $\Delta V = 0.5\text{ m}^3$</p>
+              <p style="margin-top: 10px;">$W = p \Delta V = 2 \times 1.013 \times 10^5 \times 0.5 = \mathbf{+1.013 \times 10^5\text{ J}}$ (by the system)</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 5 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.5.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> One gram of water ($1\text{ cm}^3$) becomes $1671\text{ cm}^3$ of steam when boiled at a pressure of $1\text{ atm}$. The heat of vaporization at this pressure is $2265\text{ J g}^{-1}$. Compute the work done and the increase in internal energy.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $m = 1\text{ g}$, $p = 1.013 \times 10^5\text{ Pa}$, $L_v = 2265\text{ J g}^{-1}$</p>
+              <p>$\Delta V = 1671 - 1 = 1670\text{ cm}^3 = 1670 \times 10^{-6}\text{ m}^3$</p>
+              <p style="margin-top: 10px;">$W = p \Delta V = 1.013 \times 10^5 \times 1670 \times 10^{-6} = \mathbf{169.171\text{ J}}$</p>
+              <p>$Q = m L_v = 1 \times 2265 = 2265\text{ J}$</p>
+              <p>$\Delta U = Q - W = 2265 - 169.171 = \mathbf{2095.829\text{ J}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- No. 21 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.21.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> In an isothermal process ($27^\circ\text{C}$), $2\text{ kilomole}$ of an ideal gas is compressed from a volume of $4\text{ litre}$ to $1\text{ litre}$. Find the work done on the system. ($R = 8.3143\text{ J mol}^{-1}\text{ K}^{-1}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $T = 27^\circ\text{C} = 27 + 273 = 300\text{ K}$, $n = 2\text{ kilomole} = 2 \times 10^3\text{ mol}$</p>
+              <p>$V_i = 4\text{ L} = 4 \times 10^{-3}\text{ m}^3$, $V_f = 1\text{ L} = 1 \times 10^{-3}\text{ m}^3$, $R = 8.3143\text{ J mol}^{-1}\text{ K}^{-1}$</p>
+              <p style="margin-top: 10px;">For isothermal process, $W = n R T \ln\left(\frac{V_f}{V_i}\right)$</p>
+              <p style="margin-left: 25px;">$= 2 \times 10^3 \times 8.3143 \times 300 \times \ln\left(\frac{1}{4}\right)$</p>
+              <p style="margin-left: 25px;">$= \mathbf{-6915\,640.32\text{ J}}$</p>
+              <p style="margin-top: 10px;">Since $W$ is negative, work is done on the system.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.7.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An engine takes in $9220\text{ J}$ and does $1750\text{ J}$ of work each cycle while operating between $689^\circ\text{C}$ and $397^\circ\text{C}$. (a) What is its actual efficiency? (b) What is its maximum theoretical efficiency?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $Q_H = 9220\text{ J}$, $W = 1750\text{ J}$, $T_H = 689^\circ\text{C} = 962\text{ K}$, $T_C = 397^\circ\text{C} = 670\text{ K}$</p>
+              <p style="margin-top: 10px;"><strong>(a)</strong> $\eta = \frac{W}{Q_H} = \frac{1750}{9220} = 0.19 = \mathbf{19\%}$</p>
+              <p style="margin-top: 10px;"><strong>(b)</strong> $\eta_C = 1 - \frac{T_C}{T_H} = 1 - \frac{670}{962} = 0.304 = \mathbf{30.4\%}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 22 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.22.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An automobile engine has an efficiency of $20\%$ and produces an average of $23\,000\text{ J}$ of mechanical work per second during operation. (i) How much heat input is required per second (ii) how much heat is discharged as waste heat from this engine per second?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\eta = 20\% = 0.2$, $W = 23\,000\text{ J}$</p>
+              <p style="margin-top: 10px;"><strong>(i)</strong> $\eta = \frac{W}{Q_H} \implies Q_H = \frac{W}{\eta} = \frac{23\,000}{0.2} = \mathbf{115\,000\text{ J}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> $W = Q_H - Q_C \implies Q_C = Q_H - W = 115\,000 - 23\,000 = \mathbf{92\,000\text{ J}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+
+    </main>
+  </div>
+
+</body>
+</html>
