@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 Physics - Chapter 2 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax ထည့်ရန် -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <h1 class="page-title">Chapter 2 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Sub Banner -->
+    <div class="grade-banner">
+      <h2>Chapter 2 - Gravitation & Circular Motion</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၀ ပုဒ်)</p>
+    </div>
+
+    <!-- Problems List Container -->
+    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
+      
+      <!-- No. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.7.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An $8.3\text{ kg}$ mass is attached to a string that has a <b>breaking strength</b> of $1500\text{ N}$. If the mass is whirled in a <b>horizontal circle</b> of radius $80\text{ cm}$, what maximum speed can it have?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> Mass, $m = 8.3\text{ kg}$, $T_{\max} = 1500\text{ N}$,</p>
+              <p style="margin-left: 35px;">$r = 80\text{ cm} = 80 \times 10^{-2}\text{ m}$, $g = 9.8\text{ m s}^{-2}$</p>
+              <p style="margin-left: 35px;">maximum speed, $v_{\max} = ?$</p>
+              <p style="margin-top: 10px;">For horizontal circle,</p>
+              <p style="margin-left: 25px;">$F_C = T$</p>
+              <p style="margin-left: 25px;">$\frac{m v_{\max}^2}{r} = T_{\max}$</p>
+              <p style="margin-left: 25px;">$\frac{8.3 v_{\max}^2}{80 \times 10^{-2}} = 1500$</p>
+              <p style="margin-left: 25px;">$v_{\max}^2 = \frac{1500 \times 80 \times 10^{-2}}{8.3}$</p>
+              <p style="margin-left: 25px;">$v_{\max} = \sqrt{\frac{1500 \times 80 \times 10^{-2}}{8.3}}$</p>
+              <p style="margin-left: 25px;">$= \mathbf{12.02\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 9 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.9.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> What is the tension in a $1\text{ m}$ string that is spinning $0.5\text{ kg}$ stone in a <b>horizontal circle</b> with $3\text{ rps}$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $m = 0.5\text{ kg}$, $r = 1\text{ m}$, $g = 9.8\text{ m s}^{-2}$, $T = ?$</p>
+              <p style="margin-left: 35px;">$\omega = 3\text{ rps } (\text{rev s}^{-1})$</p>
+              <p style="margin-left: 45px;">$= 3 \frac{\text{rev}}{\text{s}} = 3 \times \frac{2\pi\text{ rad}}{\text{s}} = 6\pi\text{ rad s}^{-1}$</p>
+              <p style="margin-top: 10px;">For horizontal circle,</p>
+              <p style="margin-left: 25px;">$F_C = T$</p>
+              <p style="margin-left: 25px;">$m r \omega^2 = T$</p>
+              <p style="margin-left: 25px;">$T = m r \omega^2 = 0.5 \times 1 \times (6\pi)^2$</p>
+              <p style="margin-left: 25px;">$= \mathbf{177.69\text{ N}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A $60\text{ cm}$ rope is tied to the handle of a bucket which is then whirled in a <b>vertical circle</b>. The mass of the bucket is $3\text{ kg}$. If the tension of the rope at the lowest point in its path is $50\text{ N}$, find the speed of the bucket at that point.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $m = 3\text{ kg}$, $g = 9.8\text{ m s}^{-2}$, $r = 60\text{ cm} = 60 \times 10^{-2}\text{ m}$, $v = ?$</p>
+              <p>Force acting on bucket are:</p>
+              <p style="margin-left: 20px;">Tension force, $T = 50\text{ N}$</p>
+              <p style="margin-left: 20px;">Weight, $w = mg = 3 \times 9.8 = 29.4\text{ N}$</p>
+              <p style="margin-top: 10px;">For vertical circle, at lowest point,</p>
+              <p style="margin-left: 25px;">$F_{\text{net}} = T - w = 50 - 29.4 = 20.6\text{ N}$</p>
+              <p style="font-style: italic; color: #64748b; font-size: 13px;">(Since $F_{\text{net}}$ provides the centripetal acceleration)</p>
+              <p style="margin-left: 25px;">$F_C = F_{\text{net}}$</p>
+              <p style="margin-left: 25px;">$\frac{m v^2}{r} = F_{\text{net}}$</p>
+              <p style="margin-left: 25px;">$\frac{3 v^2}{60 \times 10^{-2}} = 20.6$</p>
+              <p style="margin-left: 25px;">$v^2 = \frac{20.6 \times 60 \times 10^{-2}}{3}$</p>
+              <p style="margin-left: 25px;">$v = \sqrt{\frac{20.6 \times 60 \times 10^{-2}}{3}}$</p>
+              <p style="margin-left: 25px;">$= \mathbf{2.03\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A $0.15\text{ kg}$ ball on the end of a $1.1\text{ m}$ long cord (negligible mass) is swung in a <b>vertical circle</b>. (i) Determine the minimum speed the ball must have at the top of its arc so that the ball continues moving in a circle. (ii) Calculate the tension in the cord at the bottom of the arc, assuming the ball is moving at <b>twice the speed</b> of part (i).
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $m = 0.15\text{ kg}$, $r = 1.1\text{ m}$, $g = 9.8\text{ m s}^{-2}$</p>
+              <p style="margin-left: 35px;">(i) $v = ?$ &nbsp;&nbsp;&nbsp; (ii) $T = ?$</p>
+              <p style="margin-top: 10px;"><strong>(i)</strong> For vertical circle, At the top position,</p>
+              <p style="margin-left: 25px;">$F_{\text{net}} = T + w = T + mg$</p>
+              <p style="font-style: italic; color: #64748b; font-size: 13px;">(Since $F_{\text{net}}$ provides the centripetal acceleration)</p>
+              <p>At the top, For minimum speed, $T_{\min} = 0$</p>
+              <p style="margin-left: 25px;">$F_C = F_{\text{net}}$</p>
+              <p style="margin-left: 25px;">$\frac{m v^2}{r} = T + mg$</p>
+              <p style="margin-left: 25px;">$\frac{m v_{\min}^2}{r} = mg$</p>
+              <p style="margin-left: 25px;">$\frac{v_{\min}^2}{r} = g$</p>
+              <p style="margin-left: 25px;">$v_{\min}^2 = g r$</p>
+              <p style="margin-left: 25px;">$v_{\min} = \sqrt{g r} = \sqrt{9.8 \times 1.1}$</p>
+              <p style="margin-left: 25px;">$= \mathbf{3.283\text{ m s}^{-1}}$</p>
+
+              <p style="margin-top: 10px;"><strong>(ii)</strong> At the bottom, the speed is twice than at the top.</p>
+              <p style="margin-left: 25px;">$v = 2 v_{\min} = 2 \times 3.283 = 6.566\text{ m s}^{-1}$</p>
+              <p>At the bottom, $F_C = T - w$</p>
+              <p style="margin-left: 25px;">$T = F_C + w$</p>
+              <p style="margin-left: 25px;">$= \frac{m v^2}{r} + mg$</p>
+              <p style="margin-left: 25px;">$= \frac{0.15 \times (6.566)^2}{1.1} + (0.15 \times 9.8)$</p>
+              <p style="margin-left: 25px;">$= \mathbf{7.349\text{ N}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 1 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.1.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> What is the <b>banking angle</b> for an expressway off-ramp curve of radius $50\text{ m}$ at a limiting speed of $50\text{ km h}^{-1}$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 50\text{ m}$, $\theta = ?$, $g = 9.8\text{ m s}^{-2}$</p>
+              <p style="margin-left: 35px;">$v = 50\text{ km h}^{-1} = 50 \times \frac{10^3\text{ m}}{3600\text{ s}} = 13.89\text{ m s}^{-1}$</p>
+              <p style="margin-top: 10px;">$\tan \theta = \frac{v^2}{r g}$</p>
+              <p style="margin-left: 25px;">$\tan \theta = \frac{13.89^2}{50 \times 9.8}$</p>
+              <p style="margin-left: 25px;">$\theta = \tan^{-1}\left(\frac{13.89^2}{50 \times 9.8}\right)$</p>
+              <p style="margin-left: 25px;">$= \mathbf{21.49^\circ \text{ (or) } 21^\circ 29'}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An athlete weighing $790\text{ N}$ is running a curve at a speed of $6\text{ m s}^{-1}$ in an arc. The radius of curvature of the arc is $5\text{ m}$. Find the centripetal force acting on him.<br>
+            Which force provides the centripetal force?<br>
+            What will happen to him if the radius of curvature is smaller?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $w = 790\text{ N}$, $v = 6\text{ m s}^{-1}$, $r = 5\text{ m}$, $g = 9.8\text{ m s}^{-2}$, $F_C = ?$</p>
+              <p style="margin-left: 35px;">$m = \frac{w}{g} = \frac{790}{9.8} = 80.61\text{ kg}$</p>
+              <p style="margin-top: 10px;">$F_C = \frac{m v^2}{r}$</p>
+              <p style="margin-left: 25px;">$= \frac{80.61 \times (6)^2}{5} = \mathbf{580.4\text{ N}}$</p>
+              <p style="margin-top: 10px;">⇒ Frictional force between the feet and ground provides the centripetal force.</p>
+              <p>⇒ If the radius of curvature is smaller, the centripetal force will become greater. He will slip since the frictional force is less than the required centripetal force. [$F_f < F_C$, he will slip]</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A jet plane is flying around the airport with a speed of $800\text{ km h}^{-1}$ along a circular path with a radius of $2\text{ km}$. At what angle must the wings of the plane be banked?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 2\text{ km} = 2 \times 10^3\text{ m}$, $\theta = ?$, $g = 9.8\text{ m s}^{-2}$</p>
+              <p style="margin-left: 35px;">$v = 800\text{ km h}^{-1} = 800 \times \frac{10^3}{3600} = 222.22\text{ m s}^{-1}$</p>
+              <p style="margin-top: 10px;">$\tan \theta = \frac{v^2}{r g}$</p>
+              <p style="margin-left: 25px;">$\tan \theta = \frac{222.22^2}{2 \times 10^3 \times 9.8}$</p>
+              <p style="margin-left: 25px;">$\theta = \tan^{-1}\left(\frac{222.22^2}{2 \times 10^3 \times 9.8}\right)$</p>
+              <p style="margin-left: 25px;">$= \mathbf{68.35^\circ \text{ (or) } 68^\circ 21'}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 8 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.8.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An aeroplane is circling above an airport in a horizontal circle at a speed of $400\text{ km h}^{-1}$. The banking angle of the wing is $20^\circ$. What is the radius of the circular path?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = ?$, $\theta = 20^\circ$, $g = 9.8\text{ m s}^{-2}$</p>
+              <p style="margin-left: 35px;">$v = 400\text{ km h}^{-1} = 400 \times \frac{10^3}{3600} = 111.11\text{ m s}^{-1}$</p>
+              <p style="margin-top: 10px;">$\tan \theta = \frac{v^2}{r g}$</p>
+              <p style="margin-left: 25px;">$r = \frac{v^2}{\tan \theta \cdot g} = \frac{111.11^2}{\tan 20^\circ \times 9.8} = \mathbf{3461\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 10 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.10.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A curved roadway has a radius of curvature of $200\text{ m}$, and a banking angle of $10^\circ$. What is the highest speed at which a car can round the curve safely? (Neglect the friction between the tire and the road.)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 200\text{ m}$, $\theta = 10^\circ$, $g = 9.8\text{ m s}^{-2}$, $v = ?$</p>
+              <p style="margin-top: 10px;">$\tan \theta = \frac{v^2}{r g}$</p>
+              <p style="margin-left: 25px;">$v^2 = r g (\tan \theta)$</p>
+              <p style="margin-left: 25px;">$v = \sqrt{r g (\tan \theta)}$</p>
+              <p style="margin-left: 25px;">$= \sqrt{200 \times 9.8 \times \tan 10^\circ}$</p>
+              <p style="margin-left: 25px;">$= \mathbf{18.59\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 11 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.11.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> In an atom, an electron moves in a circular path around the nucleus. The speed of the electron is approximately $2.2 \times 10^6\text{ m s}^{-1}$. Find the centripetal force acting on the electron as it revolves in a circular orbit of radius $0.53 \times 10^{-10}\text{ m}$. ($m_e = 9.1 \times 10^{-31}\text{ kg}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $v = 2.2 \times 10^6\text{ m s}^{-1}$, $m_e = 9.1 \times 10^{-31}\text{ kg}$</p>
+              <p style="margin-left: 35px;">$r = 0.53 \times 10^{-10}\text{ m}$, $F_C = ?$</p>
+              <p style="margin-top: 10px;">$F_C = \frac{m v^2}{r}$</p>
+              <p style="margin-left: 25px;">$= \frac{9.1 \times 10^{-31} \times (2.2 \times 10^6)^2}{0.53 \times 10^{-10}}$</p>
+              <p style="margin-left: 25px;">$= \mathbf{8.3101 \times 10^{-8}\text{ N}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 Physics - Chapter 3 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax ထည့်ရန် -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <h1 class="page-title">Chapter 3 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Sub Banner -->
+    <div class="grade-banner">
+      <h2>Chapter 3 - Fluid Mechanics</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၀ ပုဒ်)</p>
+    </div>
+
+    <!-- Problems List Container -->
+    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
+      
+      <!-- Eg. 1 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.1.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A gardener uses a water pipe of $2.5\text{ cm}$ diameter. It takes $1\text{ min}$ to fill $30\text{ litre}$ bucket. What is the initial speed of water coming out of the hose? Then, nozzle with an opening $0.5\text{ cm}^2$ is attached to the hose. Find the water speed coming out from the nozzle.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> For pipe (hose): $d_1 = 2.5\text{ cm}$, $r_1 = \frac{2.5}{2} = 1.25\text{ cm}$</p>
+              <p style="margin-left: 35px;">$A_1 = \pi r_1^2 = 3.142 \times (1.25)^2 = 4.91\text{ cm}^2$, $v_1 = ?$</p>
+              <p>For nozzle: $A_2 = 0.5\text{ cm}^2$, $v_2 = ?$</p>
+              <p>$V = 30\text{ litre} = 30 \times 1000\text{ cm}^3$, $t = 1\text{ min} = 60\text{ s}$</p>
+              <p style="margin-top: 10px;">The volume rate $\frac{V}{t} = A_1 v_1$</p>
+              <p style="margin-left: 25px;">$\frac{30 \times 1000}{60} = 4.91 v_1$</p>
+              <p style="margin-left: 25px;">$v_1 = \frac{30 \times 1000}{60 \times 4.91} = \mathbf{101.83\text{ cm s}^{-1}}$</p>
+              <p style="margin-top: 10px;">Using continuity equation,</p>
+              <p style="margin-left: 25px;">$A_2 v_2 = A_1 v_1 \implies v_2 = \frac{A_1 v_1}{A_2}$</p>
+              <p style="margin-left: 25px;">$= \frac{4.91 \times 101.83}{0.5} = \mathbf{999.97\text{ cm s}^{-1}}$</p>
+              <p style="margin-top: 10px; font-weight: bold;">[OR]</p>
+              <p>The volume rate $\frac{V}{t} = A_2 v_2$</p>
+              <p style="margin-left: 25px;">$\frac{30 \times 1000}{60} = 0.5 v_2$</p>
+              <p style="margin-left: 25px;">$v_2 = \frac{30 \times 1000}{60 \times 0.5} = \mathbf{1000\text{ cm s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> What area must a heating duct have, if air moving $3\text{ m s}^{-1}$ along it can replenish the air every $15\text{ min}$ in a room of volume $300\text{ m}^3$? Assume the density of air remains constant.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $v = 3\text{ m s}^{-1}$, $V = 300\text{ m}^3$, $t = 15\text{ min} = 15 \times 60 = 900\text{ s}$</p>
+              <p style="margin-top: 10px;">Volume flow rate $\frac{V}{t} = A v$</p>
+              <p style="margin-left: 25px;">$\frac{300}{900} = A \times 3$</p>
+              <p style="margin-left: 25px;">$A = \frac{300}{900 \times 3} = \mathbf{0.11\text{ m}^2}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Water runs into a fountain, filling all the pipes, at a steady rate of $0.75\text{ m}^3\text{ s}^{-1}$. (i) How fast will it shoot out of a hole $4.5\text{ cm}$ in diameter? (ii) At what speed will it shoot out if the diameter of the hole is three times as large?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\frac{V}{t} = 0.75\text{ m}^3\text{ s}^{-1}$, $d = 4.5\text{ cm}$</p>
+              <p style="margin-left: 35px;">$r = \frac{4.5\text{ cm}}{2} = 2.25\text{ cm} = 2.25 \times 10^{-2}\text{ m}$</p>
+              <p style="margin-left: 35px;">$A = \pi r^2 = 3.142 \times (2.25 \times 10^{-2})^2\text{ m}^2$, $v = ?$</p>
+              <p style="margin-top: 10px;"><strong>(i)</strong> Volume flow rate $\frac{V}{t} = A v$</p>
+              <p style="margin-left: 25px;">$0.75 = 3.142 \times (2.25 \times 10^{-2})^2 v$</p>
+              <p style="margin-left: 25px;">$v = \frac{0.75}{3.142 \times (2.25 \times 10^{-2})^2} = \mathbf{471.51\text{ m s}^{-1}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> If the diameter of the hole is three times larger, $d_2 = 3 d_1$, $r_2 = 3 r_1$, $A_2 = 9 A_1$</p>
+              <p style="margin-left: 25px;">Using continuity equation, $A_2 v_2 = A_1 v_1 \implies 9 A_1 v_2 = A_1 v_1$</p>
+              <p style="margin-left: 25px;">$v_2 = \frac{v_1}{9} = \frac{471.51}{9} = \mathbf{52.39\text{ m s}^{-1}}$</p>
+              <p style="margin-top: 10px; font-weight: bold;">[OR]</p>
+              <p>$d_2 = 3 \times 4.5 = 13.5\text{ cm} \implies r_2 = 6.75\text{ cm} = 6.75 \times 10^{-2}\text{ m}$</p>
+              <p style="margin-left: 25px;">$A_2 = \pi r_2^2$</p>
+              <p style="margin-left: 25px;">Using continuity equation, $A_2 v_2 = A_1 v_1 \implies v_2 = \frac{A_1 v_1}{A_2} = \frac{\pi r_1^2 v_1}{\pi r_2^2}$</p>
+              <p style="margin-left: 25px;">$= \frac{(2.25 \times 10^{-2})^2 \times 471.51}{(6.75 \times 10^{-2})^2} = \mathbf{52.39\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- Eg. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Water tank of dimension $3\text{ m} \times 3\text{ m} \times 3\text{ m}$ and the base of the tank is $10\text{ m}$ above the ground. It takes $1\text{ h}$ to fill. (i) Find the power output of the pump to fill the tank. (ii) Find the flow rate through the pipe and the speed of the water flow in the pipe which has $5\text{ cm}$ radius.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $V = 3 \times 3 \times 3 = 27\text{ m}^3$, $h = 10 + 3 = 13\text{ m}$, $t = 1\text{ h} = 3600\text{ s}$</p>
+              <p style="margin-top: 10px;"><strong>(i)</strong> $P = \frac{W}{t} = \frac{mgh}{t} = \frac{\rho V g h}{t}$</p>
+              <p style="margin-left: 25px;">$P = \frac{1000 \times 27 \times 9.8 \times 13}{3600} = \mathbf{955.5\text{ W}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> $r = 5\text{ cm} = 5 \times 10^{-2}\text{ m}$</p>
+              <p style="margin-left: 25px;">Flow rate $\frac{V}{t} = \frac{27}{3600} = 7.5 \times 10^{-3}\text{ m}^3\text{ s}^{-1}$</p>
+              <p style="margin-left: 25px;">$\frac{V}{t} = A v \implies 7.5 \times 10^{-3} = 3.142 \times (5 \times 10^{-2})^2 v$</p>
+              <p style="margin-left: 25px;">$v = \frac{7.5 \times 10^{-3}}{3.142 \times (5 \times 10^{-2})^2} = \mathbf{0.96\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A shower head has $20$ circular openings, each with radius $1\text{ mm}$. The shower head is connected to a pipe with radius $0.8\text{ cm}$. If the speed of water in the pipe is $3\text{ m s}^{-1}$, what is its speed as it exits the shower-head openings?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> For pipe: $r_1 = 0.8\text{ cm} = 0.8 \times 10^{-2}\text{ m}$, $v_1 = 3\text{ m s}^{-1}$, $n_1 = 1$</p>
+              <p>For shower head: $r_2 = 1\text{ mm} = 1 \times 10^{-3}\text{ m}$, $v_2 = ?$, $n_2 = 20$</p>
+              <p style="margin-top: 10px;">Using continuity equation, $n_2 A_2 v_2 = n_1 A_1 v_1 \implies n_2 (\pi r_2^2) v_2 = n_1 (\pi r_1^2) v_1$</p>
+              <p style="margin-left: 25px;">$v_2 = \frac{n_1 r_1^2 v_1}{n_2 r_2^2} = \frac{1 \times (0.8 \times 10^{-2})^2 \times 3}{20 \times (1 \times 10^{-3})^2} = \mathbf{9.6\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> In an adult, the radius of aorta is normally $\sim 1.5\text{ cm}$ and blood moves through it at an average speed of $30\text{ cm s}^{-1}$. If typical capillary has a radius of $5 \times 10^{-6}\text{ m}$, and blood passes through them with a velocity of $0.1\text{ cm s}^{-1}$ approximately how many capillaries are in the body?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> For aorta: $r_1 = 1.5\text{ cm}$, $v_1 = 30\text{ cm s}^{-1}$, $n_1 = 1$</p>
+              <p>For capillary: $r_2 = 5 \times 10^{-6}\text{ m} = 5 \times 10^{-4}\text{ cm}$, $v_2 = 0.1\text{ cm s}^{-1}$, $n_2 = ?$</p>
+              <p style="margin-top: 10px;">Using continuity equation, $n_2 A_2 v_2 = n_1 A_1 v_1 \implies n_2 (\pi r_2^2) v_2 = n_1 (\pi r_1^2) v_1$</p>
+              <p style="margin-left: 25px;">$n_2 = \frac{n_1 r_1^2 v_1}{r_2^2 v_2} = \frac{1 \times (1.5)^2 \times 30}{(5 \times 10^{-4})^2 \times 0.1} = \mathbf{2.7 \times 10^9\text{ capillaries}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 5 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.5.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Water flowing through a restriction in a horizontal pipe is shown in the given figure. The radius of the pipe at the left end and right end are $6\text{ cm}$ and $2\text{ cm}$ respectively. If the velocity and pressure of water at the left end of pipe are $1\text{ m s}^{-1}$ and $200\text{ kPa}$, find the velocity and pressure of water at the right end of the pipe.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> At left end: $r_1 = 6\text{ cm} = 6 \times 10^{-2}\text{ m}$, $p_1 = 200\text{ kPa} = 200 \times 10^3\text{ Pa}$, $v_1 = 1\text{ m s}^{-1}$</p>
+              <p>At right end: $r_2 = 2\text{ cm} = 2 \times 10^{-2}\text{ m}$, $p_2 = ?$, $v_2 = ?$</p>
+              <p>$\rho = 1000\text{ kg m}^{-3}$, $h_1 = h_2$ (horizontal pipe)</p>
+              <p style="margin-top: 10px;">Using continuity equation, $v_2 = \frac{r_1^2 v_1}{r_2^2} = \frac{(6 \times 10^{-2})^2 \times 1}{(2 \times 10^{-2})^2} = \mathbf{9\text{ m s}^{-1}}$</p>
+              <p style="margin-top: 10px;">Using Bernoulli's theorem, $p_2 = p_1 + \frac{1}{2}\rho (v_1^2 - v_2^2)$</p>
+              <p style="margin-left: 25px;">$= [200 \times 10^3] + \frac{1}{2} \times 1000 \times (1^2 - 9^2) = \mathbf{160\,000\text{ Pa (or) } 160\text{ kPa}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- Eg. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Calculate the pressure and speed of water at points B and C shown below. (density of water is $1000\text{ kg m}^{-3}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> At A: $A_1 = 3\text{ m}^2$, $v_1 = 10\text{ m s}^{-1}$, $p_1 = 300\text{ kPa} = 300 \times 10^3\text{ Pa}$, $h_1 = 20\text{ m}$</p>
+              <p>At B: $A_2 = 3\text{ m}^2$, $v_2 = ?$, $p_2 = ?$, $h_2 = 0\text{ m}$</p>
+              <p>At C: $A_3 = 6\text{ m}^2$, $v_3 = ?$, $p_3 = ?$, $h_3 = 0\text{ m}$</p>
+              <p style="margin-top: 10px;">$v_2 = v_1 = \mathbf{10\text{ m s}^{-1}}$ (Since $A_1 = A_2$)</p>
+              <p style="margin-top: 10px;">Using Bernoulli's theorem for A and B:</p>
+              <p style="margin-left: 25px;">$p_2 = p_1 + \rho g (h_1 - h_2) + \frac{1}{2}\rho(v_1^2 - v_2^2) = 300 \times 10^3 + 1000 \times 9.8 \times 20 = \mathbf{496\text{ kPa}}$</p>
+              <p style="margin-top: 10px;">Using continuity equation for A and C: $A_3 v_3 = A_1 v_1 \implies v_3 = \frac{3 \times 10}{6} = \mathbf{5\text{ m s}^{-1}}$</p>
+              <p style="margin-top: 10px;">Using Bernoulli's theorem for A and C, $p_3 = \mathbf{533.5\text{ kPa}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.7.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A sealed tank containing seawater to a height of $11\text{ m}$ also contains air above the water at a pressure of $4\text{ atm}$. Water flows out from the bottom through a small hole. How fast is this water moving?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> Top: $h_1 = 11\text{ m}$, $p_1 = 4\text{ atm} = 4 \times 1.01 \times 10^5\text{ Pa}$, $v_1 \approx 0$</p>
+              <p>Bottom: $h_2 = 0\text{ m}$, $p_2 = 1\text{ atm} = 1.01 \times 10^5\text{ Pa}$, $v_2 = ?$</p>
+              <p>$\rho = 1025\text{ kg m}^{-3}$ (sea water)</p>
+              <p style="margin-top: 10px;">Using Bernoulli's theorem, $v_2 = \sqrt{\frac{2(p_1 - p_2)}{\rho} + 2g h_1} = \mathbf{28.4\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 8 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.8.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A small circular hole $6.00\text{ mm}$ in diameter is cut in the side of a large water tank, $14.0\text{ m}$ below the water level in the tank. The top of the tank is open to the air. Find (i) the speed of efflux of the water, and (ii) the volume discharged per second.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $h = 14\text{ m}$, $d = 6\text{ mm} \implies r = 3 \times 10^{-3}\text{ m}$, $\rho = 1000\text{ kg m}^{-3}$</p>
+              <p style="margin-top: 10px;"><strong>(i)</strong> Using Torricelli's law (derived from Bernoulli's theorem):</p>
+              <p style="margin-left: 25px;">$v_2 = \sqrt{2 g h} = \sqrt{2 \times 9.8 \times 14} = \mathbf{16.57\text{ m s}^{-1}}$</p>
+              <p style="margin-top: 10px;"><strong>(ii)</strong> Volume discharged per second ($\frac{V}{t} = A_2 v_2$):</p>
+              <p style="margin-left: 25px;">$\frac{V}{t} = \pi r^2 v_2 = 3.142 \times (3 \times 10^{-3})^2 \times 16.57 = \mathbf{4.68 \times 10^{-4}\text{ m}^3\text{ s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- No. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> One hypodermic syringe contains medicine with density $1010\text{ kg m}^{-3}$. The barrel of the syringe has a cross-sectional area $2.5 \times 10^{-5}\text{ m}^2$, and the needle has a cross-sectional area $1 \times 10^{-8}\text{ m}^2$. The syringe is in horizontal position and injection is forced by $2\text{ N}$ acting on the plunger. Find the speed of the injection that enters into the patient. (The volume of syringe is $3\text{ cc}$ and injection time is $2\text{ s}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> Barrel: $A_1 = 2.5 \times 10^{-5}\text{ m}^2$, $F = 2\text{ N}$, $p_1 = 1\text{ atm} + \frac{F}{A_1}$</p>
+              <p>Needle: $A_2 = 1 \times 10^{-8}\text{ m}^2$, $p_2 \approx 1\text{ atm} = 1.01 \times 10^5\text{ Pa}$, $v_2 = ?$</p>
+              <p>$\rho = 1010\text{ kg m}^{-3}$, $h_1 = h_2$</p>
+              <p style="margin-top: 10px;">Using continuity equation, $A_1 v_1 = A_2 v_2 \implies v_1 = \frac{A_2 v_2}{A_1} = \frac{v_2}{2500}$ ($v_1 \ll v_2$, so $v_1$ can be neglected)</p>
+              <p style="margin-top: 10px;">Using Bernoulli's theorem:</p>
+              <p style="margin-left: 25px;">$p_2 + \frac{1}{2}\rho v_2^2 = p_1 \implies \frac{1}{2}\rho v_2^2 = p_1 - p_2 = 1\text{ atm} + \frac{F}{A_1} - 1\text{ atm} = \frac{F}{A_1}$</p>
+              <p style="margin-left: 25px;">$\frac{1}{2} \times 1010 \times v_2^2 = \frac{2}{2.5 \times 10^{-5}} = 80\,000$</p>
+              <p style="margin-left: 25px;">$v_2 = \sqrt{\frac{80\,000}{505}} = \mathbf{12.59\text{ m s}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 10 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.10.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Air is streaming past a horizontal aeroplane's wings such that its speed is $120\text{ m s}^{-1}$ at the upper surface and $90\text{ m s}^{-1}$ at the lower surface. If the wing is $10\text{ m}$ long and $2\text{ m}$ wide and density of air is $1.3\text{ kg m}^{-3}$, find the net lift on it.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $v_1 = 120\text{ m s}^{-1}$, $v_2 = 90\text{ m s}^{-1}$, $\rho = 1.3\text{ kg m}^{-3}$</p>
+              <p>Area $A = 10 \times 2 = 20\text{ m}^2$, $h_1 = h_2$</p>
+              <p style="margin-top: 10px;">$\Delta p = \frac{1}{2}\rho (v_1^2 - v_2^2) = \frac{1}{2} \times 1.3 \times [120^2 - 90^2] = 4095\text{ Pa}$</p>
+              <p style="margin-top: 10px;">$F_{\text{net}} = \Delta p \times A = 4095 \times 20 = \mathbf{81\,900\text{ N}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 5 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.5.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An aeroplane's wings have a total surface area of $480\text{ m}^2$. The pressure difference upper and lower surfaces of each wing is $6500\text{ Pa}$. Calculate the lift created.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $A = 480\text{ m}^2$, $\Delta p = 6500\text{ Pa}$, lift $F = ?$</p>
+              <p style="margin-top: 10px;">$F = \Delta p \times A = 6500 \times 480 = \mathbf{3.12 \times 10^6\text{ N}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 8 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.8.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Air streams horizontally past a small aeroplane's wings such that the speed is $70\text{ m s}^{-1}$ over and $60\text{ m s}^{-1}$ past the bottom surface. If the plane has a wing area of $16.2\text{ m}^2$ on the top and on the bottom, what is the net vertical force that the air exerts on the airplane? (Density of air = $1.2\text{ kg m}^{-3}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $v_1 = 70\text{ m s}^{-1}$, $v_2 = 60\text{ m s}^{-1}$, $A = 16.2\text{ m}^2$, $\rho = 1.2\text{ kg m}^{-3}$</p>
+              <p style="margin-top: 10px;">$\Delta p = \frac{1}{2}\rho (v_1^2 - v_2^2) = \frac{1}{2} \times 1.2 \times [70^2 - 60^2] = 780\text{ Pa}$</p>
+              <p style="margin-top: 10px;">$F_{\text{net}} = \Delta p \times A = 780 \times 16.2 = \mathbf{12\,636\text{ N}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- No. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.6.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Derive expression for terminal velocity when a ball of radius $r$ is dropped through a liquid of viscosity $\eta$ and density $\rho$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> The forces acting on the object are:</p>
+              <p style="margin-left: 20px;">- Weight of the sphere ball, $w = mg = \rho_1 V g = \frac{4}{3}\pi r^3 \rho_1 g$</p>
+              <p style="margin-left: 20px;">- Upward thrust, $F_1 = mg = \rho_2 V g = \frac{4}{3}\pi r^3 \rho_2 g$</p>
+              <p style="margin-left: 20px;">- Drag force, $F = 6\pi \eta r v$</p>
+              <p style="margin-top: 10px;">At a constant terminal velocity, upward and downward forces are in balance:</p>
+              <p style="margin-left: 25px;">$F_1 + F = w$</p>
+              <p style="margin-left: 25px;">$\frac{4}{3}\pi r^3 \rho_2 g + 6\pi \eta r v = \frac{4}{3}\pi r^3 \rho_1 g$</p>
+              <p style="margin-left: 25px;">$6\pi \eta r v = \frac{4}{3}\pi r^3 (\rho_1 - \rho_2) g$</p>
+              <p style="margin-left: 25px;">$v = \frac{2 g r^2 (\rho_1 - \rho_2)}{9\eta}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.7.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The shear stress at a point in a liquid is found to be $0.03\text{ N m}^{-2}$. The velocity gradient at the point is $0.15\text{ s}^{-1}$. What will be its viscosity (in poise)? ($1\text{ Pa s} = 10\text{ poise}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> Shear stress $\tau = \frac{F}{A} = -0.03\text{ N m}^{-2}$</p>
+              <p>Velocity gradient $\frac{dv}{dy} = \frac{\Delta v}{\Delta y} = 0.15\text{ s}^{-1}$</p>
+              <p style="margin-top: 10px;">$\eta = \frac{-\tau}{dv/dy} = \frac{-(-0.03)}{0.15} = 0.2\text{ Pa s}$</p>
+              <p style="margin-left: 25px;">$= 0.2\text{ Pa s} \times \frac{10\text{ poise}}{1\text{ Pa s}} = \mathbf{2\text{ poise}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 8 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.8.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A square plate $0.1\text{ m}$ side moves parallel to second plate with a velocity of $0.1\text{ m s}^{-1}$, both plates being immersed in water. If the viscous force is $0.002\text{ N}$ and the coefficient of viscosity is $0.01\text{ poise}$, what is the distance between the plates? ($1\text{ Pa s} = 10\text{ poise}$)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $A = 0.1 \times 0.1 = 0.01\text{ m}^2$, $\Delta v = 0.1\text{ m s}^{-1}$, $F = -0.002\text{ N}$</p>
+              <p>$\eta = 0.01\text{ poise} = 0.01 \times \frac{1\text{ Pa s}}{10\text{ poise}} = 0.001\text{ Pa s}$</p>
+              <p style="margin-top: 10px;">$F = -\eta A \frac{\Delta v}{\Delta y} \implies \Delta y = \frac{\eta A \Delta v}{-F} = \frac{0.001 \times 0.01 \times 0.1}{0.002} = \mathbf{5 \times 10^{-4}\text{ m (or) } 0.5\text{ mm}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 9 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.9.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A metal plate of area $2.5 \times 10^{-4}\text{ m}^2$ is placed on a $0.25 \times 10^{-3}\text{ m}$ thick layer of castor oil. If a force of $50\text{ N}$ is needed to move the plate with a velocity $3 \times 10^{-2}\text{ m s}^{-1}$, calculate the coefficient of viscosity of castor oil.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $A = 2.5 \times 10^{-4}\text{ m}^2$, $\Delta y = 0.25 \times 10^{-3}\text{ m}$, $F = 50\text{ N}$</p>
+              <p>$\Delta v = 3 \times 10^{-2}\text{ m s}^{-1}$, $\eta = ?$</p>
+              <p style="margin-top: 10px;">Velocity gradient $\frac{dv}{dy} = \frac{3 \times 10^{-2}}{0.25 \times 10^{-3}} = 120\text{ s}^{-1}$</p>
+              <p>Shear stress $\tau = \frac{F}{A} = \frac{50}{2.5 \times 10^{-4}} = 20 \times 10^4\text{ N m}^{-2}$</p>
+              <p>$\eta = \frac{\tau}{dv/dy} = \frac{20 \times 10^4}{120} = \mathbf{1.67 \times 10^3\text{ Pa s}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- Eg. 10 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.10.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Determine the radius of a rain drop falling through air with terminal velocity $9\text{ m s}^{-1}$. Viscosity of air is $1.8 \times 10^{-5}\text{ Pa s}$, density of water is $1000\text{ kg m}^{-3}$, density of air is $1.21\text{ kg m}^{-3}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $v = 9\text{ m s}^{-1}$, $\eta = 1.8 \times 10^{-5}\text{ Pa s}$, $\rho_1 = 1000\text{ kg m}^{-3}$, $\rho_2 = 1.21\text{ kg m}^{-3}$</p>
+              <p style="margin-top: 10px;">$r = \sqrt{\frac{9 \eta v}{2 g (\rho_1 - \rho_2)}} = \sqrt{\frac{9 \times 9 \times 1.8 \times 10^{-5}}{2 \times 9.8 \times (1000 - 1.21)}} = \mathbf{2.729 \times 10^{-4}\text{ m}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 9 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.9.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Assume that a spherical object is flowing through water. Viscosity of water is $0.001\text{ Pa s}$, radius of spherical object is $2\text{ mm}$ and the velocity of the object at particular instant is $2\text{ m s}^{-1}$. Find the drag force on the object due to the fluid. Assume that Stokes' law is valid.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $\eta = 0.001\text{ Pa s}$, $r = 2\text{ mm} = 2 \times 10^{-3}\text{ m}$, $v = 2\text{ m s}^{-1}$</p>
+              <p style="margin-top: 10px;">$F = 6\pi \eta r v = 6 \times 3.142 \times 0.001 \times 2 \times 10^{-3} \times 2 = \mathbf{7.54 \times 10^{-5}\text{ N}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 11 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.11.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A horizontal circular loop of wire has a diameter of $5\text{ cm}$ and is lowered in a sample of crude oil. The additional force required to pull the loop out of the oil is $0.04\text{ N}$; calculate the surface tension of the crude oil.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $d = 5\text{ cm}$, $r = 2.5\text{ cm} = 2.5 \times 10^{-2}\text{ m}$, $F = 0.04\text{ N}$</p>
+              <p>Circumference $l = 2\pi r = 2 \times 3.142 \times 2.5 \times 10^{-2} = 0.1571\text{ m}$</p>
+              <p style="margin-top: 10px;">$\gamma = \frac{F}{2l} = \frac{0.04}{2 \times 0.1571} = \mathbf{0.127\text{ N m}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 12 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.12.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Calculate the force required to pull a flat circular plate of radius $15\text{ cm}$ from the surface of a liquid which has a surface tension of $0.053\text{ N m}^{-1}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 15\text{ cm} = 15 \times 10^{-2}\text{ m}$, $\gamma = 0.053\text{ N m}^{-1}$, $F = ?$</p>
+              <p>$l = 2\pi r = 2 \times 3.142 \times 15 \times 10^{-2} = 94.26 \times 10^{-2}\text{ m}$</p>
+              <p style="margin-top: 10px;">$\gamma = \frac{F}{l} \implies F = \gamma l = 0.053 \times 94.26 \times 10^{-2} = \mathbf{0.0499\text{ N}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 13 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.13.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A needle has a length of $3.2\text{ cm}$. When placed gently on the surface of the water in a glass, this needle will float if it is not too heavy. What is the weight of the heaviest needle? Assume that the surface tension of water is $0.073\text{ N m}^{-1}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $l = 3.2\text{ cm} = 3.2 \times 10^{-2}\text{ m}$, $\gamma = 0.073\text{ N m}^{-1}$, $w = ?$</p>
+              <p style="margin-top: 10px;">$\gamma = \frac{F}{2l} \implies w = F = \gamma (2l) = 0.073 \times 2 \times 3.2 \times 10^{-2} = \mathbf{4.672 \times 10^{-3}\text{ N}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 14 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.14.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A soap film is formed on a rectangular frame of length $7\text{ cm}$ side dipping into soap solution. The frame hangs from the arm of a balance. An extra weight of $0.4\text{ g}$ is to be placed in the opposite pan to balance the pull on the frame. Calculate the surface tension of soap solution.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $l = 7\text{ cm} = 7 \times 10^{-2}\text{ m}$, $m = 0.4\text{ g} = 0.4 \times 10^{-3}\text{ kg}$, $g = 9.8\text{ m s}^{-2}$</p>
+              <p>$F = w = mg = 0.4 \times 10^{-3} \times 9.8 = 0.00392\text{ N}$</p>
+              <p style="margin-top: 10px;">Since the rectangular frame has two edges in contact with the soap solution:</p>
+              <p style="margin-left: 25px;">$\gamma = \frac{F}{2l} = \frac{0.00392}{2 \times 7 \times 10^{-2}} = \mathbf{0.028\text{ N m}^{-1}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- Eg. 14 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.14.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> When a capillary tube stands upright in a beaker of water, the water rises $h$ in the tube. If the radius of the tube is $2\text{ mm}$, contact angle is $30^\circ$, density of water is $1000\text{ kg m}^{-3}$ and surface tension is $0.072\text{ N m}^{-1}$, calculate $h$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $r = 2\text{ mm} = 2 \times 10^{-3}\text{ m}$, $\gamma = 0.072\text{ N m}^{-1}$, $\theta = 30^\circ$, $\rho = 1000\text{ kg m}^{-3}$</p>
+              <p style="margin-top: 10px;">$h = \frac{2\gamma \cos\theta}{\rho g r} = \frac{2 \times 0.072 \times \cos 30^\circ}{1000 \times 9.8 \times 2 \times 10^{-3}} = \mathbf{0.0064\text{ m (or) } 0.64\text{ cm}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 15 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.15.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> At a certain temperature, water has a surface tension of $0.072\text{ N m}^{-1}$. In a $3\text{ mm}$ diameter vertical tube if the liquid rises $6\text{ mm}$ above the liquid outside the tube, calculate the contact angle. Assume density of water $\rho = 1000\text{ kg m}^{-3}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $d = 3\text{ mm} \implies r = 1.5 \times 10^{-3}\text{ m}$, $\gamma = 0.072\text{ N m}^{-1}$, $h = 6\text{ mm}$</p>
+              <p style="margin-top: 10px;">$\cos\theta = \frac{\rho g r h}{2\gamma} = \frac{1000 \times 9.8 \times 1.5 \times 10^{-3} \times 6 \times 10^{-3}}{2 \times 0.072}$</p>
+              <p style="margin-left: 25px;">$\theta = \mathbf{52.23^\circ \text{ (or) } 52^\circ 13'}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 15 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.15.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Calculate the height to which water will rise in a capillary tube of diameter $1\text{ mm}$. The surface tension of water is $0.072\text{ N m}^{-1}$, density of water is $1000\text{ kg m}^{-3}$. (Assume angle of contact is $0^\circ$.)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p><strong>Ans:</strong> $d = 1\text{ mm} \implies r = 0.5 \times 10^{-3}\text{ m}$, $\gamma = 0.072\text{ N m}^{-1}$, $\theta = 0^\circ$</p>
+              <p style="margin-top: 10px;">$h = \frac{2\gamma \cos\theta}{\rho g r} = \frac{2 \times 0.072 \times \cos 0^\circ}{1000 \times 9.8 \times 0.5 \times 10^{-3}} = \mathbf{0.0294\text{ m (or) } 2.94\text{ cm}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>
