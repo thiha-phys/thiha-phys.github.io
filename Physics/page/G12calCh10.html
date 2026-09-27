@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 Physics - Chapter 6 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax ထည့်ရန် -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <h1 class="page-title">Chapter 6 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Sub Banner -->
+    <div class="grade-banner">
+      <h2>Chapter 10 - Electrical energy, power and heating effect of electric current</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၂၄ ပုဒ်)</p>
+    </div>
+
+    <!-- Problems List Container -->
+    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
+ <!-- Eg. 1 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.1</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> When a battery is connected to a $2\text{ }\Omega$ resistor it drives a current of $0.6\text{ A}$ through the resistor. When it is connected to a $7\text{ }\Omega$ resistor it drives a current of $0.2\text{ A}$ through the resistor. Find the emf and the internal resistance of the battery.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$R_1 = 2\text{ }\Omega,\quad I_1 = 0.6\text{ A}$<br>
+              $R_2 = 7\text{ }\Omega,\quad I_2 = 0.2\text{ A}$<br>
+              $E = ?,\quad r = ?$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              I_1 &= \frac{E}{R_1 + r} \\
+              E &= I_1 (R_1 + r) \\
+              &= 0.6 (2 + r) \text{ } -------- (1) \\
+              I_2 &= \frac{E}{R_2 + r} \\
+              E &= I_2 (R_2 + r) \\
+              &= 0.2 (7 + r) \text{ } -------- (2)
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">From Eq (1) and (2)<br>
+              $\begin{aligned}[t]
+              0.6 (2 + r) &= 0.2 (7 + r) \\
+              \frac{0.6}{0.2} (2 + r) &= 7 + r \\
+              3 (2 + r) &= 7 + r \\
+              6 + 3r &= 7 + r \\
+              2r &= 1 \\
+              r &= \mathbf{0.5\text{ }\Omega}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$r = 0.5\text{ }\Omega$ in eq (1)<br>
+              $\begin{aligned}[t]
+              E &= 0.6 (2 + 0.5) \\
+              &= \mathbf{1.5\text{ V}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+<!-- No. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.4</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> In the electric circuit shown below, find the reading of the ammeter A when the switch is (i) open (ii) closed. (Neglect the internal resistance of the battery.)
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$R_1 = 3\text{ }\Omega,\quad R_2 = R_3 = 2\text{ }\Omega$<br>
+              $E = 20\text{ V},\quad r = 0\text{ }\Omega$</p>
+              <p style="margin-top: 10px;">(i) When the switch is open,<br>
+              $R_1$ and $R_2$ are connected in series,<br>
+              $\begin{aligned}[t]
+              R &= R_1 + R_2 \\
+              &= 3 + 2 = 5\text{ }\Omega
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              &= \frac{20}{5 + 0} \\
+              &= \mathbf{4\text{ A}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$\therefore$ When the switch is open, the reading of the ammeter A is $4\text{ A}$.</p>
+              <p style="margin-top: 10px;">(ii) When the switch is closed,<br>
+              $R_2$ and $R_3$ are connected in parallel,<br>
+              $\begin{aligned}[t]
+              \frac{1}{R_p} &= \frac{1}{R_2} + \frac{1}{R_3} \\
+              &= \frac{1}{2} + \frac{1}{2} = \frac{2}{2} = 1 \\
+              R_p &= 1\text{ }\Omega
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$R_p$ and $R_1$ are connected in series,<br>
+              $\begin{aligned}[t]
+              R &= R_1 + R_p \\
+              &= 3 + 1 = 4\text{ }\Omega
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              &= \frac{20}{4 + 0} = \frac{20}{4} = \mathbf{5\text{ A}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$\therefore$ When the switch is closed, the reading of the ammeter A is $5\text{ A}$.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+<!-- Eg. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.2</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Find the current flowing through each resistor and the potential difference across the $1\text{ }\Omega$ resistor in the circuit diagram given below.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$R_1 = 4\text{ }\Omega,\quad R_2 = 6\text{ }\Omega,\quad R_3 = 1\text{ }\Omega$<br>
+              $E = 12\text{ V},\quad r = 0.6\text{ }\Omega$<br>
+              $I_1 = ?,\quad I_2 = ?,\quad I_3 = ?$<br>
+              $V_1 = ?,\quad V_2 = ?,\quad V_3 = ?$</p>
+              <p style="margin-top: 10px;">$R_1$ and $R_2$ are connected in parallel,<br>
+              $\begin{aligned}[t]
+              \frac{1}{R_p} &= \frac{1}{R_1} + \frac{1}{R_2} \\
+              &= \frac{1}{4} + \frac{1}{6} = \frac{5}{12} \\
+              R_p &= \frac{12}{5} = 2.4\text{ }\Omega
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$R_p$ and $R_3$ are connected in series,<br>
+              $\begin{aligned}[t]
+              R &= R_p + R_3 \\
+              &= 2.4 + 1 = 3.4\text{ }\Omega
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              &= \frac{12}{3.4 + 0.6} = \frac{12}{4.0} = \mathbf{3\text{ A}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$I = I_3 = I_p = \mathbf{3\text{ A}}$ (in series)</p>
+              <p style="margin-top: 10px;">By Ohm's law, $V = IR$<br>
+              $\begin{aligned}[t]
+              V_3 &= I_3 R_3 = 3 \times 1 = \mathbf{3\text{ V}} \\
+              V_p &= I_p R_p = 3 \times 2.4 = \mathbf{7.2\text{ V}} \\
+              V_p &= V_1 = V_2 = \mathbf{7.2\text{ V}} \text{ (in parallel)}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">Since $V = IR$, $I = \frac{V}{R}$<br>
+              $\begin{aligned}[t]
+              I_1 &= \frac{V_1}{R_1} = \frac{7.2}{4} = \mathbf{1.8\text{ A}} \\
+              I_2 &= \frac{V_2}{R_2} = \frac{7.2}{6} = \mathbf{1.2\text{ A}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+<!-- Eg. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.4</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Two batteries each having an emf of $6\text{ V}$ and an internal resistance of $0.5\text{ }\Omega$ are connected (i) in series and (ii) in parallel. Find the current in each case when the batteries are connected to a $1\text{ }\Omega$ resistor.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$E_1 = E_2 = 6\text{ V},\quad r_1 = r_2 = 0.5\text{ }\Omega$<br>
+              $R = 1\text{ }\Omega,\quad I = ?$</p>
+              <p style="margin-top: 10px;">(i) When the batteries are connected in series,<br>
+              In series aiding,<br>
+              Resultant emf, $E = E_1 + E_2 = 6 + 6 = 12\text{ V}$<br>
+              Resultant $r = r_1 + r_2 = 0.5 + 0.5 = 1\text{ }\Omega$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              &= \frac{12}{1 + 1} = \mathbf{6\text{ A}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">In series opposing,<br>
+              Resultant emf, $E = E_1 - E_2 = 6 - 6 = 0\text{ V}$<br>
+              Resultant $r = r_1 + r_2 = 0.5 + 0.5 = 1\text{ }\Omega$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              &= \frac{0}{1 + 1} = \mathbf{0\text{ A}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">(ii) When the batteries are connected in Parallel,<br>
+              Resultant emf, $E = E_1 = E_2 = 6\text{ V}$<br>
+              Resultant $r = \frac{r_1}{2} = \frac{0.5}{2} = 0.25\text{ }\Omega$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              &= \frac{6}{1 + 0.25} = \mathbf{4.8\text{ A}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+<!-- Rev. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.4</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A battery has an emf of $6\text{ V}$ and an internal resistance of $0.5\text{ }\Omega$. How many batteries are necessary to pass a current of $1\text{ A}$ through a $22\text{ }\Omega$ resistor in an electric circuit?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$E_1 = 6\text{ V},\quad r_1 = 0.5\text{ }\Omega,\quad R = 22\text{ }\Omega,\quad I = 1\text{ A}$<br>
+              Number of batteries, $n = ?$</p>
+              <p style="margin-top: 10px;">By Ohm's law, $V = I R = 1 \times 22 = 22\text{ V}$<br>
+              Since $V > E$, the batteries must be connected in series aiding.</p>
+              <p style="margin-top: 10px;">In series aiding,<br>
+              Resultant emf, $E = E_1 + E_2 ...... + E_n = 6 + 6 + ...... + 6 = 6n$<br>
+              Resultant $r = r_1 + r_2 ...... + r_n = 0.5 + 0.5 + ...... + 0.5 = 0.5n$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              &= \frac{6n}{R + 0.5n} \\
+              I (R + 0.5n) &= 6n \\
+              1 (22 + 0.5n) &= 6n \\
+              22 + 0.5n &= 6n \\
+              22 &= 5.5n \\
+              n &= \frac{22}{5.5} = \mathbf{4}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$\therefore$ $4$ batteries are necessary.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+<!-- No. 5 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.5</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> When a $12\text{ V}$ battery of negligible internal resistance is connected to a resistor, a current of $3\text{ A}$ flows through it. When another battery of emf $6\text{ V}$ is in the circuit in series with the first one, the current flowing through the resistor remains at $3\text{ A}$. Find the internal resistance of the second battery.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$E = 12\text{ V},\quad r = 0\text{ }\Omega,\quad I = 3\text{ A}$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              3 &= \frac{12}{R + 0} \\
+              3 R &= 12 \\
+              R &= \mathbf{4\text{ }\Omega}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$E_1 = 12\text{ V},\quad r_1 = 0\text{ }\Omega,\quad R = 4\text{ }\Omega$<br>
+              $E_2 = 6\text{ V},\quad r_2 = ?,\quad I = 3\text{ A}$</p>
+              <p style="margin-top: 10px;">In series aiding,<br>
+              Resultant emf, $E = E_1 + E_2 = 12 + 6 = 18\text{ V}$<br>
+              Resultant $r = r_1 + r_2 = 0 + r_2 = r_2$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              3 &= \frac{18}{4 + r_2} \\
+              12 + 3r_2 &= 18 \\
+              3r_2 &= 6 \\
+              r_2 &= \mathbf{2\text{ }\Omega}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$\therefore$ The internal resistance of the second battery is $2\text{ }\Omega$.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+<!-- No. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.6</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> When two $6\text{ V}$ batteries, having the same internal resistance and connected in series, are connected to a $5\text{ }\Omega$ resistor, the current in the circuit is $2\text{ A}$. When these batteries are in parallel, a current of $1.5\text{ A}$ flows through when connected to another resistor. Find the resistance of the resistor.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$E_1 = E_2 = 6\text{ V},\quad r_1 = r_2,\quad R = 5\text{ }\Omega,\quad I = 2\text{ A}$</p>
+              <p style="margin-top: 10px;">In series aiding,<br>
+              Resultant emf, $E = E_1 + E_2 = 6 + 6 = 12\text{ V}$<br>
+              Resultant $r = r_1 + r_2 = r_1 + r_1 = 2r_1$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R + r} \\
+              2 &= \frac{12}{5 + 2r_1} \\
+              10 + 4r_1 &= 12 \\
+              4r_1 &= 2 \\
+              r_1 &= 0.5\text{ }\Omega
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$r_1 = r_2 = r = 0.5\text{ }\Omega$</p>
+              <p style="margin-top: 10px;">In parallel,<br>
+              Resultant emf, $E = E_1 = E_2 = 6\text{ V}$<br>
+              Resultant $r = \frac{r_1}{2} = \frac{0.5}{2} = 0.25\text{ }\Omega$<br>
+              $I = 1.5\text{ A},\quad R' = ?$</p>
+              <p style="margin-top: 10px;">By circuit equation,<br>
+              $\begin{aligned}[t]
+              I &= \frac{E}{R' + r} \\
+              1.5 &= \frac{6}{R' + 0.25} \\
+              1.5 (R' + 0.25) &= 6 \\
+              R' + 0.25 &= \frac{6}{1.5} \\
+              R' + 0.25 &= 4 \\
+              R' &= 4 - 0.25 \\
+              &= \mathbf{3.75\text{ }\Omega}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+<!-- Eg. 5 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.5</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> If a current of $2\text{ A}$ flows through a $50\text{ }\Omega$ resistor for $30\text{ min}$ find the amount of electrical energy dissipated in the resistor.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$I = 2\text{ A},\quad R = 50\text{ }\Omega$<br>
+              $t = 30\text{ min} = 30\text{ min} \times \frac{1\text{ h}}{60\text{ min}} = \frac{1}{2}\text{ h}$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              W &= I^2 R t \\
+              &= 2^2 \times 50 \times \frac{1}{2} \\
+              &= 100\text{ Wh} \\
+              &= 100\text{ Wh} \times \frac{1\text{ kWh}}{1000\text{ Wh}} \\
+              &= \mathbf{0.1\text{ kWh}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+<!-- Eg. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.6</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> An electric lamp of $60\text{ }\Omega$ connected to a $240\text{ V}$ mains line is used for $45\text{ min}$. (i) Find the amount of electrical energy dissipated in the lamp. (ii) Find the cost of using it if electricity costs $35\text{ kyats}$ per unit.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$R = 60\text{ }\Omega,\quad V = 240\text{ V}$<br>
+              $t = 45\text{ min} = 45\text{ min} \times \frac{1\text{ h}}{60\text{ min}} = \frac{3}{4}\text{ h}$<br>
+              (i) $W = ? \quad\quad$ (ii) cost of using $= ?$</p>
+              <p style="margin-top: 10px;">(i) $\begin{aligned}[t]
+              W &= \frac{V^2}{R} t \\
+              &= \frac{240^2}{60} \times \frac{3}{4} = 720\text{ Wh} \\
+              &= 720\text{ Wh} \times \frac{1\text{ kWh}}{1000\text{ Wh}} \\
+              &= \mathbf{0.72\text{ kWh}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">(ii) $1\text{ kWh} = 1\text{ unit of electricity}$<br>
+              $0.72\text{ kWh} = 0.72\text{ unit}$<br>
+              Cost of using $0.72\text{ kWh}$<br>
+              $\begin{aligned}[t]
+              &= 0.72 \times 35 = \mathbf{25.2\text{ kyats}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+<!-- Rev. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.6</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> When an air conditioner is connected to $220\text{ V}$ mains line it draws a current of $10\text{ A}$ and is used for $6\text{ h}$. (i) Find the amount of electrical energy consumed by it. (ii) Calculate the cost of using it if the electrical energy costs $50\text{ kyats}$ per unit.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$V = 220\text{ V},\quad I = 10\text{ A},\quad t = 6\text{ h}$<br>
+              (i) $W = ? \quad\quad$ (ii) cost of using $= ?$</p>
+              <p style="margin-top: 10px;">(i) $\begin{aligned}[t]
+              W &= V I t \\
+              &= 220 \times 10 \times 6 = 13200\text{ Wh} \\
+              &= 13200\text{ Wh} \times \frac{1\text{ kWh}}{1000\text{ Wh}} \\
+              &= \mathbf{13.2\text{ kWh}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">(ii) $1\text{ kWh} = 1\text{ unit of electricity}$<br>
+              $13.2\text{ kWh} = 13.2\text{ unit}$<br>
+              Cost of using $13.2\text{ kWh}$<br>
+              $\begin{aligned}[t]
+              &= 50 \times 13.2 = \mathbf{660\text{ kyats}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+<!-- Eg.7 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.7</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> If a $1200\text{ W}$ electric iron is used for $50\text{ min}$, by how many units does the electricity meter reading increase? Calculate the payment if one unit of electricity costs $35\text{ kyats}$.
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$t = 50\text{ min} = 50 \times \frac{1\text{ h}}{60\text{ min}} = \frac{5}{6}\text{ h}$, $W = ?$, $\text{payment} = ?$<br>
+        $P = \frac{W}{t}$<br>
+        $W = P t = 1200 \times \frac{5}{6} = 1000\text{ Wh} \times \frac{1\text{ kWh}}{1000\text{ Wh}} = 1\text{ kWh}$<br>
+        $1\text{ kWh} = 1\text{ unit of electricity}$</p>
+        <p style="margin-top: 10px;">
+        The electricity meter reading increases <br>
+        $\mathbf{1\text{ unit of electricity}}$.<br>
+        $\text{The payment} = 1 \times 35 = \mathbf{35\text{ kyats}}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- Eg.9 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.9</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> One $5\text{ }\Omega$, one $10\text{ }\Omega$ and one $15\text{ }\Omega$ resistors are connected in parallel. If each resistor has an electrical power rating of $0.5\text{ W}$, find the maximum potential difference which may be supplied to the parallel combination and the current in each resistor.
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$R_1 = 5\text{ }\Omega$, $R_2 = 10\text{ }\Omega$, $R_3 = 15\text{ }\Omega$, $P = 0.5\text{ W}$</p>
+        <p style="margin-top: 10px;">
+        $\begin{aligned}[t]
+        P &= \frac{V^2}{R} \implies V^2 = P R \\
+        V_{\max} &= \sqrt{P R_{\min}} = \sqrt{0.5 \times 5} = \sqrt{2.5} = \mathbf{1.58\text{ V}}
+        \end{aligned}$<br>
+        For parallel combination, $V = V_1 = V_2 = V_3 = 1.58\text{ V}$<br>
+        By using Ohm's law ($I = \frac{V}{R}$):<br>
+        $\begin{aligned}[t]
+        I_1 &= \frac{V_1}{R_1} = \frac{1.58}{5} = \mathbf{0.316\text{ A}} \\
+        I_2 &= \frac{V_2}{R_2} = \frac{1.58}{10} = \mathbf{0.158\text{ A}} \\
+        I_3 &= \frac{V_3}{R_3} = \frac{1.58}{15} = \mathbf{0.105\text{ A}}
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- Eg.8 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.8</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> If a $60\text{ W}$ electric lamp is connected to a $220\text{ V}$ mains line find (i) the current in the lamp (ii) the resistance of tungsten wire of the lamp (iii) the amount of charge passing through the filament in $1\text{ min}$ and (iv) the amount of heat produced by the filament in $1\text{ min}$. ($J = 4.2\text{ J cal}^{-1}$)
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$P = 60\text{ W}$, $V = 220\text{ V}$<br>
+        (i) $I = ?$, (ii) $R = ?$, (iii) $Q = ?\text{ } (t = 1\text{ min} = 60\text{ s})$, (iv) $H = ?\text{ } (t = 1\text{ min} = 60\text{ s})$</p>
+        <p style="margin-top: 10px;">
+        $\begin{aligned}[t]
+        \text{(i) } I &= \frac{P}{V} = \frac{60}{220} = \mathbf{0.2727\text{ A}} \\
+        \text{(ii) } P &= \frac{V^2}{R} \implies R = \frac{V^2}{P} = \frac{220 \times 220}{60} = \mathbf{806.67\text{ }\Omega} \\
+        \text{(iii) } Q &= I t = 0.2727 \times 60 = \mathbf{16.36\text{ C}} \\
+        \text{(iv) } H &= \frac{V I t}{J} = \frac{P t}{J} = \frac{60 \times 60}{4.2} = \mathbf{857.14\text{ cal}}
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- Rev.8 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.8</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> An electric stove of $1200\text{ W}$ is connected to a $220\text{ V}$ mains line. (i) Find its resistance. (ii) Find the current flowing through it. (iii) Find the amount of calories produced in one second by it. (iv) Find the electrical power produced by it when the voltage of the mains line drops to $180\text{ V}$. ($J = 4.2\text{ J cal}^{-1}$)
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$P = 1200\text{ W}$, $V = 220\text{ V}$</p>
+        <p style="margin-top: 10px;">
+        $\begin{aligned}[t]
+        \text{(i) } R &= \frac{V^2}{P} = \frac{220 \times 220}{1200} = \mathbf{40.33\text{ }\Omega} \\
+        \text{(ii) } I &= \frac{P}{V} = \frac{1200}{220} = \mathbf{5.45\text{ A}} \\
+        \text{(iii) } H &= \frac{P t}{J} = \frac{1200 \times 1}{4.2} = \mathbf{285.71\text{ cal}} \quad (t = 1\text{ s}) \\
+        \text{(iv) } P &= \frac{V^2}{R} = \frac{180 \times 180}{40.33} = \mathbf{803.37\text{ W}} \quad (V = 180\text{ V})
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- No.15 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.15</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> An electric iron draws a current of $3\text{ A}$ when it is connected to a $220\text{ V}$ mains line. How many kcal of heat are produced per min? ($J = 4.2\text{ J cal}^{-1}$)
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$I = 3\text{ A}$, $V = 220\text{ V}$, $t = 1\text{ min} = 60\text{ s}$, $H = ?$</p>
+        <p style="margin-top: 10px;">
+        $\begin{aligned}[t]
+        H &= \frac{V I t}{J} \\
+        &= \frac{220 \times 3 \times 60}{4.2} \\
+        &= 9428.57\text{ cal} \\
+        &= 9428.57 \times \frac{1\text{ kcal}}{1000\text{ cal}} = \mathbf{9.43\text{ kcal}}
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- No.16 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.16</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> Find the amount of calories produced per second by a $2\text{ }\Omega$ resistor in the circuit diagram shown below. ($E = 6\text{ V}$, $r = 1\text{ }\Omega$, $J = 4.2\text{ J cal}^{-1}$)
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$R = 2\text{ }\Omega$, $E = 6\text{ V}$, $r = 1\text{ }\Omega$, $t = 1\text{ s}$</p>
+        <p style="margin-top: 10px;">
+        By circuit equation,<br>
+        $\begin{aligned}[t]
+        I &= \frac{E}{R + r} = \frac{6}{2 + 1} = 2\text{ A} \\
+        \text{Rate of heat } \frac{H}{t} &= \frac{I^2 R}{J} = \frac{2^2 \times 2 \times 1}{4.2} = \mathbf{1.905\text{ cal s}^{-1}}
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- No.17 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.17</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> Find the rate of production of heat by the equivalent resistance of resistors in the circuit diagram shown below. ($R_1 = 2\text{ }\Omega$, $R_2 = 3\text{ }\Omega$, $R_3 = 4\text{ }\Omega$, $E = 12\text{ V}$, $r = 1\text{ }\Omega$, $J = 4.2\text{ J cal}^{-1}$)
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$R_1 = 2\text{ }\Omega$, $R_2 = 3\text{ }\Omega$, $R_3 = 4\text{ }\Omega$, $E = 12\text{ V}$, $r = 1\text{ }\Omega$</p>
+        <p style="margin-top: 10px;">
+        $R_2$ and $R_3$ are connected in parallel:<br>
+        $\begin{aligned}[t]
+        \frac{1}{R_p} &= \frac{1}{R_2} + \frac{1}{R_3} = \frac{1}{3} + \frac{1}{4} = \frac{7}{12} \\
+        R_p &= \frac{12}{7} = 1.71\text{ }\Omega
+        \end{aligned}$<br>
+        $R_p$ and $R_1$ are connected in series:<br>
+        $R = R_1 + R_p = 2 + 1.71 = 3.71\text{ }\Omega$<br>
+        By circuit equation:<br>
+        $\begin{aligned}[t]
+        I &= \frac{E}{R + r} = \frac{12}{3.71 + 1} = \frac{12}{4.71} = 2.55\text{ A}
+        \end{aligned}$<br>
+        By Joule's law of electricity and heat:<br>
+        $\begin{aligned}[t]
+        \frac{H}{t} &= \frac{I^2 R}{J} \text{ (by the equivalent resistors)} \\
+        &= \frac{2.55 \times 2.55 \times 3.71}{4.2} = \mathbf{5.744\text{ cal s}^{-1}}
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- No.18 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.18</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> Find the amount of heat produced in $10\text{ min}$ by a $10\text{ }\Omega$ resistor in the circuit diagram shown below. ($E_1 = 6\text{ V}$, $r_1 = 0.5\text{ }\Omega$, $E_2 = 6\text{ V}$, $r_2 = 0.5\text{ }\Omega$, $E_3 = 12\text{ V}$, $r_3 = 1\text{ }\Omega$, $J = 4.2\text{ J cal}^{-1}$)
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$R = 10\text{ }\Omega$, $E_1 = 6\text{ V}$, $r_1 = 0.5\text{ }\Omega$, $E_2 = 6\text{ V}$, $r_2 = 0.5\text{ }\Omega$, $E_3 = 12\text{ V}$, $r_3 = 1\text{ }\Omega$, $t = 10\text{ min} = 600\text{ s}$</p>
+        <p style="margin-top: 10px;">
+        The batteries are connected in series aiding,<br>
+        $\begin{aligned}[t]
+        E &= E_1 + E_2 + E_3 = 6 + 6 + 12 = 24\text{ V} \\
+        r &= r_1 + r_2 + r_3 = 0.5 + 0.5 + 1 = 2\text{ }\Omega
+        \end{aligned}$<br>
+        By circuit equation:<br>
+        $\begin{aligned}[t]
+        I &= \frac{E}{R + r} = \frac{24}{10 + 2} = 2\text{ A}
+        \end{aligned}$<br>
+        By Joule's law of electricity and heat:<br>
+        $\begin{aligned}[t]
+        H &= \frac{I^2 R t}{J} \text{ (by } 10\text{ }\Omega \text{ resistor)} \\
+        &= \frac{2 \times 2 \times 10 \times 600}{4.2} = \mathbf{5714.28\text{ cal}}
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- No.19 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.19</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> Find the rate of production of heat in the battery in the circuit diagram shown below. ($E = 12\text{ V}$, $r = 2\text{ }\Omega$, $R_1 = 1\text{ }\Omega$, $R_2 = 1\text{ }\Omega$, $R_3 = 1.5\text{ }\Omega$, $J = 4.2\text{ J cal}^{-1}$)
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$E = 12\text{ V}$, $r = 2\text{ }\Omega$, $R_1 = 1\text{ }\Omega$, $R_2 = 1\text{ }\Omega$, $R_3 = 1.5\text{ }\Omega$</p>
+        <p style="margin-top: 10px;">
+        $R_1$ and $R_2$ are connected in parallel:<br>
+        $\begin{aligned}[t]
+        \frac{1}{R_p} &= \frac{1}{R_1} + \frac{1}{R_2} = \frac{1}{1} + \frac{1}{1} = 2 \implies R_p = 0.5\text{ }\Omega
+        \end{aligned}$<br>
+        $R_p$ and $R_3$ are connected in series:<br>
+        $R = R_p + R_3 = 0.5 + 1.5 = 2\text{ }\Omega$<br>
+        By circuit equation:<br>
+        $\begin{aligned}[t]
+        I &= \frac{E}{R + r} = \frac{12}{2 + 2} = 3\text{ A}
+        \end{aligned}$<br>
+        By Joule's law of electricity and heat:<br>
+        $\begin{aligned}[t]
+        \frac{H}{t} &= \frac{I^2 r}{J} \text{ (in the battery)} \\
+        &= \frac{3 \times 3 \times 2}{4.2} = \mathbf{4.286\text{ cal s}^{-1}}
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- Rev.10 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.10</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> What should the rating of the fuse be used for an electric stove of $1200\text{ W}$, $220\text{ V}$?
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$P = 1200\text{ W}$, $V = 220\text{ V}$</p>
+        <p style="margin-top: 10px;">
+        $\begin{aligned}[t]
+        P &= V I \implies I = \frac{P}{V} = \frac{1200}{220} = 5.45\text{ A}
+        \end{aligned}$<br>
+        $1200\text{ W}$ electric stove will draw $5.45\text{ A}$ to operate.<br>
+        <strong>The rating of the fuse should be $6\text{ A}$.</strong>
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+    
+
+<!-- Eg.10 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.10</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> A $3\text{ A}$ fuse is used in a circuit which contains a source of $220\text{ V}$. Find the maximum power which can safely be consumed.
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$I_{\max} = 3\text{ A}$, $V = 220\text{ V}$</p>
+        <p style="margin-top: 10px;">
+        $\begin{aligned}[t]
+        P_{\max} &= V I_{\max} \\
+        &= 220 \times 3 = \mathbf{660\text{ W}}
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+<!-- No.22 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.22</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> An electric circuit installed in a house contains a $5\text{ A}$ fuse and the voltage is $220\text{ V}$. Find the maximum electrical power which can safely be used?
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$I_{\max} = 5\text{ A}$, $V = 220\text{ V}$, $P_{\max} = ?$</p>
+        <p style="margin-top: 10px;">
+        $\begin{aligned}[t]
+        P_{\max} &= V I_{\max} \\
+        &= 220 \times 5 = \mathbf{1100\text{ W}}
+        \end{aligned}$
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- Rev.9 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.9</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> An electric circuit installed in a house contains a $5\text{ A}$ fuse and the voltage is $220\text{ V}$. Can twenty $60\text{ W}$ electric lamps be used at the same time in that circuit?
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$I_{\max} = 5\text{ A}$, $V = 220\text{ V}$<br>
+        $\begin{aligned}[t]
+        P_{\max} &= V I_{\max} = 220 \times 5 = 1100\text{ W}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">
+        Electrical power of twenty $60\text{ W}$ electric lamps:<br>
+        $P_{\text{used}} = 20 \times 60 = 1200\text{ W}$<br>
+        Since $P_{\text{used}} > P_{\max}$,<br>
+        <strong>No, twenty $60\text{ W}$ electric lamps cannot be used at the same time in that circuit.</strong>
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+<!-- No.23 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.23</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> An electric circuit installed in an office contains a $10\text{ A}$ fuse and the voltage is $220\text{ V}$. Ten $100\text{ W}$ electric lamps and two $150\text{ W}$ refrigerators are being used there. (i) Find the cost of using all the lamps and two refrigerators for $10\text{ h}$. (ii) Find the maximum number of $60\text{ W}$ electric lamps which can be safely used in addition. (Assume that electricity costs $50\text{ kyats}$ per unit)
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$I_{\max} = 10\text{ A}$ (fuse), $V = 220\text{ V}$</p>
+        <p style="margin-top: 10px;">
+        $\begin{aligned}[t]
+        P_{\max} &= V I_{\max} \\
+        &= 220 \times 10 = \mathbf{2200\text{ W}}
+        \end{aligned}$<br>
+        Electrical power of Ten $100\text{ W}$ electric lamps and two $150\text{ W}$ refrigerators,<br>
+        $\begin{aligned}[t]
+        P_{\text{used}} &= [10 \times 100] + [2 \times 150] = 1300\text{ W}
+        \end{aligned}$
+        </p>
+        <p style="margin-top: 10px;">
+        <strong>(i)</strong><br>
+        $\begin{aligned}[t]
+        P &= \frac{W}{t} \\
+        W &= P_{\text{used}} \times t \\
+        &= 1300 \times 10 = 13,000\text{ Wh} \\
+        &= 13,000\text{ Wh} \times \frac{1\text{ kWh}}{1000\text{ Wh}} \\
+        &= \mathbf{13\text{ kWh}}
+        \end{aligned}$<br>
+        $1\text{ kWh} = 1\text{ unit of electricity}$<br>
+        $13\text{ kWh} = 13\text{ units}$<br>
+        $\begin{aligned}[t]
+        \text{Cost of using } 13\text{ kWh} &= 50 \times 13 = \mathbf{650\text{ kyats}}
+        \end{aligned}$
+        </p>
+        <p style="margin-top: 10px;">
+        <strong>(ii)</strong><br>
+        Remaining power<br>
+        $\begin{aligned}[t]
+        &= P_{\max} - P_{\text{used}} = 2200 - 1300 = 900\text{ W} \\
+        n &= \frac{\text{Remaining power}}{60} = \frac{900}{60} = \mathbf{15\text{ lamps}}
+        \end{aligned}$<br>
+        The maximum number of $60\text{ W}$ electric lamps which can be safely used in addition is **$15\text{ lamps}$**.
+        </p>
+      </div>
+    </details>
+  </div>
+</div>
+
+
+
+
+
+    </main>
+  </div>
+
+</body>
+</html>

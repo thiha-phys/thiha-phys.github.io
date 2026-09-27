@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 Physics - Chapter 6 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax ထည့်ရန် -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <h1 class="page-title">Chapter 6 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Sub Banner -->
+    <div class="grade-banner">
+      <h2>Chapter 8 - interference and diffraction of light</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၁ ပုဒ်)</p>
+    </div>
+
+    <!-- Problems List Container -->
+    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
+     <!-- Eg. 1 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.1.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A capacitor has a capacitance of $5\text{ }\mu\text{F}$. How much of the charge should be removed in order that the potential difference between its plates decreases by $40\text{ V}$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$C = 5\text{ }\mu\text{F}$, $\quad \Delta V = 40\text{ V}$, $\quad \Delta Q = ?$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              C &= \frac{\Delta Q}{\Delta V} \\
+              5 &= \frac{\Delta Q}{40} \\
+              \Delta Q &= \mathbf{200\text{ }\mu\text{C}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$200\text{ }\mu\text{C}$ of the charge should be removed to decrease potential difference $40\text{ V}$.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.2</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> When a parallel-plate capacitor is connected to a $50\text{ V}$ battery each plate receives a charge of magnitude $0.002\text{ C}$. Find its capacitance. If the capacitor is connected to a $100\text{ V}$ battery, does the capacitance change? Does the charge still remain the same?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$V = 50\text{ V}$, $\quad Q = 0.002\text{ C}$, $\quad C = ?$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              C &= \frac{Q}{V} \\
+              C &= \frac{0.002}{50} \\
+              &= 4 \times 10^{-5}\text{ F} \\
+              &= 40 \times 10^{-6}\text{ F} = \mathbf{40\text{ }\mu\text{F}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">Although voltage is increased to $100\text{ V}$, the capacitance does not change but the charge will change.</p>
+              <p style="margin-top: 10px;">$V = 100\text{ V}$, $\quad C = 40 \times 10^{-6}\text{ F}$, $\quad Q = ?$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              C &= \frac{Q}{V} \\
+              Q &= C V \\
+              &= 40 \times 10^{-6} \times 100 \\
+              &= 40 \times 10^{-4}\text{ C} = \mathbf{0.004\text{ C}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.3</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Choose the correct answer from the following.<br>
+            The plates of a parallel-plate capacitor of capacitance $C$ are brought together to a third of their original separation. The capacitance is now<br>
+            A. $\frac{1}{9}C$, B. $\frac{1}{3}C$, C. $3C$, D. $9C$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>Original separation $= d$<br>
+              Original capacitance $= C = \frac{\kappa \varepsilon_0 A}{d}$<br>
+              New separation $= d' = \frac{1}{3}d$</p>
+              <p style="margin-top: 10px;">New capacitance $= C' = \frac{\kappa \varepsilon_0 A}{d'}$<br>
+              $\begin{aligned}[t]
+              C' &= \frac{\kappa \varepsilon_0 A}{\frac{1}{3}d} \\
+              &= 3\frac{\kappa \varepsilon_0 A}{d} \\
+              &= \mathbf{3\text{ C}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.4</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> When the distance between the two parallel-plate of a capacitor is doubled, by what percent does its capacitance change?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>Original separation $= d$<br>
+              Original capacitance $= C = \frac{\kappa \varepsilon_0 A}{d}$<br>
+              New separation $= d' = 2d$</p>
+              <p style="margin-top: 10px;">New capacitance $= C' = \frac{\kappa \varepsilon_0 A}{d'}$<br>
+              $\begin{aligned}[t]
+              C' &= \frac{\kappa \varepsilon_0 A}{2d} \\
+              &= \frac{1}{2} \frac{\kappa \varepsilon_0 A}{d} \\
+              &= \mathbf{\frac{1}{2}C}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">Change in capacitance,<br>
+              $\Delta C = C - C' = C - \frac{1}{2}C = \mathbf{\frac{1}{2}C}$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              \text{percent change} &= \frac{\Delta C}{C} \times 100\% \\
+              &= \frac{\frac{1}{2}C}{C} \times 100\% \\
+              &= \mathbf{50\text{ \%}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">When the distance between the two parallel-plate of a capacitor is doubled, its capacitance decreases $50\text{ \%}$.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The area of each plate of parallel-plate capacitor is $1\text{ m}^2$ and the distance between two plates is $1\text{ mm}$. If the potential difference the plates is $120\text{ V}$ and the dielectric constant of the material inserted between them is $3$, find (i) the capacitance of the parallel-plate capacitor, (ii) the magnitude of the charge on each plate, (iii) the electric field intensity between the plates.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$A = 1\text{ m}^2$, $d = 1\text{ mm} = 1 \times 10^{-3}\text{ m}$,<br>
+              $V = 120\text{ V}$, $\kappa = 3$,<br>
+              $\varepsilon_0 = 8.85 \times 10^{-12}\text{ C}^2\text{ N}^{-1}\text{ m}^{-2}\text{ (or) F m}^{-1}$</p>
+              <p style="margin-top: 10px;">(i) $\begin{aligned}[t]
+              C &= \frac{\kappa \varepsilon_0 A}{d} \\
+              &= \frac{3 \times 8.85 \times 10^{-12} \times 1}{1 \times 10^{-3}} \\
+              &= \mathbf{2.655 \times 10^{-8}\text{ F (or) } 26.55\text{ nF}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">(ii) $\begin{aligned}[t]
+              C &= \frac{Q}{V} \\
+              Q &= C V \\
+              &= 2.655 \times 10^{-8} \times 120 \\
+              &= \mathbf{3.186 \times 10^{-6}\text{ C (or) } 3.186\text{ }\mu\text{C}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">(iii) $\begin{aligned}[t]
+              V &= E d \\
+              E &= \frac{V}{d} \\
+              &= \frac{120}{1 \times 10^{-3}} = 120 \times 10^3 \\
+              &= \mathbf{1.2 \times 10^5\text{ V m}^{-1}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.6</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The plates of a parallel-plate capacitor are $50\text{ cm}^2$ in area and $1\text{ mm}$ apart, (i) What is its capacitance? (ii) When the capacitor is connected to a $24\text{ V}$ battery, what is the charge on each plate? (iii) What is the energy of the capacitor?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$A = 50\text{ cm}^2 = 50\,(10^{-2}\text{ m})^2 = 50 \times 10^{-4}\text{ m}^2$,<br>
+              $d = 1\text{ mm} = 1 \times 10^{-3}\text{ m}$, $V = 24\text{ V}$, $\kappa = 1$,<br>
+              $\varepsilon_0 = 8.85 \times 10^{-12}\text{ C}^2\text{ N}^{-1}\text{ m}^{-2}\text{ (or) F m}^{-1}$</p>
+              <p style="margin-top: 10px;">(i) $\begin{aligned}[t]
+              C &= \frac{\kappa \varepsilon_0 A}{d} \\
+              &= \frac{1 \times 8.85 \times 10^{-12} \times 50 \times 10^{-4}}{1 \times 10^{-3}} \\
+              &= \mathbf{44.25 \times 10^{-12}\text{ F (or) } 44.25\text{ pF}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">(ii) $\begin{aligned}[t]
+              C &= \frac{Q}{V} \\
+              Q &= C V \\
+              &= 44.25 \times 10^{-12} \times 24 \\
+              &= \mathbf{1.062 \times 10^{-9}\text{ C (or) } 1.062\text{ nC}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">(iii) $\begin{aligned}[t]
+              W &= \frac{1}{2} Q V \\
+              &= \frac{1}{2} \times 1.062 \times 10^{-9} \times 24 \\
+              &= \mathbf{1.2744 \times 10^{-8}\text{ J}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.7</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> The capacitance of a parallel-plate capacitor is increased from $8\text{ }\mu\text{F}$ to $50\text{ }\mu\text{F}$ when a sheet of glass is inserted between its plates. What is the dielectric constant of the glass?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$C_0 = 8\text{ }\mu\text{F}$ (with vacuum or air),<br>
+              $C = 50\text{ }\mu\text{F}$ (with glass plate), $\kappa = ?$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              \kappa &= \frac{C}{C_0} \\
+              &= \frac{50\text{ }\mu\text{F}}{8\text{ }\mu\text{F}} = \mathbf{6.25}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Rev. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Rev.7</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A parallel-plate capacitor of capacitance '$C$' is given the charge '$Q$' and then disconnected from the circuit. How much work is required to pull apart the plates of this capacitor to twice their original separation?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>Original separation $= d$<br>
+              Original capacitance $= C = \frac{\kappa \varepsilon_0 A}{d}$<br>
+              New separation $= d' = 2d$</p>
+              <p style="margin-top: 10px;">New capacitance $= C' = \frac{\kappa \varepsilon_0 A}{d'}$<br>
+              $\begin{aligned}[t]
+              C' &= \frac{\kappa \varepsilon_0 A}{2d} \\
+              &= \frac{1}{2} \frac{\kappa \varepsilon_0 A}{d} \\
+              &= \mathbf{\frac{1}{2}C}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">Original energy stored $= W = \frac{1}{2}\frac{Q^2}{C}$<br>
+              New energy stored $= W' = \frac{1}{2}\frac{Q^2}{C'}$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              W' &= \frac{1}{2} \frac{Q^2}{\frac{1}{2}C} \\
+              &= \frac{Q^2}{C}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">Required work $= W' - W$<br>
+              $\begin{aligned}[t]
+              &= \frac{Q^2}{C} - \frac{1}{2}\frac{Q^2}{C} = \mathbf{\frac{1}{2}\frac{Q^2}{C}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> What potential difference must be applied across $10\text{ }\mu\text{F}$ capacitor if it is to have an energy content of $1\text{ J}$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$C = 10\text{ }\mu\text{F} = 10 \times 10^{-6}\text{ F}$, $W = 1\text{ J}$, $V = ?$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              W &= \frac{1}{2} C V^2 \\
+              V^2 &= \frac{2W}{C} \\
+              V &= \sqrt{\frac{2W}{C}} = \sqrt{\frac{2 \times 1}{10 \times 10^{-6}}} = \mathbf{447.2\text{ V}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A charged capacitor of capacitance $C = 35\text{ }\mu\text{F}$ is discharged through a resistor of resistance $R = 120\text{ }\Omega$. (i) What is the time constant '$\tau$' of the discharging process? (ii) What is the elapsed time when the voltage falls to $10\text{ \%}$ of its original value?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$C = 35\text{ }\mu\text{F} = 35 \times 10^{-6}\text{ F}$, $R = 120\text{ }\Omega$<br>
+              (i) time constant, $\tau = ?$ $\quad$ (ii) $t = ?$<br>
+              voltage falls to $10\text{ \%}$ of its original value,<br>
+              $V_c = 10\text{ \% } V_0 = 0.1\text{ } V_0$</p>
+              <p style="margin-top: 10px;">(i) $\begin{aligned}[t]
+              \tau &= R C \\
+              &= 120 \times 35 \times 10^{-6} \\
+              &= \mathbf{4.2 \times 10^{-3}\text{ s (or) } 4.2\text{ ms}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">(ii) For discharging,<br>
+              $\begin{aligned}[t]
+              V_c &= V_0 \left(e^{-t / R C}\right) \\
+              V_c &= V_0 \left(e^{-t / \tau}\right) \\
+              0.1\text{ } V_0 &= V_0 \left(e^{-t / \tau}\right) \\
+              0.1 &= e^{-t / \tau} \\
+              \ln 0.1 &= \ln e^{-t / \tau} \\
+              \ln 0.1 &= -\frac{t}{\tau} \\
+              t &= -\ln 0.1 \times \tau \\
+              &= -\ln 0.1 \times 4.2 \times 10^{-3} \\
+              &= \mathbf{9.67 \times 10^{-3}\text{ s (or) } 9.67\text{ ms}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 8 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.8</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> In a capacitor charging RC circuit, $C = 50\text{ }\mu\text{F}$. What is the value of resistance '$R$' that would produce a voltage **rise** to $20\text{ \%}$ of supply voltage after $1\text{ s}$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$C = 50\text{ }\mu\text{F} = 50 \times 10^{-6}\text{ F}$, $R = ?$, $t = 1\text{ s}$<br>
+              voltage **rise** to $20\text{ \%}$ of supply voltage, $V_c = 20\text{ \% } V_0 = 0.2\text{ } V_0$</p>
+              <p style="margin-top: 10px;">For charging,<br>
+              $\begin{aligned}[t]
+              V_c &= V_0 \left(1 - e^{-t / R C}\right) \\
+              0.2\text{ } V_0 &= V_0 \left(1 - e^{-t / R C}\right) \\
+              0.2 &= 1 - e^{-t / R C} \\
+              e^{-t / R C} &= 1 - 0.2 = 0.8 \\
+              \ln \left(e^{-t / R C}\right) &= \ln 0.8 \\
+              -\frac{t}{R C} &= \ln 0.8 \\
+              -t &= \ln 0.8 \times R C \\
+              R &= \frac{-t}{\ln 0.8 \times C} \\
+              &= \frac{-1}{\ln 0.8 \times 50 \times 10^{-6}} \\
+              &= \mathbf{89.628 \times 10^3\text{ }\Omega = 89.628\text{ k}\Omega}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 9 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.9</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Three capacitors have capacitances of $5\text{ }\mu\text{F}$, $10\text{ }\mu\text{F}$ and $15\text{ }\mu\text{F}$.<br>
+            (i) Find the equivalent capacitance when they are connected in parallel.<br>
+            (ii) Find the equivalent capacitance when they are connected in series.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$C_1 = 5\text{ }\mu\text{F}$, $C_2 = 10\text{ }\mu\text{F}$, $C_3 = 15\text{ }\mu\text{F}$</p>
+              <p style="margin-top: 10px;">(i) When $C_1$, $C_2$ and $C_3$ are connected in parallel<br>
+              $\begin{aligned}[t]
+              C &= C_1 + C_2 + C_3 \\
+              &= 5 + 10 + 15 = \mathbf{30\text{ }\mu\text{F}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">(ii) When $C_1$, $C_2$ and $C_3$ are connected in series<br>
+              $\begin{aligned}[t]
+              \frac{1}{C} &= \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3} \\
+              &= \frac{1}{5} + \frac{1}{10} + \frac{1}{15} \\
+              &= \frac{6 + 3 + 2}{30} = \frac{11}{30} \\
+              C &= \frac{30}{11} = \mathbf{2.727\text{ }\mu\text{F}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 10 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.10</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Find the capacitance that can be obtained by combining **three** $10\text{ }\mu\text{F}$ capacitors in **all possible ways**.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$C_1 = C_2 = C_3 = 10\text{ }\mu\text{F}$</p>
+              <p style="margin-top: 10px;">$\Rightarrow$ When $C_1$, $C_2$ and $C_3$ are connected in parallel<br>
+              $\begin{aligned}[t]
+              C &= C_1 + C_2 + C_3 \\
+              &= 10 + 10 + 10 = \mathbf{30\text{ }\mu\text{F}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$\Rightarrow$ When $C_1$, $C_2$ and $C_3$ are connected in series<br>
+              $\begin{aligned}[t]
+              \frac{1}{C} &= \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3} \\
+              &= \frac{1}{10} + \frac{1}{10} + \frac{1}{10} = \frac{3}{10} \\
+              C &= \frac{10}{3} = \mathbf{3.33\text{ }\mu\text{F}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$\Rightarrow$ When $C_1$ and $C_2$ are connected in parallel ($C_p$) and connected in series with $C_3$<br>
+              $\begin{aligned}[t]
+              C_p &= C_1 + C_2 = 10 + 10 = 20\text{ }\mu\text{F} \\
+              \frac{1}{C} &= \frac{1}{C_p} + \frac{1}{C_3} = \frac{1}{20} + \frac{1}{10} = \frac{3}{20} \\
+              C &= \frac{20}{3} = \mathbf{6.67\text{ }\mu\text{F}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$\Rightarrow$ When $C_1$ and $C_2$ are connected in series ($C_s$) and connected in parallel with $C_3$<br>
+              $\begin{aligned}[t]
+              \frac{1}{C_s} &= \frac{1}{C_1} + \frac{1}{C_2} = \frac{1}{10} + \frac{1}{10} = \frac{2}{10} \implies C_s = 5\text{ }\mu\text{F} \\
+              C &= C_s + C_3 = 5 + 10 = \mathbf{15\text{ }\mu\text{F}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+      <!-- No. 11 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.11</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> The equivalent capacitance is $10\text{ }\mu\text{F}$ when '$n$' identical capacitors are connected in parallel and $0.4\text{ }\mu\text{F}$ when they are connected in series. Determine '$n$' and the capacitance of each capacitor.
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$C_p = 10\text{ }\mu\text{F}$, $C_s = 0.4\text{ }\mu\text{F}$<br>
+        For $n$ identical capacitors,<br>
+        $C_1 = C_2 = C_3 = \dots = C_n = C$</p>
+        <p style="margin-top: 10px;">In parallel,<br>
+        $\begin{aligned}[t]
+        C_p &= n\text{ }C \text{ }--------------\text{ (1)}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">In series,<br>
+        $\begin{aligned}[t]
+        C_s &= \frac{C}{n} \text{ }--------------\text{ (2)}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">eq (1) $\div$ eq (2)<br>
+        $\begin{aligned}[t]
+        \frac{C_p}{C_s} &= \frac{n\text{ }C}{\frac{C}{n}} \\
+        \frac{C_p}{C_s} &= n\text{ }C \times \frac{n}{C} \\
+        \frac{10}{0.4} &= n^2 \\
+        n &= \sqrt{\frac{10}{0.4}} = \mathbf{5\text{ capacitors}}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">$n = 5$ in eq (2)<br>
+        $\begin{aligned}[t]
+        0.4 &= \frac{C}{5} \\
+        C &= 0.4 \times 5 \\
+        &= \mathbf{2\text{ }\mu\text{F}}
+        \end{aligned}$</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- No. 12 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.12</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> A $35\text{ }\mu\text{F}$ capacitor is needed, but only $10\text{ }\mu\text{F}$ capacitors are available. How should a minimum number of $10\text{ }\mu\text{F}$ capacitors be connected so that the combination has a capacitance of $35\text{ }\mu\text{F}$?
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>To get $35\text{ }\mu\text{F}$<br>
+        $C_1 = C_2 = C_3 = \dots = C_n = C = 10\text{ }\mu\text{F}$</p>
+        <p style="margin-top: 10px;">When $C_1$ and $C_2$ are connected in series,<br>
+        $\begin{aligned}[t]
+        \frac{1}{C_s} &= \frac{1}{C_1} + \frac{1}{C_2} \\
+        &= \frac{1}{10} + \frac{1}{10} \\
+        &= \frac{1 + 1}{10} = \frac{2}{10} \\
+        C_s &= \frac{10}{2} = \mathbf{5\text{ }\mu\text{F}}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">When $C_3$, $C_4$ and $C_5$ are connected in parallel,<br>
+        $\begin{aligned}[t]
+        C_p &= C_3 + C_4 + C_5 \\
+        &= 10 + 10 + 10 = \mathbf{30\text{ }\mu\text{F}}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">When $C_p$ and $C_s$ are connected in parallel,<br>
+        $\begin{aligned}[t]
+        C &= C_p + C_s \\
+        &= 30 + 5 = \mathbf{35\text{ }\mu\text{F}}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">To get $35\text{ }\mu\text{F}$, minimum number of $10\text{ }\mu\text{F}$ capacitors = $\mathbf{5}$</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- No. 13 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.13</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> There capacitors have capacitance of $3\text{ }\mu\text{F}$, $10\text{ }\mu\text{F}$ and $15\text{ }\mu\text{F}$. How should they be connected to obtain the equivalent capacitances of (i) $2\text{ }\mu\text{F}$ (ii) $9\text{ }\mu\text{F}$ (iii) $12.5\text{ }\mu\text{F}$?
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$C_1 = 3\text{ }\mu\text{F}$, $C_2 = 10\text{ }\mu\text{F}$, $C_3 = 15\text{ }\mu\text{F}$</p>
+        <p style="margin-top: 10px;"><strong style="color: #2563eb;">(i)</strong> To get $2\text{ }\mu\text{F}$,<br>
+        $C_1$, $C_2$ and $C_3$ are connected in series<br>
+        $\begin{aligned}[t]
+        \frac{1}{C} &= \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3} \\
+        &= \frac{1}{3} + \frac{1}{10} + \frac{1}{15} \\
+        &= \frac{10 + 3 + 2}{30} = \frac{15}{30} \\
+        C &= \frac{30}{15} = \mathbf{2\text{ }\mu\text{F}}
+        \end{aligned}$</p>
+        <p style="margin-top: 15px;"><strong style="color: #2563eb;">(ii)</strong> To get $9\text{ }\mu\text{F}$,<br>
+        $C_2$ and $C_3$ are connected in series<br>
+        $\begin{aligned}[t]
+        \frac{1}{C_s} &= \frac{1}{C_2} + \frac{1}{C_3} \\
+        &= \frac{1}{10} + \frac{1}{15} \\
+        &= \frac{3 + 2}{30} = \frac{5}{30} \\
+        C_s &= \frac{30}{5} = 6\text{ }\mu\text{F}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">$C_s$ and $C_1$ are connected in parallel<br>
+        $\begin{aligned}[t]
+        C &= C_s + C_1 = 6 + 3 = \mathbf{9\text{ }\mu\text{F}}
+        \end{aligned}$</p>
+        <p style="margin-top: 15px;"><strong style="color: #2563eb;">(iii)</strong> To get $12.5\text{ }\mu\text{F}$,<br>
+        $C_1$ and $C_3$ are connected in series<br>
+        $\begin{aligned}[t]
+        \frac{1}{C_s} &= \frac{1}{C_1} + \frac{1}{C_3} \\
+        &= \frac{1}{3} + \frac{1}{15} \\
+        &= \frac{5 + 1}{15} = \frac{6}{15} \\
+        C_s &= \frac{15}{6} = 2.5\text{ }\mu\text{F}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">$C_s$ and $C_2$ are connected in parallel<br>
+        $\begin{aligned}[t]
+        C &= C_s + C_2 = 2.5 + 10 = \mathbf{12.5\text{ }\mu\text{F}}
+        \end{aligned}$</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- No. 14 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.14</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> Three capacitors of capacitance $3\text{ }\mu\text{F}$, $10\text{ }\mu\text{F}$ and $15\text{ }\mu\text{F}$ are connected in <strong style="color: #2563eb;">series</strong> with $100\text{ V}$ battery. What is the charge and the potential difference on each capacitor?
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$C_1 = 3\text{ }\mu\text{F}$, $C_2 = 10\text{ }\mu\text{F}$, $C_3 = 15\text{ }\mu\text{F}$, $V = 100\text{ V}$<br>
+        $Q_1 = ?,\quad Q_2 = ?,\quad Q_3 = ?$<br>
+        $V_1 = ?,\quad V_2 = ?,\quad V_3 = ?$</p>
+        <p style="margin-top: 10px;">When $C_1$, $C_2$ and $C_3$ are connected in series,<br>
+        $\begin{aligned}[t]
+        \frac{1}{C} &= \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3} \\
+        &= \frac{1}{3} + \frac{1}{10} + \frac{1}{15} \\
+        &= \frac{10 + 3 + 2}{30} = \frac{15}{30} \\
+        C &= \frac{30}{15} = \mathbf{2\text{ }\mu\text{F}}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">$\begin{aligned}[t]
+        C &= \frac{Q}{V} \\
+        Q &= C\text{ }V \\
+        &= 2 \times 10^{-6} \times 100 \\
+        &= \mathbf{200 \times 10^{-6}\text{ C}}
+        \end{aligned}$</p>
+        <p style="margin-top: 10px;">$Q_1 = Q_2 = Q_3 = Q = \mathbf{200 \times 10^{-6}\text{ C}}$ (in series)</p>
+        <p style="margin-top: 10px;">$\begin{aligned}[t]
+        V_1 &= \frac{Q_1}{C_1} = \frac{200 \times 10^{-6}}{3 \times 10^{-6}} = \mathbf{66.67\text{ V}} \\
+        V_2 &= \frac{Q_2}{C_2} = \frac{200 \times 10^{-6}}{10 \times 10^{-6}} = \mathbf{20\text{ V}} \\
+        V_3 &= \frac{Q_3}{C_3} = \frac{200 \times 10^{-6}}{15 \times 10^{-6}} = \mathbf{13.33\text{ V}}
+        \end{aligned}$</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- No. 15 -->
+<div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+    <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.15</span>
+  </div>
+  <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+    <p style="margin-top: 0; font-weight: 400;">
+      <strong style="color: #2563eb;">Q:</strong> A capacitor having a capacitance of $2\text{ }\mu\text{F}$ and a charge of $2000\text{ }\mu\text{C}$ is connected in series with another capacitor having a capacitance of $8\text{ }\mu\text{F}$ and a charge of $1600\text{ }\mu\text{C}$.<br>
+      (i) Find the potential difference of the individual capacitors prior to the connection.<br>
+      (ii) Find the potential difference of the individual capacitors after the connection.
+    </p>
+    <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+    <details style="cursor: pointer;">
+      <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+        <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+      </summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+        <p>$C_1 = 2\text{ }\mu\text{F},\quad C_2 = 8\text{ }\mu\text{F}$<br>
+        $Q_1 = 2000\text{ }\mu\text{C},\quad Q_2 = 1600\text{ }\mu\text{C}$<br>
+        (i) $V_1 = ?,\quad V_2 = ?$ (prior to the connection)<br>
+        (ii) $V'_1 = ?,\quad V'_2 = ?$ (after the connection)</p>
+        
+        <p style="margin-top: 15px;"><strong style="color: #2563eb;">(i) Prior to the connection</strong><br>
+        $\begin{aligned}[t]
+        V_1 &= \frac{Q_1}{C_1} = \frac{2000 \times 10^{-6}}{2 \times 10^{-6}} = \mathbf{1000\text{ V}} \\
+        V_2 &= \frac{Q_2}{C_2} = \frac{1600 \times 10^{-6}}{8 \times 10^{-6}} = \mathbf{200\text{ V}}
+        \end{aligned}$</p>
+
+        <p style="margin-top: 15px;"><strong style="color: #2563eb;">(ii) After the connection</strong><br>
+        $\begin{aligned}[t]
+        V &= V_1 + V_2 = 1000 + 200 = 1200\text{ V}
+        \end{aligned}$</p>
+        
+        <p style="margin-top: 10px;">When $C_1$ and $C_2$ are connected in series,<br>
+        $\begin{aligned}[t]
+        \frac{1}{C} &= \frac{1}{C_1} + \frac{1}{C_2} \\
+        &= \frac{1}{2} + \frac{1}{8} \\
+        &= \frac{4 + 1}{8} = \frac{5}{8} \\
+        C &= \frac{8}{5} = 1.6\text{ }\mu\text{F}
+        \end{aligned}$</p>
+
+        <p style="margin-top: 10px;">$\begin{aligned}[t]
+        Q &= C\text{ }V \\
+        &= 1.6 \times 10^{-6} \times 1200 \\
+        &= 1920 \times 10^{-6}\text{ C}
+        \end{aligned}$</p>
+
+        <p style="margin-top: 10px;">$Q'_1 = Q'_2 = Q = 1920 \times 10^{-6}\text{ C}$ (in series)</p>
+
+        <p style="margin-top: 10px;">$\begin{aligned}[t]
+        V'_1 &= \frac{Q'_1}{C_1} = \frac{1920 \times 10^{-6}}{2 \times 10^{-6}} = \mathbf{960\text{ V}} \\
+        V'_2 &= \frac{Q'_2}{C_2} = \frac{1920 \times 10^{-6}}{8 \times 10^{-6}} = \mathbf{240\text{ V}}
+        \end{aligned}$</p>
+      </div>
+    </details>
+  </div>
+</div>
+
+    </main>
+  </div>
+
+</body>
+</html>

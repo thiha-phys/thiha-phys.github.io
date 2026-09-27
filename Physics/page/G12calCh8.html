@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 Physics - Chapter 6 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax ထည့်ရန် -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <h1 class="page-title">Chapter 6 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Sub Banner -->
+    <div class="grade-banner">
+      <h2>Chapter 8 - interference and diffraction of light</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၁ ပုဒ်)</p>
+    </div>
+
+    <!-- Problems List Container -->
+    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
+     
+<!-- Eg. 1 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.1.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> What is the phase difference for two waves of the same frequency arriving at a point with the respective path lengths of $6\lambda$ and $4.5\lambda$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              
+              <p>$\Delta x = 6\lambda - 4.5\lambda = 1.5\lambda$, $\quad \Delta\phi = ?$</p>
+
+              <p style="margin-top: 10px;">$\begin{aligned}[t] 
+              \Delta\phi &= \frac{2\pi}{\lambda} \Delta x \\
+              &= \frac{2\pi}{\lambda} \times 1.5\lambda = \mathbf{3\pi}
+              \end{aligned}$</p>
+
+              <p style="margin-top: 10px;">Thus, the two waves are out of phase.</p>
+
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 5 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.5</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> At what angle is the first-order <u>maximum</u> for $450\text{ nm}$ wavelength blue light falling <strong>on double slits</strong> separated by $0.05\text{ mm}$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>For double slits,<br>
+              $\lambda = 450\text{ nm} = 450 \times 10^{-9}\text{ m}$,<br>
+              $d = 0.05\text{ mm} = 0.05 \times 10^{-3}\text{ m}$, $\theta = ?$</p>
+              <p style="margin-top: 10px;">For first-order bright, $m = 1$<br>
+              $d\sin\theta = m\lambda$<br>
+              $\sin\theta = \frac{m\lambda}{d}$<br>
+              $\theta = \sin^{-1}\left(\frac{m\lambda}{d}\right)$<br>
+              $\theta = \sin^{-1}\left(\frac{1 \times 450 \times 10^{-9}}{0.05 \times 10^{-3}}\right) = \mathbf{0.52^\circ}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 2 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.2.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> In <strong>a double slit</strong> interference experiment, the distance between the slits is $5\text{ mm}$ and the screen is $2\text{ m}$ from the slits. Yellow light from a sodium lamp is used and it has a wavelength of $5.89 \times 10^{-7}\text{ m}$. Find the distance between <strong>the first and second order bright</strong> fringes on the screen.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>For double slits,<br>
+              $d = 5\text{ mm} = 5 \times 10^{-3}\text{ m}$, $D = 2\text{ m}$<br>
+              $\lambda = 5.89 \times 10^{-7}\text{ m}$, $\Delta y = ?$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              \Delta y &= \frac{\lambda D}{d} \\
+              &= \frac{5.89 \times 10^{-7} \times 2}{5 \times 10^{-3}} \\
+              &= 2.356 \times 10^{-4}\text{ m} = \mathbf{0.2356\text{ mm}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 7 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.7</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Find the distance between <strong>adjacent dark spots</strong> from <strong>a double slit</strong> interference pattern if the wavelength of light is $500\text{ nm}$, the distance between the slits is $1\text{ mm}$, and the distance from the slit to the screen is $2\text{ m}$.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>For double slits,<br>
+              $d = 1\text{ mm} = 1 \times 10^{-3}\text{ m}$, $D = 2\text{ m}$,<br>
+              $\lambda = 500\text{ nm} = 500 \times 10^{-9}\text{ m}$, $\Delta y = ?$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              \Delta y &= \frac{\lambda D}{d} \\
+              &= \frac{500 \times 10^{-9} \times 2}{1 \times 10^{-3}} \\
+              &= 0.001\text{ m} = \mathbf{1\text{ mm}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 9 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.9</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> If the distance between <strong>two slits</strong> is $0.05\text{ mm}$ and the distance to a screen is $2.5\text{ m}$, find the spacing between the <strong>first-order and second-order bright fringes</strong> for yellow light of $580\text{ nm}$ wavelength.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>For double slits,<br>
+              $d = 0.05\text{ mm} = 0.05 \times 10^{-3}\text{ m}$, $D = 2.5\text{ m}$,<br>
+              $\lambda = 580\text{ nm} = 580 \times 10^{-9}\text{ m}$, $\Delta y = ?$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              \Delta y &= \frac{\lambda D}{d} \\
+              &= \frac{580 \times 10^{-9} \times 2.5}{0.05 \times 10^{-3}} \\
+              &= 0.029\text{ m}\text{ (or) } \mathbf{29\text{ mm}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 6 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.6</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A beam of $650\text{ nm}$ light is directed upon two slits that are separated by a distance of $0.75\text{ mm}$. A screen is placed $1.50\text{ m}$ away to capture the interference pattern. What is the distance from the $1^{\text{st}}$ order maximum to the $3^{\text{rd}}$ order minimum?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>For double slits,<br>
+              $d = 0.75\text{ mm} = 0.75 \times 10^{-3}\text{ m}$, $D = 1.5\text{ m}$,<br>
+              $\lambda = 650\text{ nm} = 650 \times 10^{-9}\text{ m}$, $\Delta y = ?$</p>
+              <p style="margin-top: 10px;">For $1^{\text{st}}$ order bright (maximum), $m = 1$<br>
+              $\begin{aligned}[t]
+              y_1 &= m \frac{\lambda D}{d} \\
+              &= \frac{650 \times 10^{-9} \times 1.5}{0.75 \times 10^{-3}} \\
+              &= 0.0013\text{ m} = 1.3 \times 10^{-3}\text{ m}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">For $3^{\text{rd}}$ order dark (minimum), $m = 2$<br>
+              $\begin{aligned}[t]
+              y_2 &= \left(m + \frac{1}{2}\right) \frac{\lambda D}{d} = \left(2 + \frac{1}{2}\right) \frac{\lambda D}{d} = \frac{5}{2} \frac{\lambda D}{d} \\
+              &= \frac{5}{2} \times \frac{650 \times 10^{-9} \times 1.5}{0.75 \times 10^{-3}} \\
+              &= 3.25 \times 10^{-3}\text{ m}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              \Delta y &= y_2 - y_1 \\
+              &= 3.25 \times 10^{-3} - 1.3 \times 10^{-3} \\
+              &= \mathbf{1.95 \times 10^{-3}\text{ m}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 3 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.3.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A beam of green light from a laser light source is diffracted by a slit of width $0.55\text{ mm}$. The diffraction pattern forms on a wall $2.06\text{ m}$ beyond the slit. The distance between the positions of the first minima on both sides of central bright fringe is $4.1\text{ mm}$. Calculate the wavelength of the laser light.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>For single slit,<br>
+              $a = 0.55\text{ mm} = 0.55 \times 10^{-3}\text{ m}$,<br>
+              $D = 2.06\text{ m}$, $\lambda = ?$</p>
+              <p style="margin-top: 10px;">The width of the central maximum $= 2\frac{\lambda D}{a}$<br>
+              $4.1\text{ mm} = 4.1 \times 10^{-3}\text{ m}$<br>
+              $\begin{aligned}[t]
+              4.1 \times 10^{-3} &= 2 \frac{\lambda D}{a} \\
+              \lambda &= \frac{4.1 \times 10^{-3} \times a}{2D} \\
+              &= \frac{4.1 \times 10^{-3} \times 0.55 \times 10^{-3}}{2 \times 2.06} \\
+              &= 547.3 \times 10^{-9}\text{ m} = \mathbf{547.3\text{ nm}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 8 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.8</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Light of wavelength $580\text{ nm}$ is incident on a slit of width $0.3\text{ mm}$. The observing screen is placed $2\text{ m}$ from the slit. Find the positions of the first dark fringes and the width of the central bright fringes.
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>For single slit,<br>
+              $a = 0.3\text{ mm} = 0.3 \times 10^{-3}\text{ m}$, $D = 2\text{ m}$,<br>
+              $\lambda = 580\text{ nm} = 580 \times 10^{-9}\text{ m}$, $y = ?$</p>
+              <p style="margin-top: 10px;">For first dark fringes, $m = 1$<br>
+              $\begin{aligned}[t]
+              y &= m \frac{\lambda D}{a} \\
+              &= \frac{580 \times 10^{-9} \times 2}{0.3 \times 10^{-3}} \\
+              &= \mathbf{3.87 \times 10^{-3}\text{ m}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">The width of the central maximum $= 2\frac{\lambda D}{a}$<br>
+              $\begin{aligned}[t]
+              &= \frac{2 \times 580 \times 10^{-9} \times 2}{0.3 \times 10^{-3}} \\
+              &= 7.73 \times 10^{-3}\text{ m} = \mathbf{7.74\text{ mm}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">[OR] The width of the central maximum<br>
+              $= 2y = 2 \times 3.87 \times 10^{-3} = \mathbf{7.74\text{ mm}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Eg. 4 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">Eg.4.</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> Light of wavelength $457\text{ nm}$ illuminates a diffraction grating with $5000\text{ lines cm}^{-1}$. What is the second order diffracted angle?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$\lambda = 457\text{ nm} = 457 \times 10^{-9}\text{ m}$,<br>
+              $N = 5000\text{ lines cm}^{-1}$, $\theta = ?$<br>
+              for second order, $m = 2$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              d &= \frac{1}{N} \\
+              &= \frac{1}{5000} = 2 \times 10^{-4}\text{ cm} \\
+              &= 2 \times 10^{-6}\text{ m}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$d\sin\theta = m\lambda$<br>
+              $\sin\theta = \frac{m\lambda}{d}$<br>
+              $\theta = \sin^{-1}\left(\frac{m\lambda}{d}\right)$<br>
+              $\theta = \sin^{-1}\left(\frac{2 \times 457 \times 10^{-9}}{2 \times 10^{-6}}\right) = \mathbf{27.19^\circ\text{ (or) } 27^\circ\text{ 11'}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 11 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.11</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A diffraction grating has $2000\text{ lines per centimeter}$. At what angle will the first-order maximum be for $520\text{ nm}$ wavelength green light?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$\lambda = 520\text{ nm} = 520 \times 10^{-9}\text{ m}$,<br>
+              $N = 2000\text{ lines cm}^{-1}$, $\theta = ?$<br>
+              for first-order, $m = 1$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              d &= \frac{1}{N} \\
+              &= \frac{1}{2000} = 5 \times 10^{-4}\text{ cm} \\
+              &= 5 \times 10^{-6}\text{ m}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$d\sin\theta = m\lambda$<br>
+              $\sin\theta = \frac{m\lambda}{d}$<br>
+              $\theta = \sin^{-1}\left(\frac{m\lambda}{d}\right)$<br>
+              $\theta = \sin^{-1}\left(\frac{1 \times 520 \times 10^{-9}}{5 \times 10^{-6}}\right) = \mathbf{5.97^\circ\text{ (or) } 5^\circ\text{ 58'}}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 10 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.10</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> A grating containing $4000\text{ slits per centimeter}$ is illuminated with monochromatic light and produces the second-order bright line at a $30^\circ$ angle. What is the wavelength of the light used?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$N = 4000\text{ lines cm}^{-1}$, $\theta = 30^\circ$, $\lambda = ?$<br>
+              for second order, $m = 2$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              d &= \frac{1}{N} \\
+              &= \frac{1}{4000} = 2.5 \times 10^{-4}\text{ cm} \\
+              &= \mathbf{2.5 \times 10^{-6}\text{ m}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$d\sin\theta = m\lambda$<br>
+              $\begin{aligned}[t]
+              \lambda &= \frac{d\sin\theta}{m} \\
+              &= \frac{2.5 \times 10^{-6} \times \sin 30^\circ}{2} \\
+              &= \mathbf{625 \times 10^{-9}\text{ m} = 625\text{ nm}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- No. 12 -->
+      <div class="problem-card" style="background: #ffffff; border-radius: 14px; padding: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span style="background: #eff6ff; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;">No.12</span>
+        </div>
+        <div class="problem-content" style="font-size: 14px; color: #1e293b; line-height: 1.6;">
+          <p style="margin-top: 0; font-weight: 400;">
+            <strong style="color: #2563eb;">Q:</strong> How many lines per centimeter are there on a diffraction grating that gives a first-order maximum for $470\text{ nm}$ blue light at an angle of $25^\circ$?
+          </p>
+          <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0;">
+          <details style="cursor: pointer;">
+            <summary style="color: #059669; font-weight: 600; outline: none; user-select: none;">
+              <strong>Ans:</strong> (အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ)
+            </summary>
+            <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 15px; color: #1e293b; line-height: 2; word-wrap: break-word; word-break: break-word;">
+              <p>$N = ?$, $\lambda = 470\text{ nm} = 470 \times 10^{-9}\text{ m}$,<br>
+              $\theta = 25^\circ$<br>
+              for first-order, $m = 1$</p>
+              <p style="margin-top: 10px;">$d\sin\theta = m\lambda$<br>
+              $\begin{aligned}[t]
+              d &= \frac{m\lambda}{\sin\theta} \\
+              &= \frac{1 \times 470 \times 10^{-9}}{\sin 25^\circ} \\
+              &= 1.112 \times 10^{-6}\text{ m} \\
+              &= \mathbf{1.112 \times 10^{-4}\text{ cm}}
+              \end{aligned}$</p>
+              <p style="margin-top: 10px;">$\begin{aligned}[t]
+              N &= \frac{1}{d} \\
+              &= \frac{1}{1.112 \times 10^{-4}} \\
+              &= \mathbf{8992\text{ lines cm}^{-1}}
+              \end{aligned}$</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+          </main>
+  </div>
+
+</body>
+</html>
