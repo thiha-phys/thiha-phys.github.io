@@ -26,7 +26,7 @@
 
         .phone-container {
             width: 100%;
-            max-width: 480px;
+            max-width: 440px;
             margin: 0 auto;
             background-color: #f8fafc;
             border-radius: 40px;
@@ -252,8 +252,8 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 40px);
-            max-width: 440px;
+            width: calc(75% - 30px);
+            max-width: 330px;
             background: rgba(19, 32, 49, 0.82);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -358,7 +358,7 @@
                 </label>
                 <label class="form-field">
                     အီးမေးလ် (Email)
-                    <input name="email" type="email" autocomplete="email" required>
+                    <input name="email" type="email" autocomplete="email" pattern="[A-Za-z0-9._%+\x2d]+@gmail\.com" title="Use a Gmail address ending in @gmail.com" required>
                 </label>
                 <div class="form-actions">
                     <button class="btn-save" type="submit">Save</button>
@@ -373,10 +373,6 @@
             <a href="../index.html" class="nav-item">
                 <i class="fa-solid fa-house"></i>
                 <span>Home</span>
-            </a>
-            <a href="announcement.html" class="nav-item">
-                <i class="fa-solid fa-message"></i>
-                <span>Announcement</span>
             </a>
             <a href="knowledge.html" class="nav-item">
                 <i class="fa-solid fa-book"></i>
@@ -400,6 +396,40 @@
                 element
             ])
         );
+        const profileStatus = document.createElement('p');
+        profileStatus.setAttribute('role', 'status');
+        profileStatus.setAttribute('aria-live', 'polite');
+        profileStatus.style.cssText = 'margin-top:12px;color:#b91c1c;font-size:12px;';
+        editForm.after(profileStatus);
+
+        function getSavedProfile() {
+            const savedProfile = localStorage.getItem('physicsLearningHubProfile');
+            if (!savedProfile) {
+                return null;
+            }
+
+            const profile = JSON.parse(savedProfile);
+            if (!profile || typeof profile !== 'object') {
+                throw new Error('Saved profile data is not valid.');
+            }
+            return profile;
+        }
+
+        try {
+            const savedProfile = getSavedProfile();
+            if (savedProfile) {
+                for (const [field, element] of Object.entries(profileValues)) {
+                    if (typeof savedProfile[field] === 'string' && savedProfile[field].trim()) {
+                        element.textContent = field === 'phone'
+                            ? formatPhoneNumber(savedProfile[field])
+                            : savedProfile[field].trim();
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Unable to load the saved profile.', error);
+            profileStatus.textContent = 'သိမ်းထားတဲ့ account အချက်အလက်တွေကို ဖတ်မရပါ။';
+        }
 
         function openEditForm() {
             for (const [field, element] of Object.entries(profileValues)) {
@@ -416,6 +446,18 @@
             editButton.setAttribute('aria-expanded', 'false');
         }
 
+        function formatPhoneNumber(value) {
+            const englishDigits = value.replace(/[၀-၉]/g, (digit) =>
+                String(digit.charCodeAt(0) - '၀'.charCodeAt(0))
+            );
+            const digits = englishDigits.replace(/\D/g, '');
+            if (digits.length <= 2) {
+                return digits;
+            }
+
+            return [digits.slice(0, 2), ...digits.slice(2).match(/.{1,3}/g)].join(' ');
+        }
+
         editButton.addEventListener('click', () => {
             if (editForm.hidden) {
                 openEditForm();
@@ -429,11 +471,26 @@
         editForm.addEventListener('submit', (event) => {
             event.preventDefault();
             const formData = new FormData(editForm);
+            const updatedProfile = {};
 
             for (const [field, element] of Object.entries(profileValues)) {
-                element.textContent = formData.get(field).trim();
+                const value = formData.get(field).trim();
+                updatedProfile[field] = field === 'phone' ? formatPhoneNumber(value) : value;
             }
 
+            try {
+                localStorage.setItem('physicsLearningHubProfile', JSON.stringify(updatedProfile));
+            } catch (error) {
+                console.error('Unable to save the edited profile.', error);
+                profileStatus.textContent = 'အချက်အလက်တွေကို browser ထဲမှာ သိမ်းမရပါ။';
+                return;
+            }
+
+            for (const [field, element] of Object.entries(profileValues)) {
+                element.textContent = updatedProfile[field];
+            }
+
+            profileStatus.textContent = '';
             closeEditForm();
         });
     </script>

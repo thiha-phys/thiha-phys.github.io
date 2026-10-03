@@ -1,8 +1,9 @@
 /* Base Layout Setup */
 body {
+    box-sizing: border-box;
     font-family: 'Pyidaungsu', Arial, sans-serif;
     width: 100%;
-    max-width: 480px;
+    max-width: 440px;
     margin: 20px auto 0;
     min-height: calc(100vh - 20px);
     padding: 16px 16px 100px 16px;
@@ -280,12 +281,13 @@ svg {
 
 /* Floating Bottom Nav Bar */
 .bottom-nav {
+    box-sizing: border-box;
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 40px);
-    max-width: 440px;
+    width: calc(75% - 30px);
+    max-width: 330px;
     background: rgba(19, 32, 49, 0.82);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -433,12 +435,13 @@ svg {
 
 /* --- Bottom Nav Fix --- */
 .bottom-nav {
+  box-sizing: border-box;
   position: fixed;
-  bottom: 12px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 24px);
-  max-width: 420px;
+  width: calc(75% - 30px);
+  max-width: 330px;
   background: rgba(19, 32, 49, 0.82);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);

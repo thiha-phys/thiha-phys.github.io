@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Physics Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 28px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e8edf5;
+            color: #4b5563;
+            font-family: 'Pyidaungsu', Arial, sans-serif;
+        }
+
+        .auth-shell {
+            position: relative;
+            isolation: isolate;
+            width: 100%;
+            max-width: 440px;
+            padding: 5px;
+            border-radius: 36px;
+            background: conic-gradient(
+                from 20deg,
+                #ff365d,
+                #ff9a24,
+                #ffe43b,
+                #4dde76,
+                #17c8d8,
+                #3478ff,
+                #a849f5,
+                #f52cbd,
+                #ff365d
+            );
+            box-shadow:
+                0 0 18px rgba(57, 174, 255, 0.22),
+                0 18px 48px rgba(67, 80, 112, 0.2);
+        }
+
+        .auth-content {
+            padding: 30px 26px 22px;
+            border-radius: 32px;
+            background: #e8edf5;
+            box-shadow:
+                inset 5px 5px 12px #cdd3dd,
+                inset -5px -5px 12px #ffffff;
+        }
+
+        .brand {
+            margin-bottom: 22px;
+            text-align: center;
+        }
+
+        .brand-icon {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 10px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #e8edf5;
+            color: #5276d8;
+            font-size: 22px;
+            box-shadow:
+                6px 6px 12px #cdd3dd,
+                -6px -6px 12px #ffffff;
+        }
+
+        .brand h1 {
+            margin: 0;
+            color: #424b5b;
+            font-size: 22px;
+        }
+
+        .brand p {
+            margin: 5px 0 0;
+            color: #9aa3b2;
+            font-size: 12px;
+        }
+
+        .auth-form h2 {
+            margin: 0 0 5px;
+            color: #515b6d;
+            font-size: 19px;
+            text-align: center;
+        }
+
+        .form-intro {
+            margin: 0 0 16px;
+            color: #9aa3b2;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .field {
+            display: block;
+            margin-top: 12px;
+            color: #8a93a2;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .input-wrap {
+            position: relative;
+            display: block;
+            width: 100%;
+            margin-top: 6px;
+        }
+
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            z-index: 1;
+            color: #a4adbb;
+            font-size: 13px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .field input,
+        .field select {
+            display: block;
+            width: 100%;
+            min-height: 46px;
+            padding: 10px 42px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 24px;
+            outline: none;
+            background: #e8edf5;
+            color: #596273;
+            font: inherit;
+            font-size: 13px;
+            box-shadow:
+                inset 5px 5px 9px #cdd3dd,
+                inset -5px -5px 9px #ffffff;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .field input::placeholder {
+            color: #8993a3;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: rgba(83, 120, 220, 0.42);
+            box-shadow:
+                inset 3px 3px 6px #cdd3dd,
+                inset -3px -3px 6px #ffffff,
+                0 0 0 3px rgba(83, 120, 220, 0.1);
+        }
+
+        .field select {
+            appearance: none;
+            padding-right: 16px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 13px;
+            padding: 5px;
+            border: 0;
+            background: transparent;
+            color: #929cac;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+
+        .field-hint {
+            display: block;
+            margin: 5px 0 0 12px;
+            color: #9aa3b2;
+            font-size: 10px;
+            font-weight: 400;
+        }
+
+        .submit-button {
+            width: 100%;
+            min-height: 48px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            border-radius: 24px;
+            background: #e8edf5;
+            color: #5276d8;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            box-shadow:
+                6px 6px 12px #cdd3dd,
+                -6px -6px 12px #ffffff;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .submit-button:hover {
+            color: #4268cf;
+            box-shadow:
+                3px 3px 7px #cdd3dd,
+                -3px -3px 7px #ffffff;
+        }
+
+        .submit-button:active {
+            transform: scale(0.99);
+            box-shadow:
+                inset 4px 4px 8px #cdd3dd,
+                inset -4px -4px 8px #ffffff;
+        }
+
+        .auth-switch {
+            margin: 18px 0 0;
+            color: #9aa3b2;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .auth-switch button {
+            padding: 0 0 0 3px;
+            border: 0;
+            background: transparent;
+            color: #5276d8;
+            font: inherit;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .connection-note {
+            min-height: 18px;
+            margin: 12px 0 0;
+            color: #64748b;
+            font-size: 11px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 380px) {
+            body {
+                padding: 18px 12px;
+            }
+
+            .auth-content {
+                padding: 24px 18px 20px;
+            }
+        }
+
+        @media (max-height: 760px) {
+            body {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="auth-shell">
+      <div class="auth-content">
+        <header class="brand">
+            <div class="brand-icon" aria-hidden="true">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <h1>Physics Learning Hub</h1>
+            <p>သင်ခန်းစာများကို ဆက်လက်လေ့လာရန် ဝင်ရောက်ပါ</p>
+        </header>
+
+        <section class="auth-form" id="login-panel" aria-labelledby="login-heading">
+            <h2 id="login-heading">ပြန်လည်ဝင်ရောက်ရန်</h2>
+            <p class="form-intro">အကောင့်အချက်အလက်များ ထည့်သွင်းပါ။</p>
+            <form data-auth-form="login">
+                <label class="field">
+                    Email သို့မဟုတ် ဖုန်းနံပါတ်
+                    <span class="input-wrap">
+                        <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
+                        <input name="identifier" type="text" autocomplete="username" placeholder="Email သို့မဟုတ် ဖုန်းနံပါတ်" required>
+                    </span>
+                </label>
+                <label class="field">
+                    Password
+                    <span class="input-wrap">
+                        <i class="input-icon fa-solid fa-lock" aria-hidden="true"></i>
+                        <input name="password" type="password" autocomplete="current-password" placeholder="Password" required>
+                        <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+                    </span>
+                </label>
+                <button class="submit-button" type="submit">LOGIN ဝင်ရန်</button>
+            </form>
+            <p class="auth-switch">အကောင့်မရှိသေးဘူးလား? <button id="signup-tab" type="button" aria-controls="signup-panel">Create Account</button></p>
+        </section>
+
+        <section class="auth-form" id="signup-panel" aria-labelledby="signup-heading" hidden>
+            <h2 id="signup-heading">Create Account</h2>
+            <p class="form-intro">လိုအပ်တဲ့ အချက်အလက်တွေ ဖြည့်ပေးပါ။</p>
+            <form data-auth-form="signup">
+                <label class="field">
+                    အမည် (Name)
+                    <span class="input-wrap">
+                        <i class="input-icon fa-solid fa-user" aria-hidden="true"></i>
+                        <input name="name" type="text" autocomplete="name" placeholder="အမည်" required>
+                    </span>
+                </label>
+                <label class="field">
+                    အလုပ်အကိုင် (Job)
+                    <span class="input-wrap">
+                        <i class="input-icon fa-solid fa-briefcase" aria-hidden="true"></i>
+                        <select name="job" required>
+                            <option value="" selected disabled>ရွေးချယ်ပါ</option>
+                            <option value="Student">ကျောင်းသား / Student</option>
+                            <option value="Teacher">ဆရာ / Teacher</option>
+                        </select>
+                    </span>
+                    <span class="field-hint">Student သို့မဟုတ် Teacher ကို ရွေးပါ။</span>
+                </label>
+                <label class="field">
+                    Email
+                    <span class="input-wrap">
+                        <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
+                        <input name="email" type="email" autocomplete="email" placeholder="Email" pattern="[A-Za-z0-9._%+\x2d]+@gmail\.com" title="Use a Gmail address ending in @gmail.com" required>
+                    </span>
+                </label>
+                <label class="field">
+                    ဖုန်းနံပါတ် (Phone)
+                    <span class="input-wrap">
+                        <i class="input-icon fa-solid fa-phone" aria-hidden="true"></i>
+                        <input name="phone" type="tel" autocomplete="tel" placeholder="ဖုန်းနံပါတ်" required>
+                    </span>
+                </label>
+                <label class="field">
+                    Password
+                    <span class="input-wrap">
+                        <i class="input-icon fa-solid fa-lock" aria-hidden="true"></i>
+                        <input name="password" type="password" autocomplete="new-password" placeholder="Password" minlength="8" required>
+                        <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+                    </span>
+                    <span class="field-hint">အနည်းဆုံး စာလုံး ၈ လုံး ထည့်ပါ။</span>
+                </label>
+                <label class="field">
+                    Password ကို ထပ်မံထည့်ပါ
+                    <span class="input-wrap">
+                        <i class="input-icon fa-solid fa-lock" aria-hidden="true"></i>
+                        <input name="confirmPassword" type="password" autocomplete="new-password" placeholder="Password ထပ်မံထည့်ပါ" minlength="8" required>
+                        <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+                    </span>
+                </label>
+                <button class="submit-button" type="submit">REGISTER <i class="fa-solid fa-user-plus" aria-hidden="true"></i></button>
+            </form>
+            <p class="auth-switch">အကောင့်ရှိပြီးသားလား? <button id="login-tab" type="button" aria-controls="login-panel">Login ဝင်ရန်</button></p>
+        </section>
+
+        <p class="connection-note" id="connection-note" role="status" aria-live="polite"></p>
+      </div>
+    </main>
+
+    <script>
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const loginPanel = document.getElementById('login-panel');
+        const signupPanel = document.getElementById('signup-panel');
+        const connectionNote = document.getElementById('connection-note');
+
+        function showPanel(panelName) {
+            const isLogin = panelName === 'login';
+            loginPanel.hidden = !isLogin;
+            signupPanel.hidden = isLogin;
+            connectionNote.textContent = '';
+        }
+
+        loginTab.addEventListener('click', () => showPanel('login'));
+        signupTab.addEventListener('click', () => showPanel('signup'));
+
+        document.querySelectorAll('.password-toggle').forEach((toggle) => {
+            toggle.addEventListener('click', () => {
+                const input = toggle.parentElement.querySelector('input');
+                const icon = toggle.querySelector('i');
+                const showingPassword = input.type === 'password';
+
+                input.type = showingPassword ? 'text' : 'password';
+                toggle.setAttribute('aria-pressed', String(showingPassword));
+                toggle.setAttribute('aria-label', showingPassword ? 'Hide password' : 'Show password');
+                icon.classList.toggle('fa-eye', !showingPassword);
+                icon.classList.toggle('fa-eye-slash', showingPassword);
+            });
+        });
+
+        document.querySelector('[data-auth-form="signup"]').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const password = form.elements.namedItem('password').value;
+            const confirmPassword = form.elements.namedItem('confirmPassword').value;
+            const phone = form.elements.namedItem('phone').value;
+
+            if (password !== confirmPassword) {
+                form.elements.namedItem('confirmPassword').setCustomValidity('Passwords do not match.');
+                form.reportValidity();
+                form.elements.namedItem('confirmPassword').setCustomValidity('');
+                return;
+            }
+
+            const profile = {
+                name: form.elements.namedItem('name').value.trim(),
+                occupation: form.elements.namedItem('job').value,
+                email: form.elements.namedItem('email').value.trim(),
+                phone
+            };
+
+            try {
+                localStorage.setItem('physicsLearningHubProfile', JSON.stringify(profile));
+                window.location.href = 'account.html';
+            } catch (error) {
+                console.error('Unable to save the profile in this browser.', error);
+                connectionNote.textContent = 'ဒီ browser မှာ account အချက်အလက်တွေ သိမ်းမရပါ။ Browser storage setting ကို စစ်ဆေးပါ။';
+            }
+        });
+
+        document.querySelector('[data-auth-form="login"]').addEventListener('submit', (event) => {
+            event.preventDefault();
+            connectionNote.textContent = 'Login service မချိတ်ဆက်ရသေးပါ။ Backend ကို ချိတ်ဆက်ပြီးမှ ဝင်ရောက်နိုင်ပါမယ်။';
+        });
+    </script>
+</body>
+</html>
