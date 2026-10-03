@@ -1,7 +1,8 @@
 /* Base Layout Setup */
 body {
     font-family: 'Pyidaungsu', Arial, sans-serif;
-    width: min(90vw, 480px);
+    width: 100%;
+    max-width: 480px;
     margin: 20px auto 0;
     min-height: calc(100vh - 20px);
     padding: 16px 16px 100px 16px;
