@@ -281,10 +281,10 @@ svg {
 /* Floating Bottom Nav Bar */
 .bottom-nav {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    width: calc(100% - 40px);
+    bottom: 16px;
+    left: 12px;
+    right: 12px;
+    width: calc(100% - 24px);
     background: rgba(19, 32, 49, 0.82);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
