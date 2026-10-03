@@ -283,7 +283,7 @@ svg {
     bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 24px);
+    width: calc(100% - 40px);
     max-width: 420px;
     background: rgba(19, 32, 49, 0.82);
     backdrop-filter: blur(10px);
