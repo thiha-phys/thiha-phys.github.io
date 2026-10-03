@@ -15,6 +15,7 @@ body {
 }
 
 .app-container {
+    position: relative;
     min-height: calc(100vh - 120px);
     background: #ffffff;
     border-radius: 28px 28px 0 0;
@@ -280,7 +281,7 @@ svg {
 /* Floating Bottom Nav Bar */
 .bottom-nav {
     position: fixed;
-    bottom: 12px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 40px);
