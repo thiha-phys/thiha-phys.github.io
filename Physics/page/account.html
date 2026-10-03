@@ -115,12 +115,12 @@
 
         /* Info Details Card */
         .info-card {
-            background: white;
+            background: #dbeafe;
             border-radius: 20px;
             padding: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22);
             margin-bottom: 24px;
-            border: 1px solid #f1f5f9;
+            border: 1px solid #bfdbfe;
         }
 
         .info-item {
@@ -186,6 +186,66 @@
             background-color: #dc2626;
         }
 
+        .profile-edit-form {
+            margin-top: 16px;
+            padding: 18px;
+            background: #fff8db;
+            border: 1px solid #f5e7ad;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.16);
+        }
+
+        .form-field {
+            display: block;
+            margin-bottom: 14px;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .form-field input {
+            display: block;
+            width: 100%;
+            margin-top: 6px;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .form-field input:focus {
+            outline: 2px solid rgba(59, 130, 246, 0.25);
+            border-color: #3b82f6;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .form-actions button {
+            flex: 1;
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .btn-cancel {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
         /* Floating Bottom Navigation (Matching your theme) */
         .bottom-nav {
             position: fixed;
@@ -247,8 +307,8 @@
                         <i class="fa-solid fa-camera"></i>
                     </div>
                 </div>
-                <h2>U Thiha Kyaw</h2>
-                <p>Physics Teacher & Developer</p>
+                <h2 id="profile-name" data-profile-value="name">U Thiha Kyaw</h2>
+                <p id="profile-occupation" data-profile-value="occupation">Physics Teacher &amp; Developer</p>
             </div>
 
             <!-- Personal Information Section -->
@@ -259,31 +319,11 @@
             <div class="info-card">
                 <div class="info-item">
                     <div class="info-icon">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <div class="info-text">
-                        <div class="info-label">အမည် (Name)</div>
-                        <div class="info-value">U Thiha Kyaw</div>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <div class="info-icon">
-                        <i class="fa-solid fa-briefcase"></i>
-                    </div>
-                    <div class="info-text">
-                        <div class="info-label">အလုပ်အကိုင် (Job / Position)</div>
-                        <div class="info-value">Physics Teacher</div>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <div class="info-icon">
                         <i class="fa-solid fa-phone"></i>
                     </div>
                     <div class="info-text">
                         <div class="info-label">ဖုန်းနံပါတ် (Phone)</div>
-                        <div class="info-value">09 258 558 839</div>
+                        <div class="info-value" data-profile-value="phone">09 258 558 839</div>
                     </div>
                 </div>
 
@@ -293,15 +333,38 @@
                     </div>
                     <div class="info-text">
                         <div class="info-label">အီးမေးလ် (Email)</div>
-                        <div class="info-value">thihakyawphys73@gmail.com</div>
+                        <div class="info-value" data-profile-value="email">thihakyawphys73@gmail.com</div>
                     </div>
                 </div>
             </div>
 
             <!-- Edit Button Tool -->
-            <button class="btn-edit">
+            <button class="btn-edit" id="edit-profile-button" type="button" aria-expanded="false" aria-controls="profile-edit-form">
                 <i class="fa-solid fa-pen-to-square"></i> အချက်အလက်များ ပြင်ဆင်ရန် (Edit Profile)
             </button>
+
+            <form class="profile-edit-form" id="profile-edit-form" hidden>
+                <label class="form-field">
+                    အမည် (Name)
+                    <input name="name" type="text" autocomplete="name" required>
+                </label>
+                <label class="form-field">
+                    အလုပ်အကိုင် (Job / Position)
+                    <input name="occupation" type="text" required>
+                </label>
+                <label class="form-field">
+                    ဖုန်းနံပါတ် (Phone)
+                    <input name="phone" type="tel" autocomplete="tel" required>
+                </label>
+                <label class="form-field">
+                    အီးမေးလ် (Email)
+                    <input name="email" type="email" autocomplete="email" required>
+                </label>
+                <div class="form-actions">
+                    <button class="btn-save" type="submit">Save</button>
+                    <button class="btn-cancel" id="cancel-edit-button" type="button">Cancel</button>
+                </div>
+            </form>
 
         </div>
 
@@ -326,6 +389,54 @@
         </div>
 
     </div>
+
+    <script>
+        const editButton = document.getElementById('edit-profile-button');
+        const editForm = document.getElementById('profile-edit-form');
+        const cancelButton = document.getElementById('cancel-edit-button');
+        const profileValues = Object.fromEntries(
+            [...document.querySelectorAll('[data-profile-value]')].map((element) => [
+                element.dataset.profileValue,
+                element
+            ])
+        );
+
+        function openEditForm() {
+            for (const [field, element] of Object.entries(profileValues)) {
+                editForm.elements.namedItem(field).value = element.textContent.trim();
+            }
+            editForm.hidden = false;
+            editButton.setAttribute('aria-expanded', 'true');
+            editForm.elements.namedItem('name').focus();
+        }
+
+        function closeEditForm() {
+            editForm.reset();
+            editForm.hidden = true;
+            editButton.setAttribute('aria-expanded', 'false');
+        }
+
+        editButton.addEventListener('click', () => {
+            if (editForm.hidden) {
+                openEditForm();
+            } else {
+                closeEditForm();
+            }
+        });
+
+        cancelButton.addEventListener('click', closeEditForm);
+
+        editForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(editForm);
+
+            for (const [field, element] of Object.entries(profileValues)) {
+                element.textContent = formData.get(field).trim();
+            }
+
+            closeEditForm();
+        });
+    </script>
 
 </body>
 </html>
