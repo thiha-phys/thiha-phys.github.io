@@ -1,0 +1,1663 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 10%,
+            #0b1018 0%,
+            #03070c 45%,
+            #010409 100%
+        );
+
+    color: #e9e6df;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+}
+
+
+/* =========================================================
+   MAIN APP
+========================================================= */
+
+.app {
+
+    width: min(
+        1180px,
+        calc(100% - 40px)
+    );
+
+    margin:
+        0 auto;
+
+    padding:
+        35px 0 70px;
+
+}
+
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.hero-header {
+
+    position: relative;
+
+    text-align: center;
+
+    padding:
+        10px 0 0;
+
+    margin-bottom:
+        55px;
+
+    overflow: hidden;
+
+}
+
+
+.page-back-btn {
+
+    position: absolute;
+
+    left: 10px;
+
+    top: 8px;
+
+    z-index: 10;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+
+    height: 46px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #f3f4f6;
+
+    text-decoration: none;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+
+    transition: transform 0.2s ease, background 0.2s ease;
+
+}
+
+
+.page-back-btn:hover,
+.page-back-btn:active {
+
+    background: rgba(255, 212, 92, 0.15);
+
+    transform: translateY(-1px);
+
+}
+
+
+
+/* =========================================================
+   GRADE BADGE
+========================================================= */
+
+.grade-badge {
+
+    position: relative;
+
+    z-index: 5;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        9px 18px;
+
+    border:
+        1px solid #303744;
+
+    border-radius:
+        30px;
+
+    background:
+        rgba(
+            10,
+            14,
+            21,
+            0.75
+        );
+
+    color:
+        #aaaeb6;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        2.5px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(
+            0,
+            0,
+            0,
+            0.25
+        );
+
+}
+
+
+.badge-dot {
+
+    color:
+        #ffd45c;
+
+    font-size:
+        17px;
+
+}
+
+
+
+/* =========================================================
+   MAIN TITLE
+========================================================= */
+
+.hero-header h1 {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    margin:
+        28px 0 10px;
+
+    color:
+        #eeeae2;
+
+    font-size:
+        clamp(
+            52px,
+            7vw,
+            78px
+        );
+
+    line-height:
+        1.05;
+
+    font-weight:
+        400;
+
+    letter-spacing:
+        -1px;
+
+    text-shadow:
+        0 4px 30px
+        rgba(
+            255,
+            255,
+            255,
+            0.05
+        );
+
+}
+
+
+
+/* =========================================================
+   SUBTITLE
+========================================================= */
+
+.hero-subtitle {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    margin:
+        0 0 18px;
+
+    color:
+        #92959e;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        18px;
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        3px;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+
+/* =========================================================
+   CONCEPT LINE
+========================================================= */
+
+.concept-line {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        12px;
+
+    color:
+        #70747d;
+
+    font-size:
+        15px;
+
+    font-style:
+        italic;
+
+}
+
+
+.concept-dot {
+
+    color:
+        #ffd45c;
+
+    font-style:
+        normal;
+
+}
+
+
+
+/* =========================================================
+   MINI EQUATIONS
+========================================================= */
+
+.mini-equations {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        16px;
+
+    margin-top:
+        25px;
+
+    color:
+        #777b84;
+
+    font-size:
+        16px;
+
+}
+
+
+.equation-separator {
+
+    color:
+        #343b45;
+
+}
+
+
+
+/* =========================================================
+   AUTHOR CREDIT
+========================================================= */
+
+.author-credit {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    margin-top:
+        28px;
+
+    color:
+        #50545d;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        0.8px;
+
+}
+
+
+.author-credit strong {
+
+    color:
+        #777b84;
+
+    font-weight:
+        600;
+
+}
+
+
+.author-credit span {
+
+    margin:
+        0 7px;
+
+    color:
+        #3d424b;
+
+}
+
+
+
+/* =========================================================
+   DECORATIVE TRAJECTORY
+========================================================= */
+
+.hero-trajectory {
+
+    position:
+        absolute;
+
+    z-index:
+        0;
+
+    width:
+        680px;
+
+    height:
+        280px;
+
+    left:
+        50%;
+
+    top:
+        55px;
+
+    transform:
+        translateX(-50%);
+
+    pointer-events:
+        none;
+
+    opacity:
+        0.055;
+
+}
+
+
+.hero-trajectory::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        620px;
+
+    height:
+        220px;
+
+    left:
+        30px;
+
+    top:
+        25px;
+
+    border-top:
+        2px solid
+        #ffd45c;
+
+    border-radius:
+        50% 50% 0 0;
+
+}
+
+
+.hero-trajectory::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        10px;
+
+    height:
+        10px;
+
+    left:
+        22px;
+
+    bottom:
+        28px;
+
+    border-radius:
+        50%;
+
+    background:
+        #ffd45c;
+
+    box-shadow:
+        600px 110px
+        0 #ffd45c;
+
+}
+
+
+
+/* =========================================================
+   CONTROL PANEL
+========================================================= */
+
+.control-panel {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    gap:
+        25px;
+
+    padding:
+        34px;
+
+    border:
+        1px solid #252c36;
+
+    border-radius:
+        22px;
+
+    background:
+        rgba(
+            10,
+            15,
+            23,
+            0.75
+        );
+
+    box-shadow:
+        0 20px 60px
+        rgba(
+            0,
+            0,
+            0,
+            0.25
+        );
+
+}
+
+
+
+/* =========================================================
+   INPUT GROUP
+========================================================= */
+
+.input-group {
+
+    min-width:
+        0;
+
+}
+
+
+.input-group label {
+
+    display:
+        block;
+
+    margin-bottom:
+        12px;
+
+    color:
+        #999da6;
+
+    font-size:
+        19px;
+
+    font-weight:
+        600;
+
+}
+
+
+.input-with-unit {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+}
+
+
+.input-with-unit input {
+
+    width:
+        100%;
+
+    height:
+        70px;
+
+    padding:
+        0 20px;
+
+    border:
+        2px solid #303844;
+
+    border-radius:
+        14px;
+
+    outline:
+        none;
+
+    background:
+        #070b11;
+
+    color:
+        #f0eee9;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        26px;
+
+    font-weight:
+        600;
+
+    text-align:
+        center;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+
+}
+
+
+.input-with-unit input:focus {
+
+    border-color:
+        #ffd45c;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            255,
+            212,
+            92,
+            0.08
+        );
+
+}
+
+
+.unit {
+
+    color:
+        #858a94;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        17px;
+
+    white-space:
+        nowrap;
+
+}
+
+
+
+/* =========================================================
+   CALCULATE BUTTON
+========================================================= */
+
+.calculate-btn {
+
+    grid-column:
+        1 / -1;
+
+    height:
+        70px;
+
+    margin-top:
+        2px;
+
+    border:
+        none;
+
+    border-radius:
+        14px;
+
+    background:
+        #ffd45c;
+
+    color:
+        #080b10;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        27px;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform 0.18s,
+        box-shadow 0.18s,
+        background 0.18s;
+
+}
+
+
+.calculate-btn:hover {
+
+    background:
+        #ffe083;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 30px
+        rgba(
+            255,
+            212,
+            92,
+            0.15
+        );
+
+}
+
+
+.calculate-btn:active {
+
+    transform:
+        translateY(1px);
+
+}
+
+
+
+/* =========================================================
+   MAIN EQUATION
+========================================================= */
+
+.main-equation {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    min-height:
+        180px;
+
+    padding:
+        35px 0;
+
+}
+
+
+.equation {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        16px;
+
+    color:
+        #e9e6df;
+
+    font-family:
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            30px,
+            4vw,
+            48px
+        );
+
+    font-style:
+        italic;
+
+}
+
+
+
+/* =========================================================
+   FRACTION
+========================================================= */
+
+.fraction {
+
+    display:
+        inline-flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    vertical-align:
+        middle;
+
+    line-height:
+        1.1;
+
+}
+
+
+.fraction .numerator {
+
+    padding:
+        0 14px 7px;
+
+}
+
+
+.fraction .denominator {
+
+    padding:
+        7px 14px 0;
+
+}
+
+
+.fraction-line {
+
+    width:
+        100%;
+
+    height:
+        1px;
+
+    background:
+        #d9d5cd;
+
+}
+
+
+
+/* =========================================================
+   RESULT GRID
+========================================================= */
+
+.results-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:
+        22px;
+
+    margin-top:
+        10px;
+
+}
+
+
+.result-card {
+
+    min-height:
+        190px;
+
+    padding:
+        25px 20px;
+
+    border:
+        1px solid #202833;
+
+    border-radius:
+        18px;
+
+    background:
+        rgba(
+            4,
+            8,
+            14,
+            0.72
+        );
+
+    text-align:
+        center;
+
+}
+
+
+.result-card h2 {
+
+    margin:
+        0 0 16px;
+
+    color:
+        #858a94;
+
+    font-size:
+        22px;
+
+    font-weight:
+        600;
+
+}
+
+
+.result-formula {
+
+    min-height:
+        48px;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    color:
+        #b7bac0;
+
+    font-size:
+        20px;
+
+    font-style:
+        italic;
+
+}
+
+
+.fraction.small {
+
+    font-size:
+        20px;
+
+}
+
+
+.fraction.small
+.numerator {
+
+    padding:
+        0 10px 5px;
+
+}
+
+
+.fraction.small
+.denominator {
+
+    padding:
+        5px 10px 0;
+
+}
+
+
+.result-value {
+
+    margin-top:
+        15px;
+
+    color:
+        #ffd45c;
+
+    font-size:
+        29px;
+
+    font-weight:
+        600;
+
+}
+
+
+
+/* =========================================================
+   VELOCITY COMPONENTS
+========================================================= */
+
+.velocity-info {
+
+    margin-top:
+        28px;
+
+    padding:
+        22px 28px;
+
+    border:
+        1px solid #1d2530;
+
+    border-radius:
+        18px;
+
+    background:
+        rgba(
+            5,
+            9,
+            15,
+            0.65
+        );
+
+}
+
+
+.velocity-title {
+
+    margin-bottom:
+        17px;
+
+    color:
+        #858a94;
+
+    text-align:
+        center;
+
+    font-size:
+        17px;
+
+    letter-spacing:
+        1.5px;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.velocity-values {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    gap:
+        80px;
+
+}
+
+
+.velocity-item {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+}
+
+
+.velocity-label {
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        16px;
+
+    font-weight:
+        700;
+
+}
+
+
+.vx-value {
+
+    color:
+        #62b5ff;
+
+    font-size:
+        18px;
+
+    font-weight:
+        600;
+
+}
+
+
+.vy-value {
+
+    color:
+        #ff8a8a;
+
+    font-size:
+        18px;
+
+    font-weight:
+        600;
+
+}
+
+
+.velocity-note {
+
+    color:
+        #6f747d;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        12px;
+
+}
+
+
+
+/* =========================================================
+   GRAPH SECTION
+========================================================= */
+
+.graph-section {
+
+    margin-top:
+        65px;
+
+}
+
+
+.trajectory-title {
+
+    margin:
+        0 0 30px;
+
+    color:
+        #e6e2da;
+
+    text-align:
+        center;
+
+    font-size:
+        30px;
+
+    font-weight:
+        600;
+
+}
+
+
+.canvas-container {
+
+    width:
+        100%;
+
+    height:
+        560px;
+
+    border:
+        1px solid #161e28;
+
+    border-radius:
+        15px;
+
+    background:
+        #02060b;
+
+    overflow:
+        hidden;
+
+}
+
+
+canvas {
+
+    display:
+        block;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+}
+
+
+.animation-status {
+
+    margin-top:
+        18px;
+
+    color:
+        #666c76;
+
+    text-align:
+        center;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        13px;
+
+    letter-spacing:
+        0.5px;
+
+}
+
+
+
+/* =========================================================
+   QUICK ANGLES
+========================================================= */
+
+.quick-section {
+
+    margin-top:
+        55px;
+
+    text-align:
+        center;
+
+}
+
+
+.quick-section h3 {
+
+    margin:
+        0 0 22px;
+
+    color:
+        #767b84;
+
+    font-size:
+        16px;
+
+    letter-spacing:
+        3px;
+
+}
+
+
+.quick-buttons {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        14px;
+
+}
+
+
+.quick-angle {
+
+    min-width:
+        100px;
+
+    height:
+        60px;
+
+    padding:
+        0 20px;
+
+    border:
+        1px solid #2c3541;
+
+    border-radius:
+        12px;
+
+    background:
+        #070b11;
+
+    color:
+        #c9c6bf;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        18px;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    transition:
+        all 0.18s;
+
+}
+
+
+.quick-angle:hover {
+
+    border-color:
+        #ffd45c;
+
+    color:
+        #ffd45c;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.quick-angle.active {
+
+    border-color:
+        #ffd45c;
+
+    background:
+        rgba(
+            255,
+            212,
+            92,
+            0.08
+        );
+
+    color:
+        #ffd45c;
+
+}
+
+
+.ground-note {
+
+    margin:
+        28px 0 0;
+
+    color:
+        #5e636c;
+
+    font-size:
+        14px;
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (
+    max-width: 800px
+) {
+
+
+    .app {
+
+        width:
+            calc(100% - 24px);
+
+        padding-top:
+            25px;
+
+    }
+
+
+    .hero-header {
+
+        margin-bottom:
+            40px;
+
+    }
+
+
+    .hero-header h1 {
+
+        font-size:
+            46px;
+
+    }
+
+
+    .hero-subtitle {
+
+        font-size:
+            13px;
+
+        letter-spacing:
+            2px;
+
+    }
+
+
+    .concept-line {
+
+        padding:
+            0 10px;
+
+        font-size:
+            13px;
+
+    }
+
+
+    .mini-equations {
+
+        gap:
+            8px;
+
+        font-size:
+            12px;
+
+        padding:
+            0 10px;
+
+    }
+
+
+    .author-credit {
+
+        padding:
+            0 10px;
+
+        font-size:
+            10px;
+
+    }
+
+
+    .control-panel {
+
+        grid-template-columns:
+            1fr;
+
+        padding:
+            22px;
+
+    }
+
+
+    .calculate-btn {
+
+        grid-column:
+            auto;
+
+    }
+
+
+    .results-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .velocity-values {
+
+        flex-direction:
+            column;
+
+        align-items:
+            center;
+
+        gap:
+            16px;
+
+    }
+
+
+    .canvas-container {
+
+        height:
+            420px;
+
+    }
+
+
+    .equation {
+
+        font-size:
+            28px;
+
+        gap:
+            9px;
+
+    }
+
+
+    .fraction .numerator,
+    .fraction .denominator {
+
+        padding-left:
+            8px;
+
+        padding-right:
+            8px;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (
+    max-width: 480px
+) {
+
+
+    .grade-badge {
+
+        font-size:
+            10px;
+
+        padding:
+            8px 13px;
+
+    }
+
+
+    .hero-header h1 {
+
+        font-size:
+            38px;
+
+    }
+
+
+    .concept-line {
+
+        flex-direction:
+            column;
+
+        gap:
+            5px;
+
+    }
+
+
+    .concept-dot {
+
+        display:
+            none;
+
+    }
+
+
+    .main-equation {
+
+        min-height:
+            130px;
+
+    }
+
+
+    .equation {
+
+        font-size:
+            22px;
+
+    }
+
+
+    .canvas-container {
+
+        height:
+            340px;
+
+    }
+
+
+    .quick-angle {
+
+        min-width:
+            75px;
+
+        height:
+            52px;
+
+        font-size:
+            16px;
+
+    }
+
+}

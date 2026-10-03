@@ -1,17 +1,23 @@
 /* Base Layout Setup */
 body {
     font-family: 'Pyidaungsu', Arial, sans-serif;
-    margin: 20px auto; /* အပေါ်အောက် အကွာအဝေး အနည်းငယ်ပေးခြင်း */
-    max-width: 480px;
+    width: min(90vw, 480px);
+    margin: 20px auto 0;
+    min-height: calc(100vh - 20px);
     padding: 16px 16px 100px 16px;
-    background-color: #ffffff; /* မူလ Background */
+    background-color: #ffffff;
     color: #1e293b;
     line-height: 1.5;
-    
-    /* Desktop တွင် App Card ပုံစံ ပေါ်စေရန် Border နှင့် Shadow ထည့်ခြင်း */
-    border-radius: 28px;
+    border-radius: 28px 28px 0 0;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
     border: 1px solid #e2e8f0;
+}
+
+.app-container {
+    min-height: calc(100vh - 120px);
+    background: #ffffff;
+    border-radius: 28px 28px 0 0;
+    overflow: hidden;
 }
 
 /* Background တစ်ခုလုံးကို မီးခိုးရောင်နု ပေးခြင်း (Desktop မှာ ကြည့်လျှင် App ပိုပေါ်လွင်စေသည်) */
@@ -273,17 +279,21 @@ svg {
 /* Floating Bottom Nav Bar */
 .bottom-nav {
     position: fixed;
-    bottom: 16px;
+    bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
+    width: calc(100% - 24px);
     max-width: 420px;
-    background-color: #ffffff;
+    background: rgba(19, 32, 49, 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-around;
-    padding: 8px 10px;
-    border-radius: 30px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    padding: 10px 12px 8px;
+    border-radius: 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.18), 0 10px 24px rgba(15, 23, 42, 0.2);
     z-index: 9999;
 }
 .nav-item {
@@ -291,18 +301,29 @@ svg {
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    color: #94a3b8;
-    font-size: 10px;
+    color: #cbd5e1;
+    font-size: 11px;
+    gap: 4px;
     flex: 1;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 .nav-icon { 
     width: 20px !important; 
     height: 20px !important; 
-    margin-bottom: 2px; 
-    fill: #94a3b8; 
+    fill: #cbd5e1;
+    transition: fill 0.2s ease;
 }
-.nav-item:hover, .nav-item:active { color: #ef4444; }
-.nav-item:hover .nav-icon, .nav-item:active .nav-icon { fill: #ef4444; }
+.nav-item.active,
+.nav-item.active .nav-icon {
+    color: #ef4444;
+    fill: #ef4444;
+}
+.nav-item:hover, .nav-item:active {
+    color: #cbd5e1;
+}
+.nav-item:hover .nav-icon, .nav-item:active .nav-icon {
+    fill: #cbd5e1;
+}
 /* --- Grade Page Layout & Header --- */
 .page-header {
   display: flex;
@@ -411,17 +432,21 @@ svg {
 /* --- Bottom Nav Fix --- */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px; /* Mobile View Bounds */
-  background: #ffffff;
+  width: calc(100% - 24px);
+  max-width: 420px;
+  background: rgba(19, 32, 49, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-around;
-  padding: 10px 0;
-  border-top: 1px solid #f1f3f5;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+  align-items: center;
+  padding: 10px 12px 8px;
+  border-radius: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.18), 0 10px 24px rgba(15, 23, 42, 0.2);
 }
 
 .nav-item {
@@ -429,15 +454,21 @@ svg {
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: #94a3b8;
-  font-size: 10px;
+  color: #cbd5e1;
+  font-size: 11px;
+  gap: 4px;
 }
 
 .nav-item i {
   font-size: 18px;
-  margin-bottom: 3px;
+  color: #cbd5e1;
 }
-/* --- 5 Items Grid Layout (For G10 & G11) --- */
+
+.nav-item.active,
+.nav-item.active i {
+  color: #ef4444;
+}
+/* --- 5-6 Items Grid Layout (For G10 & G11) --- */
 .category-grid-5 {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -448,17 +479,11 @@ svg {
 /* ပထမ 3 ခုကို Row 1 တွင် အညီအမျှထားခြင်း */
 .category-grid-5 .grid-card:nth-child(1),
 .category-grid-5 .grid-card:nth-child(2),
-.category-grid-5 .grid-card:nth-child(3) {
+.category-grid-5 .grid-card:nth-child(3),
+.category-grid-5 .grid-card:nth-child(4),
+.category-grid-5 .grid-card:nth-child(5),
+.category-grid-5 .grid-card:nth-child(6) {
   grid-column: span 2;
-}
-
-/* နောက်ဆုံး 2 ခုကို Row 2 တွင် အလယ်ဗဟိုကျအောင် ချိန်ခြင်း */
-.category-grid-5 .grid-card:nth-child(4) {
-  grid-column: 2 / span 2;
-}
-
-.category-grid-5 .grid-card:nth-child(5) {
-  grid-column: 4 / span 2;
 }
 /* --- Chapter List Card Design --- */
 .chapter-list-container {
