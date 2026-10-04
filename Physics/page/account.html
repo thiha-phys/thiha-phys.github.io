@@ -358,7 +358,7 @@
                 </label>
                 <label class="form-field">
                     အီးမေးလ် (Email)
-                    <input name="email" type="email" autocomplete="email" pattern="[A-Za-z0-9._%+\x2d]+@gmail\.com" title="Use a Gmail address ending in @gmail.com" required>
+                    <input name="email" type="email" autocomplete="email">
                 </label>
                 <div class="form-actions">
                     <button class="btn-save" type="submit">Save</button>
@@ -386,6 +386,7 @@
 
     </div>
 
+    <script src="profile-api.js"></script>
     <script>
         const editButton = document.getElementById('edit-profile-button');
         const editForm = document.getElementById('profile-edit-form');
@@ -401,6 +402,7 @@
         profileStatus.setAttribute('aria-live', 'polite');
         profileStatus.style.cssText = 'margin-top:12px;color:#b91c1c;font-size:12px;';
         editForm.after(profileStatus);
+        let savedProfileForUpdate = null;
 
         function getSavedProfile() {
             const savedProfile = localStorage.getItem('physicsLearningHubProfile');
@@ -418,8 +420,11 @@
         try {
             const savedProfile = getSavedProfile();
             if (savedProfile) {
+                savedProfileForUpdate = savedProfile;
                 for (const [field, element] of Object.entries(profileValues)) {
-                    if (typeof savedProfile[field] === 'string' && savedProfile[field].trim()) {
+                    if (field === 'email' && typeof savedProfile[field] === 'string') {
+                        element.textContent = savedProfile[field].trim();
+                    } else if (typeof savedProfile[field] === 'string' && savedProfile[field].trim()) {
                         element.textContent = field === 'phone'
                             ? formatPhoneNumber(savedProfile[field])
                             : savedProfile[field].trim();
@@ -447,15 +452,14 @@
         }
 
         function formatPhoneNumber(value) {
-            const englishDigits = value.replace(/[၀-၉]/g, (digit) =>
-                String(digit.charCodeAt(0) - '၀'.charCodeAt(0))
-            );
-            const digits = englishDigits.replace(/\D/g, '');
-            if (digits.length <= 2) {
-                return digits;
-            }
+            const digits = normalizePhoneNumber(value);
+            return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8, 11)}`;
+        }
 
-            return [digits.slice(0, 2), ...digits.slice(2).match(/.{1,3}/g)].join(' ');
+        function normalizePhoneNumber(value) {
+            return value.replace(/[၀-၉]/g, (digit) =>
+                String(digit.charCodeAt(0) - '၀'.charCodeAt(0))
+            ).replace(/\D/g, '');
         }
 
         editButton.addEventListener('click', () => {
@@ -468,24 +472,53 @@
 
         cancelButton.addEventListener('click', closeEditForm);
 
-        editForm.addEventListener('submit', (event) => {
+        editForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const formData = new FormData(editForm);
             const updatedProfile = {};
+            const phone = formData.get('phone').trim();
+            const normalizedPhone = normalizePhoneNumber(phone);
+            if (!/^0\d{10}$/.test(normalizedPhone)) {
+                profileStatus.textContent = 'ဖုန်းနံပါတ်ကို 0x xxx xxx xxx ပုံစံအတိုင်း ဂဏန်း ၁၁ လုံး ထည့်ပါ။';
+                return;
+            }
+
+            if (!savedProfileForUpdate || typeof savedProfileForUpdate.phone !== 'string') {
+                profileStatus.textContent = 'Sheet မှာ update လုပ်ဖို့ သိမ်းထားတဲ့ account ဖုန်းနံပါတ် မရှိပါ။';
+                return;
+            }
 
             for (const [field, element] of Object.entries(profileValues)) {
                 const value = formData.get(field).trim();
-                updatedProfile[field] = field === 'phone' ? formatPhoneNumber(value) : value;
+                updatedProfile[field] = field === 'phone' ? formatPhoneNumber(normalizedPhone) : value;
+            }
+
+            try {
+                profileStatus.textContent = 'သင့်ဧ။် account ဆိုင်ရာ အချက်အလက်တွေ ပြင်ဆင်နေပါတယ်...';
+                await sendProfileToSheet('update', {
+                    name: updatedProfile.name,
+                    job: updatedProfile.occupation,
+                    email: updatedProfile.email,
+                    phone: updatedProfile.phone,
+                    lookupPhone: savedProfileForUpdate.phone
+                });
+            } catch (error) {
+                console.error('Unable to update the profile in Google Sheets.', error);
+                profileStatus.textContent = error.code === 'PHONE_NOT_FOUND'
+                    ? 'ဒီဖုန်းနံပါတ်နဲ့ ကိုက်ညီတဲ့ Sheet row ကို မတွေ့ပါ။'
+                    : `Sheet ထဲမှာ update မလုပ်နိုင်ပါ။ ${error.message}`;
+                return;
             }
 
             try {
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(updatedProfile));
             } catch (error) {
-                console.error('Unable to save the edited profile.', error);
-                profileStatus.textContent = 'အချက်အလက်တွေကို browser ထဲမှာ သိမ်းမရပါ။';
+                console.error('The Sheet was updated, but the profile could not be saved in this browser.', error);
+                profileStatus.textContent = 'Sheet ထဲမှာ update လုပ်ပြီးပါပြီ၊ ဒါပေမယ့် ဒီ browser မှာ account ကို သိမ်းမရပါ။';
                 return;
             }
 
+            savedProfileForUpdate = updatedProfile;
             for (const [field, element] of Object.entries(profileValues)) {
                 element.textContent = updatedProfile[field];
             }
