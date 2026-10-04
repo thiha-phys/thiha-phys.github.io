@@ -532,7 +532,9 @@
                 }
 
                 console.error('Unable to verify the profile in Google Sheets.', error);
-                connectionNote.textContent = `Login မလုပ်နိုင်ပါ။ ${error.message}`;
+                connectionNote.textContent = /Action must.*create.*update/i.test(error.message)
+                    ? 'Login server မှာ account ရှာဖွေစစ်ဆေးတဲ့လုပ်ဆောင်ချက် မပါသေးပါ။ လက်ရှိ Code.gs ကို Apps Script မှာ Deploy > Manage deployments မှတစ်ဆင့် version အသစ်တင်ပေးပါ။'
+                    : `Login မလုပ်နိုင်ပါ။ ${error.message}`;
             }
         });
     </script>
