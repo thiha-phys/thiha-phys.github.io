@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHYSICS @Myanmar Government School</title>
+    <link rel="icon" type="image/svg+xml" href="physics-logo.svg">
+    <link rel="manifest" href="manifest.webmanifest">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        try {
+            const savedProfile = localStorage.getItem('physicsLearningHubProfile');
+            const profile = savedProfile ? JSON.parse(savedProfile) : null;
+            if (!profile || typeof profile !== 'object' ||
+                typeof profile.name !== 'string' || typeof profile.phone !== 'string') {
+                window.location.replace('page/login.html');
+            }
+        } catch (error) {
+            console.error('Unable to validate the saved account profile.', error);
+            window.location.replace('page/login.html');
+        }
+    </script>
 </head>
 <body>
 
