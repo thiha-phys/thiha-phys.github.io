@@ -206,32 +206,47 @@ svg {
 .banner-section { margin-bottom: 24px; }
 .banner-frame {
     width: 100%;
-    height: 130px;
+    height: 180px;
     background: #ffffff;
     border: 2px dashed #cbd5e1;
     border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
     box-sizing: border-box;
 }
-.banner-placeholder p {
-    color: #94a3b8;
-    font-size: 13px;
-    margin: 0;
-    font-weight: 600;
+.banner-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+.banner-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    height: 100%;
+}
+.banner-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .slider-dots {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 6px;
     margin-top: 10px;
 }
 .dot {
+    display: block;
     width: 6px;
     height: 6px;
+    padding: 0;
+    border: 0;
     background-color: #cbd5e1;
     border-radius: 50%;
+    cursor: pointer;
+    transition: width 0.2s ease, background-color 0.2s ease;
 }
 .dot.active {
     width: 16px;

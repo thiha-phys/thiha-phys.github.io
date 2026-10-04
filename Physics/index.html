@@ -109,21 +109,10 @@
 
         <!-- 3. Books Promo Slider Frame -->
         <section class="banner-section">
-            <div class="banner-frame">
-                <div class="banner-placeholder">
-                    <p>📚 စာအုပ်ကြော်ငြာ Slide Frame</p>
-                </div>
+            <div class="banner-frame" aria-label="စာအုပ်ကြော်ငြာများ">
+                <div class="banner-track"></div>
             </div>
-            <div class="slider-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
+            <div class="slider-dots" aria-label="ကြော်ငြာပုံရွေးရန်"></div>
         </section>
 
         <!-- Knowledge Shortcut -->
@@ -183,5 +172,56 @@
         </a>
     </footer>
 
+    <script>
+        // Add new filenames here; slides and dots are generated from this list.
+        const bookPromoImages = [
+            'Screenshot 2026-10-04 at 04.41.45.png',
+            'Screenshot 2026-10-04 at 04.42.01.png',
+            'Screenshot 2026-10-04 at 04.42.07.png'
+        ];
+        const bannerTrack = document.querySelector('.banner-track');
+        const sliderDots = document.querySelector('.slider-dots');
+
+        bookPromoImages.forEach((filename, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'banner-slide';
+
+            const image = document.createElement('img');
+            image.src = `pictures/book%20show/${encodeURIComponent(filename)}`;
+            image.alt = `စာအုပ်ကြော်ငြာ ${index + 1}`;
+            image.draggable = false;
+            slide.append(image);
+            bannerTrack.append(slide);
+
+            const dot = document.createElement('button');
+            dot.className = 'dot';
+            dot.type = 'button';
+            dot.setAttribute('aria-label', `ကြော်ငြာပုံ ${index + 1}`);
+            dot.addEventListener('click', () => showSlide(index));
+            sliderDots.append(dot);
+        });
+
+        let currentSlide = 0;
+        const dots = sliderDots.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            currentSlide = index;
+            bannerTrack.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, dotIndex) => {
+                const isActive = dotIndex === index;
+                dot.classList.toggle('active', isActive);
+                dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+            });
+        }
+
+        if (bookPromoImages.length > 0) {
+            showSlide(0);
+            if (bookPromoImages.length > 1) {
+                window.setInterval(() => {
+                    showSlide((currentSlide + 1) % bookPromoImages.length);
+                }, 5000);
+            }
+        }
+    </script>
 </body>
 </html>
