@@ -29,8 +29,8 @@
 
         .page-shell {
             width: 100%;
-            max-width: 440px;
-            min-height: calc(100vh - 60px);
+            max-width: 1100px;
+            min-height: calc(100vh - 56px);
             padding: 18px 18px 28px;
             border-radius: 30px 30px 0 0;
             background: #f3f4f5;
@@ -43,7 +43,7 @@
             align-items: center;
             justify-content: center;
             height: 52px;
-            margin-bottom: 18px;
+            margin-bottom: 22px;
         }
 
         .back-btn {
@@ -113,9 +113,9 @@
         }
 
         .selection-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
         }
 
         .selection-card {
@@ -217,6 +217,10 @@
             .page-shell {
                 min-height: calc(100vh - 20px);
                 border-radius: 30px 30px 0 0;
+            }
+
+            .selection-panel {
+                grid-template-columns: minmax(0, 1fr);
             }
         }
     </style>
