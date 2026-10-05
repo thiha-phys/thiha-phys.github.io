@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Account - Physics Learning Hub</title>
+    <link rel="icon" type="image/png" href="../logo.png">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -186,6 +187,29 @@
             background-color: #dc2626;
         }
 
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            background: #fff;
+            color: #b91c1c;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-logout:hover {
+            background: #fef2f2;
+            border-color: #fca5a5;
+        }
+
         .profile-edit-form {
             margin-top: 16px;
             padding: 18px;
@@ -342,6 +366,10 @@
             <button class="btn-edit" id="edit-profile-button" type="button" aria-expanded="false" aria-controls="profile-edit-form">
                 <i class="fa-solid fa-pen-to-square"></i> အချက်အလက်များ ပြင်ဆင်ရန် (Edit Profile)
             </button>
+            <button class="btn-logout" id="logout-button" type="button">
+                <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+                အကောင့်မှ ထွက်ရန် (Log out)
+            </button>
 
             <form class="profile-edit-form" id="profile-edit-form" hidden>
                 <label class="form-field">
@@ -391,6 +419,7 @@
         const editButton = document.getElementById('edit-profile-button');
         const editForm = document.getElementById('profile-edit-form');
         const cancelButton = document.getElementById('cancel-edit-button');
+        const logoutButton = document.getElementById('logout-button');
         const profileValues = Object.fromEntries(
             [...document.querySelectorAll('[data-profile-value]')].map((element) => [
                 element.dataset.profileValue,
@@ -403,6 +432,16 @@
         profileStatus.style.cssText = 'margin-top:12px;color:#b91c1c;font-size:12px;';
         editForm.after(profileStatus);
         let savedProfileForUpdate = null;
+
+        logoutButton.addEventListener('click', () => {
+            try {
+                localStorage.removeItem('physicsLearningHubProfile');
+                window.location.replace('login.html');
+            } catch (error) {
+                console.error('Unable to clear the saved account session.', error);
+                profileStatus.textContent = 'အကောင့်မှ ထွက်မရပါ။ ထပ်မံကြိုးစားပါ။';
+            }
+        });
 
         function getSavedProfile() {
             const savedProfile = localStorage.getItem('physicsLearningHubProfile');

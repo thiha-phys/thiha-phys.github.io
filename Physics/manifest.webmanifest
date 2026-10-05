@@ -7,10 +7,10 @@
   "theme_color": "#0f172a",
   "icons": [
     {
-      "src": "./physics-logo.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "./logo.png",
+      "sizes": "353x340",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

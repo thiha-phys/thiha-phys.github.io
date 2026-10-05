@@ -1574,6 +1574,132 @@ canvas {
 
 }
 
+/* Light theme overrides keep the simulation readable without changing layout. */
+body {
+    background: #f3f7fc;
+    color: #1e293b;
+}
+
+.page-back-btn {
+    border-color: #dbe3ee;
+    background: #fff;
+    color: #334155;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.grade-badge {
+    border-color: #dbe3ee;
+    background: #fff;
+    color: #475569;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.hero-header h1,
+.trajectory-title {
+    color: #172554;
+}
+
+.hero-subtitle,
+.concept-line,
+.mini-equations,
+.author-credit,
+.input-group label,
+.result-card h2,
+.velocity-title,
+.animation-status,
+.quick-section h3,
+.ground-note {
+    color: #475569;
+}
+
+.author-credit strong {
+    color: #1e293b;
+}
+
+.equation-separator,
+.author-credit span {
+    color: #cbd5e1;
+}
+
+.hero-trajectory {
+    opacity: 0.12;
+}
+
+.control-panel,
+.result-card,
+.velocity-info {
+    border-color: #dbe3ee;
+    background: #fff;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.07);
+}
+
+.input-with-unit input {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+.input-with-unit input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+.unit,
+.result-formula,
+.velocity-note {
+    color: #64748b;
+}
+
+.calculate-btn {
+    background: #2563eb;
+    color: #fff;
+}
+
+.calculate-btn:hover {
+    background: #1d4ed8;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+}
+
+.fraction-line {
+    background: #94a3b8;
+}
+
+.result-value {
+    color: #b45309;
+}
+
+.vx-value {
+    color: #1d4ed8;
+}
+
+.vy-value {
+    color: #b91c1c;
+}
+
+.quick-angle {
+    border-color: #cbd5e1;
+    background: #fff;
+    color: #334155;
+}
+
+.quick-angle:hover,
+.quick-angle.active {
+    border-color: #2563eb;
+    color: #1d4ed8;
+}
+
+.quick-angle.active {
+    background: #eff6ff;
+}
+
+.canvas-container {
+    border-color: #dbe3ee;
+    background:
+        radial-gradient(circle at 50% 45%, #fff 0%, #f8fbff 72%),
+        #fff;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+}
+
 
 
 /* =========================================================
