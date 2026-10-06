@@ -1,6 +1,28 @@
 const SHEET_NAME = 'Profiles';
 const HEADERS = ['Name', 'Job', 'Email', 'Phone'];
 const PHONE_PATTERN = /^0\d{10}$/;
+const ORDERS_SHEET_NAME = 'Book Orders';
+const ORDER_HEADERS = [
+  'Voucher No', 'Name', 'Address', 'Phone', 'Order Date',
+  'Special Qty', 'Special Amount',
+  'Practice Qty', 'Practice Amount',
+  'Old Questions Qty', 'Old Questions Amount',
+  'Solution Qty', 'Solution Amount',
+  'Grade 11 Handbook Qty', 'Grade 11 Handbook Amount',
+  'Grade 11 Objective Qty', 'Grade 11 Objective Amount',
+  'Grade 10 Handbook Qty', 'Grade 10 Handbook Amount',
+  'Total', 'Payment Method', 'Amount Received', 'KPay Account', 'Pay Date',
+  'Royal VOC No', 'Order Confirm', 'Delivery'
+];
+const BOOK_ORDER_ITEMS = [
+  { id: 'special', name: 'သင်ရိုးကုန် အထူးထုတ်', quantityColumn: 5, price: 20000 },
+  { id: 'practice', name: 'Practice Book', quantityColumn: 7, price: 13000 },
+  { id: 'old-questions', name: 'မေးခွန်းဟောင်းစာအုပ်', quantityColumn: 9, price: 11000 },
+  { id: 'solution', name: 'တွက်စာသီးသန့်စာအုပ်', quantityColumn: 11, price: 5000 },
+  { id: 'g11-handbook', name: 'Grade 11 စာသင်ခန်းသုံး စာအုပ်', quantityColumn: 13, price: 10000 },
+  { id: 'g11-objective', name: 'Grade 11 တစ်မှတ်တန် သီးသန့်စာအုပ်', quantityColumn: 15, price: 8000 },
+  { id: 'g10-handbook', name: 'Grade 10 စာသင်ခန်းသုံး စာအုပ်', quantityColumn: 17, price: 10000 }
+];
 
 function doPost(e) {
   try {
@@ -10,6 +32,13 @@ function doPost(e) {
 
     const request = JSON.parse(e.postData.contents);
     const action = request.action;
+    if (action === 'createOrder') {
+      return createBookOrder_(request.order);
+    }
+    if (action === 'listOrders') {
+      return listBookOrders_(request.phone);
+    }
+
     const profile = request.profile;
 
     if (action !== 'create' && action !== 'update' && action !== 'lookup') {
@@ -110,6 +139,190 @@ function doPost(e) {
     console.error(error);
     return jsonResponse_({ ok: false, error: error.message });
   }
+}
+
+function createBookOrder_(order) {
+  if (!order || typeof order !== 'object') {
+    throw new Error('Order data is required.');
+  }
+
+  const name = requiredText_(order.name, 'Name');
+  const address = requiredText_(order.address, 'Address');
+  if (name.length > 120 || address.length > 500) {
+    throw new Error('Name or address is longer than the allowed limit.');
+  }
+  const phone = normalizePhone_(order.phone);
+  if (!PHONE_PATTERN.test(phone)) {
+    throw new Error('Phone must contain 11 digits and start with 0.');
+  }
+  if (order.paymentMethod !== 'COD' && order.paymentMethod !== 'KBZ Pay') {
+    throw new Error('Payment method must be COD or KBZ Pay.');
+  }
+  if (!Array.isArray(order.items)) {
+    throw new Error('A list of book quantities is required.');
+  }
+
+  const quantities = {};
+  order.items.forEach(function (item) {
+    if (!item || typeof item.id !== 'string' || quantities[item.id] !== undefined) {
+      throw new Error('Book item is invalid or repeated.');
+    }
+    const book = BOOK_ORDER_ITEMS.find(function (candidate) {
+      return candidate.id === item.id;
+    });
+    const quantity = Number(item.quantity);
+    if (!book || !Number.isInteger(quantity) || quantity < 0 || quantity > 99) {
+      throw new Error('Book quantity is invalid.');
+    }
+    quantities[item.id] = quantity;
+  });
+  if (BOOK_ORDER_ITEMS.some(function (book) { return quantities[book.id] === undefined; })) {
+    throw new Error('All book quantities must be provided.');
+  }
+
+  let total = 0;
+  const row = new Array(ORDER_HEADERS.length).fill('');
+  row[1] = sheetSafeText_(name);
+  row[2] = sheetSafeText_(address);
+  row[3] = formatPhone_(phone);
+  row[4] = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm:ss');
+  BOOK_ORDER_ITEMS.forEach(function (book) {
+    const quantity = quantities[book.id];
+    const amount = quantity * book.price;
+    row[book.quantityColumn] = String(quantity);
+    row[book.quantityColumn + 1] = String(amount);
+    total += amount;
+  });
+  if (total <= 0) {
+    throw new Error('At least one book must be ordered.');
+  }
+  if (order.paymentMethod === 'COD' && total >= 150000) {
+    throw new Error('COD is not available for orders of 150,000 kyats or more.');
+  }
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const sheet = getOrdersSheet_();
+    const voucherNo = nextVoucherNo_(sheet);
+    row[0] = voucherNo;
+    row[19] = String(total);
+    row[20] = order.paymentMethod;
+    const nextRow = sheet.getLastRow() + 1;
+    const range = sheet.getRange(nextRow, 1, 1, ORDER_HEADERS.length);
+    range.setNumberFormat('@');
+    range.setValues([row]);
+    const items = BOOK_ORDER_ITEMS.map(function (book) {
+      return {
+        id: book.id,
+        name: book.name,
+        quantity: quantities[book.id],
+        amount: quantities[book.id] * book.price
+      };
+    });
+    return jsonResponse_({
+      ok: true,
+      order: {
+        voucherNo: voucherNo,
+        name: name,
+        address: address,
+        phone: formatPhone_(phone),
+        orderDate: row[4],
+        paymentMethod: order.paymentMethod,
+        total: total,
+        items: items
+      }
+    });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function listBookOrders_(phoneValue) {
+  const phone = normalizePhone_(phoneValue);
+  if (!PHONE_PATTERN.test(phone)) {
+    throw new Error('Phone must contain 11 digits and start with 0.');
+  }
+
+  const sheet = getOrdersSheet_();
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) {
+    return jsonResponse_({ ok: true, orders: [] });
+  }
+
+  const rows = sheet.getRange(2, 1, lastRow - 1, ORDER_HEADERS.length).getDisplayValues();
+  const orders = rows.reduce(function (matches, row) {
+    if (normalizePhone_(row[3]) !== phone) {
+      return matches;
+    }
+    const items = BOOK_ORDER_ITEMS.map(function (book) {
+      const quantity = Number(row[book.quantityColumn]) || 0;
+      return {
+        id: book.id,
+        name: book.name,
+        quantity: quantity,
+        amount: Number(row[book.quantityColumn + 1]) || 0
+      };
+    });
+    matches.push({
+      voucherNo: row[0],
+      name: row[1],
+      address: row[2],
+      phone: row[3],
+      orderDate: row[4],
+      items: items,
+      total: Number(row[19]) || 0,
+      paymentMethod: row[20],
+      amountReceived: row[21],
+      kpayAccount: row[22],
+      payDate: row[23],
+      royalVocNo: row[24],
+      orderConfirm: row[25],
+      delivery: row[26]
+    });
+    return matches;
+  }, []);
+  orders.reverse();
+  return jsonResponse_({ ok: true, orders: orders });
+}
+
+function getOrdersSheet_() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  if (!spreadsheet) {
+    throw new Error('Bind this Apps Script project to the target Google Sheet.');
+  }
+  let sheet = spreadsheet.getSheetByName(ORDERS_SHEET_NAME);
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(ORDERS_SHEET_NAME);
+  }
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, ORDER_HEADERS.length).setValues([ORDER_HEADERS]);
+    sheet.setFrozenRows(1);
+  } else {
+    const actualHeaders = sheet.getRange(1, 1, 1, ORDER_HEADERS.length).getDisplayValues()[0];
+    if (ORDER_HEADERS.some(function (header, index) { return actualHeaders[index] !== header; })) {
+      throw new Error('The first row of the Book Orders sheet does not match the expected order columns.');
+    }
+  }
+  return sheet;
+}
+
+function nextVoucherNo_(sheet) {
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) {
+    return '001';
+  }
+  const currentMaximum = sheet.getRange(2, 1, lastRow - 1, 1).getDisplayValues()
+    .reduce(function (maximum, row) {
+      const number = Number(row[0]);
+      return Number.isInteger(number) && number > maximum ? number : maximum;
+    }, 0);
+  return String(currentMaximum + 1).padStart(3, '0');
+}
+
+function sheetSafeText_(value) {
+  const text = String(value);
+  return /^[=+\-@]/.test(text) ? "'" + text : text;
 }
 
 function normalizeProfile_(profile) {

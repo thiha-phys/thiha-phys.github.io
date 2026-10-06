@@ -1,0 +1,505 @@
+.shop-page {
+    width: min(100% - 32px, 960px);
+    margin: 0 auto;
+    padding: 22px 0 110px;
+    color: #172033;
+    font-family: 'Pyidaungsu', Arial, sans-serif;
+}
+
+.shop-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.shop-header > div {
+    min-width: 0;
+    flex: 1;
+}
+
+.shop-header h1 {
+    margin: 3px 0 0;
+    color: #172033;
+    font-size: clamp(19px, 4vw, 25px);
+    line-height: 1.5;
+}
+
+.shop-eyebrow {
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.back-link,
+.shop-cart-link {
+    flex: 0 0 auto;
+    color: #1d4ed8;
+    text-decoration: none;
+}
+
+.back-link {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid #dbe3ef;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.shop-cart-link {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: #eff6ff;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.shop-intro {
+    margin: 0 0 18px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px;
+}
+
+.book-card,
+.reader-card,
+.order-section,
+.receipt-card,
+.history-card {
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.book-preview-link {
+    display: block;
+    height: 100%;
+    padding: 12px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.book-preview-link img {
+    display: block;
+    width: 100%;
+    height: 230px;
+    border-radius: 13px;
+    background: #f1f5f9;
+    object-fit: contain;
+}
+
+.book-preview-link h2 {
+    margin: 12px 0 4px;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.book-price {
+    margin: 0;
+    color: #b91c1c;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.book-action {
+    display: inline-flex;
+    margin-top: 11px;
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.reader-card {
+    padding: 16px;
+}
+
+.reader-page-frame {
+    display: grid;
+    min-height: min(68vh, 760px);
+    place-items: center;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #f1f5f9;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.reader-page-frame img {
+    display: block;
+    max-width: 100%;
+    max-height: 68vh;
+    object-fit: contain;
+    pointer-events: none;
+    -webkit-user-drag: none;
+}
+
+.reader-page-frame p {
+    max-width: 420px;
+    padding: 24px;
+    color: #64748b;
+    text-align: center;
+    line-height: 1.9;
+}
+
+.reader-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 14px 0 4px;
+}
+
+.reader-controls button {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: #eff6ff;
+    color: #1d4ed8;
+    cursor: pointer;
+}
+
+.reader-controls button:disabled {
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.reader-note,
+.preview-limit-note,
+.payment-note,
+.field-hint {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.reader-note,
+.preview-limit-note {
+    text-align: center;
+}
+
+.order-page form {
+    display: grid;
+    gap: 16px;
+}
+
+.order-section {
+    padding: 18px;
+}
+
+.order-section h2 {
+    margin: 0 0 14px;
+    font-size: 17px;
+}
+
+.order-book-list {
+    display: grid;
+    gap: 11px;
+}
+
+.order-book {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 10px;
+    border: 1px solid #edf1f6;
+    border-radius: 15px;
+}
+
+.order-book > a img {
+    display: block;
+    width: 76px;
+    height: 94px;
+    border-radius: 9px;
+    background: #f1f5f9;
+    object-fit: contain;
+}
+
+.order-book-info {
+    flex: 1;
+}
+
+.order-book-info h3 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.order-book-info p {
+    margin: 0 0 8px;
+    color: #b91c1c;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.quantity-label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.quantity-label input {
+    width: 76px;
+    min-height: 38px;
+    padding: 6px 9px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    font: inherit;
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 15px;
+    border-top: 1px dashed #cbd5e1;
+    font-size: 15px;
+}
+
+.order-total strong {
+    color: #b91c1c;
+}
+
+.form-field {
+    display: block;
+    margin-top: 13px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.form-field input,
+.form-field textarea {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 11px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    color: #172033;
+    font: inherit;
+    font-size: 14px;
+}
+
+.form-field textarea {
+    resize: vertical;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.payment-option input {
+    width: 18px;
+    height: 18px;
+    accent-color: #2563eb;
+}
+
+.payment-option:has(input:disabled) {
+    color: #94a3b8;
+    background: #f8fafc;
+}
+
+.primary-button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 13px;
+    background: #2563eb;
+    color: #fff;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.primary-button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.form-status {
+    color: #b91c1c;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.history-link {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 22px 0;
+    padding: 14px;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.receipt-card {
+    margin: 20px 0;
+    padding: 20px;
+}
+
+.receipt-header {
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #cbd5e1;
+    text-align: center;
+}
+
+.receipt-header h2 {
+    margin: 5px 0;
+}
+
+.receipt-header > strong {
+    color: #1d4ed8;
+}
+
+.receipt-details {
+    padding: 12px 0;
+}
+
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.receipt-row span {
+    color: #64748b;
+}
+
+.receipt-row strong {
+    max-width: 65%;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.print-button {
+    width: 100%;
+}
+
+.account-phone {
+    color: #64748b;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.history-list {
+    display: grid;
+    gap: 14px;
+}
+
+.history-card {
+    padding: 17px;
+}
+
+.history-card h2 {
+    margin: 0 0 12px;
+    color: #1d4ed8;
+    font-size: 16px;
+}
+
+.history-card p {
+    margin: 7px 0;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.history-card p strong {
+    color: #1e293b;
+}
+
+@media (max-width: 500px) {
+    .shop-page {
+        width: min(100% - 22px, 960px);
+        padding-top: 14px;
+    }
+
+    .book-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .book-preview-link {
+        padding: 8px;
+    }
+
+    .book-preview-link img {
+        height: 180px;
+    }
+
+    .book-preview-link h2 {
+        font-size: 13px;
+    }
+
+    .reader-card,
+    .order-section {
+        padding: 12px;
+    }
+}
+
+@media print {
+    body {
+        background: #fff !important;
+    }
+
+    .shop-page {
+        width: 100%;
+        max-width: 680px;
+        padding: 0;
+    }
+
+    .shop-page > :not(.receipt-card) {
+        display: none !important;
+    }
+
+    .receipt-card {
+        display: block !important;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .print-button,
+    .bottom-nav {
+        display: none !important;
+    }
+}
