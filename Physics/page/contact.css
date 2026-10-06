@@ -1,0 +1,169 @@
+.contact-page {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.contact-profile {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: clamp(22px, 5vw, 36px);
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+.profile-heading {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #e8edf4;
+}
+
+.profile-avatar {
+    display: grid;
+    width: 68px;
+    height: 68px;
+    flex: 0 0 68px;
+    place-items: center;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: #ffffff;
+    font-size: 27px;
+}
+
+.profile-eyebrow {
+    color: #64748b;
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.profile-heading h2 {
+    margin: 5px 0 2px;
+    color: #142b48;
+    font-size: clamp(21px, 4vw, 27px);
+    line-height: 1.4;
+}
+
+.profile-qualification {
+    margin: 0;
+    color: #64748b;
+    font-family: Inter, 'Noto Sans Myanmar', sans-serif;
+    font-size: 13px;
+}
+
+.contact-intro {
+    margin: 19px 0;
+    color: #52647b;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.contact-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.contact-link {
+    display: flex;
+    min-width: 0;
+    min-height: 72px;
+    align-items: center;
+    gap: 11px;
+    padding: 12px;
+    border: 1px solid #e5ebf3;
+    border-radius: 15px;
+    background: #ffffff;
+    color: #1e293b;
+    text-decoration: none;
+    transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.contact-link:hover,
+.contact-link:focus-visible {
+    transform: translateY(-2px);
+    border-color: #bfcee0;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    outline: none;
+}
+
+.contact-icon {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    place-items: center;
+    border-radius: 12px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 17px;
+}
+
+.contact-copy {
+    display: grid;
+    min-width: 0;
+    gap: 3px;
+}
+
+.contact-label {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.contact-value {
+    overflow-wrap: anywhere;
+    color: #1e293b;
+    font-family: Inter, 'Noto Sans Myanmar', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.contact-arrow {
+    flex: 0 0 auto;
+    margin-left: auto;
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+.phone-contact .contact-icon,
+.viber-contact .contact-icon {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.email-contact .contact-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.telegram-contact .contact-icon {
+    background: #eff6ff;
+    color: #168acb;
+}
+
+.facebook-contact .contact-icon {
+    background: #eff6ff;
+    color: #1877f2;
+}
+
+@media (max-width: 520px) {
+    .contact-profile {
+        padding: 20px 16px;
+        border-radius: 20px;
+    }
+
+    .profile-avatar {
+        width: 58px;
+        height: 58px;
+        flex-basis: 58px;
+    }
+
+    .contact-links {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

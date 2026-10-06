@@ -1,15 +1,15 @@
 /* Responsive page foundation */
 body {
     box-sizing: border-box;
-    width: min(1100px, calc(100% - 36px));
+    width: 100%;
     max-width: none;
-    min-height: calc(100vh - 56px);
-    margin: 28px auto;
+    min-height: 100vh;
+    margin: 0;
     padding: 16px 16px 112px;
-    border: 2px solid #e2e8f0;
-    border-radius: 28px 28px 0 0;
+    border: 0;
+    border-radius: 0;
     background-color: #ffffff;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
     color: #1e293b;
     font-family: 'Pyidaungsu', Arial, sans-serif;
     line-height: 1.5;
@@ -19,18 +19,12 @@ body {
     position: relative;
     min-height: calc(100vh - 120px);
     overflow: visible;
-    border-radius: 28px 28px 0 0;
+    border-radius: 0;
     background: #ffffff;
 }
 
 html {
-    background-color: #0f172a;
-    background-image: url('images/physics-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    background: #ffffff;
     min-height: 100vh;
 }
 
@@ -715,9 +709,16 @@ svg {
 
 .bottom-nav {
     bottom: 18px;
-    width: min(560px, calc(100% - 36px));
-    max-width: none;
-    max-width: 560px;
+    width: max-content;
+    max-width: calc(100vw - 24px);
+    justify-content: center;
+    gap: clamp(8px, 2vw, 14px);
+    padding-right: 14px;
+    padding-left: 14px;
+}
+
+.bottom-nav .nav-item {
+    flex: 0 0 auto;
 }
 
 @media (min-width: 761px) {
