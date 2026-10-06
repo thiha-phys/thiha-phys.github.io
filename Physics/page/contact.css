@@ -80,6 +80,7 @@
     background: #ffffff;
     color: #1e293b;
     text-decoration: none;
+    box-shadow: 0 5px 14px rgba(15, 23, 42, 0.2), 0 1px 3px rgba(15, 23, 42, 0.12);
     transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
@@ -87,7 +88,7 @@
 .contact-link:focus-visible {
     transform: translateY(-2px);
     border-color: #bfcee0;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.28), 0 2px 5px rgba(15, 23, 42, 0.16);
     outline: none;
 }
 

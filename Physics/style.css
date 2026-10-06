@@ -712,9 +712,9 @@ svg {
     width: max-content;
     max-width: calc(100vw - 24px);
     justify-content: center;
-    gap: clamp(8px, 2vw, 14px);
-    padding-right: 14px;
-    padding-left: 14px;
+    gap: 32px;
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 .bottom-nav .nav-item {
