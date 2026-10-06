@@ -1,5 +1,5 @@
 async function sendOrderRequest(action, payload) {
-    const response = await fetch(PROFILE_API_URL, {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxWcDQ_ue9hZPawB-svH9bkusQelPCdXyjXilzLgklfSxXFd74fOi3ydCoCpg0ZuEXg/exec", {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
         body: JSON.stringify({ action, ...payload })
