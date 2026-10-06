@@ -17,7 +17,3 @@ async function sendOrderRequest(action, payload) {
 function submitOrder(order) {
     return sendOrderRequest('createOrder', { order });
 }
-
-function getOrdersForPhone(phone) {
-    return sendOrderRequest('listOrders', { phone });
-}

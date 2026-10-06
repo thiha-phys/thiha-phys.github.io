@@ -21,9 +21,7 @@ const APP_SHELL = [
     './page/book-preview.js',
     './page/order.html',
     './page/order.js',
-    './page/order-api.js',
-    './page/order-history.html',
-    './page/order-history.js'
+    './page/order-api.js'
 ];
 
 self.addEventListener('install', event => {

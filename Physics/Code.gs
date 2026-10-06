@@ -35,9 +35,6 @@ function doPost(e) {
     if (action === 'createOrder') {
       return createBookOrder_(request.order);
     }
-    if (action === 'listOrders') {
-      return listBookOrders_(request.phone);
-    }
 
     const profile = request.profile;
 
@@ -236,54 +233,6 @@ function createBookOrder_(order) {
   } finally {
     lock.releaseLock();
   }
-}
-
-function listBookOrders_(phoneValue) {
-  const phone = normalizePhone_(phoneValue);
-  if (!PHONE_PATTERN.test(phone)) {
-    throw new Error('Phone must contain 11 digits and start with 0.');
-  }
-
-  const sheet = getOrdersSheet_();
-  const lastRow = sheet.getLastRow();
-  if (lastRow < 2) {
-    return jsonResponse_({ ok: true, orders: [] });
-  }
-
-  const rows = sheet.getRange(2, 1, lastRow - 1, ORDER_HEADERS.length).getDisplayValues();
-  const orders = rows.reduce(function (matches, row) {
-    if (normalizePhone_(row[3]) !== phone) {
-      return matches;
-    }
-    const items = BOOK_ORDER_ITEMS.map(function (book) {
-      const quantity = Number(row[book.quantityColumn]) || 0;
-      return {
-        id: book.id,
-        name: book.name,
-        quantity: quantity,
-        amount: Number(row[book.quantityColumn + 1]) || 0
-      };
-    });
-    matches.push({
-      voucherNo: row[0],
-      name: row[1],
-      address: row[2],
-      phone: row[3],
-      orderDate: row[4],
-      items: items,
-      total: Number(row[19]) || 0,
-      paymentMethod: row[20],
-      amountReceived: row[21],
-      kpayAccount: row[22],
-      payDate: row[23],
-      royalVocNo: row[24],
-      orderConfirm: row[25],
-      delivery: row[26]
-    });
-    return matches;
-  }, []);
-  orders.reverse();
-  return jsonResponse_({ ok: true, orders: orders });
 }
 
 function getOrdersSheet_() {
