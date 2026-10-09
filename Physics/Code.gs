@@ -58,6 +58,9 @@ function doPost(e) {
     if (action === 'addBookStock') {
       return addBookStock_(request.stock);
     }
+    if (action === 'submitFeedback') {
+      return submitRecommendation_(request.profile);
+    }
 
     const profile = request.profile;
 

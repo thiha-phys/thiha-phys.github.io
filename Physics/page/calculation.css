@@ -1,0 +1,136 @@
+.problem-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 10px 20px 80px;
+}
+
+.problem-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    padding: 16px;
+}
+
+.problem-number {
+    margin-bottom: 10px;
+}
+
+.problem-number span {
+    background: #eff6ff;
+    border-radius: 6px;
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+}
+
+.problem-content {
+    color: #1e293b;
+    font-family: 'Pyidaungsu', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+}
+
+.problem-question {
+    margin: 0;
+}
+
+.problem-question > strong {
+    color: #2563eb;
+    font-weight: 700;
+}
+
+.problem-question p strong {
+    color: inherit;
+    font-weight: 400;
+}
+
+.problem-question p em {
+    font-style: normal;
+}
+
+.problem-question p,
+.problem-answer p {
+    margin: 7px 0;
+}
+
+.problem-content hr {
+    border: 0;
+    border-top: 1px dashed #e2e8f0;
+    margin: 12px 0;
+}
+
+.problem-content summary {
+    color: #059669;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.problem-answer {
+    background: #f8fafc;
+    border-radius: 8px;
+    color: #1e293b;
+    font-family: 'Pyidaungsu', Arial, sans-serif;
+    line-height: 1.9;
+    margin-top: 10px;
+    overflow-wrap: anywhere;
+    padding: 12px;
+}
+
+.calculation-table-wrap {
+    margin: 8px 0;
+    overflow-x: auto;
+}
+
+.calculation-table {
+    border-collapse: collapse;
+    font-family: 'Pyidaungsu', Arial, sans-serif;
+    font-size: 15px;
+    max-width: 100%;
+    width: max-content;
+}
+
+.calculation-table td {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 6px 8px;
+    vertical-align: middle;
+}
+
+.calculation-table tr:first-child td {
+    background: #eff6ff;
+    font-weight: 600;
+}
+
+.calculation-result {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.problem-content figure {
+    margin: 12px auto;
+    max-width: 100%;
+    text-align: center;
+}
+
+.problem-content figure img {
+    height: auto;
+    max-width: 100%;
+}
+
+@media (max-width: 600px) {
+    .problem-list-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .problem-card {
+        padding: 12px;
+    }
+
+    .problem-answer {
+        padding: 8px;
+    }
+}

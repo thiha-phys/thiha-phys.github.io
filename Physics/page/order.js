@@ -6,6 +6,7 @@ const totalElement = document.getElementById('order-total');
 const codRadio = orderForm.querySelector('input[value="COD"]');
 const kbzPayRadio = orderForm.querySelector('input[value="KBZ Pay"]');
 const COD_MAX_TOTAL = 150000;
+const paymentNote = document.getElementById('payment-note');
 const receiptCard = document.getElementById('receipt-card');
 let lastReceipt = null;
 let orderSubmitted = false;
@@ -26,6 +27,14 @@ function updateOrderTotal() {
         kbzPayRadio.checked = true;
     }
 }
+
+orderForm.querySelectorAll('input[name="paymentMethod"]').forEach((input) => {
+    input.addEventListener('change', () => {
+        paymentNote.textContent = input.value === 'COD'
+            ? 'စာအုပ်ရောက်မှ ငွေရှင်းရန်။'
+            : 'Order တင်ပြီးနောက် ငွေလွှဲနိုင်ရန် အထက်ဖော်ပြပါအချက်အလက်ကို ဆက်သွယ်ပေးပါမည်။';
+    });
+});
 
 PHYSICS_BOOKS.forEach((book) => {
     const row = document.createElement('article');

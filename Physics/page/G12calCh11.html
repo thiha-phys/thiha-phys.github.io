@@ -3,50 +3,195 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>G12 Physics - Chapter 6 Calculations</title>
+  <meta name="theme-color" content="#ffffff">
+  <title>G12 Physics - Chapter 11 Calculations</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- MathJax ထည့်ရန် -->
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
-    };
-  </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .problem-list-container { padding: 10px 20px 80px; display: flex; flex-direction: column; gap: 16px; }
+    .problem-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; box-shadow: 0 3px 10px rgba(0,0,0,.04); padding: 16px; }
+    .problem-number { margin-bottom: 10px; }
+    .problem-number span { background: #eff6ff; border-radius: 6px; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; }
+    .problem-content { color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 14px; line-height: 1.6; }
+    .problem-question { margin-top: 0; }
+    .problem-question strong { color: #2563eb; }
+    .problem-content hr { border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0; }
+    .problem-content summary { color: #059669; cursor: pointer; font-weight: 600; }
+    .problem-answer { background: #f8fafc; border-radius: 8px; color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; line-height: 2; margin-top: 10px; overflow-wrap: anywhere; padding: 12px; }
+    .problem-answer p { margin: 7px 0; }
+    .calculation-table-wrap { margin: 8px 0; overflow-x: auto; }
+    .calculation-table { border-collapse: collapse; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; max-width: 100%; min-width: 0; width: max-content; }
+    .calculation-table td { border-bottom: 1px solid #e2e8f0; padding: 6px 4px; vertical-align: middle; }
+    .calculation-table tr:first-child td { background: #eff6ff; font-weight: 600; }
+    .calculation-result { color: #dc2626; font-weight: 700; }
+    @media (max-width: 600px) { .problem-list-container { padding-left: 12px; padding-right: 12px; } .problem-card { padding: 12px; } .problem-answer { padding: 8px; } }
+  </style>
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] } };</script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-
   <div class="app-container">
-    
-    <!-- Top Header -->
     <header class="page-header">
-      <a href="G12cal.html" class="back-btn">
-        <i class="fa-solid fa-chevron-left"></i>
-      </a>
-      <h1 class="page-title">Chapter 6 Calculations</h1>
+      <a href="G12cal.html" class="back-btn" aria-label="အခန်းစာရင်းသို့ ပြန်သွားရန်"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+      <h1 class="page-title">Chapter 11 Calculations</h1>
       <div class="header-placeholder"></div>
     </header>
-
-    <!-- Sub Banner -->
     <div class="grade-banner">
-      <h2>Chapter 11 - Electromagnetic induction, generation and distrubution of electricity</h2>
-      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၅ ပုဒ်)</p>
+      <h2>Chapter 11 - Electromagnetic induction, generation and distribution of electricity</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း 15 ပုဒ်)</p>
     </div>
-
-    <!-- Problems List Container -->
-    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
-     
-
-
-
-
-
-
-    </main>
+    <main class="problem-list-container"><article class="problem-card">
+  <div class="problem-number"><span>Eg.1</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; An AC generator has an output given by E = 150 sin 377 t. (i) Find the maximum emf output, the frequency of the source, and the emf and t = \(\frac{1}{120}\) s. (ii) Find the maximum current in the circuit when generator is connected to a 50 \(\Omega \) resistor in the figure.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>E = 150 sin 377 t</p><p>(i) E<sub>m</sub> = ? f = ? &nbsp; E = ?    at t = \(\frac{1}{120}\) s</p><p>(ii) I<sub>m</sub> = ? &nbsp; R = 50 \(\Omega \) </p></td></tr><tr><td></td><td colspan="3"><p>By comparing E = E<sub>m</sub> sin (\(\omega \) t)</p></td></tr><tr><td><p>(i)</p></td><td colspan="3"><p>E<sub>m</sub> = 150 V,</p><p>\(\omega \) = 377 rad s<sup>-1 </sup>= \(\frac{377\ \pi }{\pi }\) = 120 \(\pi \) rad s<sup>-1</sup></p></td></tr><tr><td></td><td><p>E<sub>m</sub></p></td><td><p>=</p></td><td><p>150 V</p></td></tr><tr><td></td><td><p>\(\omega \) </p></td><td><p>=</p></td><td><p>2 \(\pi \) f</p></td></tr><tr><td></td><td><p>f</p></td><td><p>=</p></td><td><p>\(\frac{\omega }{2\ \pi }\)  = \(\frac{120\ \pi }{2\ \pi }\) = 60 Hz</p></td></tr><tr><td></td><td><p>E</p></td><td><p>=</p></td><td><p>150 sin (377 t)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>150 sin (120 \(\pi \) \(\times \) \(\frac{1}{120}\))</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>150 sin (\(\pi \))</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>150 \(\times \) sin (180) = 0</p></td></tr><tr><td><p>(ii)</p></td><td><p>E<sub>m</sub></p></td><td><p>=</p></td><td><p>I<sub>m</sub> R</p></td></tr><tr><td></td><td><p>I<sub>m</sub></p></td><td><p>=</p></td><td><p>\(\frac{{E}_{m}}{R}\) = \(\frac{150}{50}\) = 3 A</p></td></tr></tbody></table></div></div>
+    </details>
   </div>
-
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.2</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; The current in an AC circuit at any time t seconds is given by I = 20 sin (100 \(\pi \) t) A. Find (i) the peak value (maximum value) of current, the period and the frequency (ii) the value of the current when t = 0 (iii) the value of the current when t = 8 ms and (iv) the time when the current reaches 10 A.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="5"><p>I = 20 sin (100 \(\pi \) t) A</p><p>(i) I<sub>m</sub> = ? &nbsp; T = ? &nbsp; f = ?</p><p>(ii)  I = ? &nbsp; When, t = 0 s</p><p>(iii) I = ? &nbsp; When, t = 8 ms = 8 \(\times \ {10}^{-3}\) s</p><p>(iii) t = ? &nbsp; When, I = 10 A</p></td></tr><tr><td></td><td colspan="5"><p>By comparing I = I<sub>m</sub> sin (\(\omega \) t)</p></td></tr><tr><td></td><td colspan="5"><p>I<sub>m</sub> = 20 A, &nbsp; \(\omega \) = 100 \(\pi \) rad s<sup>-1</sup></p></td></tr><tr><td><p>(i)</p></td><td><p>I<sub>m</sub></p></td><td><p>=</p></td><td colspan="3"><p>20 A</p></td></tr><tr><td></td><td><p>\(\omega \) </p></td><td><p>=</p></td><td colspan="3"><p>2 \(\pi \) f</p></td></tr><tr><td></td><td><p>f</p></td><td><p>=</p></td><td colspan="3"><p>\(\frac{\omega }{2\ \pi }\)  = \(\frac{100\ \pi \ }{2\ \pi \ }\) = 50 Hz</p></td></tr><tr><td></td><td><p>T</p></td><td><p>=</p></td><td colspan="3"><p>\(\frac{1}{f}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="3"><p>\(\frac{1}{50}\) = 0.02 s = 20 ms</p></td></tr><tr><td><p>(ii)</p></td><td><p>I</p></td><td><p>=</p></td><td colspan="3"><p>20 sin (100 \(\pi \ \times \) 0)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="3"><p>0</p></td></tr><tr><td><p>(iii)</p></td><td><p>I</p></td><td><p>=</p></td><td colspan="3"><p>20 sin (100 \(\pi \times 8\ \times {10}^{-3}\)) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="3"><p>11.76 A</p></td></tr><tr><td><p>(iv)</p></td><td><p>I</p></td><td><p>=</p></td><td colspan="3"><p>20 sin (100 \(\pi \) t)</p></td></tr><tr><td></td><td><p>10</p></td><td><p>=</p></td><td colspan="3"><p>20 sin (100 \(\times \) 180 t)</p></td></tr><tr><td></td><td><p>0.5</p></td><td><p>=</p></td><td colspan="3"><p>sin (100 \(\times \) 180 t)</p></td></tr><tr><td></td><td colspan="3"><p>100 \(\times \) 180 t</p></td><td><p>=</p></td><td><p>sin<sup>-1</sup> 0.5</p></td></tr><tr><td></td><td colspan="3"><p>100 \(\times \) 180 t</p></td><td><p>=</p></td><td><p>30</p></td></tr><tr><td></td><td colspan="3"><p>t</p></td><td><p>=</p></td><td><p>\(\frac{30}{100\ \times 180}\) </p></td></tr><tr><td></td><td colspan="3"><p>t</p></td><td><p>=</p></td><td><p>1.67 \(\times \) 10<sup>-3 </sup>s</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A square loop of wire 10 cm on a side is in a magnetic field of 1.25 T. What are the maximum and minimum values of flux that can pass through the loop?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>A = 10 cm \(\times \) 10 cm = 100 cm<sup>2</sup> </p><p>   = 100 \(\times \) 10<sup>-4</sup> m<sup>2</sup> = 10<sup>-2</sup> m<sup>2</sup></p><p>B = 1.25 T</p><p>\({\phi }_{B}\) = ? (for maximum and minimum) </p></td></tr><tr><td></td><td><p>\({\phi }_{B}\) </p></td><td><p>=</p></td><td><p>B A cos \(\theta \)</p></td></tr><tr><td></td><td colspan="3"><p>For maximum value, &nbsp; \(\theta \) = 0\(^\circ \)</p></td></tr><tr><td></td><td><p>\({\phi }_{B}\) </p></td><td><p>=</p></td><td><p>B A cos 0\(^\circ \)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>1.25 \(\times \) 10<sup>-2</sup> \(\times \) 1 = 0.0125 Wb</p></td></tr><tr><td></td><td colspan="3"><p>For minimum value, &nbsp; \(\theta \) = 90\(^\circ \)</p></td></tr><tr><td></td><td><p>\({\phi }_{B}\) </p></td><td><p>=</p></td><td><p>B A cos 90\(^\circ \) = 0</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.9</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A square loop of wire of side 5.0 cm is in a uniform magnetic field 0.16 T. What is the magnetic flux in the loop (i) when magnetic flied is perpendicular to the surface of the loop and (ii) when magnetic filed is at an angle of 30\(^\circ \) to the surface of the loop?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>A = 5 cm \(\times \) 5 cm = 25 cm<sup>2</sup> = 25 \(\times \) 10<sup>-4</sup> m<sup>2</sup> </p><p>B = 0.16 T</p></td></tr><tr><td></td><td colspan="3"><p>(i)  \({\phi }_{B}\) = ? \(\theta \) = 0\(^\circ \ \)(ii)  \({\phi }_{B}\) = ? \(\theta \) = 60\(^\circ \)</p></td></tr><tr><td></td><td><p>\({\phi }_{B}\) </p></td><td><p>=</p></td><td><p>B A cos \(\theta \)</p></td></tr><tr><td></td><td colspan="3"><p>When \(\vec{B}\) is perpendicular to the surface of loop,    \(\theta \) = 0\(^\circ \)</p></td></tr><tr><td></td><td><p>  \({\phi }_{B}\) </p></td><td><p>=</p></td><td><p>B A cos 0\(^\circ \)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>0.16 \(\times \) 25 \(\times \) 10<sup>-4</sup> \(\times \) 1</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>4 \(\times \) 10<sup>-4</sup> Wb</p></td></tr><tr><td></td><td colspan="3"><p>When \(\vec{B}\) is at angle of 30\(^\circ \) to surface,</p><p>\(\theta \) = 90\(^\circ \) - 30\(^\circ \) = 60\(^\circ \)</p></td></tr><tr><td></td><td><p>\({\phi }_{B}\) </p></td><td><p>=</p></td><td><p>B A cos 60\(^\circ \)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>0.16 \(\times \) 25 \(\times \) 10<sup>-4</sup> \(\times \) cos 60\(^\circ \)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>2 \(\times \) 10<sup>-4</sup> Wb</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A generator coil with 200 turns is rotated through one-fourth of a revolution in 15 ms. The turn of circular coil has a 5 cm radius and is in a uniform magnetic field of 1.25 T. Find the induced emf in 15 ms.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>N = 200 turns, &nbsp; \(\Delta \) t = 15 ms = 15 \(\times {10}^{-3}\)s,</p><p>r = 5 cm = 5 \(\times {10}^{-2}\) m, B = 1.25 T, E = ?</p><p>A = \(\pi \ {r}^{2}\) = 3.142 \(\times \ {(5\times \ {10}^{-2})}^{2}\) m<sup>2</sup></p></td></tr><tr><td></td><td colspan="3"><p>\({\phi }_{B}\) = B A cos \(\theta \)</p></td></tr><tr><td></td><td colspan="3"><p>Since the area of the loop and magnetic flies are constant, change in magnetic flux due to rotational angle from 0\(^\circ \) to 90\(^\circ \) (one-fourth of a revolution)</p></td></tr><tr><td></td><td><p>\(\Delta {\ \phi }_{B}\) </p></td><td><p>=</p></td><td><p>B A \(\Delta \) (cos \(\theta \))</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>1.25 \(\times \) 3.142 \(\times \ {(5\times \ {10}^{-2})}^{2}\ \times \) (cos 90\(^\circ \) – cos 0\(^\circ \))</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>- 0.0098 Wb</p></td></tr><tr><td></td><td><p>E</p></td><td><p>=</p></td><td><p>- N \(\frac{d{\phi }_{B}}{dt}\)  = - N \(\frac{∆{\phi }_{B}}{∆t}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>- 200 \(\times \) \(\frac{(\ -0.0098\ )}{(\ 15\ \times {10}^{-3})}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>130.92 V</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.10</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A circular coil of radius 8 cm and 20 turns is rotated about its vertical diameter with an angular speed of 150 rad s<sup>-1</sup> in a uniform horizontal magnetic field of 3 \(\times \ {10}^{-2}\) T. Obtain the maximum emf induced in the coil. If the coil forms a closed loop of resistance 10 \(\Omega \), calculate the maximum value of current in the coil.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>N = 20 turns, &nbsp; r = 8 cm = 8 \(\times {10}^{-2}\) m,</p><p>\(\omega \) = 150 rad s<sup>-1</sup>, B = 3 \(\times \ {10}^{-2}\) T, E<sub>m</sub> = ?                 </p><p>R = 10 \(\Omega \), &nbsp;  &nbsp; I<sub>m</sub> = ?</p><p>A = \(\pi \ {r}^{2}\) = 3.142 \(\times \ {(8\times \ {10}^{-2})}^{2}\) m<sup>2</sup></p></td></tr><tr><td></td><td><p>E<sub>m</sub> </p></td><td><p>=</p></td><td><p>N B A \(\omega \)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>20 \(\ \times \) 3 \(\times \ {10}^{-2}\) \(\times \) 3.142 \(\times {(8\times \ {10}^{-2})}^{2}\times \) 150</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>1.81 V</p></td></tr><tr><td></td><td><p>E<sub>m</sub></p></td><td><p>=</p></td><td><p>I<sub>m</sub> R</p></td></tr><tr><td></td><td><p>I<sub>m</sub></p></td><td><p>=</p></td><td><p>\(\frac{{E}_{m}}{R}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{1.81}{10}\)  = 0.181 A</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.11</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; The armature of a 60 Hz AC generator rotates in a magnetic field of 0.15 T. If the area of the coil is 2.0 \(\times \ {10}^{-2}\) m<sup>2</sup>, how many loops must the coil contain if the maximum output is to be 170 V.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>f = 60 Hz, &nbsp; B = 0.15 T,</p><p>A = 2.0 \(\times {10}^{-2}\) m<sup>2</sup>, E<sub>m</sub> = 170 V, N = ?</p></td></tr><tr><td></td><td><p>\(\omega \)</p></td><td><p>=</p></td><td><p>2 \(\pi \) f</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>2 \(\times \) 3.142 \(\times \) 60 = 377.04 rad s<sup>-1</sup></p></td></tr><tr><td></td><td><p>E<sub>m</sub> </p></td><td><p>=</p></td><td><p>N B A \(\omega \)</p></td></tr><tr><td></td><td><p>N</p></td><td><p>=</p></td><td><p>\(\frac{{E}_{m}}{B\ A\ \omega }\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{170}{0.15\times \ 2.0\ \times \ {10}^{-2}\ \times 377.04}\) </p></td></tr><tr><td></td><td><p>N</p></td><td><p>=</p></td><td><p>150 turns</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A step-down transformer is used to light a 12 V, 24 W lamp from the 240 V mains. The current through the primary is 125 mA. What is the efficiency of the transformer?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>Primary coil</p><p>V<sub>p</sub> = 240 V</p><p>I<sub>p</sub> = 125 mA</p><p>   = 125 \(\times {10}^{-3}\) A</p></td><td><p>Secondary coil</p><p>V<sub>s</sub> = 12 V</p><p>P <sub>out</sub> = 24 W</p></td></tr><tr><td></td><td colspan="4"><p>Efficiency = ?</p></td></tr><tr><td></td><td><p>P<sub>in</sub></p></td><td><p>=</p></td><td colspan="2"><p>V<sub>p</sub> I<sub>p</sub></p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="2"><p>240 \(\times \) 125 \(\times {10}^{-3}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="2"><p>30 W</p></td></tr><tr><td></td><td><p>Efficiency</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{P}_{out}}{{P}_{in}}\ \times 100\%\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="2"><p>\(\frac{24\ W}{30\ W}\ \times 100\%\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="2"><p>80 \(\%\)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A 2 kW transformer is used to step down an AC supply of 240 V to 60 V (i) What is the turns ratio of this transformer? (ii) What will the output current be if there is a 10\(\%\) power loss in the transformer? (iii) How large is the output current if there is no power loss (i.e. 100\(\%\) efficiency)?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>Primary coil</p><p>V<sub>p</sub> = 240 V</p><p>P <sub>in</sub> = 2 kW </p><p>      = 2 \(\times {10}^{3}\) W</p></td><td><p>Secondary coil</p><p>V<sub>s</sub> = 60 V</p><p>P <sub>out</sub> = V<sub>s</sub> I<sub>s</sub></p></td></tr><tr><td></td><td colspan="4"><p>(i)   turns ratio, \(\frac{{N}_{s}}{{N}_{p}}\) = ?</p><p>(ii)  I<sub>s</sub> = ? &nbsp; power loss = 10\(\%\) </p><p>(iii) I<sub>s</sub> = ? &nbsp; no power loss</p></td></tr><tr><td><p>(i)</p></td><td><p>\(\frac{{N}_{s}}{{N}_{p}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{V}_{s}}{{V}_{p}}\) = \(\frac{60}{240}\)</p></td></tr><tr><td></td><td><p>\(\frac{{N}_{s}}{{N}_{p}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{4}\) </p></td></tr><tr><td></td><td><p>N<sub>s</sub> : N<sub>p</sub></p></td><td><p>=</p></td><td colspan="2"><p>1 : 4</p></td></tr><tr><td><p>(ii)</p></td><td colspan="4"><p>If there is a 10\(\%\) power loss </p></td></tr><tr><td></td><td><p>\(\frac{{P}_{\ out}}{{P}_{\ in}}\) </p></td><td><p>=</p></td><td colspan="2"><p>90\(\%\)</p></td></tr><tr><td></td><td><p>P<sub> out</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{90}{100}\) \(\times \) P<sub> in</sub></p></td></tr><tr><td></td><td><p>I<sub>s</sub> V<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(0.9\times \) P<sub> in</sub></p></td></tr><tr><td></td><td><p>I<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{0.9\ \times \ {P}_{in}}{{V}_{s}}\) </p></td></tr><tr><td></td><td><p>I<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{0.9\ \times \ 2\ \times {10}^{3}}{60}\)  = 30 A</p></td></tr><tr><td><p>(iii)</p></td><td colspan="4"><p>If there is no power loss </p></td></tr><tr><td></td><td><p>\(\frac{{P}_{\ out}}{{P}_{\ in}}\) </p></td><td><p>=</p></td><td colspan="2"><p>100\(\%\)</p></td></tr><tr><td></td><td><p>P<sub> out</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{100}{100}\) \(\times \) P<sub> in</sub></p></td></tr><tr><td></td><td><p>P<sub> out</sub></p></td><td><p>=</p></td><td colspan="2"><p>P<sub> in</sub></p></td></tr><tr><td></td><td><p>I<sub>s</sub> V<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>2 \(\times {10}^{3}\)</p></td></tr><tr><td></td><td><p>I<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{2\ \times {10}^{3}}{{V}_{s}}\) = \(\frac{2\ \times {10}^{3}}{60}\) = 33.33 A</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.12</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; One coil of a transformer has 50 turns and the other coil has 1000 turns. The alternating voltage of 220 V is applied to the primary. Find the alternating voltage from the secondary when it is used as (i) a step-up transformer and (ii) a step-down transformer.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="4"><p>N<sub>1</sub> = 50 turns, &nbsp; N<sub>2</sub> = 1000 turns</p></td></tr><tr><td></td><td colspan="3"><p>Primary coil</p><p>V<sub>p</sub> = 220 V</p></td><td><p>Secondary coil</p><p>V<sub>s</sub> = ?</p></td></tr><tr><td><p>(i)</p></td><td colspan="4"><p>As a step-up transformer, &nbsp; N<sub>s</sub> &gt; N<sub>p</sub> </p></td></tr><tr><td></td><td colspan="4"><p>N<sub>s</sub> = 1000 turns, &nbsp;  N<sub>p</sub> = 50 turns</p></td></tr><tr><td></td><td><p>\(\frac{{V}_{s}}{{V}_{p}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{N}_{s}}{{N}_{p}}\)  </p></td></tr><tr><td></td><td><p>\(\frac{{V}_{s}}{220}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1000}{50}\) </p></td></tr><tr><td></td><td><p>V<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>4 400 V</p></td></tr><tr><td><p>(ii)</p></td><td colspan="4"><p>As a step-down transformer, &nbsp; N<sub>s</sub> &lt; N<sub>p</sub> </p></td></tr><tr><td></td><td colspan="4"><p>N<sub>s</sub> = 50 turns, &nbsp; N<sub>p</sub> = 1000 turns</p></td></tr><tr><td></td><td><p>\(\frac{{V}_{s}}{{V}_{p}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{N}_{s}}{{N}_{p}}\)  </p></td></tr><tr><td></td><td><p>\(\frac{{V}_{s}}{220}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{50}{1000}\) </p></td></tr><tr><td></td><td><p>V<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>11 V</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.13</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; The primary coil of a step-up transformer having 220 turns is connected to a 110 V alternating voltage source. The secondary delivers a voltage of 12 000 V and a current of 40 mA. (i) How many turns are there in the secondary? (ii) What is the current in the primary? (iii) What is the power output?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>Primary coil</p><p>N<sub>p</sub> = 220 turns</p><p>V<sub>p</sub> = 110 V</p></td><td><p>Secondary coil</p><p>V<sub>s</sub> = 12 000 V</p><p>I<sub>s </sub> = 40 mA = 40 \(\times {10}^{-3}\) A</p></td></tr><tr><td></td><td colspan="4"><p>(i) N<sub>s</sub> = ? &nbsp; (ii) I<sub>p</sub> = ? &nbsp; (iii) P<sub>out</sub> = ?</p></td></tr><tr><td><p>(i)</p></td><td><p>\(\frac{{N}_{s}}{{N}_{p}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{V}_{s}}{{V}_{p}}\) </p></td></tr><tr><td></td><td><p>\(\frac{{N}_{s}}{220}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{12\ 000}{110}\) </p></td></tr><tr><td></td><td><p>N<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>24 000 turns</p></td></tr><tr><td><p>(ii)</p></td><td><p>\(\frac{{V}_{s}}{{V}_{p}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{I}_{p}}{{I}_{s}}\)  </p></td></tr><tr><td></td><td><p>\(\frac{12\ 000}{110}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{I}_{p}}{40\ \times {10}^{-3}}\) </p></td></tr><tr><td></td><td><p>I<sub>p</sub></p></td><td><p>=</p></td><td colspan="2"><p>4.364 A</p></td></tr><tr><td><p>(iii)</p></td><td><p>P<sub>out</sub></p></td><td><p>=</p></td><td colspan="2"><p>V<sub>s</sub> I<sub>s</sub> </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="2"><p>12 000 \(\times \) 40 \(\times {10}^{-3}\) = 480 W</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.14</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; An electric welding machine uses a current of 400 A. The machine has a transformer whose primary coil has 400 turns and draws 4 A from a 220 V power line. (i) How many turns does the secondary coil have? (ii) What is the voltage across the secondary coil?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>Primary coil</p><p>N<sub>p</sub> = 400 turns</p><p>V<sub>p</sub> = 220 V</p><p>I<sub>p</sub> = 4 A</p></td><td><p>Secondary coil</p><p>I<sub>s </sub> = 400 A</p></td></tr><tr><td></td><td colspan="4"><p>(i) N<sub>s</sub> = ? &nbsp; (ii) V<sub>s</sub> = ?</p></td></tr><tr><td><p>(i)</p></td><td><p>\(\frac{{N}_{s}}{{N}_{p}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{I}_{p}}{{I}_{s}}\) </p></td></tr><tr><td></td><td><p>\(\frac{{N}_{s}}{400}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{4}{400}\) </p></td></tr><tr><td></td><td><p>N<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>4 turns</p></td></tr><tr><td><p>(ii)</p></td><td><p>\(\frac{{V}_{s}}{{V}_{p}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{I}_{p}}{{I}_{s}}\) </p></td></tr><tr><td></td><td><p>\(\frac{{V}_{s}}{220}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{4}{400}\) </p></td></tr><tr><td></td><td><p>V<sub>s</sub></p></td><td><p>=</p></td><td colspan="2"><p>2.2 V</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.15</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A transformer has 2000 turns in primary, 100 turns in secondary and its efficiency 100\(\%\). It is used for 10 V, 40 W bulb. Calculate (i) the supply voltage and (ii) the current through the input coil.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>Primary coil</p><p>N<sub>p</sub> = 2000 turns</p></td><td><p>Secondary coil</p><p>N<sub>s</sub> = 100 turns</p><p>V<sub>s</sub> = 10 V</p><p>P<sub>out</sub> = 40 W</p></td></tr><tr><td></td><td colspan="4"><p>(i) V<sub>p</sub> = ? &nbsp; (ii) I<sub>p</sub> = ?</p></td></tr><tr><td></td><td colspan="4"><p>For 100\(\%\) efficiency, P<sub>out</sub> = P<sub>in</sub> = 40 W</p></td></tr><tr><td><p>(i)</p></td><td><p>\(\frac{{V}_{p}}{{V}_{s}}\)  </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{N}_{p}}{{N}_{s}}\) </p></td></tr><tr><td></td><td><p>\(\frac{{V}_{p}}{10}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{2000}{100}\) </p></td></tr><tr><td></td><td><p>V<sub>p</sub></p></td><td><p>=</p></td><td colspan="2"><p>200 V</p></td></tr><tr><td><p>(ii)</p></td><td><p>P<sub>in</sub></p></td><td><p>=</p></td><td colspan="2"><p>I<sub>p</sub> V<sub>p</sub></p></td></tr><tr><td></td><td><p>40</p></td><td><p>=</p></td><td colspan="2"><p>I<sub>p</sub> V<sub>p</sub></p></td></tr><tr><td></td><td><p>I<sub>p</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{40}{{V}_{p}}\) = \(\frac{40}{200}\) = 0.2 A</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.16</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; 120 kW of electric power is sent to a small town from a power plant 10 km away. The transmission lines have a resistance of 0.40 Ω per km. Calculate the power loss if the power is transmitted at (i) 240 V and (ii) 24 000 V.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>P = 120 kW = 120 \(\times \) 10<sup>3</sup> W</p><p>For 1 km, R = 0.40 Ω</p><p>For 10 km, R = 0.40 \(\times \) 10 = 4 Ω</p></td></tr><tr><td></td><td colspan="3"><p>(i) P<sub>loss</sub> = ?, V = 240 V</p><p>(ii) P<sub>loss</sub> = ?, V = 24 000 V</p></td></tr><tr><td><p>(i)</p></td><td><p>P</p></td><td><p>=</p></td><td><p>V I</p></td></tr><tr><td></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{P}{V}\) = \(\frac{120\ \times \ {10}^{3}}{240}\) = \(\frac{1000}{2}\) = 500 A</p></td></tr><tr><td></td><td><p>P<sub>loss</sub></p></td><td><p>=</p></td><td><p>I<sup>2</sup> R = 500<sup>2</sup> \(\times \) 4</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>100 0000 = 1000 kW</p></td></tr><tr><td><p>(ii)</p></td><td><p>P</p></td><td><p>=</p></td><td><p>V I</p></td></tr><tr><td></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{P}{V}\) = \(\frac{120\ \times \ {10}^{3}}{24\ 000}\) = \(\frac{1000}{200}\) = 5 A</p></td></tr><tr><td></td><td><p>P<sub>loss</sub></p></td><td><p>=</p></td><td><p>I<sup>2</sup> R = 5<sup>2</sup> \(\times \) 4</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>25 \(\times \) 4 = 100 = 100 W</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.7</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; If an electrician accidentally touches a live wire of 220 V, what possible effect would he experience if his skin (i) were dry and had a resistance of 100 k\(\Omega \)? (ii) were wet and had a resistance of 1000 \(\Omega \).</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>V = 220 V</p></td></tr><tr><td><p>(i)</p></td><td colspan="3"><p>If his skin were dry,</p></td></tr><tr><td></td><td><p>R</p></td><td><p>=</p></td><td><p>100 k\(\Omega \) = 100 \(\times \) 10<sup>3 </sup>\(\Omega \)</p></td></tr><tr><td></td><td colspan="3"><p>By Ohm’s law,</p></td></tr><tr><td></td><td><p>V</p></td><td><p>=</p></td><td><p>IR</p></td></tr><tr><td></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{V}{R}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{220}{100\ \times \ {10}^{3}}\) = 2.2 \(\times \) 10<sup>-3</sup> A = 2.2 mA</p></td></tr><tr><td></td><td colspan="3"><p>The electrician would experience a mild shock.</p></td></tr><tr><td><p>(ii)</p></td><td colspan="3"><p>If his skin were wet,</p></td></tr><tr><td></td><td><p>R</p></td><td><p>=</p></td><td><p>1000 \(\Omega \) </p></td></tr><tr><td></td><td><p>V</p></td><td><p>=</p></td><td><p>IR</p></td></tr><tr><td></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{V}{R}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{220}{1000}\) = 220 \(\times \) 10<sup>-3</sup> A = 220 mA</p></td></tr><tr><td></td><td colspan="3"><p>The electrician would be electrocuted.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article></main>
+  </div>
+  <script src="calculation-format.js"></script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+body:not(.has-inline-brand)::after {
+    position: fixed;
+    z-index: 1000;
+    top: 10px;
+    right: 12px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff url('../logo.png') center / contain no-repeat;
+    box-shadow: 0 1px 8px rgba(15, 23, 42, 0.16);
+    content: '';
+    pointer-events: none;
+}
+
+@media print {
+    body:not(.has-inline-brand)::after {
+        display: none;
+    }
+}

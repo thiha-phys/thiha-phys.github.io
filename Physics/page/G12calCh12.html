@@ -3,50 +3,225 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>G12 Physics - Chapter 6 Calculations</title>
+  <meta name="theme-color" content="#ffffff">
+  <title>G12 Physics - Chapter 12 Calculations</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- MathJax ထည့်ရန် -->
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
-    };
-  </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .problem-list-container { padding: 10px 20px 80px; display: flex; flex-direction: column; gap: 16px; }
+    .problem-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; box-shadow: 0 3px 10px rgba(0,0,0,.04); padding: 16px; }
+    .problem-number { margin-bottom: 10px; }
+    .problem-number span { background: #eff6ff; border-radius: 6px; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; }
+    .problem-content { color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 14px; line-height: 1.6; }
+    .problem-question { margin-top: 0; }
+    .problem-question strong { color: #2563eb; }
+    .problem-content hr { border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0; }
+    .problem-content summary { color: #059669; cursor: pointer; font-weight: 600; }
+    .problem-answer { background: #f8fafc; border-radius: 8px; color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; line-height: 2; margin-top: 10px; overflow-wrap: anywhere; padding: 12px; }
+    .problem-answer p { margin: 7px 0; }
+    .calculation-table-wrap { margin: 8px 0; overflow-x: auto; }
+    .calculation-table { border-collapse: collapse; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; max-width: 100%; min-width: 0; width: max-content; }
+    .calculation-table td { border-bottom: 1px solid #e2e8f0; padding: 6px 4px; vertical-align: middle; }
+    .calculation-table tr:first-child td { background: #eff6ff; font-weight: 600; }
+    .calculation-result { color: #dc2626; font-weight: 700; }
+    @media (max-width: 600px) { .problem-list-container { padding-left: 12px; padding-right: 12px; } .problem-card { padding: 12px; } .problem-answer { padding: 8px; } }
+  </style>
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] } };</script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-
   <div class="app-container">
-    
-    <!-- Top Header -->
     <header class="page-header">
-      <a href="G12cal.html" class="back-btn">
-        <i class="fa-solid fa-chevron-left"></i>
-      </a>
-      <h1 class="page-title">Chapter 6 Calculations</h1>
+      <a href="G12cal.html" class="back-btn" aria-label="အခန်းစာရင်းသို့ ပြန်သွားရန်"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+      <h1 class="page-title">Chapter 12 Calculations</h1>
       <div class="header-placeholder"></div>
     </header>
-
-    <!-- Sub Banner -->
     <div class="grade-banner">
       <h2>Chapter 12 - Digital electronics and communication system</h2>
-      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၇ ပုဒ်)</p>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း 18 ပုဒ်)</p>
     </div>
-
-    <!-- Problems List Container -->
-    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
-     
-
-
-
-
-
-
-    </main>
+    <main class="problem-list-container"><article class="problem-card">
+  <div class="problem-number"><span>Eg.1</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Figure shows the basic zener diode circuits. What will be the circuit behaviour if the zener diode is (i) working properly (ii) shorted and (ii) open-circuited? </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="4"></td></tr><tr><td><p>(i)</p></td><td colspan="3"><p>If the zener diode is working properly, the voltage 𝑉<sub>0</sub> across the load (5 kΩ) will be nearly 6 V.</p></td><td></td></tr><tr><td><p>(ii)</p></td><td colspan="3"><p>If the zener diode is short, the voltage 𝑉<sub>0</sub> across the load will be 0 V. The same problem could also be caused by a shorted load resistor (5 kΩ) or an opened source resistor (1 kΩ).</p></td><td></td></tr><tr><td><p>(iii)</p></td><td colspan="3"><p>If the zener diode is open-circuited, the voltage 𝑉<sub>0</sub> across the load (5 kΩ) is</p></td><td></td></tr><tr><td></td><td><p>R<sub>total</sub></p></td><td><p>=</p></td><td colspan="2"><p>R<sub>1</sub> + R<sub>2</sub> (in series)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="2"><p>1 + 5 = 6 kΩ</p></td></tr><tr><td></td><td colspan="4"><p>By Ohm’s law,</p></td></tr><tr><td></td><td><p>V</p></td><td><p>=</p></td><td colspan="2"><p>I R</p></td></tr><tr><td></td><td><p>I</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{V}{R}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="2"><p>\(\frac{12}{6\ \times \ {10}^{3}}\) = 2 \(\times {10}^{-3}\) A</p></td></tr><tr><td></td><td colspan="4"><p>I<sub>1</sub> = I<sub>2</sub> = I = 2 \(\times {10}^{-3}\) A (in series)</p></td></tr><tr><td></td><td colspan="4"><p>V<sub>0</sub> = V<sub>2</sub> = I<sub>2</sub> R<sub>2</sub> </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="2"><p>2 \(\times {10}^{-3}\) \(\times \) 5 \(\times {10}^{3}\) = 10 V</p></td></tr></tbody></table></div></div>
+    </details>
   </div>
-
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.2</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; An LED is lit from a 9 V supply and takes a current of 15 mA. Calculate the value of the current limiting resistor required for the LED. (Assume that the forward voltage drop will be 2 V).</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>V<sub>s</sub> = 9 V, I = 15 mA = 15 \(\times \ {10}^{-3}\) A,</p><p>V<sub>f</sub> = 2 V, &nbsp; R = ?</p></td></tr><tr><td></td><td><p>V<sub>s</sub></p></td><td><p>=</p></td><td><p>V<sub>f</sub> + V<sub>R</sub></p></td></tr><tr><td></td><td><p>V<sub>R</sub></p></td><td><p>= </p></td><td><p>\({V}_{s}\ -\ {V}_{f}\) = 9 – 2 = 7 V</p></td></tr><tr><td></td><td colspan="3"><p>By Ohm’s law,</p></td></tr><tr><td></td><td><p>V<sub>R</sub></p></td><td><p>=</p></td><td><p>I R</p></td></tr><tr><td></td><td><p>R</p></td><td><p>=</p></td><td><p>\(\frac{{V}_{R}}{I}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{7}{15\ \times \ {10}^{-3}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>466.67 \(\Omega \)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; An amber-coloured LED with a forward voltage drop of 2 V is to be connected to a 5 V stabilized DC power supply. Calculate the value of the series resistor required to limit the forward current to less than 10 mA. Also calculate the current flowing through the diode if a 100 Ω of current limiting resistor is used.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>V<sub>f</sub> = 2 V, &nbsp; V<sub>s </sub>= 5 V,          </p><p>I = 10 mA = 10 \(\times {10}^{-3}\) A, &nbsp; R = ? </p></td></tr><tr><td></td><td><p>V<sub>s</sub></p></td><td><p>=</p></td><td><p>V<sub>f</sub> + V<sub>R</sub></p></td></tr><tr><td></td><td><p>V<sub>R</sub></p></td><td><p>= </p></td><td><p>\({V}_{s}-\ {V}_{f}\) = 5 – 2 = 3 V</p></td></tr><tr><td></td><td colspan="3"><p>By Ohm’s law,</p></td></tr><tr><td></td><td><p>V<sub>R</sub></p></td><td><p>=</p></td><td><p> I R</p></td></tr><tr><td></td><td><p>R</p></td><td><p>=</p></td><td><p>\(\frac{{V}_{R}}{I}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{3\ }{10\ \times \ {10}^{-3}}\)  = 300 \(\Omega \)</p></td></tr><tr><td></td><td colspan="3"><p>If R = 100 Ω, &nbsp; I = ?</p></td></tr><tr><td></td><td><p>V<sub>R</sub></p></td><td><p>=</p></td><td><p>I R</p></td></tr><tr><td></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{{V}_{R}}{R}\) </p></td></tr><tr><td></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{3\ }{100}\) = 0.03 A = 30 mA</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; In the figure the resistance of R<sub>2</sub> is 2000  and V<sub>in</sub> is 6 V. (i) In daylight the resistance of R<sub>1</sub> is 500 . Calculate the voltage across R<sub>2</sub>. (ii) In the dark the resistance of R<sub>1</sub> is         198 000 . Calculate the voltage across R<sub>2</sub>.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>R<sub>2</sub> = 2000 , &nbsp;  &nbsp; V<sub>in</sub> = 6 V,               </p><p>(i)  In daylight, R<sub>1</sub> = 500 , V<sub>2</sub> = V<sub>out</sub> = ?</p><p>(ii) In dark, R<sub>1</sub> = 198 000 , V<sub>2</sub> = V<sub>out</sub> = ?</p></td></tr><tr><td></td><td colspan="3"><p>By Ohm’s law,</p></td></tr><tr><td><p>(i)</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{{V}_{in}}{{R}_{1}+\ {R}_{2}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{6}{500\ +\ 2000}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>2.4\(\times \)10<sup>-3</sup> A (or) 2.4 mA</p></td></tr><tr><td></td><td><p>V<sub>2</sub> = V<sub>out</sub></p></td><td><p>=</p></td><td><p>I R<sub>2</sub></p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>0.0024 \(\times \) 2000 = 4.8 V</p></td></tr><tr><td><p>(ii)</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{{V}_{in}}{{R}_{1}+\ {R}_{2}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{6}{198\ 000\ +\ 2000}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>30\(\times \)10<sup>-6</sup> A (or) 30 \(\mu \)A</p></td></tr><tr><td></td><td><p>V<sub>2</sub> = V<sub>out</sub></p></td><td><p>=</p></td><td><p>I R<sub>2</sub></p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>30\(\times \)10<sup>-6</sup> \(\times \) 2000 = 0.06 V</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; The circuit shows a potential divider, which consists of a fixed resistor and a light dependent resistor (LDR). The potential divider is used to switch on a lamp when it gets dark. The resistance of fixed resistor is 20 k. The potential difference across XY is 4 V when the lamp is switched on. What is the resistance of the light-dependent resistor (LDR)? (Hint: V<sub>s</sub> = V<sub>R</sub> + V<sub>LDR </sub>, I = \(\frac{{V}_{R}}{R}\) , R<sub>LDR</sub> = \(\frac{{V}_{LDR}}{I}\) )</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>R = 20 k = 20 000 , &nbsp; V<sub>s</sub> = 6 V,               </p><p>V<sub>LDR</sub> = 4 V, &nbsp; R<sub>LDR</sub> = ?</p></td></tr><tr><td></td><td><p>V<sub>s</sub></p></td><td><p>=</p></td><td><p>V<sub>R</sub> + V<sub>LDR</sub></p></td></tr><tr><td></td><td><p>V<sub>R</sub></p></td><td><p>=</p></td><td><p>V<sub>s</sub> - V<sub>LDR</sub></p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>6 – 4 = 2 V</p></td></tr><tr><td></td><td colspan="3"><p>By Ohm’s law,</p></td></tr><tr><td></td><td><p>V<sub>R</sub></p></td><td><p>=</p></td><td><p>I R</p></td></tr><tr><td></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{{V}_{R}}{R}\) = \(\frac{2}{20\ 000}\) = 10<sup>-4</sup> A</p></td></tr><tr><td></td><td><p>V<sub>LDR</sub></p></td><td><p>=</p></td><td><p>I R<sub>LDR</sub></p></td></tr><tr><td></td><td><p>R<sub>LDR</sub></p></td><td><p>=</p></td><td><p>\(\frac{{V}_{LDR}}{I}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{4}{{10}^{-4}}\) = 4 \(\times \) 10<sup>4</sup> = 40 k</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.2</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A potential divider consists of an LDR and a resistor connected to a 6 V battery in the following figure. What should be the resistance of the LDR for the output to be 2.5 V?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>R = 10 k = 10 000 , &nbsp; V<sub>s</sub> = 6 V,               </p><p>V<sub>LDR</sub> = 2.5 V, &nbsp;  &nbsp; R<sub>LDR</sub> = ?</p></td></tr><tr><td></td><td><p>V<sub>s</sub></p></td><td><p>=</p></td><td><p>V<sub>R</sub> + V<sub>LDR</sub></p></td></tr><tr><td></td><td><p>V<sub>R</sub></p></td><td><p>=</p></td><td><p>V<sub>s</sub> - V<sub>LDR</sub></p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>6 – 2.5 = 3.5 V</p></td></tr><tr><td></td><td colspan="3"><p>By Ohm’s law,</p></td></tr><tr><td></td><td><p>V<sub>R</sub></p></td><td><p>=</p></td><td><p>I R</p></td></tr><tr><td></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{{V}_{R}}{R}\) = \(\frac{3.5}{10\ 000}\) = 3.5 \(\times \) 10<sup>-4</sup> A</p></td></tr><tr><td></td><td><p>V<sub>LDR</sub></p></td><td><p>=</p></td><td><p>I R<sub>LDR</sub></p></td></tr><tr><td></td><td><p>R<sub>LDR</sub></p></td><td><p>=</p></td><td><p>\(\frac{{V}_{LDR}}{I}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{2.5}{{3.5\ \times \ 10}^{-4}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>0.714 \(\times \) 10<sup>4</sup> = 7.14 k</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Check the following logic system carefully and then construct the truth table that follows:</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p>Ans:</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Check the following logic system carefully and then construct the truth table that follows:</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p>Ans:</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.10</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Write the truth table of the following circuit. To what gate is it equivalent?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p>Ans: &nbsp;  &nbsp; </p><p> &nbsp; It is equivalent to exclusive OR (XOR) gate.</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; In the giving table, P, Q, R and S are the outputs of four logic gates. Name the logic gate which represents each output.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p>Ans: &nbsp; The output P is AND gate.</p><p> &nbsp; The output Q is OR gate.</p><p> &nbsp; The output R is NAND gate.</p><p> &nbsp; The output S is NOR gate.</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.9</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Construct a truth table for each of the followings: </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p> &nbsp; (i) AB + BC  &nbsp;  &nbsp; (ii) (A + B) C </p><p> &nbsp; (iii) (A + B) (\(\overline{B}\) + C)</p><p>Ans: &nbsp; (i) AB + BC</p><p> &nbsp; (ii) (A + B) C</p><p> &nbsp; (iii) (A + B) (\(\overline{B}\) + C)</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.11</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; For the circuit below, write the value of Z as a Boolean expression, using A and B.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p>Ans: &nbsp;  &nbsp; Z = \(\overline{A}\) + B</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.8</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Draw the logic circuit represented by each of the following expressions: </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p> &nbsp; (i) A + B + C &nbsp; (ii) ABC  &nbsp;  &nbsp; </p><p> &nbsp; (iii) AB + C  &nbsp;  &nbsp; (iv) AB + CD</p><p>Ans: &nbsp; (i) A + B + C</p><p> &nbsp; (ii) ABC</p><p> &nbsp; (iii) AB + C</p><p> &nbsp; (iv) AB + CD</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.7</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Simplify the following expressions if possible:</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p> &nbsp; (i) A + AB + A\(\overline{B}\)C</p><p> &nbsp; (ii) (\(\overline{A}\) + B) C + ABC</p><p>Ans: &nbsp; (i) A + AB + A\(\overline{B}\)C </p><p> &nbsp;  &nbsp; = A (1 + B) + A\(\overline{B}\)C</p><p> &nbsp;  &nbsp; = A \(⋅\) 1 + A\(\overline{B}\)C &nbsp; (\(\because \) 1 + B = 1)</p><p> &nbsp;  &nbsp; = A + A\(\overline{B}\)C &nbsp; (\(\because \) A \(⋅\) 1 = A)</p><p> &nbsp;  &nbsp; = A (1 + \(\overline{B}\)C)</p><p> &nbsp;  &nbsp; = A \(⋅\) 1 &nbsp;  &nbsp; (\(\because \) 1 + \(\overline{B}\)C = 1)</p><p> &nbsp;  &nbsp; = A &nbsp;  &nbsp; (\(\because \) A \(⋅\) 1 = A)</p><p> &nbsp; (ii) (\(\overline{A}\) + B) C + ABC</p><p> &nbsp;  &nbsp; = \(\overline{A}\)C + BC + ABC</p><p> &nbsp;  &nbsp; = \(\overline{A}\)C + BC (1 + A)</p><p> &nbsp;  &nbsp; = \(\overline{A}\)C + BC \(⋅\) 1 &nbsp; (\(\because \) 1 + A = 1)</p><p> &nbsp;  &nbsp; = \(\overline{A}\)C + BC &nbsp; (\(\because \) BC \(⋅\) 1 = BC)</p><p> &nbsp;  &nbsp; = (\(\overline{A}\) + B) C</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.10</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Find the value of X for all possible values of variables. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p> &nbsp; (i) X = (A + B)C + B  &nbsp; (ii) X = (\(\overline{A+B}\))C </p><p> &nbsp; (iii) X = A\(\overline{B}\)C + AB</p><p>Ans: &nbsp; (i) X = (A + B)C + B</p><p> &nbsp;  &nbsp; = AC + BC + B</p><p> &nbsp;  &nbsp; = AC + B(C + 1)</p><p> &nbsp;  &nbsp; = AC + B \(⋅\) 1 &nbsp; (\(\because \) C + 1 = 1)</p><p> &nbsp;  &nbsp; = AC + B &nbsp;  &nbsp; (\(\because \) B \(⋅\) 1 = B)</p><p> &nbsp; (ii) X = (\(\overline{A+B}\))C ဒီမောဂင်း သီအိုရမ်သုံးရန်</p><p> &nbsp;  &nbsp; = \(\overline{A}\) \(\overline{B}\) C &nbsp; (\(\because \overline{A+B}\) = \(\overline{A}\) \(\overline{B}\))</p><p> &nbsp; (iii) X = A\(\overline{B}\)C + AB</p><p> &nbsp;  &nbsp; = A (\(\overline{B}\)C + B)</p><p> &nbsp;  &nbsp; = A (C + B) &nbsp; (\(\because \) \(\overline{B}\)C + B = C + B)</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Simplify the expression AB + A (B + C) + B (B + C) and draw the equivalent gate diagram.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p>Ans: &nbsp; AB + A (B + C) + B (B + C)</p><p> &nbsp;  &nbsp; = AB + AB + AC + BB + BC</p><p> &nbsp;  &nbsp; = AB + AB + AC + B + BC &nbsp; (\(\because \)BB = B)</p><p> &nbsp;  &nbsp; = AB + AC + B + BC &nbsp; (\(\because \)AB + AB = AB)</p><p> &nbsp;  &nbsp; = AB + AC + B &nbsp; (\(\because \) B + BC = B)</p><p> &nbsp;  &nbsp; = B + AC &nbsp;  &nbsp; (\(\because \) AB + B = B)</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Apply De Morgan&#x27;s theorems to the expression \(\overline{XYZ}\) and \(\overline{X\ +\ Y\ +\ Z}\).</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p>Ans: &nbsp; \(\overline{XYZ}\) = \(\overline{X}\) + \(\overline{Y}\) + \(\overline{Z}\)</p><p> &nbsp; \(\overline{X\ +\ Y\ +\ Z}\) = \(\overline{X}\) \(\overline{Y}\) \(\overline{Z}\)</p></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.11</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Apply De Morgan&#x27;s theorems to the expression \(\overline{\overline{ABC}}\) and \(\overline{\overline{A}\ +\ \overline{B}\ +\ \overline{C}\ +\overline{D}}\).</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p>Ans: &nbsp; \(\overline{\overline{ABC}}\) = \(\overline{\overline{A}\ +\ \overline{B}\ +\ \overline{C}}\) = \(\overline{\overline{A}}\) \(\overline{\overline{B}}\) \(\overline{\overline{C}}\) = A B C</p><p> &nbsp; \(\overline{\overline{A}\ +\ \overline{B}\ +\ \overline{C}\ +\overline{D}}\) = \(\overline{\overline{A}}\) \(\overline{\overline{B}}\) \(\overline{\overline{C}}\) \(\overline{\overline{D}}\) = A B C D</p></div>
+    </details>
+  </div>
+</article></main>
+  </div>
+  <script src="calculation-format.js"></script>
 </body>
 </html>

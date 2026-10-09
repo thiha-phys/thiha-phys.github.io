@@ -3,50 +3,225 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>G12 Physics - Chapter 6 Calculations</title>
+  <meta name="theme-color" content="#ffffff">
+  <title>G12 Physics - Chapter 13 Calculations</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- MathJax ထည့်ရန် -->
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
-    };
-  </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .problem-list-container { padding: 10px 20px 80px; display: flex; flex-direction: column; gap: 16px; }
+    .problem-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; box-shadow: 0 3px 10px rgba(0,0,0,.04); padding: 16px; }
+    .problem-number { margin-bottom: 10px; }
+    .problem-number span { background: #eff6ff; border-radius: 6px; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; }
+    .problem-content { color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 14px; line-height: 1.6; }
+    .problem-question { margin-top: 0; }
+    .problem-question strong { color: #2563eb; }
+    .problem-content hr { border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0; }
+    .problem-content summary { color: #059669; cursor: pointer; font-weight: 600; }
+    .problem-answer { background: #f8fafc; border-radius: 8px; color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; line-height: 2; margin-top: 10px; overflow-wrap: anywhere; padding: 12px; }
+    .problem-answer p { margin: 7px 0; }
+    .calculation-table-wrap { margin: 8px 0; overflow-x: auto; }
+    .calculation-table { border-collapse: collapse; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; max-width: 100%; min-width: 0; width: max-content; }
+    .calculation-table td { border-bottom: 1px solid #e2e8f0; padding: 6px 4px; vertical-align: middle; }
+    .calculation-table tr:first-child td { background: #eff6ff; font-weight: 600; }
+    .calculation-result { color: #dc2626; font-weight: 700; }
+    @media (max-width: 600px) { .problem-list-container { padding-left: 12px; padding-right: 12px; } .problem-card { padding: 12px; } .problem-answer { padding: 8px; } }
+  </style>
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] } };</script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-
   <div class="app-container">
-    
-    <!-- Top Header -->
     <header class="page-header">
-      <a href="G12cal.html" class="back-btn">
-        <i class="fa-solid fa-chevron-left"></i>
-      </a>
-      <h1 class="page-title">Chapter 6 Calculations</h1>
+      <a href="G12cal.html" class="back-btn" aria-label="အခန်းစာရင်းသို့ ပြန်သွားရန်"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+      <h1 class="page-title">Chapter 13 Calculations</h1>
       <div class="header-placeholder"></div>
     </header>
-
-    <!-- Sub Banner -->
     <div class="grade-banner">
-      <h2>Chapter 13 - Modern Physics</h2>
-      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း ၁၇ ပုဒ်)</p>
+      <h2>Chapter 13 - Modern physics</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း 18 ပုဒ်)</p>
     </div>
-
-    <!-- Problems List Container -->
-    <main class="problem-list-container" style="padding: 10px 20px 80px 20px; display: flex; flex-direction: column; gap: 16px;">
-     
-
-
-
-
-
-
-    </main>
+    <main class="problem-list-container"><article class="problem-card">
+  <div class="problem-number"><span>Eg.1</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Suppose there was 2 g of radon at t = 0 and its half-life is 3.8 days. How much would be left after 15.2 days?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>Initial amount = 2 g, &nbsp; </p><p>half-life, \({T}_{\frac{1}{2}}\) = 3.8 days, &nbsp; </p><p>time elapsed, t = 15.2 days</p></td></tr><tr><td></td><td colspan="3"><p>Number of half-life, n = \(\frac{time\ elasped}{half-life}\)</p></td></tr><tr><td></td><td colspan="3"><p> &nbsp; = \(\frac{15.2}{3.8}\) = 4</p></td></tr><tr><td></td><td colspan="3"><p>Amount left after n half-life</p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{n}\) \(\times \) initial amount</p></td></tr><tr><td></td><td colspan="3"><p>Amount left after 15.2 days (4 half-life)</p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{4}\) \(\times \) 2 = 0.125 g</p></td></tr><tr><td><p>[OR]</p></td><td colspan="3"><p>\({N}_{0}\)= 2 g, &nbsp; \({T}_{\frac{1}{2}}\)= 3.8 days, &nbsp; \({N}_{t}\)= ?</p><p>t = 15.2 days</p></td></tr><tr><td></td><td colspan="3"><p>By exponential law of radioactive decay,</p></td></tr><tr><td></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \lambda \ t\ )}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\ )}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>2 \({e}^{(-\ \frac{0.693\ \times 15.2}{3.8}\ )}\) = 0.125 g</p></td></tr></tbody></table></div></div>
+    </details>
   </div>
-
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.7</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>   &nbsp; Suppose there was 8 g of radon at t = 0 and its half-life is 3.8 days. How much would be left after (i) 7.6 days (ii) 11.4 days? </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>Initial amount = 8 g</p><p>half-life, \({T}_{\frac{1}{2}}\) = 3.8 days </p><p>(i) time elapsed, t = 7.6 day</p><p>(ii) time elapsed, t = 11.4 days</p></td></tr><tr><td><p>(i)</p></td><td colspan="3"><p>Number of half-life, n = \(\frac{time\ elasped}{half-life}\) </p></td></tr><tr><td></td><td colspan="3"><p> &nbsp; = \(\frac{7.6}{3.8}\) = 2</p></td></tr><tr><td></td><td colspan="3"><p>Amount left after n half-life</p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{n}\) \(\times \) initial amount</p></td></tr><tr><td></td><td colspan="3"><p>Amount left after 7.6 days (2 half-life)</p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{2}\) \(\times \) 8 = 2 g</p></td></tr><tr><td><p>(ii)</p></td><td colspan="3"><p>Number of half-life, n = \(\frac{time\ elasped}{half-life}\) </p></td></tr><tr><td></td><td colspan="3"><p> &nbsp;  &nbsp; = \(\frac{11.4}{3.8}\) = 3</p></td></tr><tr><td></td><td colspan="3"><p>Amount left after 11.4 days (3 half-life)</p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{3}\) \(\times \) 8 = 1 g</p></td></tr><tr><td><p>[OR]</p></td><td colspan="3"><p>\({N}_{0}\)= 8 g, &nbsp; \({T}_{\frac{1}{2}}\)= 3.8 days, &nbsp; \({N}_{t}\)= ?, &nbsp; </p><p>(i) t = 7.6 days &nbsp;  &nbsp; (ii) t = 11.4 days</p></td></tr><tr><td></td><td colspan="3"><p>By exponential law of radioactive decay,</p></td></tr><tr><td></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \lambda \ t\ )}\)</p></td></tr><tr><td></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\ )}\)</p></td></tr><tr><td><p>(i)</p></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>8 \({e}^{(-\ \frac{0.693\ \times 7.6}{3.8}\ )}\) = 2 g</p></td></tr><tr><td><p>(ii)</p></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>8 \({e}^{(-\ \frac{0.693\ \times 11.4}{3.8}\ )}\) = 1 g</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Suppose that initially there was 100 mg of iodine-131 and its half-life is 8 days. How much would it be left after 24 days?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>\({T}_{\frac{1}{2}}\) = 8 days, &nbsp; \({N}_{0}\) = 100 mg, &nbsp; </p><p>N<sub>t</sub> = ? &nbsp;  &nbsp; t = 24 days</p></td></tr><tr><td></td><td colspan="3"><p>By exponential law of radioactive decay,</p></td></tr><tr><td></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \lambda \ t\ )}\)</p></td></tr><tr><td></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\ )}\)</p></td></tr><tr><td></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>100 \({e}^{(-\ \frac{0.693}{8}\ \times \ 24\ )}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>12.5 mg</p></td></tr><tr><td><p>[OR]</p></td><td colspan="3"><p>initial amount = 100 mg, amount left = ?</p></td></tr><tr><td></td><td colspan="3"><p>Number of half-life, n = \(\frac{time\ elasped,\ \ \ t}{half-life,\ \ {\ T}_{\frac{1}{2}}}\) </p></td></tr><tr><td></td><td colspan="3"><p> &nbsp;  &nbsp; = \(\frac{24}{8}\) = 3</p></td></tr><tr><td></td><td colspan="3"><p>Amount left after n half-life</p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{n}\) \(\times \) initial amount</p></td></tr><tr><td></td><td colspan="3"><p>Amount left after 24 days (3 half-life)</p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{3}\) \(\times \) 100 = 12.5 mg</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.2</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A radioisotope has a half-life of 20 min. If there is initially 102.4 g of this isotope, how much time elapses for 12.8 g to be left?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>half-life, \({T}_{\frac{1}{2}}\) = 20 min, &nbsp; </p><p>Initial amount = 102.4 g,</p><p>amount left = 12.8 g</p><p>time elapsed, t = ?</p></td></tr><tr><td></td><td colspan="3"><p>Amount left after n half-life</p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{n}\) \(\times \) initial amount</p></td></tr><tr><td></td><td><p>12.8</p></td><td><p>=</p></td><td><p>\({\left(\frac{1}{2}\right)}^{n}\) \(\times \) 102.4</p></td></tr><tr><td></td><td><p>\(\frac{12.8}{102.4}\) </p></td><td><p>=</p></td><td><p>\({\left(\frac{1}{2}\right)}^{n}\) </p></td></tr><tr><td></td><td><p>\(\frac{1}{8}\) </p></td><td><p>=</p></td><td><p>\({\left(\frac{1}{2}\right)}^{n}\) </p></td></tr><tr><td></td><td><p>\({\left(\frac{1}{2}\right)}^{3}\) </p></td><td><p>=</p></td><td><p>\({\left(\frac{1}{2}\right)}^{n}\) </p></td></tr><tr><td></td><td><p>n</p></td><td><p>=</p></td><td><p>3</p></td></tr><tr><td></td><td colspan="3"><p>Number of half-life, n = \(\frac{time\ elasped,\ \ \ t}{half-life,\ \ {\ T}_{\frac{1}{2}}}\) </p></td></tr><tr><td></td><td><p>t</p></td><td><p>=</p></td><td><p>\(n\times \) \({T}_{\frac{1}{2}}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(3\times \) 20 min = 60 min = 1 h</p></td></tr><tr><td><p>[OR]</p></td><td colspan="3"><p>\({T}_{\frac{1}{2}}\)= 20 min, &nbsp; \({N}_{0}\)= 102.4 g, &nbsp; \({N}_{t}\)= 12.8 g,</p><p>t = ?</p></td></tr><tr><td></td><td colspan="3"><p>By exponential law of radioactive decay</p></td></tr><tr><td></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \lambda \ t\ )}\)</p></td></tr><tr><td></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\ )}\)</p></td></tr><tr><td></td><td><p>12.8</p></td><td><p>=</p></td><td><p>102.4 \({e}^{(-\ \frac{0.693}{20}\ t\ )}\)</p></td></tr><tr><td></td><td><p>0.125</p></td><td><p>=</p></td><td><p>\({e}^{(-\ \frac{0.693}{20}\ t\ )}\) </p></td></tr><tr><td></td><td><p>ln 0.125</p></td><td><p>=</p></td><td><p>ln \({e}^{(-\ \frac{0.693}{20}\ t\ )}\)</p></td></tr><tr><td></td><td><p>ln 0.125</p></td><td><p>=</p></td><td><p>\(-\ \frac{0.693}{20}\) t</p></td></tr><tr><td></td><td><p>t</p></td><td><p>=</p></td><td><p>ln 0.125 \(\left(\ \frac{-\ 20\ }{0.693}\right)\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>60 min = 1 h</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Cobalt-60 (half-life = 5.25 years) is often used as a radiation source in medicine. How long after a new sample is delivered, will the activity have decreased to \(\frac{1}{8}\) of its original value?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.8</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>   &nbsp; Co-60 (half-life = 5.25 years) is often used as a radiation source in medicine. How long after a new sample is delivered, will the activity have decreased to \(\frac{1}{8}\) of its original value?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="5"><p>half-life, \({T}_{\frac{1}{2}}\) = 5.25 years, </p><p>\({N}_{t}\) = \(\frac{1}{8}\) \({N}_{0}\), &nbsp;  \(\frac{{N}_{t}}{{N}_{0}}\)  = \(\frac{1}{8}\), &nbsp;  &nbsp; t = ?</p></td></tr><tr><td></td><td colspan="3"><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \lambda \ t\ )}\)</p></td></tr><tr><td></td><td colspan="3"><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\ )}\)</p></td></tr><tr><td></td><td colspan="3"><p>\(\frac{{N}_{t}}{{N}_{0}}\) </p></td><td><p>=</p></td><td><p>\({e}^{(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\ )}\) </p></td></tr><tr><td></td><td colspan="3"><p>ln \((\ \frac{{N}_{t}}{{N}_{0}}\ )\)</p></td><td><p>=</p></td><td><p>\(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ \) t</p></td></tr><tr><td></td><td colspan="3"><p>ln \(\frac{1}{8}\)</p></td><td><p>=</p></td><td><p>\(-\ \frac{0.693}{5.25}\ \)t</p></td></tr><tr><td></td><td colspan="3"><p>- 2.079</p></td><td><p>=</p></td><td><p>\(-\ \frac{0.693}{5.25}\ \)t</p></td></tr><tr><td></td><td colspan="3"><p>t</p></td><td><p>=</p></td><td><p>2.079 \(\times \) \(\frac{5.25}{0.693}\)</p></td></tr><tr><td></td><td colspan="3"></td><td><p>=</p></td><td><p>15.75 years</p></td></tr><tr><td><p>[OR]</p></td><td colspan="5"><p>Amount left = \(\frac{1}{8}\) \(\times \) initial amount</p></td></tr><tr><td></td><td colspan="5"><p>Amount left after n half-life </p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{n}\) \(\times \) initial amount</p></td></tr><tr><td></td><td colspan="5"><p>\(\frac{1}{8}\) \(\times \) initial amount</p><p> &nbsp; = \({\left(\frac{1}{2}\right)}^{n}\) \(\times \) initial amount</p></td></tr><tr><td></td><td><p>\(\frac{1}{8}\) </p></td><td><p>=</p></td><td colspan="3"><p>\({\left(\frac{1}{2}\right)}^{n}\) </p></td></tr><tr><td></td><td><p>\({\left(\frac{1}{2}\right)}^{3}\) </p></td><td><p>=</p></td><td colspan="3"><p>\({\left(\frac{1}{2}\right)}^{n}\) </p></td></tr><tr><td></td><td><p>n</p></td><td><p>=</p></td><td colspan="3"><p>3</p></td></tr><tr><td></td><td colspan="5"><p>Number of half-life, n = \(\frac{time\ elasped,\ \ \ t}{half-life,\ \ {\ T}_{\frac{1}{2}}}\) </p></td></tr><tr><td></td><td><p>t</p></td><td><p>=</p></td><td colspan="3"><p>\(n\times \) \({T}_{\frac{1}{2}}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td colspan="3"><p>\(3\times \) 5.25 years = 15.75 years</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; If a fossil has 10 % carbon-14 compared to a living sample, find the age of the fossil. (half-life of carbon-14 = 5730 years) </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>half-life, \({T}_{\frac{1}{2}}\) = 5730 years,</p><p>\(\frac{{N}_{t}}{{N}_{0}}\)  = 10 \(\%\) = 0.1, age of the fossil, t = ?</p></td></tr><tr><td></td><td><p>\({N}_{t}\) </p></td><td><p>=</p></td><td><p>\({N}_{0}\) \({e}^{(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\ )}\)</p></td></tr><tr><td></td><td><p>\(\frac{{N}_{t}}{{N}_{0}}\) </p></td><td><p>=</p></td><td><p>\({e}^{(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\ )}\) </p></td></tr><tr><td></td><td><p>ln ( \(\frac{{N}_{t}}{{N}_{0}}\) ) </p></td><td><p>=</p></td><td><p>\(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\) </p></td></tr><tr><td></td><td><p>ln 0.1</p></td><td><p>=</p></td><td><p>\(-\ \frac{0.693}{5730}\ t\) </p></td></tr><tr><td></td><td><p>- 2.303</p></td><td><p>=</p></td><td><p>\(-\ \frac{0.693}{5730}\ t\) </p></td></tr><tr><td></td><td><p>t</p></td><td><p>=</p></td><td><p>2.303 \(\times \) \(\frac{5730}{0.693}\) </p></td></tr><tr><td></td><td><p>t</p></td><td><p>=</p></td><td><p>19 042 years</p></td></tr><tr><td></td><td colspan="3"><p>age of the fossil = 19 042 years</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Potassium-40 has a half-life of 1300 million years. If the atomic ratio of potassium-40 to argon-40 in a rock sample is found to be 1:3, estimate the age of the rock. Assume that there was initially no argon in the rock and argon formed by the decay of potassium is trapped in the rock.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>half-life of K-40, \({T}_{\frac{1}{2}}\) = 1300 million years,</p><p>age of the rock, t = ?</p></td></tr><tr><td></td><td colspan="3"><p>\(\frac{{N}_{K}\ }{{N}_{Ar}}\) = \(\frac{1}{3}\)</p></td></tr><tr><td><p>\(⟹\) </p></td><td colspan="3"><p>Initially, </p><p> &nbsp; number of K-40 atoms = \({N}_{0}\)</p><p> &nbsp; number of Ar-40 atoms = 0</p></td></tr><tr><td><p>\(⟹\) </p></td><td colspan="3"><p>Finally,</p><p> &nbsp; number of K-40 atoms = \({N}_{K}\) = \({\left(\frac{1}{2}\right)}^{n}\) \({N}_{0}\)</p><p> &nbsp; number of Ar-40 atoms = \({N}_{Ar}\)</p><p> &nbsp; \({N}_{Ar}\) = \({N}_{0}\) - \({N}_{K}\)</p><p> &nbsp;  &nbsp;       = \({N}_{0}\) - \({\left(\frac{1}{2}\right)}^{n}\) \({N}_{0}\)</p><p> &nbsp;  &nbsp;       = [1 - \({\left(\frac{1}{2}\right)}^{n}\)] \({N}_{0}\)</p></td></tr><tr><td></td><td><p>\(\frac{{N}_{K}\ }{{N}_{Ar}}\) </p></td><td><p>=</p></td><td><p>\(\frac{{\left(\frac{1}{2}\right)}^{n}\ {N}_{0}}{\left[1\ -\ {\left(\frac{1}{2}\right)}^{n}\right]{N}_{0}\ }\) </p></td></tr><tr><td></td><td><p>\(\frac{1}{3}\) </p></td><td><p>=</p></td><td><p>\(\frac{{\left(\frac{1}{2}\right)}^{n}}{1\ -\ {\left(\frac{1}{2}\right)}^{n}}\) </p></td></tr><tr><td></td><td><p>\(\frac{1}{3}\) </p></td><td><p>=</p></td><td><p>\(\frac{\frac{1}{{2}^{n}}}{1\ -\ \frac{1}{{2}^{n}}}\) =    \(\frac{\frac{1}{{2}^{n}}}{\frac{{2}^{n}\ -\ \ 1}{{2}^{n}}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p> \(\frac{1}{{2}^{n}}\ \times \ \frac{{2}^{n}}{{2}^{n}-1}\)</p></td></tr><tr><td></td><td><p>\(\frac{1}{3}\) </p></td><td><p>=</p></td><td><p>\(\frac{1}{{2}^{n}-1\ }\) </p></td></tr><tr><td></td><td><p>\({2}^{n}-1\) </p></td><td><p>=</p></td><td><p>3</p></td></tr><tr><td></td><td><p>\({2}^{n}\) </p></td><td><p>=</p></td><td><p>4 = \({2}^{2}\)</p></td></tr><tr><td></td><td><p>n</p></td><td><p>=</p></td><td><p>2</p></td></tr><tr><td></td><td colspan="3"><p>Number of half-life, n = \(\frac{time\ elasped,\ \ \ t}{half-life,\ \ {\ T}_{\frac{1}{2}}}\) </p></td></tr><tr><td></td><td><p>t</p></td><td><p>=</p></td><td><p>\(n\times \) \({T}_{\frac{1}{2}}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(2\times \) 1300 million years</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>2600 million years</p></td></tr><tr><td><p>[OR]</p></td><td colspan="3"><p>half-life of K-40, \({T}_{\frac{1}{2}}\)= 1300 million years</p><p>age of the rock, t = ?</p></td></tr><tr><td></td><td colspan="3"><p>\(\frac{{N}_{K}\ }{{N}_{Ar}}\) = \(\frac{1}{3}\)</p></td></tr><tr><td><p>\(⟹\) </p></td><td colspan="3"><p>Initially, </p><p> &nbsp; number of K-40 atoms = \({N}_{0}\)</p><p> &nbsp; number of Ar-40 atoms = 0</p></td></tr><tr><td><p>\(⟹\) </p></td><td colspan="3"><p>Finally,</p><p> &nbsp; number of K-40 atoms = \({N}_{K}\) = \({N}_{0}\) \({e}^{(-\ \lambda \ t\ )}\)</p><p> &nbsp; number of Ar-40 atoms = \({N}_{Ar}\)</p><p> &nbsp; \({N}_{Ar}\) = \({N}_{0}\) – \({N}_{K}\)</p><p> &nbsp;  &nbsp;       = \({N}_{0}\) – \({N}_{0}\) \({e}^{(-\ \lambda \ t\ )}\)</p><p> &nbsp;  &nbsp;       = [1 - \({e}^{(-\ \lambda \ t\ )}\)] \({N}_{0}\)</p></td></tr><tr><td></td><td><p>\(\frac{{N}_{K}\ }{{N}_{Ar}}\) </p></td><td><p>=</p></td><td><p>\(\frac{{N}_{0}\ {e}^{(-\ \lambda \ t\ )}}{[1\ -\ {e}^{(-\ \lambda \ t\ )}]\ {N}_{0}}\) </p></td></tr><tr><td></td><td><p>\(\frac{1}{3}\) </p></td><td><p>=</p></td><td><p>\(\frac{\ {e}^{(-\ \lambda \ t\ )}}{1\ -\ {e}^{(-\ \lambda \ t\ )}}\) </p></td></tr><tr><td></td><td><p>3 \({e}^{(-\ \lambda \ t\ )}\)</p></td><td><p>=</p></td><td><p>\(1\ -\ {e}^{(-\ \lambda \ t\ )}\) </p></td></tr><tr><td></td><td><p>4 \({e}^{(-\ \lambda \ t\ )}\) </p></td><td><p>=</p></td><td><p>1</p></td></tr><tr><td></td><td><p>\({e}^{(-\ \lambda \ t\ )}\)</p></td><td><p>=</p></td><td><p>\(\frac{1}{4}\) </p></td></tr><tr><td></td><td><p>\({e}^{(-\ \frac{0.693}{{T}_{\frac{1}{2}}}\ t\ )}\) </p></td><td><p>=</p></td><td><p>0.25</p></td></tr><tr><td></td><td><p>\(-\ \frac{0.693}{1300}\ t\) </p></td><td><p>=</p></td><td><p>ln 0.25</p></td></tr><tr><td></td><td><p>t </p></td><td><p>=</p></td><td><p>\(\frac{-\ 1300\ ln 0.25}{0.693}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>2600 million years</p></td></tr><tr><td></td><td colspan="3"><p>age of the rock = 2600 million years</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Calculate the de Broglie wavelength of (i) a 0.65 kg basketball thrown at a speed of 10 m s<sup>-1</sup>, (ii) a nonrelativistic electron with a kinetic energy of 1 eV.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>(i) m = 0.65 kg, &nbsp; v = 10 m s<sup>-1</sup>, &nbsp; \(\lambda \) = ?, &nbsp; </p><p>h = 6.63 \(\times {10}^{-34}\) J s</p></td></tr><tr><td></td><td colspan="3"><p>The de Broglie wavelength associated with basketball,</p></td></tr><tr><td></td><td><p>λ</p></td><td><p>=</p></td><td><p>\(\frac{h}{p}\) = \(\frac{h}{m\ v}\)</p></td></tr><tr><td></td><td><p>λ</p></td><td><p>=</p></td><td><p>\(\frac{6.63\ \times {10}^{-34}\ }{0.65\times 10}\) = 1.02 \(\times {10}^{-34}\) m</p></td></tr><tr><td><p>(ii)</p></td><td colspan="3"><p>KE = 1 eV = 1.6 \(\times {10}^{-19}\) J,</p><p>m = \(9.1\ \times \ {10}^{-31}\) kg</p></td></tr><tr><td></td><td colspan="3"><p>The de Broglie wavelength associated with electron,</p></td></tr><tr><td></td><td><p>λ</p></td><td><p>=</p></td><td><p>\(\frac{h}{\sqrt{2\ m\ KE}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{6.63\ \times {10}^{-34}}{\sqrt{2\ \times \ 9.1\ \times \ {10}^{-31}\ \times \ 1.6\ \times {10}^{-19}}}\)  </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>1.23 \(\times {10}^{-9}\) m</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.13</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>   &nbsp; A proton and an electron are each accelerated through a potential difference of 1 kV from rest. What are their kinetic energies? Compare their de Broglie wavelengths. (m<sub>p</sub> = 1840 m<sub>e</sub>)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>m<sub>p</sub> = 1840 m<sub>e</sub>, &nbsp; V = 1 kV = 1000 V,</p><p>h = 6.63 \(\times {10}^{-34}\) J s</p></td></tr><tr><td></td><td colspan="3"><p>KE = W = q V </p><p> &nbsp;  &nbsp;  = 1000 eV </p><p> &nbsp;  &nbsp;  = 1000 \(\times \) 1.6 \(\times {10}^{-19}\) </p><p> &nbsp;  &nbsp;  = 1.6 \(\times {10}^{-16}\) J</p></td></tr><tr><td></td><td colspan="3"><p>The de Broglie wavelength associated with electron, </p></td></tr><tr><td></td><td><p>λ<sub>e</sub></p></td><td><p>=</p></td><td><p>\(\frac{h}{\sqrt{2\ {m}_{e}\ KE}}\) </p></td></tr><tr><td></td><td colspan="3"><p>The de Broglie wavelength associated with proton, </p></td></tr><tr><td></td><td><p>λ<sub>p</sub></p></td><td><p>=</p></td><td><p>\(\frac{h}{\sqrt{2\ {m}_{p}\ KE}}\) </p></td></tr><tr><td></td><td><p>\(\frac{{\lambda }_{e}}{{\lambda }_{p}}\) </p></td><td><p>=</p></td><td><p>\(\frac{\frac{h}{\sqrt{2\ {m}_{e}\ KE}}\ }{\frac{h}{\sqrt{2\ {m}_{p}\ KE}}}\) </p></td></tr><tr><td></td><td><p>\(\frac{{\lambda }_{e}}{{\lambda }_{p}}\) </p></td><td><p>=</p></td><td><p>\(\frac{h}{\sqrt{2\ {m}_{e}\ KE}}\ \times \ \frac{\sqrt{2\ {m}_{p}\ KE}}{h}\) </p></td></tr><tr><td></td><td><p>\(\frac{{\lambda }_{e}}{{\lambda }_{p}}\) </p></td><td><p>=</p></td><td><p>\(\frac{\sqrt{{m}_{p}}}{\sqrt{{m}_{e}}}\) = \(\sqrt{\frac{1840\ {m}_{e}}{{m}_{e}}}\)</p></td></tr><tr><td></td><td><p>\(\frac{{\lambda }_{e}}{{\lambda }_{p}}\) </p></td><td><p>=</p></td><td><p>\(\sqrt{1840}\) </p></td></tr><tr><td></td><td><p>\({\lambda }_{e}\) </p></td><td><p>=</p></td><td><p>42.895 \({\lambda }_{p}\)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.14</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>   &nbsp; In old days radios contained vacuum tubes that generated and speeded up electrons. A tube operates at 100 V. Find the speed of an electron and de Broglie wavelength. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><p> &nbsp; (mass of an electron = \(9.1\ \times \ {10}^{-31}\)<sup> </sup>kg) </p><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>V = 100 V, &nbsp; m = 9.1 \(\times \) 10<sup>-31 </sup>kg,</p><p>h = 6.63 \(\times {10}^{-34}\) J s</p></td></tr><tr><td></td><td colspan="3"><p>KE = W = q V </p><p> &nbsp;  &nbsp;  = 100 eV</p><p> &nbsp;  &nbsp;  = 100 \(\times \) 1.6 \(\times {10}^{-19}\) </p><p> &nbsp;  &nbsp;  = 1.6 \(\times {10}^{-17}\) J</p></td></tr><tr><td></td><td><p>KE</p></td><td><p>=</p></td><td><p>\(\frac{1}{2}\) m v<sup>2</sup></p></td></tr><tr><td></td><td><p>v<sup>2</sup></p></td><td><p>=</p></td><td><p>\(\frac{2\ KE}{m}\) </p></td></tr><tr><td></td><td><p>v</p></td><td><p>=</p></td><td><p>\(\sqrt{\frac{2\ KE}{m}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\sqrt{\frac{2\ \times \ 1.6\ \times {10}^{-17}\ }{9.1\ \times \ {10}^{-31}}}\) </p></td></tr><tr><td></td><td><p>v</p></td><td><p>=</p></td><td><p>5.93 \(\times {10}^{6}\) m s<sup>-1</sup></p></td></tr><tr><td></td><td colspan="3"><p>The de Broglie wavelength associated with electron, </p></td></tr><tr><td></td><td><p>λ</p></td><td><p>=</p></td><td><p>\(\frac{h}{\sqrt{2\ m\ KE}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{6.63\ \times {10}^{-34}}{\sqrt{2\ \times \ 9.1\ \times \ {10}^{-31}\times \ 1.6\ \times {10}^{-17}}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>1.229 \(\times {10}^{-10}\) m = 1.229 Å</p></td></tr><tr><td><p>[OR]</p></td><td><p>λ</p></td><td><p>=</p></td><td><p>\(\frac{h}{m\ v}\) = \(\frac{6.63\ \times {10}^{-34}\ }{9.1\ \times \ {10}^{-31}\times \ 5.93\ \times {10}^{6}}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>1.229 \(\times {10}^{-10}\) m = 1.229 Å</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.15</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>   &nbsp; Find the de Broglie wavelength of an electron in the ground state of hydrogen atom. Radius of the first orbit of hydrogen atom is 0.53 Å. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>r = 0.53 Å = 0.53 \(\times {10}^{-10}\ \)m, \(\lambda \) = ?</p><p>for ground state, n = 1</p></td></tr><tr><td></td><td colspan="3"><p>The de Broglie wavelength associated with electron,</p></td></tr><tr><td></td><td><p>2 \(\pi \) r</p></td><td><p>=</p></td><td><p>n \(\lambda \) &nbsp; (n = 1, 2, 3, 4, ......)</p></td></tr><tr><td></td><td><p>\(\lambda \) </p></td><td><p>=</p></td><td><p>\(\frac{2\ \pi \ r}{n}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{2\ \times \ 3.142\ \times \ 0.53\ \times {10}^{-10}}{1}\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>3.33 \(\times {10}^{-10}\ \)m = 3.33 Å</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.9</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Calculate the relativistic factor \(\gamma \), for a particle traveling at 99.7 percent of the speed of light.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>v = 99.7\(\%\) c = 0.997 c</p></td></tr><tr><td></td><td><p>\(\gamma \) </p></td><td><p>=</p></td><td><p>\(\frac{1}{\sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}}\) </p></td></tr><tr><td></td><td><p>\(\gamma \) </p></td><td><p>=</p></td><td><p>\(\frac{1}{\sqrt{1-\ \frac{{(0.997\ c)}^{2}}{{c}^{2}}}}\) </p></td></tr><tr><td></td><td><p>\(\gamma \) </p></td><td><p>=</p></td><td><p>\(\frac{1}{\sqrt{1-\ {0.997}^{2}}}\)  = 12.92</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.10</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; Calculate the relativistic factor \(\gamma \), for an object traveling at 2 \(\times \) \({10}^{8}\) m s<sup>-1</sup>.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>v = 2 \(\times \) \({10}^{8}\) m s<sup>-1</sup></p></td></tr><tr><td></td><td><p>\(\gamma \) </p></td><td><p>=</p></td><td><p>\(\frac{1}{\sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}}\) </p></td></tr><tr><td></td><td><p>\(\gamma \) </p></td><td><p>=</p></td><td><p>\(\frac{1}{\sqrt{1-\ \frac{{(\ 2\ \times \ {10}^{8})}^{2}}{{(\ 3\ \times \ {10}^{8})}^{2}}}}\)  = \(\frac{1}{\sqrt{1-\ \frac{{(\ 2\ )}^{2}}{{(\ 3\ )}^{2}}}}\)  = 1.34</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; A positron is a type of antimatter that is just like an electron, except that it has a positive charge. When a positron and an electron collide, their masses are completely annihilated and converted to energy in the form of gamma rays. If both particles have a rest mass of 9.11 \(\times \) 10<sup>-31 </sup>kg, find the rest energy of each particle and the total energy of gamma rays in MeV.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>\({m}_{0}\) = 9.11 \(\times \) \({10}^{-31}\)<sup> </sup>kg &nbsp; c = 3 \(\times \) \({10}^{8}\) m s<sup>-1</sup></p><p>\({E}_{0}\) = ?, &nbsp; E = ?</p></td></tr><tr><td></td><td colspan="3"><p>The rest energy of an electron and a positron is</p></td></tr><tr><td></td><td><p>E<sub>0</sub></p></td><td><p>=</p></td><td><p>m<sub>0</sub> c<sup>2</sup></p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>9.11 \(\times \) \({10}^{-31}\times (\) 3 \(\times \) \({10}^{8}{)}^{2}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>8.19 \(\times \) \({10}^{-14}\) J</p></td></tr><tr><td></td><td colspan="3"><p>1 MeV = 1.6 \(\times \) \({10}^{-19}\times \) \({10}^{6}J\) </p><p> &nbsp; = 1.6 \(\times \) \({10}^{-13}J\)</p></td></tr><tr><td></td><td><p>E<sub>0</sub></p></td><td><p>=</p></td><td><p>8.19 \(\times \) \({10}^{-14}J\times \ \frac{1\ MeV}{1.6\ \times \ {10}^{-13}J}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>0.511 MeV</p></td></tr><tr><td></td><td colspan="3"><p>The total energy of gamma rays</p></td></tr><tr><td></td><td><p>E</p></td><td><p>=</p></td><td><p>2 E<sub>0</sub> = 2 \(\times \) 0.511 = 1.022 MeV</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.7</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; One stary night, an earth-bound observer looking up the stars sees an extra-terrestrial spaceship flashacross the sky. The ship is 50 m long and is traveling at 95 percent of the speed of light. What would the ship’s length be when measured from earth-bound frame of reference?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>\({L}_{0}\) = 50 m, v = 95\(\%\) c = 0.95 c, &nbsp; L = ?</p></td></tr><tr><td></td><td><p>L</p></td><td><p>=</p></td><td><p>\(\frac{{L}_{0}}{\gamma }\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{{L}_{0}}{\frac{1}{\sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}}}\) </p></td></tr><tr><td></td><td><p>L</p></td><td><p>=</p></td><td><p>\({L}_{0}\ \sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}\) </p></td></tr><tr><td></td><td><p>L</p></td><td><p>=</p></td><td><p>50 \(\sqrt{1-\ \frac{{(0.95\ c)}^{2}}{{c}^{2}}}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>50 \(\sqrt{1-\ {0.95}^{2}}\) = 15.61 m</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.16</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>   &nbsp; The distance between two points, called the proper length L<sub>0</sub> is 1 km. An observer in motion with respect to the frame of reference of the two points measures 0.8 km, which is L. What is the relative speed of the frame of reference with respect to the observer?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>\({L}_{0}\) = 1 km = \({10}^{3}\)m,</p><p>L = 0.8 km = 0.8 \(\times \) \({10}^{3}\)m, &nbsp; v = ?</p></td></tr><tr><td></td><td><p>L</p></td><td><p>=</p></td><td><p>\(\frac{{L}_{0}}{\gamma }\) </p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>\(\frac{{L}_{0}}{\frac{1}{\sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}}}\) </p></td></tr><tr><td></td><td><p>L</p></td><td><p>=</p></td><td><p>\({L}_{0}\ \sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}\) </p></td></tr><tr><td></td><td><p>\(\frac{L}{{L}_{0}}\) </p></td><td><p>=</p></td><td><p>\(\sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}\) </p></td></tr><tr><td></td><td><p>\({\left(\frac{L}{{L}_{0}}\right)}^{2}\) </p></td><td><p>=</p></td><td><p>\(1-\ \frac{{v}^{2}}{{c}^{2}}\) </p></td></tr><tr><td></td><td><p>\(\frac{{v}^{2}}{{c}^{2}}\) </p></td><td><p>=</p></td><td><p>1 - \({\left(\frac{L}{{L}_{0}}\right)}^{2}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>1 - \({\left(\frac{0.8\ \times \ {10}^{3}}{{10}^{3}}\right)}^{2}\)</p></td></tr><tr><td></td><td><p>\(\frac{{v}^{2}}{{c}^{2}}\) </p></td><td><p>=</p></td><td><p>0.36</p></td></tr><tr><td></td><td><p>\(\frac{v}{c}\) </p></td><td><p>=</p></td><td><p>0.6</p></td></tr><tr><td></td><td><p>v</p></td><td><p>=</p></td><td><p>0.6 c = 0.6 \(\times \) 3 \(\times \) \({10}^{8}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>1.8 \(\times \) \({10}^{8}\) m s<sup>-1</sup></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.8</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>  &nbsp; How fast must a vehicle travel for 1 s of time measured on a passenger’s watch in the vehicle to differ by 1 % for an observer measuring it from the ground outside?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>Ans:</p></td><td colspan="3"><p>\(∆{t}_{0}\)= 1 s, </p><p>\(\Delta t\) = \(∆{t}_{0}\)+ 1 % = 1 + 0.01 = 1.01 s</p></td></tr><tr><td></td><td><p>\(\Delta t\) </p></td><td><p>=</p></td><td><p>\(\gamma \) \(∆{t}_{0}\)</p></td></tr><tr><td></td><td><p>\(\Delta t\) </p></td><td><p>=</p></td><td><p>\(\frac{1}{\sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}}\) \(∆{t}_{0}\)</p></td></tr><tr><td></td><td><p>\(\frac{\Delta t}{∆{t}_{0}}\) </p></td><td><p>=</p></td><td><p>\(\frac{1}{\sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}}\) </p></td></tr><tr><td></td><td><p>\(\frac{∆{t}_{0}}{\Delta t}\) </p></td><td><p>=</p></td><td><p>\(\sqrt{1-\ \frac{{v}^{2}}{{c}^{2}}}\) </p></td></tr><tr><td></td><td><p>\({\left(\frac{∆{t}_{0}}{\Delta t}\right)}^{2}\) </p></td><td><p>=</p></td><td><p>\(1-\ \frac{{v}^{2}}{{c}^{2}}\) </p></td></tr><tr><td></td><td><p>\(\frac{{v}^{2}}{{c}^{2}}\) </p></td><td><p>=</p></td><td><p>1 - \({\left(\frac{∆{t}_{0}}{\Delta t}\right)}^{2}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>1 - \({\left(\frac{1}{1.01}\right)}^{2}\)</p></td></tr><tr><td></td><td><p>\(\frac{v}{c}\) </p></td><td><p>=</p></td><td><p>\(\sqrt{1\ -\ {\left(\frac{1}{1.01}\right)}^{2}}\) </p></td></tr><tr><td></td><td><p>\(\frac{v}{c}\) </p></td><td><p>=</p></td><td><p>0.14 </p></td></tr><tr><td></td><td><p>v</p></td><td><p>=</p></td><td><p>0.14 c = 0.14 \(\times \) 3 \(\times \) \({10}^{8}\)</p></td></tr><tr><td></td><td></td><td><p>=</p></td><td><p>0.42 \(\times \) \({10}^{8}\) m s<sup>-1</sup></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article></main>
+  </div>
+  <script src="calculation-format.js"></script>
 </body>
 </html>
