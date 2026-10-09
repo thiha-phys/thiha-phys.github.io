@@ -3,7 +3,6 @@ const orderBookList = document.getElementById('order-book-list');
 const orderStatus = document.getElementById('order-status');
 const confirmOrderButton = document.getElementById('confirm-order');
 const totalElement = document.getElementById('order-total');
-const codRadio = orderForm.querySelector('input[value="COD"]');
 const receiptCard = document.getElementById('receipt-card');
 let lastReceipt = null;
 let orderSubmitted = false;
@@ -18,11 +17,6 @@ function getCurrentTotal() {
 function updateOrderTotal() {
     const total = getCurrentTotal();
     totalElement.textContent = formatKyats(total);
-    codRadio.disabled = total >= 150000;
-    if (codRadio.disabled && codRadio.checked) {
-        codRadio.checked = false;
-        orderForm.querySelector('input[value="KBZ Pay"]').checked = true;
-    }
 }
 
 PHYSICS_BOOKS.forEach((book) => {
@@ -51,7 +45,6 @@ PHYSICS_BOOKS.forEach((book) => {
     quantity.type = 'number';
     quantity.name = `quantity-${book.id}`;
     quantity.min = '0';
-    quantity.max = '99';
     quantity.step = '1';
     quantity.value = '0';
     quantity.inputMode = 'numeric';
@@ -73,14 +66,6 @@ try {
 } catch (error) {
     console.error('Unable to load the saved account profile.', error);
 }
-
-orderForm.querySelectorAll('input[name="paymentMethod"]').forEach((input) => {
-    input.addEventListener('change', () => {
-        document.getElementById('payment-note').textContent = input.value === 'COD'
-            ? 'ပစ္စည်းရောက်ရှိချိန်တွင် ငွေပေးချေနိုင်ပါသည်။'
-            : 'KBZ Pay ကိုရွေးပါက မှာယူမှုတင်ပြီးနောက် ငွေလွှဲရန်အချက်အလက်ကို ဆက်သွယ်ပေးပါမည်။';
-    });
-});
 
 function addReceiptRow(container, label, value) {
     const row = document.createElement('div');
@@ -123,18 +108,13 @@ orderForm.addEventListener('submit', async (event) => {
         return;
     }
     const paymentMethod = orderForm.elements.paymentMethod.value;
-    if (paymentMethod === 'COD' && total >= 150000) {
-        orderStatus.textContent = 'စုစုပေါင်း ၁၅၀,၀၀၀ ကျပ်နှင့်အထက်တွင် COD ကို ရွေး၍မရပါ။ KBZ Pay ကို ရွေးပါ။';
-        return;
-    }
-
     const formData = new FormData(orderForm);
     const items = PHYSICS_BOOKS.map((book) => ({
         id: book.id,
         quantity: Number(formData.get(`quantity-${book.id}`) || 0)
     }));
-    if (items.some((item) => !Number.isInteger(item.quantity) || item.quantity < 0 || item.quantity > 99)) {
-        orderStatus.textContent = 'အုပ်ရေကို ၀ မှ ၉၉ အတွင်း ကိန်းပြည့်ဖြင့် ထည့်ပါ။';
+    if (items.some((item) => !Number.isSafeInteger(item.quantity) || item.quantity < 0)) {
+        orderStatus.textContent = 'အုပ်ရေကို ၀ နှင့်အထက် ကိန်းပြည့်ဖြင့် ထည့်ပါ။';
         return;
     }
 

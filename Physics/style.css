@@ -5,7 +5,7 @@ body {
     max-width: none;
     min-height: 100vh;
     margin: 0;
-    padding: 16px 16px 112px;
+    padding: 8px 16px 112px;
     border: 0;
     border-radius: 0;
     background-color: #ffffff;
@@ -658,8 +658,8 @@ svg {
 }
 
 .page-header {
-    min-height: 64px;
-    margin: 0 0 22px;
+    min-height: 56px;
+    margin: 0 0 12px;
     padding: 10px 16px;
 }
 
@@ -733,7 +733,7 @@ svg {
     body {
         width: calc(100% - 24px);
         min-height: 100vh;
-        margin: 18px auto 0;
+        margin: 8px auto 0;
         padding-bottom: 102px;
     }
 
@@ -754,7 +754,7 @@ svg {
     }
 
     .page-header {
-        margin-bottom: 18px;
+        margin-bottom: 12px;
         padding: 9px 12px;
     }
 

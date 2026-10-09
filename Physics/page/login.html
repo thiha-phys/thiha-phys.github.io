@@ -412,18 +412,14 @@
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-briefcase" aria-hidden="true"></i>
-                        <select name="job" required>
-                            <option value="" selected disabled hidden></option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="Student">Student</option>
-                        </select>
+                        <input name="job" type="text" autocomplete="organization-title" placeholder=" ">
                         <span class="floating-label">Select job</span>
                     </span>
                 </label>
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
-                        <input name="email" type="email" autocomplete="email" placeholder=" ">
+                        <input name="email" type="text" autocomplete="email" placeholder=" ">
                         <span class="floating-label">Email</span>
                     </span>
                 </label>
@@ -469,6 +465,7 @@
             const digits = value.replace(/[၀-၉]/g, (digit) =>
                 String(digit.charCodeAt(0) - '၀'.charCodeAt(0))
             ).replace(/\D/g, '');
+            if (digits.length !== 11 || digits[0] !== '0') return digits;
             return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8, 11)}`;
         }
 
@@ -497,8 +494,8 @@
             const form = event.currentTarget;
             const phone = form.elements.namedItem('phone').value;
             const normalizedPhone = normalizePhoneNumber(phone);
-            if (!/^0\d{10}$/.test(normalizedPhone)) {
-                connectionNote.textContent = 'ဖုန်းနံပါတ်ကို 0x xxx xxx xxx ပုံစံအတိုင်း ဂဏန်း ၁၁ လုံး ထည့်ပါ။';
+            if (!normalizedPhone) {
+                connectionNote.textContent = 'ဖုန်းနံပါတ် ထည့်ပါ။';
                 return;
             }
 
@@ -545,8 +542,8 @@
             const phone = normalizePhoneNumber(form.elements.namedItem('phone').value);
             const password = form.elements.namedItem('password').value;
 
-            if (!/^0\d{10}$/.test(phone)) {
-                connectionNote.textContent = 'ဖုန်းနံပါတ်ကို 0x xxx xxx xxx ပုံစံအတိုင်း ဂဏန်း ၁၁ လုံး ထည့်ပါ။';
+            if (!phone) {
+                connectionNote.textContent = 'ဖုန်းနံပါတ် ထည့်ပါ။';
                 return;
             }
 

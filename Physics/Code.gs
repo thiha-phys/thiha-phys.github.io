@@ -1,8 +1,19 @@
 const SHEET_NAME = 'Profiles';
 const HEADERS = ['Name', 'Job', 'Email', 'Phone'];
-const PHONE_PATTERN = /^0\d{10}$/;
 const ORDERS_SHEET_NAME = 'Book Orders';
 const ORDER_HEADERS = [
+  'Voucher No', 'Name', 'Address', 'Phone', 'Order Date',
+  'Special Qty', 'Special Amount',
+  'Practice Qty', 'Practice Amount',
+  'Old Questions Qty', 'Old Questions Amount',
+  'Solution Qty', 'Solution Amount',
+  'Grade 11 Handbook Qty', 'Grade 11 Handbook Amount',
+  'Grade 11 Objective Qty', 'Grade 11 Objective Amount',
+  'Grade 10 Handbook Qty', 'Grade 10 Handbook Amount',
+  'Total', 'Payment Method', 'Amount Received', 'KPay Account', 'Pay Date',
+  'Royal VOC No', 'Delivered Date', 'Delivery', 'Facebook Account Name'
+];
+const LEGACY_ORDER_HEADERS = [
   'Voucher No', 'Name', 'Address', 'Phone', 'Order Date',
   'Special Qty', 'Special Amount',
   'Practice Qty', 'Practice Amount',
@@ -35,6 +46,18 @@ function doPost(e) {
     if (action === 'createOrder') {
       return createBookOrder_(request.order);
     }
+    if (action === 'listOrders') {
+      return jsonResponse_({ ok: true, orders: listBookOrders_() });
+    }
+    if (action === 'updateOrder') {
+      return updateBookOrder_(request.order);
+    }
+    if (action === 'getBookStock') {
+      return jsonResponse_({ ok: true, stock: getBookStock_() });
+    }
+    if (action === 'addBookStock') {
+      return addBookStock_(request.stock);
+    }
 
     const profile = request.profile;
 
@@ -47,9 +70,7 @@ function doPost(e) {
 
     if (action === 'lookup') {
       const phone = normalizePhone_(profile.phone);
-      if (!PHONE_PATTERN.test(phone)) {
-        throw new Error('Phone must contain 11 digits and start with 0.');
-      }
+      if (!phone) throw new Error('Phone is required.');
 
       const sheet = getProfilesSheet_();
       const phoneRows = findPhoneRows_(sheet, phone);
@@ -82,8 +103,8 @@ function doPost(e) {
       ? normalizePhone_(profile.lookupPhone)
       : normalizedProfile.phone;
 
-    if (action === 'update' && !PHONE_PATTERN.test(lookupPhone)) {
-      throw new Error('A valid lookupPhone is required for profile updates.');
+    if (action === 'update' && !lookupPhone) {
+      throw new Error('A lookup phone is required for profile updates.');
     }
 
     const lock = LockService.getScriptLock();
@@ -138,6 +159,168 @@ function doPost(e) {
   }
 }
 
+function listBookOrders_() {
+  const sheet = getOrdersSheet_();
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return [];
+
+  return sheet.getRange(2, 1, lastRow - 1, ORDER_HEADERS.length).getDisplayValues()
+    .filter(function (row) { return row[0] !== ''; })
+    .map(function (row) {
+      const order = {};
+      ORDER_HEADERS.forEach(function (header, index) { order[header] = row[index]; });
+      return order;
+    });
+}
+
+function updateBookOrder_(order) {
+  if (!order || typeof order !== 'object') {
+    throw new Error('Order data is required.');
+  }
+  const voucherNo = requiredText_(order.voucherNo, 'Voucher No');
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const sheet = getOrdersSheet_();
+    const lastRow = sheet.getLastRow();
+    if (lastRow < 2) throw new Error('No orders were found.');
+    const voucherRows = sheet.getRange(2, 1, lastRow - 1, 1).getDisplayValues()
+      .reduce(function (rows, values, index) {
+        if (String(values[0]).trim() === voucherNo) rows.push(index + 2);
+        return rows;
+      }, []);
+    if (voucherRows.length === 0) throw new Error('No order was found for this voucher number.');
+    if (voucherRows.length > 1) throw new Error('Duplicate voucher numbers were found; update was stopped.');
+
+    const rowNumber = voucherRows[0];
+    const range = sheet.getRange(rowNumber, 1, 1, ORDER_HEADERS.length);
+    const values = range.getDisplayValues()[0];
+    ORDER_HEADERS.forEach(function (header, index) {
+      if (index === 0 || !Object.prototype.hasOwnProperty.call(order, header)) return;
+      const value = order[header] == null ? '' : String(order[header]);
+      values[index] = sheetSafeText_(value);
+    });
+    range.setNumberFormat('@');
+    range.setValues([values]);
+    const updated = {};
+    ORDER_HEADERS.forEach(function (header, index) { updated[header] = values[index]; });
+    return jsonResponse_({ ok: true, order: updated });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function getBookStock_() {
+  const stockSheet = getBookStockSheet_();
+  const stockLastRow = stockSheet.getLastRow();
+  const orders = listBookOrders_();
+  return BOOK_ORDER_ITEMS.map(function (book, bookIndex) {
+    const column = bookIndex * 2 + 1;
+    const incoming = [];
+    if (stockLastRow >= 3) {
+      const values = stockSheet.getRange(3, column, stockLastRow - 2, 2).getDisplayValues();
+      values.forEach(function (row) {
+        const quantity = Number(row[1]);
+        if (row[0] && Number.isSafeInteger(quantity) && quantity > 0) {
+          incoming.push({ date: row[0], quantity: quantity });
+        }
+      });
+    }
+    const received = incoming.reduce(function (sum, entry) { return sum + entry.quantity; }, 0);
+    const delivered = orders.reduce(function (sum, order) {
+      if (!order['Delivered Date']) return sum;
+      return sum + Number(order[ORDER_HEADERS[book.quantityColumn]] || 0);
+    }, 0);
+    return {
+      id: book.id,
+      name: book.name,
+      received: received,
+      delivered: delivered,
+      remaining: received - delivered,
+      entries: incoming
+    };
+  });
+}
+
+function addBookStock_(stock) {
+  if (!stock || typeof stock !== 'object') {
+    throw new Error('Stock entry is required.');
+  }
+  const bookIndex = BOOK_ORDER_ITEMS.findIndex(function (book) { return book.id === stock.bookId; });
+  const quantity = Number(stock.quantity);
+  const date = requiredText_(stock.date, 'Stock date');
+  if (bookIndex < 0) throw new Error('Book type is invalid.');
+  const parsedDate = new Date(date + 'T00:00:00Z');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) ||
+      Number.isNaN(parsedDate.getTime()) || parsedDate.toISOString().slice(0, 10) !== date) {
+    throw new Error('Stock date must be a valid date in YYYY-MM-DD format.');
+  }
+  if (!Number.isSafeInteger(quantity) || quantity < 1) {
+    throw new Error('Stock quantity must be a positive whole number.');
+  }
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const sheet = getBookStockSheet_();
+    const column = bookIndex * 2 + 1;
+    const lastRow = Math.max(sheet.getLastRow(), 2);
+    const dates = lastRow > 2
+      ? sheet.getRange(3, column, lastRow - 2, 1).getDisplayValues()
+      : [];
+    const entryRow = dates.reduce(function (last, values, index) {
+      return values[0] ? index + 3 : last;
+    }, 2) + 1;
+    const range = sheet.getRange(entryRow, column, 1, 2);
+    range.setNumberFormat('@');
+    range.setValues([[date, String(quantity)]]);
+    return jsonResponse_({
+      ok: true,
+      entry: { bookId: stock.bookId, date: date, quantity: quantity },
+      stock: getBookStock_()
+    });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function getBookStockSheet_() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  if (!spreadsheet) {
+    throw new Error('Bind this Apps Script project to the target Google Sheet.');
+  }
+  let sheet = spreadsheet.getSheetByName('Book Stock');
+  if (!sheet) sheet = spreadsheet.insertSheet('Book Stock');
+
+  const requiredColumns = BOOK_ORDER_ITEMS.length * 2;
+  if (sheet.getLastRow() === 0) {
+    const headers = new Array(requiredColumns);
+    BOOK_ORDER_ITEMS.forEach(function (book, index) {
+      headers[index * 2] = book.name;
+      headers[index * 2 + 1] = '';
+    });
+    sheet.getRange(1, 1, 1, requiredColumns).setValues([headers]);
+    const subheaders = new Array(requiredColumns).fill('');
+    BOOK_ORDER_ITEMS.forEach(function (_book, index) {
+      subheaders[index * 2] = 'Stock Date';
+      subheaders[index * 2 + 1] = 'Quantity';
+    });
+    sheet.getRange(2, 1, 1, requiredColumns).setValues([subheaders]);
+    sheet.setFrozenRows(2);
+  } else {
+    const actual = sheet.getRange(1, 1, 2, requiredColumns).getDisplayValues();
+    const isValid = BOOK_ORDER_ITEMS.every(function (book, index) {
+      return actual[0][index * 2] === book.name &&
+        actual[1][index * 2] === 'Stock Date' &&
+        actual[1][index * 2 + 1] === 'Quantity';
+    });
+    if (!isValid) {
+      throw new Error('The Book Stock sheet must contain the expected seven book tables.');
+    }
+  }
+  return sheet;
+}
+
 function createBookOrder_(order) {
   if (!order || typeof order !== 'object') {
     throw new Error('Order data is required.');
@@ -145,16 +328,9 @@ function createBookOrder_(order) {
 
   const name = requiredText_(order.name, 'Name');
   const address = requiredText_(order.address, 'Address');
-  if (name.length > 120 || address.length > 500) {
-    throw new Error('Name or address is longer than the allowed limit.');
-  }
   const phone = normalizePhone_(order.phone);
-  if (!PHONE_PATTERN.test(phone)) {
-    throw new Error('Phone must contain 11 digits and start with 0.');
-  }
-  if (order.paymentMethod !== 'COD' && order.paymentMethod !== 'KBZ Pay') {
-    throw new Error('Payment method must be COD or KBZ Pay.');
-  }
+  if (!phone) throw new Error('Phone is required.');
+  const paymentMethod = order.paymentMethod == null ? '' : String(order.paymentMethod).trim();
   if (!Array.isArray(order.items)) {
     throw new Error('A list of book quantities is required.');
   }
@@ -168,7 +344,7 @@ function createBookOrder_(order) {
       return candidate.id === item.id;
     });
     const quantity = Number(item.quantity);
-    if (!book || !Number.isInteger(quantity) || quantity < 0 || quantity > 99) {
+    if (!book || !Number.isSafeInteger(quantity) || quantity < 0) {
       throw new Error('Book quantity is invalid.');
     }
     quantities[item.id] = quantity;
@@ -183,6 +359,7 @@ function createBookOrder_(order) {
   row[2] = sheetSafeText_(address);
   row[3] = formatPhone_(phone);
   row[4] = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm:ss');
+  row[27] = sheetSafeText_(order.facebookAccountName == null ? '' : order.facebookAccountName);
   BOOK_ORDER_ITEMS.forEach(function (book) {
     const quantity = quantities[book.id];
     const amount = quantity * book.price;
@@ -193,9 +370,6 @@ function createBookOrder_(order) {
   if (total <= 0) {
     throw new Error('At least one book must be ordered.');
   }
-  if (order.paymentMethod === 'COD' && total >= 150000) {
-    throw new Error('COD is not available for orders of 150,000 kyats or more.');
-  }
 
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
@@ -204,7 +378,7 @@ function createBookOrder_(order) {
     const voucherNo = nextVoucherNo_(sheet);
     row[0] = voucherNo;
     row[19] = String(total);
-    row[20] = order.paymentMethod;
+    row[20] = sheetSafeText_(paymentMethod);
     const nextRow = sheet.getLastRow() + 1;
     const range = sheet.getRange(nextRow, 1, 1, ORDER_HEADERS.length);
     range.setNumberFormat('@');
@@ -225,7 +399,7 @@ function createBookOrder_(order) {
         address: address,
         phone: formatPhone_(phone),
         orderDate: row[4],
-        paymentMethod: order.paymentMethod,
+        paymentMethod: paymentMethod,
         total: total,
         items: items
       }
@@ -248,6 +422,18 @@ function getOrdersSheet_() {
     sheet.getRange(1, 1, 1, ORDER_HEADERS.length).setValues([ORDER_HEADERS]);
     sheet.setFrozenRows(1);
   } else {
+    const legacyHeaders = sheet.getRange(1, 1, 1, LEGACY_ORDER_HEADERS.length).getDisplayValues()[0];
+    const isLegacySchema = LEGACY_ORDER_HEADERS.every(function (header, index) {
+      return legacyHeaders[index] === header;
+    });
+    if (isLegacySchema) {
+      sheet.getRange(1, 26).setValue('Delivered Date');
+      sheet.insertColumnAfter(27);
+      sheet.getRange(1, 28).setValue('Facebook Account Name');
+    }
+    if (sheet.getMaxColumns() < ORDER_HEADERS.length) {
+      sheet.insertColumnsAfter(sheet.getMaxColumns(), ORDER_HEADERS.length - sheet.getMaxColumns());
+    }
     const actualHeaders = sheet.getRange(1, 1, 1, ORDER_HEADERS.length).getDisplayValues()[0];
     if (ORDER_HEADERS.some(function (header, index) { return actualHeaders[index] !== header; })) {
       throw new Error('The first row of the Book Orders sheet does not match the expected order columns.');
@@ -276,16 +462,13 @@ function sheetSafeText_(value) {
 
 function normalizeProfile_(profile) {
   const name = requiredText_(profile.name, 'Name');
-  const job = requiredText_(profile.job || profile.occupation, 'Job');
+  const job = profile.job == null && profile.occupation == null
+    ? ''
+    : String(profile.job || profile.occupation).trim();
   const email = profile.email == null ? '' : String(profile.email).trim();
   const phone = normalizePhone_(profile.phone);
 
-  if (!PHONE_PATTERN.test(phone)) {
-    throw new Error('Phone must contain 11 digits and start with 0.');
-  }
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    throw new Error('Email must be a valid email address or empty.');
-  }
+  if (!phone) throw new Error('Phone is required.');
 
   return {
     name: name,
@@ -313,10 +496,9 @@ function normalizePhone_(value) {
 }
 
 function formatPhone_(digits) {
-  return digits.slice(0, 2) + ' ' +
-    digits.slice(2, 5) + ' ' +
-    digits.slice(5, 8) + ' ' +
-    digits.slice(8, 11);
+  if (!digits || digits.length !== 11 || digits[0] !== '0') return digits;
+  return digits.slice(0, 2) + ' ' + digits.slice(2, 5) + ' ' +
+    digits.slice(5, 8) + ' ' + digits.slice(8, 11);
 }
 
 function getProfilesSheet_() {

@@ -23,27 +23,26 @@
                 <h2>စာအုပ်နှင့် အရေအတွက်ရွေးပါ</h2>
                 <div id="order-book-list" class="order-book-list"></div>
                 <div class="order-total"><span>စုစုပေါင်းကျသင့်ငွေ</span><strong id="order-total">0 ကျပ်</strong></div>
-                <p id="cod-hint" class="field-hint">စုစုပေါင်း ၁၅၀,၀၀၀ ကျပ်နှင့်အထက်ဆိုလျှင် အိမ်ရောက်ငွေချေ (COD) ကို ရွေး၍မရပါ။</p>
             </section>
 
             <section class="order-section">
                 <h2>မှာယူသူ၏ အချက်အလက်</h2>
                 <label class="form-field">အမည်
-                    <input name="name" type="text" autocomplete="name" required maxlength="120">
+                    <input name="name" type="text" autocomplete="name" required>
                 </label>
                 <label class="form-field">လိပ်စာ (အပြည့်အစုံ)
-                    <textarea name="address" autocomplete="street-address" rows="3" required maxlength="500"></textarea>
+                    <textarea name="address" autocomplete="street-address" rows="3" required></textarea>
                 </label>
                 <label class="form-field">ဖုန်းနံပါတ်
-                    <input name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="30">
+                    <input name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
                 </label>
             </section>
 
             <section class="order-section">
                 <h2>ငွေပေးချေမှု</h2>
-                <label class="payment-option"><input type="radio" name="paymentMethod" value="COD" required> အိမ်ရောက်ငွေချေ (COD)</label>
-                <label class="payment-option"><input type="radio" name="paymentMethod" value="KBZ Pay" required> KBZ Pay</label>
-                <p id="payment-note" class="payment-note">KBZ Pay ကိုရွေးပါက မှာယူမှုတင်ပြီးနောက် ငွေလွှဲရန်အချက်အလက်ကို ဆက်သွယ်ပေးပါမည်။</p>
+                <label class="form-field">ငွေပေးချေမှုအမျိုးအစား
+                    <input name="paymentMethod" type="text" value="KBZ Pay" required>
+                </label>
             </section>
 
             <p id="order-status" class="form-status" role="status" aria-live="polite"></p>
@@ -52,6 +51,7 @@
 
         <section class="receipt-card" id="receipt-card" aria-labelledby="receipt-title" tabindex="-1" hidden>
             <div class="receipt-header">
+                <img class="receipt-logo" src="../logo.png" alt="Physics Learning Hub logo">
                 <span class="shop-eyebrow">PHYSICS LEARNING HUB</span>
                 <h2 id="receipt-title">မှာယူမှု ဘောက်ချာ</h2>
                 <strong id="receipt-number"></strong>
