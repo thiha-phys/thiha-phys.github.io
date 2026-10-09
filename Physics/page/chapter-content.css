@@ -1,0 +1,189 @@
+.chapter-content-page {
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.chapter-content-intro {
+    margin-bottom: 16px;
+}
+
+.chapter-content-intro > span,
+.chapter-content-label {
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.chapter-content-intro h2,
+.chapter-content-heading h2 {
+    margin: 4px 0;
+    color: #1e293b;
+    font-size: clamp(20px, 4vw, 26px);
+}
+
+.chapter-content-intro p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.chapter-content-list {
+    display: grid;
+    gap: 10px;
+    padding-bottom: 30px;
+}
+
+.chapter-content-list > a {
+    display: flex;
+    min-height: 56px;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border: 1px solid #bfdbfe;
+    border-radius: 14px;
+    background: #fff;
+    color: #172033;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.chapter-content-list > a:hover {
+    transform: translateY(-1px);
+    border-color: #3b82f6;
+}
+
+.chapter-content-list > a > span:nth-child(2) {
+    flex: 1;
+}
+
+.chapter-content-list > a > i {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.chapter-content-number {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    place-items: center;
+    border-radius: 10px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.chapter-content-heading {
+    margin: 2px 0 18px;
+}
+
+.chapter-content-heading > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.chapter-content-cards {
+    display: grid;
+    gap: 12px;
+    padding-bottom: 30px;
+}
+
+.chapter-content-card {
+    padding: 16px;
+    border: 1px solid #93c5fd;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.chapter-content-card h3 {
+    margin: 0 0 8px;
+    color: #1e293b;
+    font-size: 16px;
+    line-height: 1.55;
+}
+
+.chapter-content-card p {
+    margin: 6px 0 0;
+    color: #172033;
+    font-size: 14px;
+    line-height: 1.85;
+    overflow-wrap: anywhere;
+}
+
+.myanmar-text {
+    color: #0f766e;
+}
+
+.chapter-math {
+    display: inline-block;
+    max-width: 100%;
+    margin: 0 2px;
+    color: #0f172a;
+    font-size: 1.03em;
+}
+
+.chapter-math mjx-container {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.chapter-content-card figure {
+    margin: 12px 0 0;
+}
+
+.chapter-content-card figure img {
+    display: block;
+    max-width: 100%;
+    max-height: 360px;
+    margin: auto;
+    object-fit: contain;
+}
+
+.chapter-answer {
+    margin-top: 12px;
+    border-top: 1px solid #dbeafe;
+    padding-top: 10px;
+}
+
+.chapter-answer summary {
+    width: fit-content;
+    color: #1d4ed8;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.chapter-answer[open] summary {
+    margin-bottom: 8px;
+}
+
+.chapter-answer-unavailable {
+    color: #64748b !important;
+    font-style: italic;
+}
+
+@media (max-width: 500px) {
+    .chapter-content-list > a {
+        gap: 10px;
+        padding: 11px 12px;
+        font-size: 13px;
+    }
+
+    .chapter-content-card {
+        padding: 14px;
+    }
+}

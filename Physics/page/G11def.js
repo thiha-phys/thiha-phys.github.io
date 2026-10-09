@@ -36,7 +36,20 @@ chapter.forEach((definition, index) => {
         const segments = typeof parts === 'string' ? [{ text: parts }] : parts;
         segments.forEach((segment) => {
             if (segment.text !== undefined) {
-                paragraph.append(document.createTextNode(segment.text));
+                const chunks = segment.text.split(/([\u1000-\u109f]+)/);
+                chunks.forEach((chunk) => {
+                    if (!chunk) {
+                        return;
+                    }
+                    if (/^[\u1000-\u109f]+$/.test(chunk)) {
+                        const myanmar = document.createElement('span');
+                        myanmar.className = 'myanmar-text';
+                        myanmar.textContent = chunk;
+                        paragraph.append(myanmar);
+                    } else {
+                        paragraph.append(document.createTextNode(chunk));
+                    }
+                });
                 return;
             }
             const equation = document.createElement('span');
@@ -46,9 +59,6 @@ chapter.forEach((definition, index) => {
             equation.dataset.plain = segment.plain;
             paragraph.append(equation);
         });
-        if (/[\u1000-\u109f]/.test(paragraph.textContent)) {
-            paragraph.lang = 'my';
-        }
         card.append(paragraph);
     });
     definitionList.append(card);

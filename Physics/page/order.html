@@ -23,6 +23,7 @@
                 <h2>စာအုပ်နှင့် အရေအတွက်ရွေးပါ</h2>
                 <div id="order-book-list" class="order-book-list"></div>
                 <div class="order-total"><span>စုစုပေါင်းကျသင့်ငွေ</span><strong id="order-total">0 ကျပ်</strong></div>
+                <p id="cod-hint" class="field-hint">စုစုပေါင်း ၁၅၀,၀၀၀ ကျပ်နှင့်အထက်ဆိုလျှင် အိမ်ရောက်ငွေချေ (COD) ကို ရွေး၍မရပါ။</p>
             </section>
 
             <section class="order-section">
@@ -40,9 +41,9 @@
 
             <section class="order-section">
                 <h2>ငွေပေးချေမှု</h2>
-                <label class="form-field">ငွေပေးချေမှုအမျိုးအစား
-                    <input name="paymentMethod" type="text" value="KBZ Pay" required>
-                </label>
+                <label class="payment-option"><input type="radio" name="paymentMethod" value="COD" required> အိမ်ရောက်ငွေချေ (COD)</label>
+                <label class="payment-option"><input type="radio" name="paymentMethod" value="KBZ Pay" required checked> KBZ Pay</label>
+                <p id="payment-note" class="payment-note">KBZ Pay ကိုရွေးပါက မှာယူမှုတင်ပြီးနောက် ငွေလွှဲရန်အချက်အလက်ကို ဆက်သွယ်ပေးပါမည်။</p>
             </section>
 
             <p id="order-status" class="form-status" role="status" aria-live="polite"></p>

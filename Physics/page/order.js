@@ -3,6 +3,9 @@ const orderBookList = document.getElementById('order-book-list');
 const orderStatus = document.getElementById('order-status');
 const confirmOrderButton = document.getElementById('confirm-order');
 const totalElement = document.getElementById('order-total');
+const codRadio = orderForm.querySelector('input[value="COD"]');
+const kbzPayRadio = orderForm.querySelector('input[value="KBZ Pay"]');
+const COD_MAX_TOTAL = 150000;
 const receiptCard = document.getElementById('receipt-card');
 let lastReceipt = null;
 let orderSubmitted = false;
@@ -17,6 +20,11 @@ function getCurrentTotal() {
 function updateOrderTotal() {
     const total = getCurrentTotal();
     totalElement.textContent = formatKyats(total);
+    codRadio.disabled = total >= COD_MAX_TOTAL;
+    if (codRadio.disabled && codRadio.checked) {
+        codRadio.checked = false;
+        kbzPayRadio.checked = true;
+    }
 }
 
 PHYSICS_BOOKS.forEach((book) => {
@@ -107,7 +115,11 @@ orderForm.addEventListener('submit', async (event) => {
     if (!orderForm.reportValidity()) {
         return;
     }
-    const paymentMethod = orderForm.elements.paymentMethod.value;
+    const paymentMethod = new FormData(orderForm).get('paymentMethod');
+    if (paymentMethod === 'COD' && total >= COD_MAX_TOTAL) {
+        orderStatus.textContent = 'စုစုပေါင်း ၁၅၀,၀၀၀ ကျပ်နှင့်အထက်တွင် COD ကို ရွေး၍မရပါ။ KBZ Pay ကို ရွေးပါ။';
+        return;
+    }
     const formData = new FormData(orderForm);
     const items = PHYSICS_BOOKS.map((book) => ({
         id: book.id,

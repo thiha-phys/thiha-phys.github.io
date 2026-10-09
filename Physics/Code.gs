@@ -370,6 +370,12 @@ function createBookOrder_(order) {
   if (total <= 0) {
     throw new Error('At least one book must be ordered.');
   }
+  if (paymentMethod !== 'COD' && paymentMethod !== 'KBZ Pay') {
+    throw new Error('Payment method must be COD or KBZ Pay.');
+  }
+  if (paymentMethod === 'COD' && total >= 150000) {
+    throw new Error('COD is not available for orders of 150,000 kyats or more.');
+  }
 
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);

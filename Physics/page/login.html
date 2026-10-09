@@ -412,7 +412,11 @@
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-briefcase" aria-hidden="true"></i>
-                        <input name="job" type="text" autocomplete="organization-title" placeholder=" ">
+                        <select name="job" required>
+                            <option value="" selected disabled hidden></option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Student">Student</option>
+                        </select>
                         <span class="floating-label">Select job</span>
                     </span>
                 </label>
