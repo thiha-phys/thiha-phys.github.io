@@ -211,10 +211,16 @@ svg {
     width: 100%;
     height: 180px;
     background: #ffffff;
-    border: 2px dashed #cbd5e1;
+    border: 2px solid #1e3a8a;
     border-radius: 16px;
     overflow: hidden;
     box-sizing: border-box;
+    box-shadow: 0 0 18px rgba(30, 58, 138, 0.36);
+    touch-action: pan-y;
+    cursor: grab;
+}
+.banner-frame.is-dragging {
+    cursor: grabbing;
 }
 .banner-track {
     display: flex;
@@ -231,7 +237,8 @@ svg {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
 }
 .slider-dots {
     display: flex;

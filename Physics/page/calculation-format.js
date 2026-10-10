@@ -1,3 +1,9 @@
+document.querySelectorAll('.problem-content details > div').forEach((answer) => {
+    if (!answer.classList.contains('problem-answer')) {
+        answer.classList.add('problem-answer', 'legacy-calculation-answer');
+    }
+});
+
 document.querySelectorAll('.problem-answer').forEach((answer) => {
     const paragraphs = answer.querySelectorAll('p');
     const paragraph = paragraphs[paragraphs.length - 1];
@@ -38,8 +44,8 @@ document.querySelectorAll('.problem-answer').forEach((answer) => {
 });
 
 document.querySelectorAll('.problem-card').forEach((card) => {
-    const label = card.querySelector('.problem-number span')?.textContent.trim();
-    const firstParagraph = card.querySelector('.problem-question p');
+    const label = card.querySelector('.problem-number span, :scope > div:first-child > span')?.textContent.trim();
+    const firstParagraph = card.querySelector('.problem-question p, .problem-content > p');
     if (!label || !firstParagraph) return;
 
     const match = label.match(/^(No|Eg|Rev)\.?(\d+)$/i);

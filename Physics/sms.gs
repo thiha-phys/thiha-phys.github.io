@@ -351,3 +351,8 @@ function optionalRecommendationText_(value, fieldName, maxLength) {
   }
   return text;
 }
+
+function sheetSafeText_(value) {
+  const text = String(value);
+  return /^[=+\-@]/.test(text) ? "'" + text : text;
+}

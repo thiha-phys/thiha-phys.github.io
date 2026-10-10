@@ -184,6 +184,9 @@
         ];
         const bannerTrack = document.querySelector('.banner-track');
         const sliderDots = document.querySelector('.slider-dots');
+        const bannerFrame = document.querySelector('.banner-frame');
+        let autoAdvanceTimer = null;
+        let pointerStartX = null;
 
         bookPromoImages.forEach((filename, index) => {
             const slide = document.createElement('div');
@@ -200,30 +203,84 @@
             dot.className = 'dot';
             dot.type = 'button';
             dot.setAttribute('aria-label', `ကြော်ငြာပုံ ${index + 1}`);
-            dot.addEventListener('click', () => showSlide(index));
+            dot.addEventListener('click', () => {
+                showSlide(bookPromoImages.length > 1 ? index + 1 : index);
+                restartAutoAdvance();
+            });
             sliderDots.append(dot);
         });
+
+        if (bookPromoImages.length > 1) {
+            const firstSlide = bannerTrack.firstElementChild;
+            const lastSlide = bannerTrack.lastElementChild;
+            const leadingLoopSlide = lastSlide.cloneNode(true);
+            const trailingLoopSlide = firstSlide.cloneNode(true);
+            leadingLoopSlide.setAttribute('aria-hidden', 'true');
+            trailingLoopSlide.setAttribute('aria-hidden', 'true');
+            leadingLoopSlide.querySelector('img').alt = '';
+            trailingLoopSlide.querySelector('img').alt = '';
+            bannerTrack.prepend(leadingLoopSlide);
+            bannerTrack.append(trailingLoopSlide);
+        }
 
         let currentSlide = 0;
         const dots = sliderDots.querySelectorAll('.dot');
 
         function showSlide(index) {
             currentSlide = index;
-            bannerTrack.style.transform = `translateX(-${index * 100}%)`;
+            bannerTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
             dots.forEach((dot, dotIndex) => {
-                const isActive = dotIndex === index;
+                const activeIndex = (currentSlide - 1 + bookPromoImages.length) % bookPromoImages.length;
+                const isActive = dotIndex === activeIndex;
                 dot.classList.toggle('active', isActive);
                 dot.setAttribute('aria-current', isActive ? 'true' : 'false');
             });
         }
 
-        if (bookPromoImages.length > 0) {
-            showSlide(0);
+        bannerTrack.addEventListener('transitionend', (event) => {
+            if (event.target !== bannerTrack || event.propertyName !== 'transform' ||
+                (currentSlide !== 0 && currentSlide !== bookPromoImages.length + 1)) return;
+            bannerTrack.style.transition = 'none';
+            showSlide(currentSlide === 0 ? bookPromoImages.length : 1);
+            bannerTrack.offsetHeight;
+            bannerTrack.style.transition = '';
+        });
+
+        function restartAutoAdvance() {
+            window.clearInterval(autoAdvanceTimer);
             if (bookPromoImages.length > 1) {
-                window.setInterval(() => {
-                    showSlide((currentSlide + 1) % bookPromoImages.length);
+                autoAdvanceTimer = window.setInterval(() => {
+                    showSlide(currentSlide + 1);
                 }, 5000);
             }
+        }
+
+        bannerFrame.addEventListener('pointerdown', (event) => {
+            if (!event.isPrimary || event.button !== 0) return;
+            pointerStartX = event.clientX;
+            bannerFrame.classList.add('is-dragging');
+            bannerFrame.setPointerCapture(event.pointerId);
+        });
+
+        bannerFrame.addEventListener('pointerup', (event) => {
+            if (pointerStartX === null) return;
+            const dragDistance = event.clientX - pointerStartX;
+            pointerStartX = null;
+            bannerFrame.classList.remove('is-dragging');
+            if (Math.abs(dragDistance) >= 40) {
+                showSlide(currentSlide + (dragDistance < 0 ? 1 : -1));
+                restartAutoAdvance();
+            }
+        });
+
+        bannerFrame.addEventListener('pointercancel', () => {
+            pointerStartX = null;
+            bannerFrame.classList.remove('is-dragging');
+        });
+
+        if (bookPromoImages.length > 0) {
+            showSlide(bookPromoImages.length > 1 ? 1 : 0);
+            restartAutoAdvance();
         }
     </script>
 </body>

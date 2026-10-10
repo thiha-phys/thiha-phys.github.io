@@ -8,10 +8,10 @@
 .problem-card {
     margin: 0 !important;
     padding: 16px !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 16px !important;
+    border: 1px solid #f1f5f9 !important;
+    border-radius: 14px !important;
     background: #fff !important;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05) !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04) !important;
 }
 
 .problem-card > div:first-child {
@@ -19,18 +19,18 @@
 }
 
 .problem-card > div:first-child > span {
-    border-radius: 8px !important;
-    padding: 5px 11px !important;
+    border-radius: 6px !important;
+    padding: 4px 10px !important;
     background: #eff6ff !important;
     color: #2563eb !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
 }
 
 .problem-content {
     color: #1e293b !important;
     font-family: 'Pyidaungsu', Arial, sans-serif;
-    font-size: 15px !important;
-    line-height: 1.8 !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
     overflow-wrap: anywhere;
 }
 
@@ -70,8 +70,16 @@
     overflow-wrap: anywhere;
 }
 
-.problem-content details > div p {
-    margin: 7px 0;
+.problem-content details > .legacy-calculation-answer > p {
+    box-sizing: border-box;
+    margin: 0 !important;
+    padding: 10px 12px !important;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.problem-content details > .legacy-calculation-answer > p:first-child {
+    background: #eff6ff;
+    font-weight: 600;
 }
 
 .problem-content details > div img {
@@ -89,6 +97,11 @@
     padding: 6px;
     border-bottom: 1px solid #e2e8f0;
     vertical-align: top;
+}
+
+.calculation-result {
+    color: #dc2626;
+    font-weight: 700;
 }
 
 @media (max-width: 600px) {
