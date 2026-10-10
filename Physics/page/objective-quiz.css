@@ -25,11 +25,44 @@
     box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
 }
 
+.objective-section-card {
+    margin-bottom: 14px;
+}
+
+.objective-quiz-card#objective-quiz {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.objective-section-card:last-child {
+    margin-bottom: 0;
+}
+
 .objective-progress {
     margin: 0 0 12px;
     color: #2563eb;
     font-size: 13px;
     font-weight: 700;
+}
+
+.objective-section-card .objective-section {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #2563eb;
+    font-size: 16px;
+}
+
+.objective-section-card .objective-question-count {
+    margin: 0 0 8px;
+}
+
+.objective-section-notice {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.7;
 }
 
 .objective-section {

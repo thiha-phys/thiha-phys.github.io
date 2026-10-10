@@ -74,6 +74,13 @@ if (chapterList) {
         throw new Error(`Invalid ${grade} objective chapter: ${chapterNumber}`);
     }
 
+    const sections = chapter.sections.map((section) => ({
+        ...section,
+        questions: section.questions.map((question) => ({
+            ...question,
+            type: section.type
+        }))
+    }));
     const questions = allQuestions(chapter);
     const gradableQuestions = questions.filter((question) =>
         question.type === 'multipleChoice' || question.answer !== null
@@ -84,44 +91,103 @@ if (chapterList) {
     document.getElementById('chapter-content-title').textContent = title;
 
     const quiz = document.getElementById('objective-quiz');
-    const sectionLabel = document.getElementById('objective-section') ||
-        document.getElementById('objective-progress').insertAdjacentElement(
-            'afterend',
-            Object.assign(document.createElement('p'), { id: 'objective-section', className: 'objective-section' })
-        );
+    const progress = document.getElementById('objective-progress');
+    const summary = document.getElementById('objective-summary');
+    quiz.replaceChildren();
     if (questions.length === 0) {
         throw new Error(`${grade} chapter ${chapterNumber} has no objective questions.`);
     }
 
-    let currentIndex = 0;
+    let currentSectionIndex = 0;
+    let currentQuestionIndex = 0;
     let score = 0;
 
-    const progress = document.getElementById('objective-progress');
-    const questionText = document.getElementById('objective-question');
-    const options = document.getElementById('objective-options');
-    const result = document.getElementById('objective-result');
-    const nextButton = document.getElementById('objective-next');
-    const summary = document.getElementById('objective-summary');
+    quiz.append(progress);
+    const sectionCards = sections.map((section, index) => {
+        const card = document.createElement('section');
+        card.className = 'objective-quiz-card objective-section-card';
+        card.setAttribute('aria-label', sectionTitles[section.type]);
 
-    function finishAnswer(isCorrect, message) {
+        const sectionHeading = document.createElement('h3');
+        sectionHeading.className = 'objective-section';
+        sectionHeading.textContent = sectionTitles[section.type];
+
+        const sectionNotice = document.createElement('p');
+        sectionNotice.className = 'objective-section-notice';
+        sectionNotice.textContent = index === 0
+            ? ''
+            : 'အပေါ်က အမျိုးအစားကို အရင်ဖြေဆိုပါ။';
+        sectionNotice.hidden = index === 0;
+
+        const questionProgress = document.createElement('p');
+        questionProgress.className = 'objective-question-count';
+        questionProgress.hidden = index !== 0;
+
+        const questionText = document.createElement('p');
+        questionText.className = 'objective-question';
+        questionText.hidden = index !== 0;
+
+        const options = document.createElement('div');
+        options.className = 'objective-options';
+        options.hidden = index !== 0;
+
+        const result = document.createElement('p');
+        result.className = 'objective-result';
+        result.setAttribute('role', 'status');
+        result.setAttribute('aria-live', 'polite');
+        result.hidden = index !== 0;
+
+        const nextButton = document.createElement('button');
+        nextButton.className = 'primary-button objective-next';
+        nextButton.type = 'button';
+        nextButton.hidden = true;
+
+        card.append(sectionHeading, sectionNotice, questionProgress, questionText, options, result, nextButton);
+        quiz.append(card);
+        return {
+            card, sectionNotice, questionProgress, questionText, options, result, nextButton
+        };
+    });
+
+    function finishAnswer(isCorrect, message, elements) {
         if (isCorrect) {
             score += 1;
-            result.className = 'objective-result is-correct';
+            elements.result.className = 'objective-result is-correct';
         } else {
-            result.className = 'objective-result is-incorrect';
+            elements.result.className = 'objective-result is-incorrect';
         }
-        result.textContent = message;
-        progress.textContent = `မေးခွန်း ${currentIndex + 1} / ${questions.length} · ရမှတ် ${score}`;
-        nextButton.hidden = false;
-        nextButton.textContent = currentIndex === questions.length - 1
+        elements.result.textContent = message;
+        progress.textContent = `မေးခွန်း ${getQuestionNumber()} / ${questions.length} · ရမှတ် ${score}`;
+        elements.nextButton.hidden = false;
+        elements.nextButton.textContent = isLastQuestion()
             ? 'ရလဒ်ကြည့်ရန်'
-            : 'နောက်မေးခွန်း';
+            : isLastQuestionInSection()
+                ? 'နောက်အမျိုးအစား'
+                : 'နောက်မေးခွန်း';
+    }
+
+    function getQuestionNumber() {
+        return sections.slice(0, currentSectionIndex)
+            .reduce((total, section) => total + section.questions.length, 0) +
+            currentQuestionIndex + 1;
+    }
+
+    function isLastQuestionInSection() {
+        return currentQuestionIndex === sections[currentSectionIndex].questions.length - 1;
+    }
+
+    function isLastQuestion() {
+        return currentSectionIndex === sections.length - 1 && isLastQuestionInSection();
     }
 
     function renderQuestion() {
-        const question = questions[currentIndex];
-        progress.textContent = `မေးခွန်း ${currentIndex + 1} / ${questions.length} · ရမှတ် ${score}`;
-        sectionLabel.textContent = sectionTitles[question.type];
+        const section = sections[currentSectionIndex];
+        const question = section.questions[currentQuestionIndex];
+        const elements = sectionCards[currentSectionIndex];
+        const { questionProgress, questionText, options, result, nextButton } = elements;
+        progress.textContent = `မေးခွန်း ${getQuestionNumber()} / ${questions.length} · ရမှတ် ${score}`;
+        questionProgress.textContent =
+            `မေးခွန်း ${currentQuestionIndex + 1} / ${section.questions.length}`;
         questionText.textContent = question.text;
         result.textContent = '';
         result.className = 'objective-result';
@@ -153,16 +219,19 @@ if (chapterList) {
                     result.textContent = 'ဤမေးခွန်းအတွက် အဖြေစာရင်း မပါဝင်သေးပါ။';
                     result.className = 'objective-result';
                     nextButton.hidden = false;
-                    nextButton.textContent = currentIndex === questions.length - 1
+                    nextButton.textContent = isLastQuestion()
                         ? 'ရလဒ်ကြည့်ရန်'
-                        : 'နောက်မေးခွန်း';
+                        : isLastQuestionInSection()
+                            ? 'နောက်အမျိုးအစား'
+                            : 'နောက်မေးခွန်း';
                     return;
                 }
                 const normalize = (value) => value.toLocaleLowerCase().replace(/[\s.,;:!?'"()[\]{}]/g, '');
                 const isCorrect = question.answer.some((answer) => normalize(answer) === normalize(input.value));
                 finishAnswer(
                     isCorrect,
-                    isCorrect ? 'မှန်ပါသည်။' : `မမှန်ပါ။ အဖြေမှန်မှာ ${question.answer.join(' / ')} ဖြစ်ပါသည်။`
+                    isCorrect ? 'မှန်ပါသည်။' : `မမှန်ပါ။ အဖြေမှန်မှာ ${question.answer.join(' / ')} ဖြစ်ပါသည်။`,
+                    elements
                 );
             });
             input.addEventListener('keydown', (event) => {
@@ -190,7 +259,7 @@ if (chapterList) {
                     : index === question.correct;
                 if (isCorrect) {
                     button.classList.add('is-correct');
-                    finishAnswer(true, 'မှန်ပါသည်။');
+                    finishAnswer(true, 'မှန်ပါသည်။', elements);
                     return;
                 }
                 button.classList.add('is-incorrect');
@@ -202,30 +271,63 @@ if (chapterList) {
                     false,
                     question.type === 'trueFalse'
                         ? `မမှန်ပါ။ အဖြေမှန်မှာ ${choices[correctIndex]} ဖြစ်ပါသည်။`
-                        : `မမှန်ပါ။ အဖြေမှန်မှာ ${String.fromCharCode(65 + correctIndex)} ဖြစ်ပါသည်။`
+                        : `မမှန်ပါ။ အဖြေမှန်မှာ ${String.fromCharCode(65 + correctIndex)} ဖြစ်ပါသည်။`,
+                    elements
                 );
             });
             options.append(button);
         });
     }
 
-    nextButton.addEventListener('click', () => {
-        currentIndex += 1;
-        if (currentIndex < questions.length) {
-            renderQuestion();
-            questionText.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            return;
-        }
+    sectionCards.forEach(({ nextButton }) => {
+        nextButton.addEventListener('click', () => {
+            if (isLastQuestion()) {
+                quiz.hidden = true;
+                summary.hidden = false;
+                summary.querySelector('[data-objective-score]').textContent =
+                    `ရမှတ် ${score} / ${gradableQuestions}`;
+                return;
+            }
 
-        quiz.hidden = true;
-        summary.hidden = false;
-        summary.querySelector('[data-objective-score]').textContent =
-            `ရမှတ် ${score} / ${gradableQuestions}`;
+            if (isLastQuestionInSection()) {
+                sectionCards[currentSectionIndex].sectionNotice.hidden = false;
+                sectionCards[currentSectionIndex].sectionNotice.textContent =
+                    `${sectionTitles[sections[currentSectionIndex].type]} အပိုင်း ပြီးပါပြီ။`;
+                nextButton.hidden = true;
+                currentSectionIndex += 1;
+                const nextSection = sectionCards[currentSectionIndex];
+                nextSection.sectionNotice.hidden = true;
+                nextSection.questionProgress.hidden = false;
+                nextSection.questionText.hidden = false;
+                nextSection.options.hidden = false;
+                nextSection.result.hidden = false;
+                currentQuestionIndex = 0;
+            } else {
+                currentQuestionIndex += 1;
+            }
+            renderQuestion();
+            sectionCards[currentSectionIndex].questionText.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        });
     });
 
     document.getElementById('objective-retry').addEventListener('click', () => {
-        currentIndex = 0;
+        currentSectionIndex = 0;
+        currentQuestionIndex = 0;
         score = 0;
+        sectionCards.forEach((elements, index) => {
+            elements.sectionNotice.hidden = index === 0;
+            elements.sectionNotice.textContent = index === 0
+                ? ''
+                : 'အပေါ်က အမျိုးအစားကို အရင်ဖြေဆိုပါ။';
+            elements.questionProgress.hidden = index !== 0;
+            elements.questionText.hidden = index !== 0;
+            elements.options.hidden = index !== 0;
+            elements.result.hidden = index !== 0;
+            elements.nextButton.hidden = true;
+        });
         summary.hidden = true;
         quiz.hidden = false;
         renderQuestion();
