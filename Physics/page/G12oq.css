@@ -1,0 +1,223 @@
+.oq-page {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.oq-intro {
+    margin: 2px 0 18px;
+}
+
+.oq-intro > span {
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.oq-intro h2 {
+    margin: 5px 0;
+    color: #172033;
+    font-size: clamp(21px, 5vw, 29px);
+}
+
+.oq-intro p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.oq-chapter-nav {
+    display: flex;
+    gap: 9px;
+    overflow-x: auto;
+    padding: 4px 2px 14px;
+    scrollbar-color: #93c5fd #eff6ff;
+    scrollbar-width: thin;
+}
+
+.oq-chapter-link {
+    display: inline-flex;
+    min-width: 106px;
+    min-height: 44px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border: 1px solid #bfdbfe;
+    border-radius: 13px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    color: #1e3a8a;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.oq-chapter-link:hover {
+    transform: translateY(-1px);
+    border-color: #60a5fa;
+    background: #eff6ff;
+}
+
+.oq-chapter-link.is-current {
+    border-color: #1d4ed8;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    color: #fff;
+}
+
+.oq-chapter-link:focus-visible,
+.oq-section-button:focus-visible,
+.oq-group-button:focus-visible {
+    outline: 3px solid #bfdbfe;
+    outline-offset: 2px;
+}
+
+.oq-chapter-number {
+    display: grid;
+    width: 25px;
+    height: 25px;
+    flex: 0 0 25px;
+    place-items: center;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 11px;
+}
+
+.oq-chapter-link.is-current .oq-chapter-number {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.oq-chapter-heading {
+    margin: 5px 0 18px;
+}
+
+.oq-chapter-heading h2 {
+    margin: 0;
+    color: #172033;
+    font-size: clamp(20px, 4vw, 26px);
+}
+
+.oq-section-tabs,
+.oq-group-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.oq-section-tabs {
+    margin: 0 0 13px;
+}
+
+.oq-section-button,
+.oq-group-button {
+    min-height: 42px;
+    padding: 9px 15px;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    background: #fff;
+    color: #1e3a8a;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.oq-section-button[aria-expanded="true"],
+.oq-group-button[aria-pressed="true"] {
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+    color: #fff;
+}
+
+.oq-group-tabs {
+    margin: 0 0 16px;
+}
+
+.oq-group-button {
+    min-width: 70px;
+    min-height: 38px;
+    padding: 7px 12px;
+    font-size: 13px;
+}
+
+.oq-question-list {
+    display: grid;
+    gap: 11px;
+    padding-bottom: 32px;
+}
+
+.oq-question-card {
+    min-width: 0;
+    padding: 15px 16px;
+    border: 1px solid #dbeafe;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #fff, #f8fbff);
+    box-shadow: 0 5px 16px rgba(15, 23, 42, 0.06);
+}
+
+.oq-question-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 8px;
+}
+
+.oq-question-number {
+    color: #1d4ed8;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.oq-source-tag {
+    flex: 0 0 auto;
+    padding: 3px 9px;
+    border: 1px solid #fecaca;
+    border-radius: 999px;
+    background: #fef2f2;
+    color: #dc2626;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.oq-question-text {
+    margin: 0;
+    color: #1e293b;
+    font-size: 14px;
+    line-height: 1.85;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+}
+
+.oq-empty-state {
+    margin: 0 0 24px;
+    padding: 15px 16px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 14px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+@media (max-width: 500px) {
+    .oq-question-card {
+        padding: 13px;
+    }
+
+    .oq-question-heading {
+        gap: 8px;
+    }
+
+    .oq-source-tag {
+        font-size: 10px;
+    }
+}

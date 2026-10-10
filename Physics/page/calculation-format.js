@@ -4,10 +4,42 @@ document.querySelectorAll('.problem-content details > div').forEach((answer) => 
     }
 });
 
+document.querySelectorAll('.problem-answer table').forEach((table) => {
+    if (table.closest('.calculation-table-wrap')) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'calculation-table-wrap';
+    table.before(wrapper);
+    wrapper.append(table);
+});
+
 document.querySelectorAll('.problem-answer').forEach((answer) => {
+    const mathWalker = document.createTreeWalker(answer, NodeFilter.SHOW_TEXT);
+    const mathNodes = [];
+    let mathNode;
+    while ((mathNode = mathWalker.nextNode())) {
+        if (mathNode.textContent.includes('\\mathbf')) mathNodes.push(mathNode);
+    }
+
+    mathNodes.forEach((textNode) => {
+        const mathExpressions = [...textNode.textContent.matchAll(/\$[^$]*\$|\\\([\s\S]*?\\\)/g)]
+            .filter((match) => match[0].includes('\\mathbf'));
+        mathExpressions.reverse().forEach((match) => {
+            const start = match.index;
+            if (start === undefined) return;
+            const range = document.createRange();
+            range.setStart(textNode, start);
+            range.setEnd(textNode, start + match[0].length);
+            const result = document.createElement('span');
+            result.className = 'calculation-result';
+            result.append(range.extractContents());
+            range.insertNode(result);
+        });
+    });
+
     const paragraphs = answer.querySelectorAll('p');
     const paragraph = paragraphs[paragraphs.length - 1];
     if (!paragraph) return;
+    if (paragraph.textContent.includes('\\mathbf')) return;
 
     const text = paragraph.textContent.trim();
     const lastEquals = text.lastIndexOf('=');

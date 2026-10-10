@@ -1,12 +1,19 @@
 .problem-list-container {
+    box-sizing: border-box;
     display: flex !important;
     flex-direction: column !important;
     gap: 16px !important;
+    width: 100%;
     padding: 10px 20px 80px !important;
+    min-width: 0;
 }
 
 .problem-card {
+    box-sizing: border-box;
     margin: 0 !important;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
     padding: 16px !important;
     border: 1px solid #f1f5f9 !important;
     border-radius: 14px !important;
@@ -27,6 +34,9 @@
 }
 
 .problem-content {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
     color: #1e293b !important;
     font-family: 'Pyidaungsu', Arial, sans-serif;
     font-size: 14px !important;
@@ -58,6 +68,8 @@
 
 .problem-content details > div {
     box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
     max-width: 100%;
     margin-top: 12px !important;
     padding: 14px !important;
@@ -73,7 +85,10 @@
 .problem-content details > .legacy-calculation-answer > p {
     box-sizing: border-box;
     margin: 0 !important;
+    max-width: 100%;
+    overflow-wrap: anywhere;
     padding: 10px 12px !important;
+    text-align: left;
     border-bottom: 1px solid #e2e8f0;
 }
 
@@ -87,9 +102,23 @@
     height: auto;
 }
 
-.problem-content table {
+.calculation-table-wrap {
+    width: 100%;
     max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+}
+
+.problem-content table {
+    width: max-content;
+    max-width: none;
     border-collapse: collapse;
+}
+
+.problem-content mjx-container {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .problem-content td,

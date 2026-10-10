@@ -13,7 +13,7 @@ function showPage() {
     nextButton.disabled = currentPage === 10;
     image.hidden = true;
     message.textContent = 'ဤစာအုပ်၏ နမူနာစာမျက်နှာများကို မတင်ရသေးပါ။';
-    image.src = `../pictures/book%20samples/${encodeURIComponent(book.id)}/page-${String(currentPage).padStart(2, '0')}.png`;
+    image.src = `../pictures/book%20samples/${encodeURIComponent(book.id)}/page-${String(currentPage).padStart(2, '0')}.jpeg`;
 }
 
 if (!book) {
