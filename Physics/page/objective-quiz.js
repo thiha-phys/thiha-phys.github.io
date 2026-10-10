@@ -174,7 +174,7 @@ if (chapterList) {
         }
 
         const choices = question.type === 'trueFalse'
-            ? ['မှန်ပါသည်', 'မှားပါသည်']
+            ? ['True', 'False']
             : question.options;
         choices.forEach((choice, index) => {
             const button = document.createElement('button');
