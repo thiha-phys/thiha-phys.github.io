@@ -8,6 +8,7 @@ const kbzPayRadio = orderForm.querySelector('input[value="KBZ Pay"]');
 const COD_MAX_TOTAL = 150000;
 const paymentNote = document.getElementById('payment-note');
 const receiptCard = document.getElementById('receipt-card');
+const orderSuccessDialog = document.getElementById('order-success-dialog');
 let lastReceipt = null;
 let orderSubmitted = false;
 
@@ -153,6 +154,7 @@ orderForm.addEventListener('submit', async (event) => {
         lastReceipt = result.order;
         orderSubmitted = true;
         displayReceipt(result.order);
+        orderSuccessDialog.showModal();
         orderStatus.textContent = 'မှာယူမှုကို လက်ခံရရှိပါပြီ။ ဘောက်ချာကို screenshot ရိုက်ထားပါ သို့မဟုတ် Print / Save PDF ကို အသုံးပြုပါ။';
     } catch (error) {
         console.error('Unable to submit the book order.', error);
@@ -161,6 +163,15 @@ orderForm.addEventListener('submit', async (event) => {
         confirmOrderButton.disabled = orderSubmitted;
         confirmOrderButton.textContent = orderSubmitted ? 'မှာယူပြီးပါပြီ' : 'မှာယူမှု အတည်ပြုမည်';
     }
+});
+
+document.getElementById('close-order-success').addEventListener('click', () => {
+    orderSuccessDialog.close();
+});
+
+document.getElementById('view-order-receipt').addEventListener('click', () => {
+    orderSuccessDialog.close();
+    receiptCard.focus();
 });
 
 document.getElementById('print-receipt').addEventListener('click', () => {

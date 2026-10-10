@@ -50,6 +50,18 @@
             <button class="primary-button" id="confirm-order" type="submit">မှာယူမှု အတည်ပြုမည်</button>
         </form>
 
+        <dialog class="order-success-dialog" id="order-success-dialog" aria-labelledby="order-success-title" aria-describedby="order-success-message">
+            <button class="success-close" id="close-order-success" type="button" aria-label="ပိတ်ရန်">&times;</button>
+            <div class="success-animation" aria-hidden="true">
+                <span class="success-ripple"></span>
+                <span class="success-mark"><i class="fa-solid fa-check"></i></span>
+            </div>
+            <span class="shop-eyebrow">ORDER CONFIRMED</span>
+            <h2 id="order-success-title">မှာယူမှု အောင်မြင်ပါပြီ</h2>
+            <p id="order-success-message">မှာယူမှုကို လက်ခံရရှိပါပြီ။</p>
+            <button class="primary-button success-receipt-button" id="view-order-receipt" type="button">ဘောက်ချာကြည့်ရန်</button>
+        </dialog>
+
         <section class="receipt-card" id="receipt-card" aria-labelledby="receipt-title" tabindex="-1" hidden>
             <div class="receipt-header">
                 <img class="receipt-logo" src="../logo.png" alt="Physics Learning Hub logo">

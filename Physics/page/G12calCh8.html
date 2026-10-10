@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>G12 Physics - Chapter 8 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .problem-list-container { padding: 10px 20px 80px; display: flex; flex-direction: column; gap: 16px; }
+    .problem-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; box-shadow: 0 3px 10px rgba(0,0,0,.04); padding: 16px; }
+    .problem-number { margin-bottom: 10px; }
+    .problem-number span { background: #eff6ff; border-radius: 6px; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; }
+    .problem-content { color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+    .problem-question { margin-top: 0; }
+    .problem-question > strong { color: #2563eb; }
+    .problem-content hr { border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0; }
+    .problem-content summary { color: #059669; cursor: pointer; font-weight: 600; }
+    .problem-answer { background: #f8fafc; border-radius: 8px; color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; line-height: 2; margin-top: 10px; overflow-wrap: anywhere; padding: 12px; }
+    .problem-answer p { margin: 7px 0; }
+    .calculation-table-wrap { margin: 8px 0; overflow-x: auto; }
+    .calculation-table { border-collapse: collapse; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; max-width: 100%; min-width: 0; width: max-content; }
+    .calculation-table td { border-bottom: 1px solid #e2e8f0; padding: 6px 4px; vertical-align: middle; }
+    .calculation-table tr:first-child td { background: #eff6ff; font-weight: 600; }
+    .calculation-result { color: #dc2626; font-weight: 700; }
+    @media (max-width: 600px) { .problem-list-container { padding-left: 12px; padding-right: 12px; } .problem-card { padding: 12px; } .problem-answer { padding: 8px; } }
+  </style>
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] } };</script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn" aria-label="အခန်းစာရင်းသို့ ပြန်သွားရန်"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+      <h1 class="page-title">Chapter 8 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+    <div class="grade-banner">
+      <h2>Chapter 8 - Interference and diffraction of light</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း 12 ပုဒ်)</p>
+    </div>
+    <main class="problem-list-container"><article class="problem-card">
+  <div class="problem-number"><span>Eg.1</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; What is the phase difference for two waves of the same frequency arriving at a point with the respective path lengths of 6\(\lambda \) and 4.5\(\lambda \)?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\(\Delta \,x\) = 6\(\lambda \) – 4.5\(\lambda \) = 1.5\(\lambda \), \(\Delta ϕ\) = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\Delta ϕ\) </p></td><td><p>=</p></td><td><p>\(\frac{2\pi }{\lambda }\) \(\Delta \,x\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{2\pi }{\lambda }\) \(\times \) 1.5 \(\lambda \) = <strong>3</strong>\(\pi \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Thus, the two waves are out of phase.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; At what angle is the first-order maximum for 450 nm wavelength blue light falling <strong>on double slits</strong> separated by 0.05 mm?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>For double slits, </p><p>\(\lambda \) = 450 nm = 450 \(\times {10}^{-9}\) m,</p><p>d = 0.05 mm = 0.05 \(\times {10}^{-3}\) m,&emsp;\(\theta \) = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>For first-order bright, m = 1</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d sin θ</p></td><td><p>=</p></td><td><p>m λ</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>sin θ</p></td><td><p>=</p></td><td><p>\(\frac{m\,}{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>θ</p></td><td><p>=</p></td><td><p>\({\sin}^{-1} \frac{m\,}{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>θ</p></td><td><p>=</p></td><td><p>\({\sin}^{-1} \frac{1\,\times \,450\,\times {10}^{-9}\,}{0.05\,\times {10}^{-3}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>0.52</strong>\(^\circ \)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.2</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; In <strong>a double slit</strong> interference experiment, the distance between the slits is 5 mm and the screen is 2 m from the slits. Yellow light from a sodium lamp is used and it has a wavelength of 5.89 \(\times \,{10}^{-7}\)m. Find the distance between <strong>the first and second order</strong> <strong>bright</strong> fringes on the screen.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>For double slits, </p><p>d = 5 mm = 5 \(\times {10}^{-3}\) m, D = 2 m</p><p>\(\lambda \) = 5.89 \(\times \,{10}^{-7}\)m, \(\Delta \)y =? </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\Delta \)y</p></td><td><p>=</p></td><td><p>\(\frac{\lambda \,D}{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{5.89\,\times \,{10}^{-7}\times \,2}{5\,\times {10}^{-3}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>2.356 \(\times {10}^{-4}\) m = <strong>0.2356 mm</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.7</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Find the distance between <strong>adjacent dark spots</strong> from <strong>a double </strong><strong>slits</strong> interference pattern if the wavelength of light is 500 nm, the distance between the slits is 1 mm, and the distance from the slit to the screen is 2 m.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>For double slits, </p><p>d = 1 mm = 1 \(\times {10}^{-3}\) m, D = 2 m, </p><p>\(\lambda \) = 500 nm = 500 \(\times {10}^{-9}\) m, \(\Delta \)y =?</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\Delta \)y</p></td><td><p>=</p></td><td><p>\(\frac{\lambda \,D}{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{500\,\times {10}^{-9}\,\times \,2}{1\,\times {10}^{-3}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.001 m = <strong>1 mm</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.9</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; If the distance between <strong>two slits</strong> is 0.05 mm and the distance to a screen is 2.5 m, find the spacing between the <strong>first-order and second-order</strong> <strong>bright fringes</strong> for yellow light of 580 nm wavelength. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>For double slits, </p><p>d = 0.05 mm = 0.05 \(\times {10}^{-3}\) m,&emsp;D = 2.5 m,</p><p>\(\lambda \) = 580 nm = 580 \(\times {10}^{-9}\) m, \(\Delta \)y =? </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\Delta \)y</p></td><td><p>=</p></td><td><p>\(\frac{\lambda \,D}{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{580\,\times {10}^{-9}\,\times \,2.5}{0.05\,\times {10}^{-3}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>0.029 m</strong> (or) <strong>29 mm</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A beam of 650 nm light is directed upon <strong>two slits</strong> that are separated by a distance of     0.75 mm. A screen is placed 1.50 m away to capture the interference pattern. What is the distance <strong>from</strong> <strong>the 1</strong><sup><strong>st</strong></sup><strong> order maximum to the 3</strong><sup><strong>rd</strong></sup><strong> order minimum</strong>?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>For double slits, </p><p>d = 0.75 mm = 0.75 \(\times {10}^{-3}\) m,&emsp;D = 1.5 m,</p><p>\(\lambda \) = 650 nm = 650 \(\times {10}^{-9}\) m, \(\Delta \)y =? </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>For 1<sup>st</sup> order bright (maximum), m = 1</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>y<sub>m</sub></p></td><td><p>=</p></td><td><p>m \(\frac{\lambda \,D}{d}\) &emsp;</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>y<sub>1</sub></p></td><td><p>=</p></td><td><p>\(\frac{\lambda \,D}{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{650\,\times {10}^{-9}\times \,1.5}{0.75\,\times {10}^{-3}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.0013 m = <strong>1.3 </strong>\(\times {10}^{-3}\)<strong> m</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>For 3<sup>rd</sup> order dark (minimum), m = 2</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>y<sub>m</sub></p></td><td><p>=</p></td><td><p>(m + \(\frac{1}{2}\)) \(\frac{\lambda \,D}{d}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>y<sub>2</sub></p></td><td><p>=</p></td><td><p>(2 + \(\frac{1}{2}\)) \(\frac{\lambda \,D}{d}\) = \(\frac{5}{2}\) \(\frac{\lambda \,D}{d}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{5}{2}\) \(\times \) \(\frac{650\,\times {10}^{-9}\times \,1.5}{0.75\,\times {10}^{-3}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>3.25 </strong>\(\times {10}^{-3}\)<strong> m</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\Delta \)y</p></td><td><p>=</p></td><td><p>y<sub>2</sub> – y<sub>1</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>3.25 \(\times {10}^{-3}\) - 1.3 \(\times {10}^{-3}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>1.95 </strong>\(\times {10}^{-3}\)<strong> m</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A beam of green light from a laser light source is diffracted by <strong>a slit</strong> of width 0.55 mm. The diffraction pattern forms on a wall 2.06 m beyond the slit. The distance between the positions of the first minima on both sides of central bright fringe is 4.1 mm. Calculate the wavelength of the laser light. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>For single slit, </p><p>\(a\) = 0.55 mm = 0.55 \(\times {10}^{-3}\) m,&emsp;</p><p>D = 2.06 m, \(\lambda \) = ? </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>The width of the central maximum </p><p>&emsp;= 4.1 mm = 4.1 \(\times {10}^{-3}\) m</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>The width of the central maximum </p><p>&emsp;= 2 \(\frac{\lambda \,D}{a}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>4.1 \(\times {10}^{-3}\)</p></td><td><p>=</p></td><td><p>2 \(\frac{\lambda \,D}{a}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\lambda \) </p></td><td><p>=</p></td><td><p>\(\frac{4.1\,\times {10}^{-3}\times \,a}{2\,D}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{4.1\,\times {10}^{-3}\times 0.55\,\times {10}^{-3}}{2\times 2.06}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\lambda \) </p></td><td><p>=</p></td><td><p>547.3 \(\times {10}^{-9}\) m</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>547.3 nm</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.8</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Light of wavelength 580 nm is incident on <strong>a slit</strong> of width 0.3 mm. The observing screen is placed 2 m from the slit. Find the positions of the first dark fringes and the width of the central bright fringes. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>For single slit, </p><p>\(a\) = 0.3 mm = 0.3 \(\times {10}^{-3}\) m, D = 2 m,</p><p>\(\lambda \) = 580 nm = 580 \(\times {10}^{-9}\) m, y = ?,</p><p>The width of the central maximum = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>For first dark fringes, m = 1</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>y</p></td><td><p>=</p></td><td><p>m \(\frac{\lambda \,D}{a}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{580\,\times {10}^{-9}\times 2}{0.3\,\times {10}^{-3}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.00387 m = <strong>3.87 </strong>\(\times {10}^{-3}\)<strong> m</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>The width of the central maximum = 2 \(\frac{\lambda \,D}{a}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{2\,\times \,580\,\times {10}^{-9}\times 2}{0.3\,\times {10}^{-3}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.00773 m = 7.73 \(\times {10}^{-3}\) m </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p> <strong>7.74 mm</strong></p></td></tr><tr><td><p><strong>[OR]</strong></p></td><td colspan="3"><p>The width of the central maximum </p><p>= 2 y = 2 \(\times \) 3.87 \(\times {10}^{-3}\) = <strong>7.74 mm</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Light of wavelength 457 nm illuminates a <strong>diffraction grating</strong> with 5000 lines cm<sup>-1</sup>. What is the <strong>second order</strong> diffracted angle?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\(\lambda \) = 457 nm = 457 \(\times {10}^{-9}\) m,</p><p>N = 5000 lines cm<sup>-1</sup>, \(\theta \) = ?</p><p>for second order, m = 2</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d </p></td><td><p>=</p></td><td><p>\(\frac{1}{N}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{5000}\) = 2 \(\times {10}^{-4}\) cm</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>2 \(\times {10}^{-6}\) m</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d sin \(\theta \)</p></td><td><p>=</p></td><td><p>m \(\lambda \)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>sin \(\theta \)</p></td><td><p>=</p></td><td><p>\(\frac{m\,\lambda }{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\theta \) </p></td><td><p>=</p></td><td><p>\({\sin}^{-1} \frac{m\,\lambda }{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\theta \) </p></td><td><p>=</p></td><td><p>\({\sin}^{-1} \frac{2\times 457\,\times {10}^{-9}}{2\,\times {10}^{-6}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>27.19</strong>\(^\circ \)<strong> (or) 27</strong>\(^\circ \)<strong> 11</strong>\('\)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.11</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A <strong>diffraction grating</strong> has 2000 lines per centimetre. At what angle will the first-order maximum be for 520 nm wavelength green light?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\(\lambda \) = 520 nm = 520 \(\times {10}^{-9}\) m,</p><p>N = 2000 lines cm<sup>-1</sup>, \(\theta \) = ?</p><p>for first-order, m = 1</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d </p></td><td><p>=</p></td><td><p>\(\frac{1}{N}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{2000}\) = 5 \(\times {10}^{-4}\) cm </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>5 \(\times {10}^{-6}\) m</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d sin \(\theta \)</p></td><td><p>=</p></td><td><p>m \(\lambda \)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>sin \(\theta \)</p></td><td><p>=</p></td><td><p>\(\frac{m\,\lambda }{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\theta \) </p></td><td><p>=</p></td><td><p>\({\sin}^{-1} \frac{m\,\lambda }{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\theta \) </p></td><td><p>=</p></td><td><p>\({\sin}^{-1} \frac{1\,\times 520\,\times {10}^{-9}}{5\,\times {10}^{-6}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>5.97</strong>\(^\circ \)<strong> (or) 5</strong>\(^\circ \)<strong> 58</strong>\('\)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.10</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A grating containing 4000 slits per centimeter is illuminated with a monochromatic light and produces the <strong>second-order</strong> bright line at a 30\(^\circ \) angle. What is the wavelength of the light used?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>N = 4000 lines cm<sup>-1</sup>, \(\theta \) = 30\(^\circ \), \(\lambda \) = ?</p><p>for second order, m = 2</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d </p></td><td><p>=</p></td><td><p>\(\frac{1}{N}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{4000}\) = 2.5 \(\times {10}^{-4}\) cm </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>2.5 </strong>\(\times {10}^{-6}\)<strong> m</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d sin \(\theta \)</p></td><td><p>=</p></td><td><p>m \(\lambda \)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\lambda \) </p></td><td><p>=</p></td><td><p>\(\frac{d\,\sin\,\theta }{m}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{2.5\,\times {10}^{-6}\times \sin 30^\circ \,}{2}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>625 </strong>\(\times {10}^{-9}\)<strong> m = 625 nm</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.12</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; How many lines per centimeter are there on a diffraction grating that gives a <strong>first-order</strong> maximum for 470 nm blue light at an angle of 25\(^\circ \)?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>N = ?, \(\lambda \) = 470 nm = 470 \(\times {10}^{-9}\) m,</p><p>\(\theta \) = 25\(^\circ \)</p><p>for first-order, m = 1</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d sin \(\theta \)</p></td><td><p>=</p></td><td><p>m \(\lambda \)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d </p></td><td><p>=</p></td><td><p>\(\frac{m\,\lambda }{\sin\,\theta }\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d</p></td><td><p>=</p></td><td><p>\(\frac{1\,\times 470\,\times {10}^{-9}}{\sin 25^\circ }\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1.112 \(\times {10}^{-6}\) m</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>1.112 </strong>\(\times {10}^{-4}\)<strong> cm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d </p></td><td><p>=</p></td><td><p>\(\frac{1}{N}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>N</p></td><td><p>=</p></td><td><p>\(\frac{1}{d}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{1.112\,\times {10}^{-4}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>8992 lines cm</strong><sup><strong>-1</strong></sup></p></td></tr></tbody></table></div><p>&nbsp;</p></div>
+    </details>
+  </div>
+</article></main>
+  </div>
+  <script src="calculation-format.js"></script>
+</body>
+</html>
