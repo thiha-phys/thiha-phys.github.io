@@ -116,7 +116,7 @@ if (chapterList) {
         sectionNotice.className = 'objective-section-notice';
         sectionNotice.textContent = index === 0
             ? ''
-            : 'အပေါ်က အမျိုးအစားကို အရင်ဖြေဆိုပါ။';
+            : 'အပေါ်က မေးခွန်းများကို အရင်ဖြေဆိုပါ။';
         sectionNotice.hidden = index === 0;
 
         const questionProgress = document.createElement('p');
