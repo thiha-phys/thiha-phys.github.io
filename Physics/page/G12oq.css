@@ -27,6 +27,79 @@
     font-size: 14px;
 }
 
+.oq-choice-grid {
+    display: grid;
+    gap: 13px;
+    padding-bottom: 30px;
+}
+
+.oq-choice-card {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 14px;
+    padding: 17px;
+    border: 1px solid #dbeafe;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #fff, #f8fbff);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    color: #172033;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.oq-choice-card:hover {
+    transform: translateY(-2px);
+    border-color: #93c5fd;
+    box-shadow: 0 9px 24px rgba(15, 23, 42, 0.09);
+}
+
+.oq-choice-card:focus-visible,
+.oq-paper-link:focus-visible {
+    outline: 3px solid #bfdbfe;
+    outline-offset: 2px;
+}
+
+.oq-choice-icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    place-items: center;
+    border-radius: 15px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 18px;
+}
+
+.oq-choice-icon-red {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.oq-choice-copy {
+    display: grid;
+    min-width: 0;
+    flex: 1;
+    gap: 4px;
+}
+
+.oq-choice-copy strong {
+    color: #1e3a8a;
+    font-size: 15px;
+}
+
+.oq-choice-copy > span {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.oq-choice-arrow {
+    flex: 0 0 auto;
+    color: #94a3b8;
+}
+
 .oq-chapter-nav {
     display: flex;
     gap: 9px;
@@ -34,6 +107,48 @@
     padding: 4px 2px 14px;
     scrollbar-color: #93c5fd #eff6ff;
     scrollbar-width: thin;
+}
+
+.oq-paper-year {
+    margin: 0 0 18px;
+}
+
+.oq-paper-year h3 {
+    margin: 4px 0 10px;
+    color: #1e3a8a;
+    font-size: 16px;
+}
+
+.oq-paper-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    gap: 9px;
+}
+
+.oq-paper-link {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    color: #1e3a8a;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.oq-paper-link:hover {
+    border-color: #60a5fa;
+    background: #eff6ff;
+}
+
+.oq-paper-link i {
+    color: #2563eb;
 }
 
 .oq-chapter-link {
@@ -140,6 +255,10 @@
     margin: 0 0 16px;
 }
 
+.oq-group-tabs[hidden] {
+    display: none;
+}
+
 .oq-group-button {
     min-width: 70px;
     min-height: 38px;
@@ -151,6 +270,22 @@
     display: grid;
     gap: 11px;
     padding-bottom: 32px;
+}
+
+.oq-question-group + .oq-question-group {
+    margin-top: 24px;
+}
+
+.oq-question-group-title {
+    margin: 0 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #dbeafe;
+    color: #1e3a8a;
+    font-size: 17px;
+}
+
+.oq-question-group .oq-question-card + .oq-question-card {
+    margin-top: 10px;
 }
 
 .oq-question-card {
@@ -186,6 +321,13 @@
     font-size: 11px;
     font-weight: 700;
     line-height: 1.6;
+    text-decoration: none;
+}
+
+a.oq-source-tag:hover,
+a.oq-source-tag:focus-visible {
+    background: #fee2e2;
+    text-decoration: underline;
 }
 
 .oq-question-text {

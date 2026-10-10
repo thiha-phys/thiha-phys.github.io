@@ -124,15 +124,23 @@
 }
 
 .reader-card {
+    box-sizing: border-box;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
     padding: 16px;
+    box-shadow: 0 0 20px rgba(30, 58, 138, 0.28);
 }
 
 .reader-page-frame {
     display: grid;
-    min-height: min(68vh, 760px);
+    width: min(100%, 480px, 48vh);
+    aspect-ratio: 210 / 297;
+    margin: 0 auto;
     place-items: center;
     overflow: hidden;
-    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
     background: #f1f5f9;
     user-select: none;
     -webkit-user-select: none;
@@ -140,9 +148,10 @@
 
 .reader-page-frame img {
     display: block;
+    width: 100%;
+    height: 100%;
     max-width: 100%;
-    max-height: 68vh;
-    object-fit: contain;
+    object-fit: cover;
     pointer-events: none;
     -webkit-user-drag: none;
 }
@@ -161,6 +170,13 @@
     justify-content: center;
     gap: 22px;
     padding: 14px 0 4px;
+}
+
+.reader-controls button {
+    display: grid;
+    flex: 0 0 42px;
+    place-items: center;
+    font-size: 15px;
 }
 
 .reader-controls button {
@@ -190,6 +206,11 @@
 .reader-note,
 .preview-limit-note {
     text-align: center;
+}
+
+.reader-note {
+    max-width: min(420px, 48vh);
+    margin: 12px auto 0;
 }
 
 .order-page form {
@@ -435,6 +456,10 @@
     .reader-card,
     .order-section {
         padding: 12px;
+    }
+
+    .reader-page-frame {
+        width: min(100%, 48vh);
     }
 }
 

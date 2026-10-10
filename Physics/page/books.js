@@ -21,7 +21,11 @@ PHYSICS_BOOKS.forEach((book) => {
     price.textContent = formatKyats(book.price);
     const action = document.createElement('span');
     action.className = 'book-action';
-    action.textContent = 'နမူနာစာမျက်နှာ ကြည့်ရန်';
+    const previewIcon = document.createElement('i');
+    previewIcon.className = 'fa-solid fa-eye';
+    previewIcon.setAttribute('aria-hidden', 'true');
+    action.append(previewIcon);
+    action.append(document.createTextNode(' နမူနာစာမျက်နှာ ကြည့်ရန်'));
     previewLink.append(image, name, price, action);
     card.append(previewLink);
     bookGrid.append(card);
