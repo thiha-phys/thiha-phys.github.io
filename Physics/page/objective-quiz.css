@@ -1,0 +1,150 @@
+.objective-question-count {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.objective-notice {
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    border: 1px solid #fcd34d;
+    border-radius: 12px;
+    background: #fffbeb;
+    color: #92400e;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.objective-quiz-card,
+.objective-summary {
+    padding: 18px;
+    border: 1px solid #bfdbfe;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.objective-progress {
+    margin: 0 0 12px;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.objective-section {
+    margin: 0 0 8px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.objective-question {
+    margin: 0 0 16px;
+    color: #172033;
+    font-size: 17px;
+    line-height: 1.8;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.objective-options {
+    display: grid;
+    gap: 10px;
+}
+
+.objective-option {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: #fff;
+    color: #172033;
+    font: inherit;
+    line-height: 1.7;
+    text-align: left;
+    cursor: pointer;
+}
+
+.objective-answer-input {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    color: #172033;
+    font: inherit;
+}
+
+.objective-answer-input:focus {
+    border-color: #60a5fa;
+    outline: 3px solid #dbeafe;
+}
+
+.objective-check {
+    justify-self: start;
+}
+
+.objective-option:not(:disabled):hover {
+    border-color: #60a5fa;
+    background: #eff6ff;
+}
+
+.objective-option:disabled {
+    cursor: default;
+}
+
+.objective-option.is-correct {
+    border-color: #22c55e;
+    background: #f0fdf4;
+    color: #166534;
+}
+
+.objective-option.is-incorrect {
+    border-color: #ef4444;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.objective-result {
+    min-height: 28px;
+    margin: 12px 0 0;
+    font-weight: 700;
+    line-height: 1.7;
+}
+
+.objective-result.is-correct {
+    color: #15803d;
+}
+
+.objective-result.is-incorrect {
+    color: #b91c1c;
+}
+
+.objective-next,
+.objective-retry {
+    margin-top: 12px;
+}
+
+.objective-summary {
+    text-align: center;
+}
+
+.objective-summary h3 {
+    margin-top: 0;
+}
+
+@media (max-width: 500px) {
+    .objective-quiz-card,
+    .objective-summary {
+        padding: 14px;
+    }
+
+    .objective-question {
+        font-size: 15px;
+    }
+
+    .objective-question-count {
+        font-size: 10px;
+    }
+}

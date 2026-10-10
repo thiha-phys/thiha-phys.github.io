@@ -145,6 +145,13 @@
     cursor: pointer;
 }
 
+.feedback-actions > .primary-button,
+.feedback-actions > .feedback-cancel {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    width: auto;
+}
+
 .feedback-review h3 {
     margin: 16px 0 4px;
     font-size: 14px;

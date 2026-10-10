@@ -79,7 +79,6 @@ function collectFeedback() {
     const formData = new FormData(feedbackForm);
     return {
         phone: signedInProfile.phone,
-        name: signedInProfile.name.trim(),
         job: String(formData.get('job') || ''),
         books: PHYSICS_BOOKS.map((book) => ({
             id: book.id,
@@ -100,8 +99,6 @@ function addReviewText(parent, text, className) {
 function showReview(feedback) {
     reviewedFeedback = feedback;
     feedbackReviewDetails.replaceChildren();
-    addReviewText(feedbackReviewDetails, `အမည် - ${feedback.name}`);
-    addReviewText(feedbackReviewDetails, `ဖုန်းနံပါတ် - ${feedback.phone}`);
     addReviewText(
         feedbackReviewDetails,
         `အလုပ်အကိုင် - ${feedback.job === 'teacher' ? 'ဆရာ / ဆရာမ' : 'ကျောင်းသား / ကျောင်းသူ'}`
@@ -163,7 +160,7 @@ submitFeedbackButton.addEventListener('click', async () => {
         feedbackSuccess.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (error) {
         console.error('Unable to submit feedback.', error);
-        feedbackStatus.textContent = 'အကြံပြုစာ ပေးပို့၍မရပါ။ အင်တာနက်နှင့် Google Sheet API ကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။';
+        feedbackStatus.textContent = `အကြံပြုစာ ပေးပို့၍မရပါ။ ${error.message}`;
     } finally {
         submitFeedbackButton.disabled = false;
     }
