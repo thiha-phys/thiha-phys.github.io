@@ -334,7 +334,7 @@ function displayReceipt(order) {
     });
     addReceiptRow(details, 'စာအုပ်ဖိုး စုစုပေါင်း', formatKyats(order.total), 'receipt-book-total');
     addReceiptRow(details, 'ဝန်ဆောင်မှု', order.deliveryService === 'Car'
-        ? 'ကားတင်ရန် (ကားတင်ဘောက်ချာ ပြန်ပို့ပေးပါမည်)'
+        ? 'ကားတင်ရန်'
         : 'Royal Delivery Service',
         'receipt-delivery-row'
     );
@@ -353,7 +353,7 @@ function displayReceipt(order) {
     );
 
     if (order.paymentMethod !== 'COD') {
-        addReceiptRow(details, 'KBZ Pay သို့ လွှဲရန်', '09-258 554 839 — U Thiha Kyaw', 'receipt-payment-row');
+        addReceiptRow(details, 'KBZ Pay သို့ လွှဲရန်', '09-258 554 839 - U Thiha Kyaw', 'receipt-payment-row');
     }
     addReceiptRow(details, 'ငွေပေးချေမှု', order.paymentMethod, 'receipt-payment-row');
     receiptCard.hidden = false;
