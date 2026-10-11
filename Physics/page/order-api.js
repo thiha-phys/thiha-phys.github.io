@@ -17,3 +17,17 @@ async function sendOrderRequest(action, payload) {
 function submitOrder(order) {
     return sendOrderRequest('createOrder', { order });
 }
+
+function getDeliveryCities() {
+    return sendOrderRequest('getDeliveryCities', {}).then((result) => {
+        if (!Array.isArray(result.cities) || result.cities.some((city) =>
+            !city || typeof city.english !== 'string' ||
+            typeof city.myanmar !== 'string' ||
+            !Number.isFinite(Number(city.upTo2Kg)) ||
+            !Number.isFinite(Number(city.nextKg))
+        )) {
+            throw new Error('The delivery city list returned by Google Sheets is invalid.');
+        }
+        return result.cities;
+    });
+}
