@@ -604,6 +604,7 @@ function createBookOrder_(order) {
         deliveryFees: deliveryFees,
         totalKg: totalWeight,
         cashCollection: cashCollection,
+        deliveryNotes: deliveryNotes,
         items: itemRows
       }
     });

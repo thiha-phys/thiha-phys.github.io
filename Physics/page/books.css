@@ -511,7 +511,7 @@
 .receipt-header {
     position: relative;
     padding: 0 58px 10px;
-    border-bottom: 1px dashed #94a3b8;
+    border-bottom: 1px dashed #dbeafe;
     text-align: center;
 }
 
@@ -531,6 +531,7 @@
 
 .receipt-header h2 {
     margin: 4px 0;
+    font-size: 18px;
 }
 
 .receipt-header > strong {
@@ -549,10 +550,10 @@
     display: flex;
     justify-content: space-between;
     gap: 8px;
-    padding: 3px 0;
-    border-bottom: 1px solid #e8edf4;
-    font-size: 13px;
-    line-height: 1.35;
+    padding: 4px 0;
+    border-bottom: 1px solid #dbeafe;
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 .receipt-row span {
@@ -570,39 +571,42 @@
 }
 
 .receipt-book-total {
-    border-top: 1px solid #93c5fd;
-    border-bottom: 1px solid #bfdbfe;
-    color: #1d4ed8;
+    border-top: 1px solid #60a5fa;
+    border-bottom: 1px solid #60a5fa;
+    color: #2563eb;
     font-weight: 700;
 }
 
 .receipt-delivery-row {
-    border-color: #ffedd5;
+    border-color: #dbeafe;
 }
 
 .receipt-delivery-total {
-    border-top: 1px solid #fdba74;
-    border-bottom: 1px solid #fed7aa;
-    color: #c2410c;
+    border-color: #dbeafe;
+    border-bottom: 0;
     font-weight: 700;
 }
 
 .receipt-grand-total {
     margin-top: 4px;
     padding: 7px 0;
-    border-top: 2px solid #4338ca;
-    border-bottom: 2px solid #4338ca;
-    color: #312e81;
+    border-top: 1px solid #60a5fa;
+    border-bottom: 1px solid #60a5fa;
+    color: #2563eb;
     font-weight: 800;
 }
 
 .receipt-grand-total strong {
-    color: #312e81;
-    font-size: 16px;
+    color: #2563eb;
+    font-size: 14px;
 }
 
 .receipt-payment-row {
-    border-color: #e2e8f0;
+    border-color: #dbeafe;
+}
+
+.receipt-payment-row:last-child {
+    border-bottom: 0;
 }
 
 .print-button {
@@ -808,8 +812,12 @@
     }
 
     .receipt-header {
-        padding: 0 48px 6px;
-        border-color: #999;
+        padding: 0 48px 8px;
+        border-color: #dbeafe;
+    }
+
+    .receipt-header h2 {
+        font-size: 16px;
     }
 
     .receipt-header .shop-eyebrow,
@@ -831,15 +839,15 @@
     }
 
     .receipt-details {
-        padding: 4px 0;
+        padding: 6px 0 8px;
     }
 
     .receipt-row {
-        padding: 2px 0;
-        border-color: #ddd;
+        padding: 4px 0;
+        border-color: #dbeafe;
         color: #111;
         font-size: 11px;
-        line-height: 1.4;
+        line-height: 1.5;
     }
 
     .receipt-row span,
@@ -848,17 +856,14 @@
     }
 
     .receipt-book-total,
-    .receipt-delivery-total,
     .receipt-grand-total {
-        border-color: #777;
+        border-color: #60a5fa;
         color: #111;
     }
 
     .receipt-grand-total {
-        margin-top: 3px;
-        padding: 4px 0;
-        border-top-width: 1px;
-        border-bottom-width: 1px;
+        margin-top: 4px;
+        padding: 6px 0;
     }
 
     .receipt-grand-total strong {
