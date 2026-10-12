@@ -51,9 +51,20 @@ function getPricing() {
     });
     const total = quantities.reduce((amount, quantity, index) =>
         amount + quantity * unitPrices[index], 0);
-    const weight = Math.round(quantities.reduce((amount, quantity, index) =>
+    const actualWeight = Math.round(quantities.reduce((amount, quantity, index) =>
         amount + quantity * BOOK_WEIGHTS[index], 0) * 100000) / 100000;
+    const weight = roundDeliveryWeight(actualWeight);
     return { quantities, itemCount, unitPrices, total, weight };
+}
+
+function roundDeliveryWeight(weight) {
+    if (weight <= 0) return 0;
+    const weightUnits = Math.round(weight * 100000);
+    const wholeKg = Math.floor(weightUnits / 100000);
+    const fractionalUnits = weightUnits - wholeKg * 100000;
+    if (fractionalUnits <= 20000) return wholeKg;
+    if (fractionalUnits < 60000) return wholeKg + 0.5;
+    return wholeKg + 1;
 }
 
 function getSelectedDeliveryService() {

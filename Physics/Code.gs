@@ -10,9 +10,9 @@ const ORDER_HEADERS = [
   'G11 Handbook Qty', 'G11 Handbook Amount',
   'G11 Objective Qty', 'G11 Objective Amount',
   'G10 Handbook Qty', 'G10 Handbook Amount',
-  'Total', 'Payment Method', 'Received', 'KPay Account', 'Pay Date',
+  'Total', 'Received', 'KPay Account', 'Pay Date',
   'Delivery Service', 'Delivery Fees', 'Total KG', 'Cash Collection',
-  'Delivery Notes', 'Facebook Name', 'Facebook Link', 'Royal Voucher'
+  'Facebook Name', 'Facebook Link', 'Royal Voucher', 'Payment Method', 'Delivery Notes'
 ];
 const ORDER_HEADER_ALIASES = {
   'Phone': 'Phone 1',
@@ -54,7 +54,7 @@ const BOOK_ORDER_ITEMS = [
     prices: [5000, 4500, 4000, 4000, 3800]
   },
   {
-    id: 'g11-handbook', name: 'Grade 11 စာသင်ခန်းသုံး စာအုပ်',
+    id: 'g11-handbook', name: 'Grade 11 handbook',
     quantityHeader: 'G11 Handbook Qty', amountHeader: 'G11 Handbook Amount', weight: 0.3,
     prices: [10000, 9000, 8500, 8000, 8000]
   },
@@ -64,7 +64,7 @@ const BOOK_ORDER_ITEMS = [
     prices: [8000, 7000, 6500, 6500, 6500]
   },
   {
-    id: 'g10-handbook', name: 'Grade 10 စာသင်ခန်းသုံး စာအုပ်',
+    id: 'g10-handbook', name: 'Grade 10 handbook',
     quantityHeader: 'G10 Handbook Qty', amountHeader: 'G10 Handbook Amount', weight: 0.2,
     prices: [10000, 9000, 8500, 8000, 8000]
   }
@@ -425,6 +425,16 @@ function calculateRoyalDeliveryFee_(totalWeight, city) {
     city[2] + lastPackageExtraKg * city[3] + ROYAL_SERVICE_FEE;
 }
 
+function roundDeliveryWeight_(weight) {
+  if (weight <= 0) return 0;
+  const weightUnits = Math.round(weight * 100000);
+  const wholeKg = Math.floor(weightUnits / 100000);
+  const fractionalUnits = weightUnits - wholeKg * 100000;
+  if (fractionalUnits <= 20000) return wholeKg;
+  if (fractionalUnits < 60000) return wholeKg + 0.5;
+  return wholeKg + 1;
+}
+
 function bookUnitPrice_(book, quantity) {
   const priceTier = ORDER_PRICE_THRESHOLDS.reduce(function (tier, threshold, index) {
     return quantity >= threshold ? index : tier;
@@ -516,6 +526,7 @@ function createBookOrder_(order) {
     throw new Error('The order total or weight is too large.');
   }
   totalWeight = Math.round(totalWeight * 100000) / 100000;
+  totalWeight = roundDeliveryWeight_(totalWeight);
 
   const deliveryService = normalizeDeliveryService_(order.deliveryService || order.delivery);
   const cityValue = order.deliveryCity || order.city || order.cityName || '';
@@ -660,6 +671,24 @@ function getOrdersSheet_() {
       );
     }
     sheet.getRange(1, 1, 1, migratedHeaders.length).setValues([migratedHeaders]);
+    const desiredHeaders = ORDER_HEADERS.concat(
+      migratedHeaders.filter(function (header) {
+        return header && !ORDER_HEADERS.includes(header);
+      })
+    );
+    const currentHeaders = migratedHeaders.slice();
+    desiredHeaders.forEach(function (header, targetIndex) {
+      const sourceIndex = currentHeaders.indexOf(header, targetIndex);
+      if (sourceIndex === -1) {
+        throw new Error('The Book Orders sheet is missing the required column: ' + header);
+      }
+      if (sourceIndex === targetIndex) return;
+      sheet.moveColumns(
+        sheet.getRange(1, sourceIndex + 1, sheet.getMaxRows(), 1),
+        targetIndex + 1
+      );
+      currentHeaders.splice(targetIndex, 0, currentHeaders.splice(sourceIndex, 1)[0]);
+    });
   }
   return sheet;
 }
