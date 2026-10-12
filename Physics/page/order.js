@@ -58,8 +58,8 @@ function getPricing() {
 }
 
 function roundDeliveryWeight(weight) {
-    if (weight <= 0) return 0;
     const weightUnits = Math.round(weight * 100000);
+    if (weightUnits <= 60000) return 0.5;
     const wholeKg = Math.floor(weightUnits / 100000);
     const fractionalUnits = weightUnits - wholeKg * 100000;
     if (fractionalUnits <= 20000) return wholeKg;
@@ -107,31 +107,35 @@ function updateOrderTotal() {
         priceElement.textContent = formatKyats(price);
     });
     totalElement.textContent = formatKyats(pricing.total);
-    document.getElementById('order-weight').textContent = `${pricing.weight} kg`;
+    document.getElementById('order-weight').textContent = pricing.itemCount > 0
+        ? `${pricing.weight} kg`
+        : '—';
 
     const city = getSelectedCity();
     const service = getSelectedDeliveryService();
     const feeElement = document.getElementById('delivery-fee');
     const payableElement = document.getElementById('payable-total');
-    let deliveryFee = 0;
+    let baseDeliveryFee = 0;
     let feeReady = false;
     if (service === 'Car') {
-        feeElement.textContent = '0 ကျပ် (ကားတင်ရန်)';
         feeReady = true;
     } else if (service === 'Royal' && city) {
-        deliveryFee = getRoyalDeliveryFee(pricing.weight, city);
-        feeElement.textContent = formatKyats(deliveryFee);
+        baseDeliveryFee = getRoyalDeliveryFee(pricing.weight, city);
         feeReady = true;
     } else {
         feeElement.textContent = 'မြို့နှင့်ဝန်ဆောင်မှု ရွေးပါ';
     }
 
     const roundingAdjustment = feeReady
-        ? getRoundingAdjustment(pricing.total + deliveryFee)
+        ? getRoundingAdjustment(pricing.total + baseDeliveryFee)
         : 0;
-    const totalPayable = pricing.total + deliveryFee + roundingAdjustment;
-    document.getElementById('rounding-adjustment-row').hidden = roundingAdjustment === 0;
-    document.getElementById('rounding-adjustment').textContent = formatKyats(roundingAdjustment);
+    const deliveryFee = baseDeliveryFee + roundingAdjustment;
+    if (feeReady) {
+        feeElement.textContent = service === 'Car'
+            ? `${formatKyats(deliveryFee)} (ကားတင်ရန်)`
+            : formatKyats(deliveryFee);
+    }
+    const totalPayable = pricing.total + deliveryFee;
     payableElement.textContent = feeReady ? formatKyats(totalPayable) : 'တွက်ချက်ရန်လိုအပ်သည်';
     document.getElementById('royal-note').hidden = service !== 'Royal' || !city;
     document.getElementById('order-total-count').textContent =
@@ -362,12 +366,13 @@ function displayReceipt(order) {
     addReceiptRow(
         details,
         'ပို့ဆောင်ခ',
-        order.deliveryService === 'Car' ? 'ကားဂိတ်တွင် သီးခြားပေးချေရန်' : formatKyats(order.deliveryFees),
+        order.deliveryService === 'Car'
+            ? order.deliveryFees > 0
+                ? `${formatKyats(order.deliveryFees)} + ကားဂိတ်ခ သီးခြား`
+                : 'ကားဂိတ်တွင် သီးခြားပေးချေရန်'
+            : formatKyats(order.deliveryFees),
         'receipt-delivery-total'
     );
-    if (order.roundingAdjustment > 0) {
-        addReceiptRow(details, 'ရာပြည့်ဖြည့်ငွေ', formatKyats(order.roundingAdjustment), 'receipt-delivery-row');
-    }
     addReceiptRow(
         details,
         'စုစုပေါင်းကျသင့်ငွေ',
@@ -401,11 +406,12 @@ orderForm.addEventListener('submit', async (event) => {
         citySelect.focus();
         return;
     }
-    const deliveryFees = deliveryService === 'Royal'
+    const baseDeliveryFees = deliveryService === 'Royal'
         ? getRoyalDeliveryFee(pricing.weight, city)
         : 0;
-    const roundingAdjustment = getRoundingAdjustment(pricing.total + deliveryFees);
-    const totalWithDelivery = pricing.total + deliveryFees + roundingAdjustment;
+    const roundingAdjustment = getRoundingAdjustment(pricing.total + baseDeliveryFees);
+    const deliveryFees = baseDeliveryFees + roundingAdjustment;
+    const totalWithDelivery = pricing.total + deliveryFees;
     const paymentMethod = String(formData.get('paymentMethod') || '');
     if (deliveryService === 'Car' && paymentMethod !== 'KBZ Pay') {
         orderStatus.textContent = 'ကားတင်ရန်အတွက် KBZ Pay တစ်မျိုးတည်းသာ ရွေးချယ်နိုင်ပါသည်။';

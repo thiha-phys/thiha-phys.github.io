@@ -11,7 +11,7 @@ const ORDER_HEADERS = [
   'G11 Objective Qty', 'G11 Objective Amount',
   'G10 Handbook Qty', 'G10 Handbook Amount',
   'Total', 'Received', 'KPay Account', 'Pay Date',
-  'Delivery Service', 'Delivery Fees', 'Rounding Adjustment', 'Total KG', 'Cash Collection',
+  'Delivery Service', 'Delivery Fees', 'Total KG', 'Cash Collection',
   'Facebook Name', 'Facebook Link', 'Royal Voucher', 'Payment Method', 'Delivery Notes'
 ];
 const ORDER_HEADER_ALIASES = {
@@ -430,8 +430,8 @@ function calculateRoundingAdjustment_(total) {
 }
 
 function roundDeliveryWeight_(weight) {
-  if (weight <= 0) return 0;
   const weightUnits = Math.round(weight * 100000);
+  if (weightUnits <= 60000) return 0.5;
   const wholeKg = Math.floor(weightUnits / 100000);
   const fractionalUnits = weightUnits - wholeKg * 100000;
   if (fractionalUnits <= 20000) return wholeKg;
@@ -542,11 +542,12 @@ function createBookOrder_(order) {
   if (deliveryService && !deliveryCity) {
     throw new Error('A valid delivery city is required.');
   }
-  const deliveryFees = deliveryService === 'Royal'
+  const baseDeliveryFees = deliveryService === 'Royal'
     ? calculateRoyalDeliveryFee_(totalWeight, deliveryCity)
     : 0;
-  const roundingAdjustment = calculateRoundingAdjustment_(total + deliveryFees);
-  const totalPayable = total + deliveryFees + roundingAdjustment;
+  const roundingAdjustment = calculateRoundingAdjustment_(total + baseDeliveryFees);
+  const deliveryFees = baseDeliveryFees + roundingAdjustment;
+  const totalPayable = total + deliveryFees;
   const cashCollection = paymentMethod === 'COD' ? totalPayable : 0;
   const address = buildOrderAddress_(order, deliveryCity);
   const carDetails = [order.carStation, order.carName].filter(Boolean).join(' / ') ||
@@ -587,7 +588,6 @@ function createBookOrder_(order) {
       'Payment Method': paymentMethod,
       'Delivery Service': deliveryService,
       'Delivery Fees': String(deliveryFees),
-      'Rounding Adjustment': String(roundingAdjustment),
       'Total KG': String(totalWeight),
       'Cash Collection': String(cashCollection),
       'Delivery Notes': deliveryNotes
@@ -620,7 +620,6 @@ function createBookOrder_(order) {
         total: total,
         deliveryService: deliveryService,
         deliveryFees: deliveryFees,
-        roundingAdjustment: roundingAdjustment,
         payableTotal: totalPayable,
         totalKg: totalWeight,
         cashCollection: cashCollection,
