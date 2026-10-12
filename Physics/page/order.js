@@ -84,6 +84,10 @@ function getRoyalDeliveryFee(weight, city) {
         Number(city.upTo2Kg) + extraKg * Number(city.nextKg) + ROYAL_SERVICE_FEE;
 }
 
+function getRoundingAdjustment(total) {
+    return total % 100 === 50 ? 50 : 0;
+}
+
 function updatePaymentOptions(totalWithDelivery) {
     const isCarDelivery = getSelectedDeliveryService() === 'Car';
     const codUnavailable = isCarDelivery || totalWithDelivery >= COD_MAX_TOTAL;
@@ -122,12 +126,17 @@ function updateOrderTotal() {
         feeElement.textContent = 'မြို့နှင့်ဝန်ဆောင်မှု ရွေးပါ';
     }
 
-    const totalWithDelivery = pricing.total + deliveryFee;
-    payableElement.textContent = feeReady ? formatKyats(totalWithDelivery) : 'တွက်ချက်ရန်လိုအပ်သည်';
+    const roundingAdjustment = feeReady
+        ? getRoundingAdjustment(pricing.total + deliveryFee)
+        : 0;
+    const totalPayable = pricing.total + deliveryFee + roundingAdjustment;
+    document.getElementById('rounding-adjustment-row').hidden = roundingAdjustment === 0;
+    document.getElementById('rounding-adjustment').textContent = formatKyats(roundingAdjustment);
+    payableElement.textContent = feeReady ? formatKyats(totalPayable) : 'တွက်ချက်ရန်လိုအပ်သည်';
     document.getElementById('royal-note').hidden = service !== 'Royal' || !city;
     document.getElementById('order-total-count').textContent =
         `${pricing.itemCount.toLocaleString('en-US')} အုပ်`;
-    updatePaymentOptions(feeReady ? totalWithDelivery : pricing.total);
+    updatePaymentOptions(feeReady ? totalPayable : pricing.total);
     updatePaymentNote();
 }
 
@@ -356,10 +365,13 @@ function displayReceipt(order) {
         order.deliveryService === 'Car' ? 'ကားဂိတ်တွင် သီးခြားပေးချေရန်' : formatKyats(order.deliveryFees),
         'receipt-delivery-total'
     );
+    if (order.roundingAdjustment > 0) {
+        addReceiptRow(details, 'ရာပြည့်ဖြည့်ငွေ', formatKyats(order.roundingAdjustment), 'receipt-delivery-row');
+    }
     addReceiptRow(
         details,
         'စုစုပေါင်းကျသင့်ငွေ',
-        formatKyats(order.total + order.deliveryFees),
+        formatKyats(order.payableTotal),
         'receipt-grand-total'
     );
 
@@ -392,7 +404,8 @@ orderForm.addEventListener('submit', async (event) => {
     const deliveryFees = deliveryService === 'Royal'
         ? getRoyalDeliveryFee(pricing.weight, city)
         : 0;
-    const totalWithDelivery = pricing.total + deliveryFees;
+    const roundingAdjustment = getRoundingAdjustment(pricing.total + deliveryFees);
+    const totalWithDelivery = pricing.total + deliveryFees + roundingAdjustment;
     const paymentMethod = String(formData.get('paymentMethod') || '');
     if (deliveryService === 'Car' && paymentMethod !== 'KBZ Pay') {
         orderStatus.textContent = 'ကားတင်ရန်အတွက် KBZ Pay တစ်မျိုးတည်းသာ ရွေးချယ်နိုင်ပါသည်။';

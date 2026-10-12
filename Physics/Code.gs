@@ -11,7 +11,7 @@ const ORDER_HEADERS = [
   'G11 Objective Qty', 'G11 Objective Amount',
   'G10 Handbook Qty', 'G10 Handbook Amount',
   'Total', 'Received', 'KPay Account', 'Pay Date',
-  'Delivery Service', 'Delivery Fees', 'Total KG', 'Cash Collection',
+  'Delivery Service', 'Delivery Fees', 'Rounding Adjustment', 'Total KG', 'Cash Collection',
   'Facebook Name', 'Facebook Link', 'Royal Voucher', 'Payment Method', 'Delivery Notes'
 ];
 const ORDER_HEADER_ALIASES = {
@@ -425,6 +425,10 @@ function calculateRoyalDeliveryFee_(totalWeight, city) {
     city[2] + lastPackageExtraKg * city[3] + ROYAL_SERVICE_FEE;
 }
 
+function calculateRoundingAdjustment_(total) {
+  return total % 100 === 50 ? 50 : 0;
+}
+
 function roundDeliveryWeight_(weight) {
   if (weight <= 0) return 0;
   const weightUnits = Math.round(weight * 100000);
@@ -541,7 +545,9 @@ function createBookOrder_(order) {
   const deliveryFees = deliveryService === 'Royal'
     ? calculateRoyalDeliveryFee_(totalWeight, deliveryCity)
     : 0;
-  const cashCollection = paymentMethod === 'COD' ? total + deliveryFees : 0;
+  const roundingAdjustment = calculateRoundingAdjustment_(total + deliveryFees);
+  const totalPayable = total + deliveryFees + roundingAdjustment;
+  const cashCollection = paymentMethod === 'COD' ? totalPayable : 0;
   const address = buildOrderAddress_(order, deliveryCity);
   const carDetails = [order.carStation, order.carName].filter(Boolean).join(' / ') ||
     order.carDetails || order.deliveryNotes;
@@ -555,7 +561,7 @@ function createBookOrder_(order) {
   if (deliveryService === 'Car' && paymentMethod !== 'KBZ Pay') {
     throw new Error('KBZ Pay is required for car delivery.');
   }
-  if (paymentMethod === 'COD' && total + deliveryFees >= COD_MAX_TOTAL) {
+  if (paymentMethod === 'COD' && totalPayable >= COD_MAX_TOTAL) {
     throw new Error('COD is not available for orders totaling 150,000 kyats or more.');
   }
 
@@ -581,6 +587,7 @@ function createBookOrder_(order) {
       'Payment Method': paymentMethod,
       'Delivery Service': deliveryService,
       'Delivery Fees': String(deliveryFees),
+      'Rounding Adjustment': String(roundingAdjustment),
       'Total KG': String(totalWeight),
       'Cash Collection': String(cashCollection),
       'Delivery Notes': deliveryNotes
@@ -613,6 +620,8 @@ function createBookOrder_(order) {
         total: total,
         deliveryService: deliveryService,
         deliveryFees: deliveryFees,
+        roundingAdjustment: roundingAdjustment,
+        payableTotal: totalPayable,
         totalKg: totalWeight,
         cashCollection: cashCollection,
         deliveryNotes: deliveryNotes,
