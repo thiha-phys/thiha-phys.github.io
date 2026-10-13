@@ -19,15 +19,16 @@ function submitOrder(order) {
 }
 
 function getDeliveryCities() {
-    return sendOrderRequest('getDeliveryCities', {}).then((result) => {
-        if (!Array.isArray(result.cities) || result.cities.some((city) =>
+    return Promise.resolve(window.PHYSICS_DELIVERY_CITIES).then((cities) => {
+        if (!Array.isArray(cities) || cities.length !== 223 || cities.some((city) =>
             !city || typeof city.english !== 'string' ||
             typeof city.myanmar !== 'string' ||
+            typeof city.label !== 'string' ||
             !Number.isFinite(Number(city.upTo2Kg)) ||
             !Number.isFinite(Number(city.nextKg))
         )) {
-            throw new Error('The delivery city list returned by Google Sheets is invalid.');
+            throw new Error('The local delivery city list is missing or invalid.');
         }
-        return result.cities;
+        return cities;
     });
 }
