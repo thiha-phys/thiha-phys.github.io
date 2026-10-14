@@ -47,7 +47,7 @@ const ORDER_HEADERS = [
   'G11 Objective Qty', 'G11 Objective Amount',
   'G10 Handbook Qty', 'G10 Handbook Amount',
   'Total', 'Received', 'KPay Account', 'Pay Date',
-  'Delivery Service', 'Delivery Fees', 'Rounding Adjustment', 'Total KG', 'Cash Collection',
+  'Delivery Service', 'Delivery Fees', 'Total KG', 'Cash Collection',
   'Facebook Name', 'Facebook Link', 'Royal Voucher', 'Payment Method', 'Delivery Notes'
 ];
 const ORDER_HEADER_ALIASES = {
@@ -658,8 +658,10 @@ function calculateRoyalDeliveryFee_(totalWeight, city) {
     city[2] + lastPackageExtraKg * city[3] + ROYAL_SERVICE_FEE;
 }
 
-function calculateRoundingAdjustment_(total) {
-  return total % 100 === 50 ? 50 : 0;
+function calculateFinalRoyalDeliveryFee_(totalWeight, city) {
+  const billableWeight = Math.ceil(totalWeight - 0.000000001);
+  const feeIncludingService = calculateRoyalDeliveryFee_(billableWeight, city);
+  return (Math.floor(feeIncludingService / 500) + 1) * 500;
 }
 
 function roundDeliveryWeight_(weight) {
@@ -762,6 +764,7 @@ function createBookOrder_(order) {
     throw new Error('The order total or weight is too large.');
   }
   totalWeight = Math.round(totalWeight * 100000) / 100000;
+  const deliveryWeight = totalWeight;
   totalWeight = roundDeliveryWeight_(totalWeight);
 
   const deliveryService = normalizeDeliveryService_(order.deliveryService || order.delivery);
@@ -774,11 +777,9 @@ function createBookOrder_(order) {
   if (deliveryService && !deliveryCity) {
     throw new Error('A valid delivery city is required.');
   }
-  const baseDeliveryFees = deliveryService === 'Royal'
-    ? calculateRoyalDeliveryFee_(totalWeight, deliveryCity)
+  const deliveryFees = deliveryService === 'Royal'
+    ? calculateFinalRoyalDeliveryFee_(deliveryWeight, deliveryCity)
     : 0;
-  const roundingAdjustment = calculateRoundingAdjustment_(total + baseDeliveryFees);
-  const deliveryFees = baseDeliveryFees + roundingAdjustment;
   const totalPayable = total + deliveryFees;
   const cashCollection = paymentMethod === 'COD' ? totalPayable : 0;
   const address = buildOrderAddress_(order, deliveryCity);
@@ -820,7 +821,6 @@ function createBookOrder_(order) {
       'Payment Method': paymentMethod,
       'Delivery Service': deliveryService,
       'Delivery Fees': String(deliveryFees),
-      'Rounding Adjustment': '0',
       'Total KG': String(totalWeight),
       'Cash Collection': String(cashCollection),
       'Delivery Notes': deliveryNotes
@@ -853,7 +853,6 @@ function createBookOrder_(order) {
         total: total,
         deliveryService: deliveryService,
         deliveryFees: deliveryFees,
-        roundingAdjustment: 0,
         payableTotal: totalPayable,
         totalKg: totalWeight,
         cashCollection: cashCollection,

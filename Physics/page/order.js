@@ -54,7 +54,7 @@ function getPricing() {
     const actualWeight = Math.round(quantities.reduce((amount, quantity, index) =>
         amount + quantity * BOOK_WEIGHTS[index], 0) * 100000) / 100000;
     const weight = roundDeliveryWeight(actualWeight);
-    return { quantities, itemCount, unitPrices, total, weight };
+    return { quantities, itemCount, unitPrices, total, actualWeight, weight };
 }
 
 function roundDeliveryWeight(weight) {
@@ -84,8 +84,10 @@ function getRoyalDeliveryFee(weight, city) {
         Number(city.upTo2Kg) + extraKg * Number(city.nextKg) + ROYAL_SERVICE_FEE;
 }
 
-function getRoundingAdjustment(total) {
-    return total % 100 === 50 ? 50 : 0;
+function getFinalRoyalDeliveryFee(weight, city) {
+    const billableWeight = Math.ceil(weight - 0.000000001);
+    const feeIncludingService = getRoyalDeliveryFee(billableWeight, city);
+    return (Math.floor(feeIncludingService / 500) + 1) * 500;
 }
 
 function updatePaymentOptions(totalWithDelivery) {
@@ -115,21 +117,17 @@ function updateOrderTotal() {
     const service = getSelectedDeliveryService();
     const feeElement = document.getElementById('delivery-fee');
     const payableElement = document.getElementById('payable-total');
-    let baseDeliveryFee = 0;
+    let deliveryFee = 0;
     let feeReady = false;
     if (service === 'Car') {
         feeReady = true;
     } else if (service === 'Royal' && city) {
-        baseDeliveryFee = getRoyalDeliveryFee(pricing.weight, city);
+        deliveryFee = getFinalRoyalDeliveryFee(pricing.actualWeight, city);
         feeReady = true;
     } else {
         feeElement.textContent = 'မြို့နှင့်ဝန်ဆောင်မှု ရွေးပါ';
     }
 
-    const roundingAdjustment = feeReady
-        ? getRoundingAdjustment(pricing.total + baseDeliveryFee)
-        : 0;
-    const deliveryFee = baseDeliveryFee + roundingAdjustment;
     if (feeReady) {
         feeElement.textContent = service === 'Car'
             ? `${formatKyats(deliveryFee)} (ကားတင်ရန်)`
@@ -406,11 +404,9 @@ orderForm.addEventListener('submit', async (event) => {
         citySelect.focus();
         return;
     }
-    const baseDeliveryFees = deliveryService === 'Royal'
-        ? getRoyalDeliveryFee(pricing.weight, city)
+    const deliveryFees = deliveryService === 'Royal'
+        ? getFinalRoyalDeliveryFee(pricing.actualWeight, city)
         : 0;
-    const roundingAdjustment = getRoundingAdjustment(pricing.total + baseDeliveryFees);
-    const deliveryFees = baseDeliveryFees + roundingAdjustment;
     const totalWithDelivery = pricing.total + deliveryFees;
     const paymentMethod = String(formData.get('paymentMethod') || '');
     if (deliveryService === 'Car' && paymentMethod !== 'KBZ Pay') {
