@@ -20,6 +20,7 @@ const BOOK_PRICES = [
 const BOOK_WEIGHTS = [0.7, 0.44925, 0.4668, 0.10437, 0.3, 0.25, 0.2];
 const paymentNote = document.getElementById('payment-note');
 const receiptCard = document.getElementById('receipt-card');
+const receiptShareStatus = document.getElementById('receipt-share-status');
 const orderSuccessDialog = document.getElementById('order-success-dialog');
 const citySearch = document.getElementById('city-search');
 const citySelect = document.getElementById('delivery-city');
@@ -336,6 +337,7 @@ function addReceiptRow(container, label, value, className = '') {
 }
 
 function displayReceipt(order) {
+    receiptShareStatus.textContent = '';
     document.getElementById('receipt-number').textContent = `${order.voucherNo}`;
     const details = document.getElementById('receipt-details');
     details.replaceChildren();
@@ -384,6 +386,63 @@ function displayReceipt(order) {
     addReceiptRow(details, 'ငွေပေးချေမှု', order.paymentMethod, 'receipt-payment-row');
     receiptCard.hidden = false;
     receiptCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function getReceiptShareText(order) {
+    const lines = [
+        `Physics Learning Hub - မှာယူမှု ဘောက်ချာ`,
+        `ဘောက်ချာအမှတ်: ${order.voucherNo}`,
+        `အမည်: ${order.name}`,
+        `ဖုန်း: ${order.phone}${order.phone2 ? ` / ${order.phone2}` : ''}`,
+        `လိပ်စာ: ${order.address}`,
+        '',
+        ...order.items
+            .filter((item) => item.quantity > 0)
+            .map((item) => `${item.name} × ${item.quantity} - ${formatKyats(item.amount)}`),
+        `စာအုပ်ဖိုးစုစုပေါင်း: ${formatKyats(order.total)}`,
+        `ပို့ဆောင်ရေး: ${order.deliveryService === 'Car' ? 'ကားတင်ရန်' : 'Royal Delivery Service'}`,
+        `အလေးချိန်: ${order.totalKg} kg`,
+        `ပို့ဆောင်ခ: ${order.deliveryService === 'Car'
+            ? order.deliveryFees > 0
+                ? `${formatKyats(order.deliveryFees)} + ကားဂိတ်ခ သီးခြား`
+                : 'ကားဂိတ်တွင် သီးခြားပေးချေရန်'
+            : formatKyats(order.deliveryFees)}`,
+        `စုစုပေါင်းကျသင့်ငွေ: ${formatKyats(order.payableTotal)}`,
+        `ငွေပေးချေမှု: ${order.paymentMethod}`
+    ];
+    if (order.paymentMethod !== 'COD') {
+        lines.push('KBZ Pay: 09-258 554 839 - U Thiha Kyaw');
+    }
+    return lines.join('\n');
+}
+
+async function shareReceipt() {
+    if (!lastReceipt) return;
+    const shareData = {
+        title: `Physics Learning Hub - ${lastReceipt.voucherNo}`,
+        text: getReceiptShareText(lastReceipt)
+    };
+    receiptShareStatus.textContent = '';
+    try {
+        if (typeof navigator.share === 'function') {
+            await navigator.share(shareData);
+            receiptShareStatus.textContent = 'Share menu မှ Messenger, Viber သို့မဟုတ် Telegram ကို ရွေးချယ်ပါ။';
+            return;
+        }
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            await navigator.clipboard.writeText(shareData.text);
+            receiptShareStatus.textContent = 'ဘောက်ချာစာသားကို ကူးယူပြီးပါပြီ။ Messenger, Viber သို့မဟုတ် Telegram ထဲတွင် Paste လုပ်၍ ပို့နိုင်ပါသည်။';
+            return;
+        }
+        throw new Error('Sharing and clipboard are not available in this browser.');
+    } catch (error) {
+        if (error && error.name === 'AbortError') {
+            receiptShareStatus.textContent = 'မျှဝေမှုကို ပယ်ဖျက်လိုက်ပါသည်။';
+            return;
+        }
+        console.error('Unable to share the order receipt.', error);
+        receiptShareStatus.textContent = 'ဘောက်ချာကို မျှဝေနိုင်ပါ။ Browser ၏ share သို့မဟုတ် clipboard ခွင့်ပြုချက်ကို စစ်ဆေးပါ။';
+    }
 }
 
 orderForm.addEventListener('submit', async (event) => {
@@ -463,5 +522,7 @@ document.getElementById('view-order-receipt').addEventListener('click', () => {
 document.getElementById('print-receipt').addEventListener('click', () => {
     if (lastReceipt) window.print();
 });
+
+document.getElementById('share-receipt').addEventListener('click', shareReceipt);
 
 updateOrderTotal();

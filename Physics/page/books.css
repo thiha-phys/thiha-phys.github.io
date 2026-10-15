@@ -616,6 +616,25 @@
     white-space: nowrap;
 }
 
+.receipt-actions {
+    display: grid;
+    gap: 8px;
+}
+
+.share-button {
+    width: 100%;
+    padding: 9px 8px;
+    background: #0f766e;
+    font-size: 14px;
+}
+
+.receipt-share-status {
+    margin: 8px 0 0;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
 .order-success-dialog {
     position: fixed;
     width: min(340px, calc(100% - 32px));
@@ -876,7 +895,8 @@
         font-size: 11px;
     }
 
-    .print-button,
+    .receipt-actions,
+    .receipt-share-status,
     .bottom-nav {
         display: none !important;
     }

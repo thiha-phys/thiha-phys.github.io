@@ -103,7 +103,11 @@
                 <strong id="receipt-number"></strong>
             </div>
             <div id="receipt-details" class="receipt-details"></div>
-            <button id="print-receipt" class="primary-button print-button" type="button"><i class="fa-solid fa-print" aria-hidden="true"></i> ဘောက်ချာ Print / Save PDF</button>
+            <div class="receipt-actions">
+                <button id="print-receipt" class="primary-button print-button" type="button"><i class="fa-solid fa-print" aria-hidden="true"></i> ဘောက်ချာ Print / Save PDF</button>
+                <button id="share-receipt" class="primary-button share-button" type="button"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Messenger / Viber / Telegram သို့ Share</button>
+            </div>
+            <p id="receipt-share-status" class="receipt-share-status" role="status" aria-live="polite"></p>
         </section>
     </main>
     <footer class="bottom-nav">
