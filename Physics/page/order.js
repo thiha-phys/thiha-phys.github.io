@@ -388,60 +388,182 @@ function displayReceipt(order) {
     receiptCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function getReceiptShareText(order) {
-    const lines = [
-        `Physics Learning Hub - မှာယူမှု ဘောက်ချာ`,
-        `ဘောက်ချာအမှတ်: ${order.voucherNo}`,
-        `အမည်: ${order.name}`,
-        `ဖုန်း: ${order.phone}${order.phone2 ? ` / ${order.phone2}` : ''}`,
-        `လိပ်စာ: ${order.address}`,
-        '',
-        ...order.items
-            .filter((item) => item.quantity > 0)
-            .map((item) => `${item.name} × ${item.quantity} - ${formatKyats(item.amount)}`),
-        `စာအုပ်ဖိုးစုစုပေါင်း: ${formatKyats(order.total)}`,
-        `ပို့ဆောင်ရေး: ${order.deliveryService === 'Car' ? 'ကားတင်ရန်' : 'Royal Delivery Service'}`,
-        `အလေးချိန်: ${order.totalKg} kg`,
-        `ပို့ဆောင်ခ: ${order.deliveryService === 'Car'
-            ? order.deliveryFees > 0
-                ? `${formatKyats(order.deliveryFees)} + ကားဂိတ်ခ သီးခြား`
-                : 'ကားဂိတ်တွင် သီးခြားပေးချေရန်'
-            : formatKyats(order.deliveryFees)}`,
-        `စုစုပေါင်းကျသင့်ငွေ: ${formatKyats(order.payableTotal)}`,
-        `ငွေပေးချေမှု: ${order.paymentMethod}`
+function getReceiptImageRows(order) {
+    const rows = [
+        { label: 'ဘောက်ချာအမှတ်', value: String(order.voucherNo) },
+        { label: 'အမည်', value: order.name },
+        { label: 'ဖုန်းနံပါတ် ၁', value: order.phone }
     ];
+    if (order.phone2) rows.push({ label: 'ဖုန်းနံပါတ် ၂', value: order.phone2 });
+    rows.push({ label: 'လိပ်စာ', value: order.address });
+    order.items.forEach((item) => {
+        if (item.quantity > 0) {
+            rows.push({
+                label: `${item.name} × ${item.quantity}`,
+                value: formatKyats(item.amount)
+            });
+        }
+    });
+    rows.push(
+        { label: 'စာအုပ်ဖိုး စုစုပေါင်း', value: formatKyats(order.total), total: true },
+        {
+            label: 'ပို့ဆောင်ရေး',
+            value: order.deliveryService === 'Car' ? 'ကားတင်ရန်' : 'Royal Delivery Service'
+        },
+        { label: 'စုစုပေါင်းအလေးချိန်', value: `${order.totalKg} kg` },
+        {
+            label: 'ပို့ဆောင်ခ',
+            value: order.deliveryService === 'Car'
+                ? order.deliveryFees > 0
+                    ? `${formatKyats(order.deliveryFees)} + ကားဂိတ်ခ သီးခြား`
+                    : 'ကားဂိတ်တွင် သီးခြားပေးချေရန်'
+                : formatKyats(order.deliveryFees)
+        },
+        { label: 'စုစုပေါင်းကျသင့်ငွေ', value: formatKyats(order.payableTotal), total: true }
+    );
     if (order.paymentMethod !== 'COD') {
-        lines.push('KBZ Pay: 09-258 554 839 - U Thiha Kyaw');
+        rows.push({ label: 'KBZ Pay သို့ လွှဲရန်', value: '09-258 554 839 - U Thiha Kyaw' });
     }
-    return lines.join('\n');
+    rows.push({ label: 'ငွေပေးချေမှု', value: order.paymentMethod });
+    return rows;
+}
+
+function escapeReceiptXml(value) {
+    return String(value).replace(/[<>&"']/g, (character) => ({
+        '<': '&lt;',
+        '>': '&gt;',
+        '&': '&amp;',
+        '"': '&quot;',
+        "'": '&apos;'
+    })[character]);
+}
+
+function splitReceiptText(value, maxLength = 40) {
+    const segments = typeof Intl.Segmenter === 'function'
+        ? Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(String(value)),
+            (segment) => segment.segment)
+        : Array.from(String(value));
+    const lines = [];
+    while (segments.length > maxLength) {
+        let breakAt = maxLength;
+        for (let index = maxLength; index > Math.floor(maxLength * 0.6); index -= 1) {
+            if (segments[index] === ' ') {
+                breakAt = index;
+                break;
+            }
+        }
+        lines.push(segments.splice(0, breakAt).join('').trim());
+        while (segments[0] === ' ') segments.shift();
+    }
+    lines.push(segments.join(''));
+    return lines;
+}
+
+function createReceiptSvg(order) {
+    const width = 720;
+    const padding = 44;
+    const rows = getReceiptImageRows(order);
+    const content = [];
+    let y = 150;
+    rows.forEach((row) => {
+        const valueLines = splitReceiptText(row.value);
+        const rowHeight = 34 + valueLines.length * 34 + (row.total ? 10 : 0);
+        if (row.total) {
+            content.push(`<rect x="${padding}" y="${y - 24}" width="${width - padding * 2}" height="${rowHeight - 4}" rx="12" fill="#eff6ff"/>`);
+        }
+        content.push(
+            `<text x="${padding + 14}" y="${y}" class="label">${escapeReceiptXml(row.label)}</text>`,
+            ...valueLines.map((line, index) =>
+                `<text x="${padding + 14}" y="${y + 32 + index * 34}" class="${row.total ? 'total' : 'value'}">${escapeReceiptXml(line)}</text>`
+            )
+        );
+        y += rowHeight;
+        content.push(`<line x1="${padding}" y1="${y - 8}" x2="${width - padding}" y2="${y - 8}" stroke="#dbeafe"/>`);
+    });
+    const height = y + 42;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+        <rect width="100%" height="100%" fill="#f8fafc"/>
+        <rect x="16" y="16" width="${width - 32}" height="${height - 32}" rx="22" fill="#fff" stroke="#dbeafe" stroke-width="2"/>
+        <text x="${width / 2}" y="62" text-anchor="middle" class="brand">PHYSICS LEARNING HUB</text>
+        <text x="${width / 2}" y="106" text-anchor="middle" class="title">မှာယူမှု ဘောက်ချာ</text>
+        ${content.join('')}
+        <style>
+            text { font-family: "Noto Sans Myanmar", "Myanmar Text", sans-serif; }
+            .brand { fill: #2563eb; font-size: 22px; font-weight: 700; letter-spacing: 2px; }
+            .title { fill: #172033; font-size: 26px; font-weight: 700; }
+            .label { fill: #64748b; font-size: 17px; }
+            .value { fill: #172033; font-size: 21px; }
+            .total { fill: #1d4ed8; font-size: 23px; font-weight: 700; }
+        </style>
+    </svg>`;
+}
+
+async function createReceiptImage(order) {
+    const svgUrl = URL.createObjectURL(new Blob([createReceiptSvg(order)], {
+        type: 'image/svg+xml;charset=utf-8'
+    }));
+    try {
+        const image = new Image();
+        image.src = svgUrl;
+        await image.decode();
+        const canvas = document.createElement('canvas');
+        canvas.width = image.naturalWidth * 2;
+        canvas.height = image.naturalHeight * 2;
+        const context = canvas.getContext('2d');
+        if (!context) throw new Error('Canvas is unavailable.');
+        context.scale(2, 2);
+        context.drawImage(image, 0, 0);
+        const blob = await new Promise((resolve, reject) => {
+            canvas.toBlob((result) => {
+                if (result) resolve(result);
+                else reject(new Error('Unable to encode the receipt image.'));
+            }, 'image/png');
+        });
+        const voucherName = String(order.voucherNo).replace(/[^a-zA-Z0-9._-]/g, '-');
+        return new File([blob], `receipt-${voucherName}.png`, { type: 'image/png' });
+    } finally {
+        URL.revokeObjectURL(svgUrl);
+    }
+}
+
+function downloadReceiptImage(file) {
+    const imageUrl = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = file.name;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(imageUrl), 1000);
 }
 
 async function shareReceipt() {
     if (!lastReceipt) return;
-    const shareData = {
-        title: `Physics Learning Hub - ${lastReceipt.voucherNo}`,
-        text: getReceiptShareText(lastReceipt)
-    };
     receiptShareStatus.textContent = '';
     try {
-        if (typeof navigator.share === 'function') {
-            await navigator.share(shareData);
-            receiptShareStatus.textContent = 'Share menu မှ Messenger, Viber သို့မဟုတ် Telegram ကို ရွေးချယ်ပါ။';
-            return;
+        const image = await createReceiptImage(lastReceipt);
+        const shareData = {
+            title: `Physics Learning Hub - ${lastReceipt.voucherNo}`,
+            files: [image]
+        };
+        if (typeof navigator.share === 'function' &&
+            typeof navigator.canShare === 'function' &&
+            navigator.canShare({ files: shareData.files })) {
+            try {
+                await navigator.share(shareData);
+                receiptShareStatus.textContent = 'Share menu မှ Messenger, Viber သို့မဟုတ် Telegram ကို ရွေးချယ်ပါ။';
+                return;
+            } catch (error) {
+                if (error && error.name === 'AbortError') {
+                    receiptShareStatus.textContent = 'မျှဝေမှုကို ပယ်ဖျက်လိုက်ပါသည်။';
+                    return;
+                }
+                console.error('Unable to share the order receipt image.', error);
+            }
         }
-        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-            await navigator.clipboard.writeText(shareData.text);
-            receiptShareStatus.textContent = 'ဘောက်ချာစာသားကို ကူးယူပြီးပါပြီ။ Messenger, Viber သို့မဟုတ် Telegram ထဲတွင် Paste လုပ်၍ ပို့နိုင်ပါသည်။';
-            return;
-        }
-        throw new Error('Sharing and clipboard are not available in this browser.');
+        downloadReceiptImage(image);
+        receiptShareStatus.textContent = 'ဘောက်ချာပုံကို PNG အဖြစ်သိမ်းပြီးပါပြီ။ Messenger, Viber သို့မဟုတ် Telegram မှ ထိုပုံကို ပူးတွဲပို့နိုင်ပါသည်။';
     } catch (error) {
-        if (error && error.name === 'AbortError') {
-            receiptShareStatus.textContent = 'မျှဝေမှုကို ပယ်ဖျက်လိုက်ပါသည်။';
-            return;
-        }
         console.error('Unable to share the order receipt.', error);
-        receiptShareStatus.textContent = 'ဘောက်ချာကို မျှဝေနိုင်ပါ။ Browser ၏ share သို့မဟုတ် clipboard ခွင့်ပြုချက်ကို စစ်ဆေးပါ။';
+        receiptShareStatus.textContent = 'ဘောက်ချာပုံကို မဖန်တီးနိုင်ပါ။ Browser ကို ပြန်ဖွင့်ပြီး ထပ်ကြိုးစားပါ။';
     }
 }
 
@@ -500,7 +622,7 @@ orderForm.addEventListener('submit', async (event) => {
         orderSubmitted = true;
         displayReceipt(result.order);
         orderSuccessDialog.showModal();
-        orderStatus.textContent = 'မှာယူမှုကို လက်ခံရရှိပါပြီ။ ဘောက်ချာကို screenshot ရိုက်ထားပါ သို့မဟုတ် Print / Save PDF ကို အသုံးပြုပါ။';
+        orderStatus.textContent = 'မှာယူမှုကို လက်ခံရရှိပါပြီ။ ဘောက်ချာကို Print / Save PDF သို့မဟုတ် ဘောက်ချာပုံ Share ကို အသုံးပြုပါ။';
     } catch (error) {
         console.error('Unable to submit the book order.', error);
         orderStatus.textContent = 'မှာယူမှု မအောင်မြင်ပါ။ အချက်အလက်နှင့် Google Sheet API setting ကို စစ်ပြီး ထပ်မံကြိုးစားပါ။';
