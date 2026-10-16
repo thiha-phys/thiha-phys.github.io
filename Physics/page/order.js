@@ -388,47 +388,7 @@ function displayReceipt(order) {
     receiptCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function getReceiptImageRows(order) {
-    const rows = [
-        { label: 'ဘောက်ချာအမှတ်', value: String(order.voucherNo) },
-        { label: 'အမည်', value: order.name },
-        { label: 'ဖုန်းနံပါတ် ၁', value: order.phone }
-    ];
-    if (order.phone2) rows.push({ label: 'ဖုန်းနံပါတ် ၂', value: order.phone2 });
-    rows.push({ label: 'လိပ်စာ', value: order.address });
-    order.items.forEach((item) => {
-        if (item.quantity > 0) {
-            rows.push({
-                label: `${item.name} × ${item.quantity}`,
-                value: formatKyats(item.amount)
-            });
-        }
-    });
-    rows.push(
-        { label: 'စာအုပ်ဖိုး စုစုပေါင်း', value: formatKyats(order.total), total: true },
-        {
-            label: 'ပို့ဆောင်ရေး',
-            value: order.deliveryService === 'Car' ? 'ကားတင်ရန်' : 'Royal Delivery Service'
-        },
-        { label: 'စုစုပေါင်းအလေးချိန်', value: `${order.totalKg} kg` },
-        {
-            label: 'ပို့ဆောင်ခ',
-            value: order.deliveryService === 'Car'
-                ? order.deliveryFees > 0
-                    ? `${formatKyats(order.deliveryFees)} + ကားဂိတ်ခ သီးခြား`
-                    : 'ကားဂိတ်တွင် သီးခြားပေးချေရန်'
-                : formatKyats(order.deliveryFees)
-        },
-        { label: 'စုစုပေါင်းကျသင့်ငွေ', value: formatKyats(order.payableTotal), total: true }
-    );
-    if (order.paymentMethod !== 'COD') {
-        rows.push({ label: 'KBZ Pay သို့ လွှဲရန်', value: '09-258 554 839 - U Thiha Kyaw' });
-    }
-    rows.push({ label: 'ငွေပေးချေမှု', value: order.paymentMethod });
-    return rows;
-}
-
-function escapeReceiptXml(value) {
+function escapeSvgText(value) {
     return String(value).replace(/[<>&"']/g, (character) => ({
         '<': '&lt;',
         '>': '&gt;',
@@ -438,77 +398,143 @@ function escapeReceiptXml(value) {
     })[character]);
 }
 
-function splitReceiptText(value, maxLength = 40) {
+function getReceiptTextLines(textNode, origin) {
+    const parent = textNode.parentElement;
+    const style = window.getComputedStyle(parent);
     const segments = typeof Intl.Segmenter === 'function'
-        ? Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(String(value)),
-            (segment) => segment.segment)
-        : Array.from(String(value));
+        ? Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(textNode.textContent),
+            (segment) => ({ text: segment.segment, index: segment.index }))
+        : Array.from(textNode.textContent).map((text, index) => ({ text, index }));
     const lines = [];
-    while (segments.length > maxLength) {
-        let breakAt = maxLength;
-        for (let index = maxLength; index > Math.floor(maxLength * 0.6); index -= 1) {
-            if (segments[index] === ' ') {
-                breakAt = index;
-                break;
-            }
+    segments.forEach((segment, index) => {
+        const range = document.createRange();
+        range.setStart(textNode, segment.index);
+        range.setEnd(textNode, segments[index + 1]?.index ?? textNode.textContent.length);
+        const bounds = range.getBoundingClientRect();
+        if (!bounds.width || !bounds.height) return;
+        const lineTop = Math.round(bounds.top * 2) / 2;
+        let line = lines.find((candidate) => candidate.top === lineTop);
+        if (!line) {
+            line = { top: lineTop, left: bounds.left, right: bounds.right, height: bounds.height, text: '' };
+            lines.push(line);
         }
-        lines.push(segments.splice(0, breakAt).join('').trim());
-        while (segments[0] === ' ') segments.shift();
-    }
-    lines.push(segments.join(''));
-    return lines;
-}
-
-function createReceiptSvg(order) {
-    const width = 720;
-    const padding = 44;
-    const rows = getReceiptImageRows(order);
-    const content = [];
-    let y = 150;
-    rows.forEach((row) => {
-        const valueLines = splitReceiptText(row.value);
-        const rowHeight = 34 + valueLines.length * 34 + (row.total ? 10 : 0);
-        if (row.total) {
-            content.push(`<rect x="${padding}" y="${y - 24}" width="${width - padding * 2}" height="${rowHeight - 4}" rx="12" fill="#eff6ff"/>`);
-        }
-        content.push(
-            `<text x="${padding + 14}" y="${y}" class="label">${escapeReceiptXml(row.label)}</text>`,
-            ...valueLines.map((line, index) =>
-                `<text x="${padding + 14}" y="${y + 32 + index * 34}" class="${row.total ? 'total' : 'value'}">${escapeReceiptXml(line)}</text>`
-            )
-        );
-        y += rowHeight;
-        content.push(`<line x1="${padding}" y1="${y - 8}" x2="${width - padding}" y2="${y - 8}" stroke="#dbeafe"/>`);
+        line.left = Math.min(line.left, bounds.left);
+        line.right = Math.max(line.right, bounds.right);
+        line.text += segment.text;
     });
-    const height = y + 42;
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-        <rect width="100%" height="100%" fill="#f8fafc"/>
-        <rect x="16" y="16" width="${width - 32}" height="${height - 32}" rx="22" fill="#fff" stroke="#dbeafe" stroke-width="2"/>
-        <text x="${width / 2}" y="62" text-anchor="middle" class="brand">PHYSICS LEARNING HUB</text>
-        <text x="${width / 2}" y="106" text-anchor="middle" class="title">မှာယူမှု ဘောက်ချာ</text>
-        ${content.join('')}
-        <style>
-            text { font-family: "Noto Sans Myanmar", "Myanmar Text", sans-serif; }
-            .brand { fill: #2563eb; font-size: 22px; font-weight: 700; letter-spacing: 2px; }
-            .title { fill: #172033; font-size: 26px; font-weight: 700; }
-            .label { fill: #64748b; font-size: 17px; }
-            .value { fill: #172033; font-size: 21px; }
-            .total { fill: #1d4ed8; font-size: 23px; font-weight: 700; }
-        </style>
-    </svg>`;
+
+    const fontSize = parseFloat(style.fontSize) || 12;
+    return lines.map((line) => {
+        const baseline = line.top - origin.top + (line.height - fontSize) / 2 + fontSize * 0.82;
+        return `<text x="${line.left - origin.left}" y="${baseline}" textLength="${line.right - line.left}" lengthAdjust="spacingAndGlyphs" fill="${escapeSvgText(style.color)}" font-family="${escapeSvgText(style.fontFamily)}" font-size="${fontSize}" font-weight="${escapeSvgText(style.fontWeight)}" font-style="${escapeSvgText(style.fontStyle)}" letter-spacing="${escapeSvgText(style.letterSpacing)}" xml:space="preserve">${escapeSvgText(line.text)}</text>`;
+    });
 }
 
-async function createReceiptImage(order) {
-    const svgUrl = URL.createObjectURL(new Blob([createReceiptSvg(order)], {
-        type: 'image/svg+xml;charset=utf-8'
-    }));
+function getReceiptElementBackground(element, origin) {
+    const bounds = element.getBoundingClientRect();
+    const style = window.getComputedStyle(element);
+    const x = bounds.left - origin.left;
+    const y = bounds.top - origin.top;
+    const width = bounds.width;
+    const height = bounds.height;
+    const parts = [];
+    if (style.backgroundColor !== 'rgba(0, 0, 0, 0)' && style.backgroundColor !== 'transparent') {
+        parts.push(`<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="${parseFloat(style.borderTopLeftRadius) || 0}" fill="${escapeSvgText(style.backgroundColor)}"/>`);
+    }
+    const borders = [
+        ['Top', x, y, x + width, y],
+        ['Right', x + width, y, x + width, y + height],
+        ['Bottom', x, y + height, x + width, y + height],
+        ['Left', x, y, x, y + height]
+    ].map(([side, x1, y1, x2, y2]) => {
+        const borderWidth = parseFloat(style[`border${side}Width`]) || 0;
+        return {
+            side,
+            x1,
+            y1,
+            x2,
+            y2,
+            width: borderWidth,
+            color: style[`border${side}Color`],
+            style: style[`border${side}Style`]
+        };
+    });
+    const [firstBorder, ...otherBorders] = borders;
+    const uniformBorder = firstBorder.width > 0 && otherBorders.every((border) =>
+        border.width === firstBorder.width &&
+        border.color === firstBorder.color &&
+        border.style === firstBorder.style
+    );
+    if (uniformBorder && firstBorder.style !== 'none' && firstBorder.style !== 'hidden') {
+        const radius = parseFloat(style.borderTopLeftRadius) || 0;
+        const dash = firstBorder.style === 'dashed' ? ' stroke-dasharray="6 4"' : '';
+        parts.push(`<rect x="${x + firstBorder.width / 2}" y="${y + firstBorder.width / 2}" width="${width - firstBorder.width}" height="${height - firstBorder.width}" rx="${radius}" fill="none" stroke="${escapeSvgText(firstBorder.color)}" stroke-width="${firstBorder.width}"${dash}/>`);
+    } else borders.forEach((border) => {
+        const { side, x1, y1, x2, y2, width: borderWidth, color, style: borderStyle } = border;
+        if (borderWidth && borderStyle !== 'none' && borderStyle !== 'hidden') {
+            const dash = borderStyle === 'dashed' ? ' stroke-dasharray="6 4"' : '';
+            parts.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${escapeSvgText(color)}" stroke-width="${borderWidth}"${dash}/>`);
+        }
+    });
+    return parts;
+}
+
+async function getReceiptLogoDataUrl(image) {
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('Canvas is unavailable.');
+    context.drawImage(image, 0, 0);
+    return canvas.toDataURL('image/png');
+}
+
+async function createReceiptImage() {
+    const bounds = receiptCard.getBoundingClientRect();
+    const origin = { left: bounds.left, top: bounds.top };
+    const width = Math.ceil(bounds.width);
+    const cardStyle = window.getComputedStyle(receiptCard);
+    const detailsBottom = receiptCard.querySelector('.receipt-details').getBoundingClientRect().bottom;
+    const height = Math.ceil(
+        detailsBottom - bounds.top +
+        (parseFloat(cardStyle.paddingBottom) || 0) +
+        (parseFloat(cardStyle.borderBottomWidth) || 0)
+    );
+    const parts = [];
+    const logo = receiptCard.querySelector('.receipt-logo');
+    const logoDataUrl = logo && logo.complete && logo.naturalWidth
+        ? await getReceiptLogoDataUrl(logo)
+        : '';
+    const drawElement = (element) => {
+        if (element.matches('.receipt-actions, .receipt-share-status')) return;
+        parts.push(...getReceiptElementBackground(element, origin));
+        if (element instanceof HTMLImageElement) {
+            if (!logoDataUrl || !element.naturalWidth || !element.naturalHeight) return;
+            const imageBounds = element.getBoundingClientRect();
+            const aspectRatio = element.naturalWidth / element.naturalHeight;
+            const imageWidth = Math.min(imageBounds.width, imageBounds.height * aspectRatio);
+            const imageHeight = imageWidth / aspectRatio;
+            parts.push(`<image x="${imageBounds.left - origin.left + (imageBounds.width - imageWidth) / 2}" y="${imageBounds.top - origin.top + (imageBounds.height - imageHeight) / 2}" width="${imageWidth}" height="${imageHeight}" href="${logoDataUrl}" preserveAspectRatio="xMidYMid meet"/>`);
+            return;
+        }
+        Array.from(element.childNodes).forEach((node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                if (node.textContent.trim()) parts.push(...getReceiptTextLines(node, origin));
+            } else if (node instanceof Element) {
+                drawElement(node);
+            }
+        });
+    };
+    drawElement(receiptCard);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+    const svgUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
     try {
         const image = new Image();
         image.src = svgUrl;
         await image.decode();
         const canvas = document.createElement('canvas');
-        canvas.width = image.naturalWidth * 2;
-        canvas.height = image.naturalHeight * 2;
+        canvas.width = width * 2;
+        canvas.height = height * 2;
         const context = canvas.getContext('2d');
         if (!context) throw new Error('Canvas is unavailable.');
         context.scale(2, 2);
@@ -519,7 +545,7 @@ async function createReceiptImage(order) {
                 else reject(new Error('Unable to encode the receipt image.'));
             }, 'image/png');
         });
-        const voucherName = String(order.voucherNo).replace(/[^a-zA-Z0-9._-]/g, '-');
+        const voucherName = String(lastReceipt.voucherNo).replace(/[^a-zA-Z0-9._-]/g, '-');
         return new File([blob], `receipt-${voucherName}.png`, { type: 'image/png' });
     } finally {
         URL.revokeObjectURL(svgUrl);
@@ -539,7 +565,7 @@ async function shareReceipt() {
     if (!lastReceipt) return;
     receiptShareStatus.textContent = '';
     try {
-        const image = await createReceiptImage(lastReceipt);
+        const image = await createReceiptImage();
         const shareData = {
             title: `Physics Learning Hub - ${lastReceipt.voucherNo}`,
             files: [image]

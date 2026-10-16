@@ -1,7 +1,7 @@
 .shop-page {
     width: min(100% - 32px, 960px);
     margin: 0 auto;
-    padding: 22px 0 110px;
+    padding: 22px 0;
     color: #172033;
     font-family: 'Pyidaungsu', Arial, sans-serif;
 }
