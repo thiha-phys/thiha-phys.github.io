@@ -1,4 +1,5 @@
 const feedbackForm = document.getElementById('feedback-form');
+feedbackForm.hidden = true;
 const feedbackBookList = document.getElementById('feedback-book-list');
 const feedbackStatus = document.getElementById('feedback-status');
 const feedbackReviewPanel = document.getElementById('feedback-review-panel');
@@ -7,6 +8,7 @@ const feedbackSuccess = document.getElementById('feedback-success');
 const submitFeedbackButton = document.getElementById('submit-feedback');
 let reviewedFeedback = null;
 let signedInProfile = null;
+let feedbackBooks = [];
 
 try {
     const profileData = localStorage.getItem('physicsLearningHubProfile');
@@ -19,7 +21,9 @@ try {
     console.error('Unable to load the saved account profile for feedback.', error);
 }
 
-PHYSICS_BOOKS.forEach((book) => {
+function renderFeedbackBooks(masterData) {
+feedbackBooks = getFirebaseOrderBooks(masterData);
+feedbackBooks.forEach((book) => {
     const card = document.createElement('article');
     card.className = 'feedback-book';
 
@@ -74,13 +78,25 @@ PHYSICS_BOOKS.forEach((book) => {
     card.append(image, details);
     feedbackBookList.append(card);
 });
+}
+
+loadOrderMasterData()
+    .then(({ masterData }) => {
+        renderFeedbackBooks(masterData);
+        feedbackForm.hidden = false;
+    })
+    .catch((error) => {
+        console.error('Unable to load Firebase book names for feedback.', error);
+        feedbackForm.hidden = true;
+        feedbackStatus.textContent = 'Firebase မှ စာအုပ်စာရင်းကို ရယူမရပါ။';
+    });
 
 function collectFeedback() {
     const formData = new FormData(feedbackForm);
     return {
         phone: signedInProfile.phone,
         job: String(formData.get('job') || ''),
-        books: PHYSICS_BOOKS.map((book) => ({
+        books: feedbackBooks.map((book) => ({
             id: book.id,
             rating: Number(formData.get(`rating-${book.id}`)),
             suggestion: String(formData.get(`suggestion-${book.id}`) || '').trim()
@@ -106,7 +122,7 @@ function showReview(feedback) {
 
     feedback.books.forEach((entry, index) => {
         const title = document.createElement('h3');
-        title.textContent = PHYSICS_BOOKS[index].name;
+        title.textContent = feedbackBooks[index].name;
         feedbackReviewDetails.append(title);
         addReviewText(feedbackReviewDetails, `အဆင့် - ${'★'.repeat(entry.rating)}`);
         if (entry.suggestion) addReviewText(feedbackReviewDetails, entry.suggestion);

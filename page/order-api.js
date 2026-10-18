@@ -5,30 +5,43 @@ async function sendOrderRequest(action, payload) {
         body: JSON.stringify({ action, ...payload })
     });
     if (!response.ok) {
-        throw new Error(`Google Sheet request failed (${response.status}).`);
+        throw new Error(`Firebase order sync request failed (${response.status}).`);
     }
     const result = await response.json();
     if (!result.ok) {
-        throw new Error(result.message || result.error || 'Google Sheet rejected the order request.');
+        throw new Error(result.message || result.error || 'The order sync service rejected the Firebase order.');
     }
     return result;
 }
 
-function submitOrder(order) {
-    return sendOrderRequest('createOrder', { order });
+async function submitOrder(order) {
+    const session = await getFirebaseOrderSession();
+    const orderId = await submitOrderToFirebase(order, session);
+    try {
+        const synced = await sendOrderRequest('syncFirebaseOrder', {
+            orderId,
+            idToken: session.idToken
+        });
+        return { ...synced, orderId, syncPending: false };
+    } catch (error) {
+        console.warn('The Firebase order was saved but Sheet sync is pending.', error);
+        return { ok: true, orderId, syncPending: true };
+    }
 }
 
-function getDeliveryCities() {
-    return Promise.resolve(window.PHYSICS_DELIVERY_CITIES).then((cities) => {
-        if (!Array.isArray(cities) || cities.length !== 223 || cities.some((city) =>
+async function getDeliveryCities() {
+    const { session, masterData } = await loadOrderMasterData();
+    window.PHYSICS_ORDER_MASTER_DATA = masterData;
+    window.PHYSICS_ORDER_FIREBASE_SESSION = session;
+    const cities = Object.values(masterData.deliveryCities);
+    if (!Array.isArray(cities) || cities.length === 0 || cities.some((city) =>
             !city || typeof city.english !== 'string' ||
             typeof city.myanmar !== 'string' ||
             typeof city.label !== 'string' ||
             !Number.isFinite(Number(city.upTo2Kg)) ||
             !Number.isFinite(Number(city.nextKg))
-        )) {
-            throw new Error('The local delivery city list is missing or invalid.');
-        }
-        return cities;
-    });
+    )) {
+        throw new Error('Firebase delivery city data is missing or invalid.');
+    }
+    return cities;
 }

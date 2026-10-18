@@ -50,16 +50,18 @@ const ORDER_HEADERS = [
   'G11 Handbook Qty', 'G11 Handbook Amount',
   'G11 Objective Qty', 'G11 Objective Amount',
   'G10 Handbook Qty', 'G10 Handbook Amount',
-  'Total', 'Received', 'KPay Account', 'Pay Date',
+  'Total', 'Received', 'KPay Account', 'Pay Date', 'Payment Method',
   'Delivery Service', 'Delivery Fees', 'Total KG', 'Cash Collection',
-  'Facebook Name', 'Facebook Link', 'Royal Voucher', 'car inform',
-  'Confirm Service Charge', 'Confirm Service COD', 'Payment Method', 'Delivery Notes'
+  'Facebook Name', 'Facebook Link', 'car inform', 'Delivery Notes', 'Royal Voucher',
+  'Royal Shipment Service Charge', 'Royal Shipment COD Amount', 'Royal Shipment Weight',
+  'Royal Statement COD Charge', 'Royal Statement Paid Charge', 'Royal Statement Paid Date'
 ];
 const ORDER_CURRENCY_HEADERS = [
   'Special Amount', 'Practice Amount', 'OQ Amount', 'Solution Amount',
   'G11 Handbook Amount', 'G11 Objective Amount', 'G10 Handbook Amount',
   'Total', 'Received', 'Delivery Fees', 'Cash Collection',
-  'Confirm Service Charge', 'Confirm Service COD'
+  'Royal Shipment Service Charge', 'Royal Shipment COD Amount',
+  'Royal Statement COD Charge', 'Royal Statement Paid Charge'
 ];
 const ORDER_HEADER_ALIASES = {
   'Phone': 'Phone 1',
@@ -76,6 +78,8 @@ const ORDER_HEADER_ALIASES = {
   'Grade 10 Handbook Amount': 'G10 Handbook Amount',
   'Amount Received': 'Received',
   'Royal VOC No': 'Royal Voucher',
+  'Confirm Service Charge': 'Royal Shipment Service Charge',
+  'Confirm Service COD': 'Royal Shipment COD Amount',
   'Delivery': 'Delivery Service',
   'Facebook Account Name': 'Facebook Name'
 };
@@ -130,8 +134,14 @@ function doPost(e) {
 
     const request = JSON.parse(e.postData.contents);
     const action = request.action;
+    if (action === 'syncFirebaseOrder') {
+      return syncFirebaseOrderRequest_(request.orderId, request.idToken);
+    }
     if (action === 'createOrder') {
-      return createBookOrder_(request.order);
+      return jsonResponse_({
+        ok: false,
+        error: 'Direct order submission is disabled. Create the order in Firebase first.'
+      });
     }
     if (action === 'listOrders') {
       return jsonResponse_({ ok: true, orders: listBookOrders_() });
@@ -264,6 +274,235 @@ function doPost(e) {
   }
 }
 
+const FIREBASE_DATABASE_URL_ = 'https://thkapp-305-default-rtdb.firebaseio.com';
+const FIREBASE_WEB_API_KEY_ = 'AIzaSyDOEqOTtBACp_IfxjntLsNF97JBiuQDkV8';
+
+function firebaseAdminAccessToken_() {
+  const cache = CacheService.getScriptCache();
+  const cachedToken = cache.get('firebaseAdminAccessToken');
+  if (cachedToken) return cachedToken;
+
+  const rawServiceAccount = PropertiesService.getScriptProperties()
+    .getProperty('FIREBASE_SERVICE_ACCOUNT_JSON');
+  if (!rawServiceAccount) {
+    throw new Error('Set FIREBASE_SERVICE_ACCOUNT_JSON in Apps Script Script Properties.');
+  }
+  const serviceAccount = JSON.parse(rawServiceAccount);
+  const issuedAt = Math.floor(Date.now() / 1000);
+  const base64Url = function (value) {
+    return Utilities.base64EncodeWebSafe(value).replace(/=+$/, '');
+  };
+  const header = base64Url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+  const claims = base64Url(JSON.stringify({
+    iss: serviceAccount.client_email,
+    scope: 'https://www.googleapis.com/auth/firebase.database https://www.googleapis.com/auth/userinfo.email',
+    aud: 'https://oauth2.googleapis.com/token',
+    iat: issuedAt,
+    exp: issuedAt + 3600
+  }));
+  const unsignedToken = header + '.' + claims;
+  const signature = base64Url(Utilities.computeRsaSha256Signature(
+    unsignedToken,
+    serviceAccount.private_key
+  ));
+  const response = UrlFetchApp.fetch('https://oauth2.googleapis.com/token', {
+    method: 'post',
+    payload: {
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      assertion: unsignedToken + '.' + signature
+    },
+    muteHttpExceptions: true
+  });
+  const result = JSON.parse(response.getContentText());
+  if (response.getResponseCode() < 200 || response.getResponseCode() >= 300 || !result.access_token) {
+    throw new Error('Unable to authenticate Apps Script with Firebase: ' + (result.error_description || result.error || 'token request failed'));
+  }
+  cache.put('firebaseAdminAccessToken', result.access_token, Math.min(Number(result.expires_in) - 60, 3300));
+  return result.access_token;
+}
+
+function firebaseAdminRequest_(path, method, body) {
+  const pathParts = String(path || '').replace(/^\/+/, '').split('?');
+  const cleanPath = pathParts[0].replace(/\.json$/, '');
+  const query = pathParts.length > 1 ? '?' + pathParts.slice(1).join('?') : '';
+  const url = FIREBASE_DATABASE_URL_.replace(/\/$/, '') + '/' + cleanPath + '.json' + query;
+  const options = {
+    method: String(method || 'get').toLowerCase(),
+    headers: { Authorization: 'Bearer ' + firebaseAdminAccessToken_() },
+    muteHttpExceptions: true
+  };
+  if (body !== undefined) {
+    options.contentType = 'application/json';
+    options.payload = JSON.stringify(body);
+  }
+  const response = UrlFetchApp.fetch(url, options);
+  const text = response.getContentText();
+  if (response.getResponseCode() < 200 || response.getResponseCode() >= 300) {
+    throw new Error('Firebase Database request failed (' + response.getResponseCode() + '): ' + text);
+  }
+  return text ? JSON.parse(text) : null;
+}
+
+function seedFirebaseOrderMasterData() {
+  if (firebaseAdminRequest_('masterData/order', 'get') != null) {
+    throw new Error('Firebase order master data already exists; refusing to overwrite it.');
+  }
+  const images = {
+    special: 'special.jpeg', practice: 'practice.jpeg', 'old-questions': 'oq.jpeg',
+    solution: 'solution.jpeg', 'g11-handbook': 'G11H.jpeg',
+    'g11-objective': 'G11O.jpeg', 'g10-handbook': 'G10H.jpeg'
+  };
+  const books = {};
+  BOOK_ORDER_ITEMS.forEach(function (book) {
+    books[book.id] = {
+      id: book.id,
+      name: book.name,
+      image: images[book.id],
+      weight: book.weight,
+      prices: book.prices,
+      quantityHeader: book.quantityHeader,
+      amountHeader: book.amountHeader
+    };
+  });
+  const deliveryCities = {};
+  DELIVERY_CITY_ROWS.forEach(function (row) {
+    const id = row[0].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    deliveryCities[id] = {
+      english: row[0],
+      myanmar: row[1],
+      label: row[0] + ' (' + row[1] + ')',
+      upTo2Kg: row[2],
+      nextKg: row[3]
+    };
+  });
+  const masterData = {
+    settings: {
+      priceThresholds: ORDER_PRICE_THRESHOLDS,
+      royalServiceFee: ROYAL_SERVICE_FEE,
+      codMaxTotal: COD_MAX_TOTAL
+    },
+    books: books,
+    deliveryCities: deliveryCities,
+    updatedAt: new Date().toISOString()
+  };
+  firebaseAdminRequest_('masterData/order', 'put', masterData);
+  return 'Firebase order master data seeded: ' + Object.keys(books).length + ' books, ' + Object.keys(deliveryCities).length + ' cities.';
+}
+
+function installFirebaseOrderSyncTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function (trigger) {
+    if (trigger.getHandlerFunction() === 'syncPendingFirebaseOrders') {
+      ScriptApp.deleteTrigger(trigger);
+    }
+  });
+  ScriptApp.newTrigger('syncPendingFirebaseOrders').timeBased().everyMinutes(1).create();
+}
+
+function syncPendingFirebaseOrders() {
+  const pending = firebaseAdminRequest_(
+    'orders.json?orderBy=%22syncStatus%22&equalTo=%22pending%22', 'get'
+  ) || {};
+  Object.keys(pending).forEach(function (orderId) {
+    try {
+      processFirebaseOrder_(orderId, null);
+    } catch (error) {
+      console.error('Firebase order sync failed for ' + orderId + ': ' + error.message);
+      recordFirebaseOrderSyncFailure_(orderId, error);
+    }
+  });
+}
+
+function syncFirebaseOrderRequest_(orderId, idToken) {
+  const normalizedId = requiredText_(orderId, 'Firebase order ID');
+  const uid = verifyFirebaseIdToken_(idToken);
+  const receipt = processFirebaseOrder_(normalizedId, uid);
+  return jsonResponse_({ ok: true, order: receipt });
+}
+
+function verifyFirebaseIdToken_(idToken) {
+  const token = requiredText_(idToken, 'Firebase ID token');
+  const response = UrlFetchApp.fetch(
+    'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=' + encodeURIComponent(FIREBASE_WEB_API_KEY_),
+    {
+      method: 'post',
+      contentType: 'application/json',
+      payload: JSON.stringify({ idToken: token }),
+      muteHttpExceptions: true
+    }
+  );
+  const result = JSON.parse(response.getContentText());
+  if (response.getResponseCode() < 200 || response.getResponseCode() >= 300 ||
+      !result.users || !result.users[0] || !result.users[0].localId) {
+    throw new Error('Firebase ID token is invalid or expired.');
+  }
+  return result.users[0].localId;
+}
+
+function processFirebaseOrder_(orderId, expectedUid) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const record = firebaseAdminRequest_('orders/' + encodeURIComponent(orderId), 'get');
+    if (!record || !record.request || !record.ownerUid) {
+      throw new Error('Firebase order was not found or is invalid.');
+    }
+    if (expectedUid && record.ownerUid !== expectedUid) {
+      throw new Error('This Firebase order belongs to another user.');
+    }
+    if (record.syncStatus === 'synced' && record.receipt) return record.receipt;
+
+    const properties = PropertiesService.getScriptProperties();
+    const receiptKey = 'FIREBASE_ORDER_RECEIPT_' + orderId;
+    const existingReceipt = properties.getProperty(receiptKey);
+    if (existingReceipt) {
+      record.syncStatus = 'synced';
+      record.receipt = JSON.parse(existingReceipt);
+      record.sheetSyncedAt = new Date().toISOString();
+      firebaseAdminRequest_('orders/' + encodeURIComponent(orderId), 'put', record);
+      properties.deleteProperty(receiptKey);
+      return record.receipt;
+    }
+
+    const masterData = getFirebaseOrderMasterData_();
+    const output = createBookOrder_(record.request, masterData, true);
+    const result = JSON.parse(output.getContent());
+    if (!result.ok || !result.order) {
+      throw new Error(result.error || 'Sheet rejected the Firebase order.');
+    }
+    properties.setProperty(receiptKey, JSON.stringify(result.order));
+    record.syncStatus = 'synced';
+    record.receipt = result.order;
+    record.sheetSyncedAt = new Date().toISOString();
+    firebaseAdminRequest_('orders/' + encodeURIComponent(orderId), 'put', record);
+    properties.deleteProperty(receiptKey);
+    return result.order;
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function recordFirebaseOrderSyncFailure_(orderId, error) {
+  try {
+    const path = 'orders/' + encodeURIComponent(orderId);
+    const record = firebaseAdminRequest_(path, 'get');
+    if (!record || record.syncStatus === 'synced') return;
+    record.syncAttempts = Number(record.syncAttempts || 0) + 1;
+    record.syncError = String(error.message || error).slice(0, 500);
+    record.syncStatus = record.syncAttempts >= 5 ? 'failed' : 'pending';
+    firebaseAdminRequest_(path, 'put', record);
+  } catch (updateError) {
+    console.error('Unable to record Firebase order sync failure: ' + updateError.message);
+  }
+}
+
+function getFirebaseOrderMasterData_() {
+  const masterData = firebaseAdminRequest_('masterData/order', 'get');
+  if (!masterData || !masterData.books || !masterData.deliveryCities || !masterData.settings) {
+    throw new Error('Firebase order master data is missing or invalid.');
+  }
+  return masterData;
+}
+
 function listBookOrders_() {
   const sheet = getOrdersSheet_();
   const lastRow = sheet.getLastRow();
@@ -343,8 +582,8 @@ function syncRoyalShipments_(waybills) {
     const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getDisplayValues()[0];
     const columns = {
       voucher: headers.indexOf('Royal Voucher'),
-      serviceCharge: headers.indexOf('Confirm Service Charge'),
-      cod: headers.indexOf('Confirm Service COD'),
+      serviceCharge: headers.indexOf('Royal Shipment Service Charge'),
+      cod: headers.indexOf('Royal Shipment COD Amount'),
       notes: headers.indexOf('Delivery Notes')
     };
     const updatedRows = {};
@@ -938,12 +1177,12 @@ function getBookStockSheet_() {
   return sheet;
 }
 
-function findDeliveryCity_(value) {
+function findDeliveryCity_(value, cityRows) {
   const cityName = value == null
     ? ''
     : String(value).trim().toLocaleLowerCase().replace(/မြို့/g, '').trim();
   if (!cityName) return null;
-  const city = DELIVERY_CITY_ROWS.find(function (row) {
+  const city = (cityRows || DELIVERY_CITY_ROWS).find(function (row) {
     return cityName === row[0].toLocaleLowerCase() ||
       cityName === row[1].toLocaleLowerCase() ||
       cityName === (row[0] + ' (' + row[1] + ')').toLocaleLowerCase();
@@ -961,13 +1200,14 @@ function normalizeDeliveryService_(value) {
   throw new Error('Delivery service must be Royal or Car.');
 }
 
-function calculateRoyalDeliveryFee_(totalWeight, city) {
+function calculateRoyalDeliveryFee_(totalWeight, city, serviceFee) {
   const packageCount = Math.max(1, Math.ceil(totalWeight / 5 - 0.000000001));
   const fullPackageFee = city[2] + 3 * city[3];
   const lastPackageWeight = totalWeight - 5 * (packageCount - 1);
   const lastPackageExtraKg = Math.ceil(Math.max(0, lastPackageWeight - 2) - 0.000000001);
   return (packageCount - 1) * fullPackageFee +
-    city[2] + lastPackageExtraKg * city[3] + ROYAL_SERVICE_FEE;
+    city[2] + lastPackageExtraKg * city[3] +
+    (serviceFee == null ? ROYAL_SERVICE_FEE : serviceFee);
 }
 
 function roundDeliveryFeeTo500_(fee) {
@@ -977,14 +1217,17 @@ function roundDeliveryFeeTo500_(fee) {
 function roundDeliveryWeight_(weight) {
   if (weight <= 0) return 0;
   const weightUnits = Math.round(weight * 100000);
+  if (weightUnits <= 60000) return 0.5;
   const wholeKg = Math.floor(weightUnits / 100000);
   const fractionalUnits = weightUnits - wholeKg * 100000;
+  if (fractionalUnits <= 20000) return wholeKg;
   if (fractionalUnits < 60000) return wholeKg + 0.5;
   return wholeKg + 1;
 }
 
-function bookUnitPrice_(book, quantity) {
-  const priceTier = ORDER_PRICE_THRESHOLDS.reduce(function (tier, threshold, index) {
+function bookUnitPrice_(book, quantity, priceThresholds) {
+  const thresholds = priceThresholds || ORDER_PRICE_THRESHOLDS;
+  const priceTier = thresholds.reduce(function (tier, threshold, index) {
     return quantity >= threshold ? index : tier;
   }, 0);
   return book.prices[priceTier];
@@ -1012,9 +1255,41 @@ function buildOrderAddress_(order, city) {
   return requiredText_(details.join(', '), 'Address');
 }
 
-function createBookOrder_(order) {
+function createBookOrder_(order, masterData, lockAlreadyHeld) {
   if (!order || typeof order !== 'object') {
     throw new Error('Order data is required.');
+  }
+
+  const orderMasterData = masterData || getFirebaseOrderMasterData_();
+  const settings = orderMasterData.settings;
+  const priceThresholds = settings.priceThresholds;
+  const royalServiceFee = Number(settings.royalServiceFee);
+  const codMaxTotal = Number(settings.codMaxTotal);
+  if (!Array.isArray(priceThresholds) || !Number.isFinite(royalServiceFee) ||
+      !Number.isFinite(codMaxTotal)) {
+    throw new Error('Firebase order settings are invalid.');
+  }
+  const bookOrderItems = Object.keys(orderMasterData.books).map(function (bookId) {
+    const book = orderMasterData.books[bookId];
+    if (!book || !Array.isArray(book.prices) || book.prices.length !== priceThresholds.length ||
+        !book.quantityHeader || !book.amountHeader || !Number.isFinite(Number(book.weight))) {
+      throw new Error('Firebase book master data is invalid for ' + bookId + '.');
+    }
+    return {
+      id: book.id || bookId,
+      name: requiredText_(book.name, 'Book name'),
+      quantityHeader: book.quantityHeader,
+      amountHeader: book.amountHeader,
+      weight: Number(book.weight),
+      prices: book.prices.map(Number)
+    };
+  });
+  const deliveryCityRows = Object.keys(orderMasterData.deliveryCities).map(function (cityId) {
+    const city = orderMasterData.deliveryCities[cityId];
+    return [city.english, city.myanmar, Number(city.upTo2Kg), Number(city.nextKg)];
+  });
+  if (!bookOrderItems.length || !deliveryCityRows.length) {
+    throw new Error('Firebase order master data has no books or delivery cities.');
   }
 
   const name = requiredText_(order.name, 'Name');
@@ -1031,7 +1306,7 @@ function createBookOrder_(order) {
     if (!item || typeof item.id !== 'string' || quantities[item.id] !== undefined) {
       throw new Error('Book item is invalid or repeated.');
     }
-    const book = BOOK_ORDER_ITEMS.find(function (candidate) {
+    const book = bookOrderItems.find(function (candidate) {
       return candidate.id === item.id;
     });
     const quantity = Number(item.quantity);
@@ -1040,11 +1315,11 @@ function createBookOrder_(order) {
     }
     quantities[item.id] = quantity;
   });
-  if (BOOK_ORDER_ITEMS.some(function (book) { return quantities[book.id] === undefined; })) {
+  if (bookOrderItems.some(function (book) { return quantities[book.id] === undefined; })) {
     throw new Error('All book quantities must be provided.');
   }
 
-  const itemCount = BOOK_ORDER_ITEMS.reduce(function (sum, book) {
+  const itemCount = bookOrderItems.reduce(function (sum, book) {
     return sum + quantities[book.id];
   }, 0);
   if (!Number.isSafeInteger(itemCount)) {
@@ -1053,9 +1328,9 @@ function createBookOrder_(order) {
   let total = 0;
   let totalWeight = 0;
   const itemRows = [];
-  BOOK_ORDER_ITEMS.forEach(function (book) {
+  bookOrderItems.forEach(function (book) {
     const quantity = quantities[book.id];
-    const unitPrice = bookUnitPrice_(book, quantity);
+    const unitPrice = bookUnitPrice_(book, quantity, priceThresholds);
     const amount = quantity * unitPrice;
     totalWeight += quantity * book.weight;
     total += amount;
@@ -1082,12 +1357,14 @@ function createBookOrder_(order) {
     ? cityValue.english || cityValue.englishName || cityValue.myanmar ||
       cityValue.myanmarName || cityValue.label
     : cityValue;
-  const deliveryCity = deliveryCityName ? findDeliveryCity_(deliveryCityName) : null;
+  const deliveryCity = deliveryCityName
+    ? findDeliveryCity_(deliveryCityName, deliveryCityRows)
+    : null;
   if (deliveryService && !deliveryCity) {
     throw new Error('A valid delivery city is required.');
   }
   const baseDeliveryFees = deliveryService === 'Royal'
-    ? calculateRoyalDeliveryFee_(totalWeight, deliveryCity)
+    ? calculateRoyalDeliveryFee_(totalWeight, deliveryCity, royalServiceFee)
     : 0;
   const deliveryFees = roundDeliveryFeeTo500_(baseDeliveryFees);
   const totalPayable = total + deliveryFees;
@@ -1105,7 +1382,7 @@ function createBookOrder_(order) {
   if (deliveryService === 'Car' && paymentMethod !== 'KBZ Pay') {
     throw new Error('KBZ Pay is required for car delivery.');
   }
-  if (paymentMethod === 'COD' && totalPayable >= COD_MAX_TOTAL) {
+  if (paymentMethod === 'COD' && totalPayable >= codMaxTotal) {
     throw new Error('COD is not available for orders totaling 150,000 kyats or more.');
   }
 
@@ -1113,10 +1390,10 @@ function createBookOrder_(order) {
     new Date(), Session.getScriptTimeZone(), 'dd.MM.yyyy HH:mm:ss'
   );
 
-  const lock = LockService.getScriptLock();
-  lock.waitLock(10000);
+  const lock = lockAlreadyHeld ? null : LockService.getScriptLock();
+  if (lock) lock.waitLock(10000);
   try {
-    const sheet = getOrdersSheet_();
+    const sheet = getOrdersSheet_(bookOrderItems);
     const voucherNo = nextVoucherNo_(sheet);
     const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getDisplayValues()[0];
     const row = new Array(headers.length).fill('');
@@ -1136,15 +1413,18 @@ function createBookOrder_(order) {
       'car inform': deliveryNotes,
       'Delivery Notes': ''
     };
-    BOOK_ORDER_ITEMS.forEach(function (book) {
+    const currencyHeaders = ORDER_CURRENCY_HEADERS.concat(bookOrderItems.map(function (book) {
+      return book.amountHeader;
+    }));
+    bookOrderItems.forEach(function (book) {
       values[book.quantityHeader] = String(quantities[book.id]);
       values[book.amountHeader] = String(
-        quantities[book.id] * bookUnitPrice_(book, quantities[book.id])
+        quantities[book.id] * bookUnitPrice_(book, quantities[book.id], priceThresholds)
       );
     });
     headers.forEach(function (header, index) {
       if (Object.prototype.hasOwnProperty.call(values, header)) {
-        row[index] = ORDER_CURRENCY_HEADERS.includes(header)
+        row[index] = currencyHeaders.includes(header)
           ? currencySheetValue_(values[header])
           : sheetSafeText_(values[header]);
       }
@@ -1153,7 +1433,7 @@ function createBookOrder_(order) {
     const range = sheet.getRange(nextRow, 1, 1, headers.length);
     range.setNumberFormat('@');
     range.setValues([row]);
-    applyCurrencyRowFormats_(sheet, nextRow, headers, ORDER_CURRENCY_HEADERS);
+    applyCurrencyRowFormats_(sheet, nextRow, headers, currencyHeaders);
     return jsonResponse_({
       ok: true,
       order: {
@@ -1176,11 +1456,17 @@ function createBookOrder_(order) {
       }
     });
   } finally {
-    lock.releaseLock();
+    if (lock) lock.releaseLock();
   }
 }
 
-function getOrdersSheet_() {
+function getOrdersSheet_(dynamicBooks) {
+  const dynamicHeaders = (dynamicBooks || []).reduce(function (headers, book) {
+    return headers.concat([book.quantityHeader, book.amountHeader]);
+  }, []);
+  const requiredHeaders = ORDER_HEADERS.concat(dynamicHeaders.filter(function (header) {
+    return header && !ORDER_HEADERS.includes(header);
+  }));
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   if (!spreadsheet) {
     throw new Error('Bind this Apps Script project to the target Google Sheet.');
@@ -1190,13 +1476,13 @@ function getOrdersSheet_() {
     sheet = spreadsheet.insertSheet(ORDERS_SHEET_NAME);
   }
   if (sheet.getLastRow() === 0) {
-    if (sheet.getMaxColumns() < ORDER_HEADERS.length) {
+    if (sheet.getMaxColumns() < requiredHeaders.length) {
       sheet.insertColumnsAfter(
         sheet.getMaxColumns(),
-        ORDER_HEADERS.length - sheet.getMaxColumns()
+        requiredHeaders.length - sheet.getMaxColumns()
       );
     }
-    sheet.getRange(1, 1, 1, ORDER_HEADERS.length).setValues([ORDER_HEADERS]);
+    sheet.getRange(1, 1, 1, requiredHeaders.length).setValues([requiredHeaders]);
     sheet.setFrozenRows(1);
   } else {
     const lastColumn = Math.max(sheet.getLastColumn(), 1);
@@ -1215,7 +1501,7 @@ function getOrdersSheet_() {
       }
       seen[header] = true;
     });
-    ORDER_HEADERS.forEach(function (header) {
+    requiredHeaders.forEach(function (header) {
       if (seen[header]) return;
       migratedHeaders.push(header);
       seen[header] = true;
@@ -1227,9 +1513,9 @@ function getOrdersSheet_() {
       );
     }
     sheet.getRange(1, 1, 1, migratedHeaders.length).setValues([migratedHeaders]);
-    const desiredHeaders = ORDER_HEADERS.concat(
+    const desiredHeaders = requiredHeaders.concat(
       migratedHeaders.filter(function (header) {
-        return header && !ORDER_HEADERS.includes(header);
+        return header && !requiredHeaders.includes(header);
       })
     );
     const currentHeaders = migratedHeaders.slice();

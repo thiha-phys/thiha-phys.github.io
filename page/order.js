@@ -2,22 +2,10 @@ const orderForm = document.getElementById('order-form');
 const orderBookList = document.getElementById('order-book-list');
 const orderStatus = document.getElementById('order-status');
 const confirmOrderButton = document.getElementById('confirm-order');
+confirmOrderButton.disabled = true;
 const totalElement = document.getElementById('order-total');
 const codRadio = orderForm.querySelector('input[value="COD"]');
 const kbzPayRadio = orderForm.querySelector('input[value="KBZ Pay"]');
-const COD_MAX_TOTAL = 150000;
-const ROYAL_SERVICE_FEE = 300;
-const PRICE_THRESHOLDS = [0, 10, 30, 50, 100];
-const BOOK_PRICES = [
-    [20000, 19000, 18000, 17000, 16000],
-    [13000, 12000, 11500, 11000, 10500],
-    [11000, 10000, 9500, 9000, 8800],
-    [5000, 4500, 4000, 4000, 3800],
-    [10000, 9000, 8500, 8000, 8000],
-    [8000, 7000, 6500, 6500, 6500],
-    [10000, 9000, 8500, 8000, 8000]
-];
-const BOOK_WEIGHTS = [0.7, 0.44925, 0.4668, 0.10437, 0.3, 0.25, 0.2];
 const paymentNote = document.getElementById('payment-note');
 const receiptCard = document.getElementById('receipt-card');
 const receiptShareStatus = document.getElementById('receipt-share-status');
@@ -33,11 +21,12 @@ let deliveryCities = [];
 let lastReceipt = null;
 let orderSubmitted = false;
 let activeCityIndex = -1;
+let orderBooks = [];
 
 function getOrderQuantities() {
-    return PHYSICS_BOOKS.map((book) => {
+    return orderBooks.map((book) => {
         const input = orderBookList.querySelector(`[name="quantity-${book.id}"]`);
-        const value = Number(input.value || 0);
+        const value = Number(input?.value || 0);
         return Number.isSafeInteger(value) && value >= 0 ? value : 0;
     });
 }
@@ -46,14 +35,17 @@ function getPricing() {
     const quantities = getOrderQuantities();
     const itemCount = quantities.reduce((total, quantity) => total + quantity, 0);
     const unitPrices = quantities.map((quantity, index) => {
-        const tier = PRICE_THRESHOLDS.reduce((selectedTier, threshold, tierIndex) =>
+        const book = window.PHYSICS_ORDER_MASTER_DATA?.books?.[orderBooks[index].id];
+        const prices = book?.prices || [];
+        const thresholds = window.PHYSICS_ORDER_MASTER_DATA?.settings?.priceThresholds || [];
+        const tier = thresholds.reduce((selectedTier, threshold, tierIndex) =>
             quantity >= threshold ? tierIndex : selectedTier, 0);
-        return BOOK_PRICES[index][tier];
+        return Number(prices[tier] || 0);
     });
     const total = quantities.reduce((amount, quantity, index) =>
         amount + quantity * unitPrices[index], 0);
     const actualWeight = Math.round(quantities.reduce((amount, quantity, index) =>
-        amount + quantity * BOOK_WEIGHTS[index], 0) * 100000) / 100000;
+        amount + quantity * Number(window.PHYSICS_ORDER_MASTER_DATA?.books?.[orderBooks[index].id]?.weight || 0), 0) * 100000) / 100000;
     const weight = roundDeliveryWeight(actualWeight);
     return { quantities, itemCount, unitPrices, total, actualWeight, weight };
 }
@@ -77,12 +69,13 @@ function getSelectedCity() {
 }
 
 function getRoyalDeliveryFee(weight, city) {
+    const serviceFee = Number(window.PHYSICS_ORDER_MASTER_DATA?.settings?.royalServiceFee || 0);
     const packageCount = Math.max(1, Math.ceil(weight / 5 - 0.000000001));
     const fullPackageFee = Number(city.upTo2Kg) + 3 * Number(city.nextKg);
     const lastPackageWeight = weight - 5 * (packageCount - 1);
     const extraKg = Math.ceil(Math.max(0, lastPackageWeight - 2) - 0.000000001);
     return (packageCount - 1) * fullPackageFee +
-        Number(city.upTo2Kg) + extraKg * Number(city.nextKg) + ROYAL_SERVICE_FEE;
+        Number(city.upTo2Kg) + extraKg * Number(city.nextKg) + serviceFee;
 }
 
 function getFinalRoyalDeliveryFee(weight, city) {
@@ -93,7 +86,8 @@ function getFinalRoyalDeliveryFee(weight, city) {
 
 function updatePaymentOptions(totalWithDelivery) {
     const isCarDelivery = getSelectedDeliveryService() === 'Car';
-    const codUnavailable = isCarDelivery || totalWithDelivery >= COD_MAX_TOTAL;
+    const codMaxTotal = Number(window.PHYSICS_ORDER_MASTER_DATA?.settings?.codMaxTotal || 0);
+    const codUnavailable = isCarDelivery || totalWithDelivery >= codMaxTotal;
     codRadio.disabled = codUnavailable;
     codRadio.closest('.payment-option').hidden = isCarDelivery;
     if (codUnavailable && codRadio.checked) {
@@ -106,8 +100,8 @@ function updatePaymentOptions(totalWithDelivery) {
 function updateOrderTotal() {
     const pricing = getPricing();
     pricing.unitPrices.forEach((price, index) => {
-        const priceElement = orderBookList.querySelector(`[data-book-price="${PHYSICS_BOOKS[index].id}"]`);
-        priceElement.textContent = formatKyats(price);
+        const priceElement = orderBookList.querySelector(`[data-book-price="${orderBooks[index].id}"]`);
+        if (priceElement) priceElement.textContent = formatKyats(price);
     });
     totalElement.textContent = formatKyats(pricing.total);
     document.getElementById('order-weight').textContent = pricing.itemCount > 0
@@ -226,43 +220,47 @@ orderForm.querySelectorAll('input[name="deliveryService"]').forEach((input) => {
     });
 });
 
-PHYSICS_BOOKS.forEach((book) => {
-    const row = document.createElement('article');
-    row.className = 'order-book';
-    const imageLink = document.createElement('a');
-    imageLink.href = `book-preview.html?book=${encodeURIComponent(book.id)}`;
-    imageLink.setAttribute('aria-label', `${book.name} နမူနာစာမျက်နှာ ကြည့်ရန်`);
-    const image = document.createElement('img');
-    image.src = bookImagePath(book);
-    image.alt = book.name;
-    image.loading = 'lazy';
-    image.draggable = false;
-    imageLink.append(image);
+function renderOrderBooks(masterData) {
+    orderBookList.replaceChildren();
+    orderBooks = getFirebaseOrderBooks(masterData);
+    orderBooks.forEach((book) => {
+        const row = document.createElement('article');
+        row.className = 'order-book';
+        const imageLink = document.createElement('a');
+        imageLink.href = `book-preview.html?book=${encodeURIComponent(book.id)}`;
+        imageLink.setAttribute('aria-label', `${book.name} နမူနာစာမျက်နှာ ကြည့်ရန်`);
+        const image = document.createElement('img');
+        image.src = bookImagePath(book);
+        image.alt = book.name;
+        image.loading = 'lazy';
+        image.draggable = false;
+        imageLink.append(image);
 
-    const info = document.createElement('div');
-    info.className = 'order-book-info';
-    const title = document.createElement('h3');
-    title.textContent = book.name;
-    const price = document.createElement('p');
-    price.dataset.bookPrice = book.id;
-    price.textContent = formatKyats(book.price);
-    const quantityLabel = document.createElement('label');
-    quantityLabel.className = 'quantity-label';
-    quantityLabel.textContent = 'အရေအတွက်';
-    const quantity = document.createElement('input');
-    quantity.type = 'number';
-    quantity.name = `quantity-${book.id}`;
-    quantity.min = '0';
-    quantity.step = '1';
-    quantity.value = '0';
-    quantity.inputMode = 'numeric';
-    quantity.setAttribute('aria-label', `${book.name} အုပ်ရေ`);
-    quantity.addEventListener('input', updateOrderTotal);
-    quantityLabel.append(quantity);
-    info.append(title, price, quantityLabel);
-    row.append(imageLink, info);
-    orderBookList.append(row);
-});
+        const info = document.createElement('div');
+        info.className = 'order-book-info';
+        const title = document.createElement('h3');
+        title.textContent = book.name;
+        const price = document.createElement('p');
+        price.dataset.bookPrice = book.id;
+        price.textContent = formatKyats(book.prices[0]);
+        const quantityLabel = document.createElement('label');
+        quantityLabel.className = 'quantity-label';
+        quantityLabel.textContent = 'အရေအတွက်';
+        const quantity = document.createElement('input');
+        quantity.type = 'number';
+        quantity.name = `quantity-${book.id}`;
+        quantity.min = '0';
+        quantity.step = '1';
+        quantity.value = '0';
+        quantity.inputMode = 'numeric';
+        quantity.setAttribute('aria-label', `${book.name} အုပ်ရေ`);
+        quantity.addEventListener('input', updateOrderTotal);
+        quantityLabel.append(quantity);
+        info.append(title, price, quantityLabel);
+        row.append(imageLink, info);
+        orderBookList.append(row);
+    });
+}
 
 citySearch.addEventListener('focus', () => {
     if (deliveryCities.length) renderDeliveryCities();
@@ -316,12 +314,15 @@ try {
 getDeliveryCities()
     .then((cities) => {
         deliveryCities = cities;
+        renderOrderBooks(window.PHYSICS_ORDER_MASTER_DATA);
         citySearch.disabled = false;
+        confirmOrderButton.disabled = false;
         cityStatus.textContent = `${deliveryCities.length} မြို့ ရှိပါသည်။ စာရိုက်ရှာနိုင်ပါသည်။`;
+        updateOrderTotal();
     })
     .catch((error) => {
         console.error('Unable to load delivery cities.', error);
-        cityStatus.textContent = 'မြို့စာရင်းကို ရယူမရပါ။ အင်တာနက်နှင့် Google Sheet API deployment ကို စစ်ဆေးပါ။';
+        cityStatus.textContent = 'Firebase master data ကို ရယူမရပါ။ Firebase Auth နှင့် master data ကို စစ်ဆေးပါ။';
         confirmOrderButton.disabled = true;
     });
 
@@ -615,17 +616,18 @@ orderForm.addEventListener('submit', async (event) => {
         ? getFinalRoyalDeliveryFee(pricing.actualWeight, city)
         : 0;
     const totalWithDelivery = pricing.total + deliveryFees;
+    const codMaxTotal = Number(window.PHYSICS_ORDER_MASTER_DATA?.settings?.codMaxTotal || 0);
     const paymentMethod = String(formData.get('paymentMethod') || '');
     if (deliveryService === 'Car' && paymentMethod !== 'KBZ Pay') {
         orderStatus.textContent = 'ကားတင်ရန်အတွက် KBZ Pay တစ်မျိုးတည်းသာ ရွေးချယ်နိုင်ပါသည်။';
         return;
     }
-    if (paymentMethod === 'COD' && totalWithDelivery >= COD_MAX_TOTAL) {
+    if (paymentMethod === 'COD' && totalWithDelivery >= codMaxTotal) {
         orderStatus.textContent = 'စာအုပ်ဖိုးနှင့် ပို့ခပေါင်း ၁၅၀,၀၀၀ ကျပ်နှင့်အထက်ဖြစ်သဖြင့် COD ရွေး၍မရပါ။ KBZ Pay ကို ရွေးပါ။';
         return;
     }
 
-    const items = PHYSICS_BOOKS.map((book, index) => ({
+    const items = orderBooks.map((book, index) => ({
         id: book.id,
         quantity: pricing.quantities[index]
     }));
@@ -644,14 +646,39 @@ orderForm.addEventListener('submit', async (event) => {
     confirmOrderButton.textContent = 'ပို့နေသည်…';
     try {
         const result = await submitOrder(order);
-        lastReceipt = result.order;
+        const unitPrices = pricing.unitPrices;
+        lastReceipt = result.order || {
+            voucherNo: result.orderId,
+            name: order.name,
+            address: `${city.label}, ${order.address}`,
+            phone: order.phone,
+            phone2: order.phone2,
+            orderDate: new Date().toLocaleString(),
+            paymentMethod,
+            total: pricing.total,
+            deliveryService,
+            deliveryFees,
+            payableTotal: totalWithDelivery,
+            totalKg: pricing.weight,
+            cashCollection: paymentMethod === 'COD' ? totalWithDelivery : 0,
+            carInfo: order.carDetails,
+            items: orderBooks.map((book, index) => ({
+                id: book.id,
+                name: book.name,
+                quantity: pricing.quantities[index],
+                unitPrice: unitPrices[index],
+                amount: pricing.quantities[index] * unitPrices[index]
+            }))
+        };
         orderSubmitted = true;
-        displayReceipt(result.order);
+        displayReceipt(lastReceipt);
         orderSuccessDialog.showModal();
-        orderStatus.textContent = 'မှာယူမှုကို လက်ခံရရှိပါပြီ။ ဘောက်ချာကို Print / Save PDF သို့မဟုတ် ဘောက်ချာပုံ Share ကို အသုံးပြုပါ။';
+        orderStatus.textContent = result.syncPending
+            ? `မှာယူမှုကို Firebase တွင် သိမ်းထားပြီးပါပြီ။ Sheet sync ကို ထပ်မံကြိုးစားနေပါသည်။ Order ID: ${result.orderId}`
+            : 'မှာယူမှုကို လက်ခံရရှိပါပြီ။ ဘောက်ချာကို Print / Save PDF သို့မဟုတ် ဘောက်ချာပုံ Share ကို အသုံးပြုပါ။';
     } catch (error) {
         console.error('Unable to submit the book order.', error);
-        orderStatus.textContent = 'မှာယူမှု မအောင်မြင်ပါ။ အချက်အလက်နှင့် Google Sheet API setting ကို စစ်ပြီး ထပ်မံကြိုးစားပါ။';
+        orderStatus.textContent = 'မှာယူမှု မအောင်မြင်ပါ။ Firebase ချိတ်ဆက်မှုကို စစ်ပြီး ထပ်မံကြိုးစားပါ။';
     } finally {
         confirmOrderButton.disabled = orderSubmitted;
         confirmOrderButton.textContent = orderSubmitted ? 'မှာယူပြီးပါပြီ' : 'မှာယူမှု အတည်ပြုမည်';

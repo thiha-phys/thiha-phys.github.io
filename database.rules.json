@@ -1,6 +1,54 @@
 {
   "rules": {
     ".read": false,
-    ".write": false
+    ".write": false,
+    "masterData": {
+      "order": {
+        ".read": "auth != null",
+        ".write": false
+      }
+    },
+    "orders": {
+      ".indexOn": ["syncStatus"],
+      "$orderId": {
+        ".read": "auth != null && data.child('ownerUid').val() === auth.uid",
+        ".write": "auth != null && !data.exists() && newData.child('ownerUid').val() === auth.uid && newData.child('syncStatus').val() === 'pending'",
+        ".validate": "newData.hasChildren(['ownerUid', 'syncStatus', 'createdAt', 'request']) && newData.numChildren() === 4",
+        "ownerUid": { ".validate": "newData.isString()" },
+        "syncStatus": { ".validate": "newData.val() === 'pending'" },
+        "createdAt": { ".validate": "newData.isString()" },
+        "request": {
+          ".validate": "newData.hasChildren(['name', 'phone', 'phone2', 'deliveryCity', 'address', 'deliveryService', 'carDetails', 'paymentMethod', 'items']) && newData.numChildren() === 9",
+          "name": { ".validate": "newData.isString() && newData.val().length <= 120" },
+          "phone": { ".validate": "newData.isString() && newData.val().length <= 30" },
+          "phone2": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 30)" },
+          "deliveryCity": { ".validate": "newData.isString()" },
+          "address": { ".validate": "newData.isString() && newData.val().length <= 500" },
+          "deliveryService": { ".validate": "newData.val() === 'Royal' || newData.val() === 'Car'" },
+          "carDetails": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 240)" },
+          "paymentMethod": { ".validate": "newData.val() === 'COD' || newData.val() === 'KBZ Pay'" },
+          "items": {
+            ".validate": "newData.hasChildren() && newData.numChildren() <= 20",
+            "$itemIndex": {
+              ".validate": "newData.hasChildren(['id', 'quantity']) && newData.numChildren() === 2",
+              "id": { ".validate": "newData.isString() && newData.val().length <= 80" },
+              "quantity": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000" }
+            }
+          }
+        }
+      }
+    },
+    "profiles": {
+      "$phone": {
+        ".read": true,
+        ".write": true
+      }
+    },
+    "recommendations": {
+      "$recommendationId": {
+        ".read": false,
+        ".write": true
+      }
+    }
   }
 }

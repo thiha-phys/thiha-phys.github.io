@@ -1,5 +1,4 @@
 const requestedBookId = new URLSearchParams(window.location.search).get('book');
-const book = PHYSICS_BOOKS.find((item) => item.id === requestedBookId);
 const image = document.getElementById('sample-page');
 const message = document.getElementById('sample-message');
 const indicator = document.getElementById('page-indicator');
@@ -16,36 +15,48 @@ function showPage() {
     image.src = `../pictures/book%20samples/${encodeURIComponent(book.id)}/page-${String(currentPage).padStart(2, '0')}.jpeg`;
 }
 
-if (!book) {
+if (!requestedBookId) {
     document.getElementById('reader-title').textContent = 'စာအုပ်ကို ရှာမတွေ့ပါ';
     message.textContent = 'စာအုပ်စာရင်းသို့ ပြန်သွားပြီး စာအုပ်တစ်အုပ်ကို ရွေးချယ်ပါ။';
     previousButton.disabled = true;
     nextButton.disabled = true;
 } else {
-    document.title = `${book.name} နမူနာ | Physics Learning Hub`;
-    document.getElementById('reader-title').textContent = book.name;
-    image.alt = `${book.name} နမူနာစာမျက်နှာ`;
-    image.addEventListener('load', () => {
-        image.hidden = false;
-        message.textContent = '';
-    });
-    image.addEventListener('error', () => {
-        image.hidden = true;
-        message.textContent = 'ဤစာအုပ်၏ နမူနာစာမျက်နှာများကို မတင်ရသေးပါ။';
-    });
-    previousButton.addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage -= 1;
+    loadOrderMasterData()
+        .then(({ masterData }) => {
+            const book = getFirebaseOrderBooks(masterData).find((entry) => entry.id === requestedBookId);
+            if (!book) throw new Error('The book is missing from Firebase master data.');
+            document.title = `${book.name} နမူနာ | Physics Learning Hub`;
+            document.getElementById('reader-title').textContent = book.name;
+            image.alt = `${book.name} နမူနာစာမျက်နှာ`;
+            image.addEventListener('load', () => {
+                image.hidden = false;
+                message.textContent = '';
+            });
+            image.addEventListener('error', () => {
+                image.hidden = true;
+                message.textContent = 'ဤစာအုပ်၏ နမူနာစာမျက်နှာများကို မတင်ရသေးပါ။';
+            });
+            previousButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage -= 1;
+                    showPage();
+                }
+            });
+            nextButton.addEventListener('click', () => {
+                if (currentPage < 10) {
+                    currentPage += 1;
+                    showPage();
+                }
+            });
             showPage();
-        }
-    });
-    nextButton.addEventListener('click', () => {
-        if (currentPage < 10) {
-            currentPage += 1;
-            showPage();
-        }
-    });
-    showPage();
+        })
+        .catch((error) => {
+            console.error('Unable to load the Firebase book catalog.', error);
+            document.getElementById('reader-title').textContent = 'စာအုပ်အချက်အလက် မရနိုင်ပါ';
+            message.textContent = 'Firebase မှ စာအုပ်စာရင်းကို ရယူမရပါ။';
+            previousButton.disabled = true;
+            nextButton.disabled = true;
+        });
 }
 
 document.addEventListener('contextmenu', (event) => event.preventDefault());
