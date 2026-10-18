@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <script src="/auth-guard.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f8fc">
+    <title>စာအုပ်ဆိုင်များ | Physics Learning Hub</title>
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="stylesheet" href="bookstores.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="brand.css">
+</head>
+<body>
+    <main class="directory">
+        <a class="back-link" href="../index.html">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            မူလစာမျက်နှာ
+        </a>
+
+        <header class="directory-hero">
+            <span class="eyebrow"><i class="fa-solid fa-book-open" aria-hidden="true"></i> PHYSICS LEARNING HUB</span>
+            <h1>စာအုပ်ဆိုင်များ</h1>
+            <p>မြို့အလိုက် စာအုပ်ဆိုင်များကို ရှာဖွေပြီး ဖုန်းတစ်ချက်နှိပ်ကာ တိုက်ရိုက်ခေါ်ဆိုနိုင်ပါတယ်။</p>
+            <div class="hero-note"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> မြို့အလိုက် ဆိုင်စာရင်း</div>
+        </header>
+
+        <section class="directory-tools" aria-label="ဆိုင်စာရင်းရှာဖွေရန်">
+            <label class="search-box">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input id="shopSearch" type="search" placeholder="မြို့၊ ဆိုင်အမည်၊ လိပ်စာ ရှာရန်" autocomplete="off">
+            </label>
+            <div id="cityFilters" class="city-filters" aria-label="မြို့ရွေးချယ်ရန်"></div>
+        </section>
+
+        <section class="results-heading" aria-live="polite">
+            <div>
+                <span class="eyebrow">BOOKSHOP DIRECTORY</span>
+                <h2 id="resultsTitle">ဆိုင်စာရင်း</h2>
+            </div>
+            <span id="resultCount" class="result-count"></span>
+        </section>
+
+        <section id="shopGrid" class="shop-grid" aria-live="polite"></section>
+        <p id="emptyState" class="empty-state" hidden>ရှာဖွေမှုနှင့် ကိုက်ညီသော ဆိုင်မရှိပါ။</p>
+    </main>
+
+    <script src="bookstores.js"></script>
+</body>
+</html>

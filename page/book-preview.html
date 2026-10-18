@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <script src="/auth-guard.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <title>စာအုပ်နမူနာ | Physics Learning Hub</title>
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="books.css">
+</head>
+<body>
+    <main class="shop-page reader-page">
+        <header class="shop-header">
+            <a href="books.html" class="back-link" aria-label="စာအုပ်စာရင်းသို့ ပြန်သွားရန်"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+            <div><span class="shop-eyebrow">စာအုပ်နမူနာ</span><h1 id="reader-title">စာအုပ်</h1></div>
+            <a class="shop-cart-link" href="order.html"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i><span>မှာယူမည်</span></a>
+        </header>
+        <section class="reader-card" aria-label="စာအုပ်နမူနာစာမျက်နှာ">
+            <div class="reader-page-frame" id="reader-page-frame">
+                <img id="sample-page" alt="" hidden draggable="false">
+                <p id="sample-message" role="status"></p>
+            </div>
+            <div class="reader-controls">
+                <button id="previous-page" type="button" aria-label="ယခင်စာမျက်နှာ"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                <span id="page-indicator" aria-live="polite">စာမျက်နှာ 1 / 10</span>
+                <button id="next-page" type="button" aria-label="နောက်စာမျက်နှာ"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+            </div>
+            <p class="reader-note">နမူနာပုံများကို <code>pictures/book samples/&lt;book-id&gt;/page-01.png</code> မှ <code>page-10.png</code> အထိ အမည်ပေးပြီး တင်ပါ။</p>
+        </section>
+        <p class="preview-limit-note">ဤကြည့်ရှုမှုတွင် download ခလုတ် မပါဝင်ပါ။ သို့သော် website ပေါ်ရှိ ပုံများကို ကူးယူခြင်း သို့မဟုတ် screenshot ရိုက်ခြင်းကို browser မှ အပြည့်အဝတားဆီး၍ မရနိုင်ပါ။</p>
+    </main>
+    <script src="books-data.js"></script>
+    <script src="book-preview.js"></script>
+</body>
+</html>
