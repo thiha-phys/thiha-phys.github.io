@@ -444,6 +444,7 @@
       </div>
     </main>
 
+    <script src="firebase-order-api.js"></script>
     <script src="profile-api.js"></script>
     <script>
         const loginTab = document.getElementById('login-tab');
@@ -534,7 +535,7 @@
                 console.error('Unable to create the profile in the configured storage backend.', error);
                 connectionNote.textContent = error.code === 'PHONE_EXISTS'
                     ? 'ဒီဖုန်းနံပါတ်နဲ့ အကောင့်ရှိပြီးသားပါ။ Login ဝင်ပါ။'
-                    : `Server ထဲသို့ အချက်အလက်ပို့မရပါ။ ${error.message}`;
+                    : `Firebase ထဲသို့ အချက်အလက်သိမ်းမရပါ။ ${error.message}`;
                 return;
             }
 

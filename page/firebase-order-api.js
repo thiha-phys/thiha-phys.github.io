@@ -37,8 +37,14 @@ async function firebaseAuthRequest(url, body, formEncoded = false) {
     });
     const result = await response.json();
     if (!response.ok) {
-        const error = new Error(result.error?.message || `Firebase Authentication failed (${response.status}).`);
-        error.code = result.error?.message || 'AUTH_FAILED';
+        const authError = result.error?.message || '';
+        const message = authError.includes('CONFIGURATION_NOT_FOUND')
+            ? 'Firebase Authentication ကို မစတင်ရသေးပါ။ Firebase Console > Authentication မှ setup ပြီး Anonymous sign-in ကို ဖွင့်ပါ။'
+            : authError.includes('OPERATION_NOT_ALLOWED')
+                ? 'Anonymous sign-in ပိတ်ထားပါသည်။ Firebase Console > Authentication > Sign-in method မှ ဖွင့်ပါ။'
+                : authError || `Firebase Authentication failed (${response.status}).`;
+        const error = new Error(message);
+        error.code = authError || 'AUTH_FAILED';
         throw error;
     }
     return result;

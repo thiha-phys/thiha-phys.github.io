@@ -456,6 +456,7 @@
 
     </div>
 
+    <script src="firebase-order-api.js"></script>
     <script src="profile-api.js"></script>
     <script>
         const editButton = document.getElementById('edit-profile-button');
@@ -574,9 +575,10 @@
                 updatedProfile[field] = field === 'phone' ? formatPhoneNumber(normalizedPhone) : value;
             }
 
+            let syncResult;
             try {
                 profileStatus.textContent = 'သင့်ဧ။် account ဆိုင်ရာ အချက်အလက်တွေ ပြင်ဆင်နေပါတယ်...';
-                await sendProfileRequest('update', {
+                syncResult = await sendProfileRequest('update', {
                     name: updatedProfile.name,
                     job: updatedProfile.occupation,
                     email: updatedProfile.email,
@@ -604,7 +606,9 @@
                 element.textContent = updatedProfile[field];
             }
 
-            profileStatus.textContent = '';
+            profileStatus.textContent = syncResult.syncPending
+                ? 'Firebase ထဲမှာ သိမ်းပြီးပါပြီ။ Sheet sync ကို နောက်တစ်ကြိမ် ပြန်ကြိုးစားပါမည်။'
+                : '';
             closeEditForm();
         });
     </script>

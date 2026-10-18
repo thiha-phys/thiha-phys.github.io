@@ -94,6 +94,7 @@ loadOrderMasterData()
 function collectFeedback() {
     const formData = new FormData(feedbackForm);
     return {
+        name: signedInProfile.name,
         phone: signedInProfile.phone,
         job: String(formData.get('job') || ''),
         books: feedbackBooks.map((book) => ({
@@ -164,13 +165,16 @@ submitFeedbackButton.addEventListener('click', async () => {
     submitFeedbackButton.disabled = true;
     feedbackStatus.textContent = 'ပေးပို့နေပါသည်။ ခဏစောင့်ပေးပါ။';
     try {
-        await sendProfileRequest('submitFeedback', {
+        const syncResult = await sendProfileRequest('submitFeedback', {
+            name: reviewedFeedback.name,
             phone: reviewedFeedback.phone,
             job: reviewedFeedback.job,
             books: reviewedFeedback.books,
             otherSuggestion: reviewedFeedback.otherSuggestion
         });
-        feedbackStatus.textContent = '';
+        feedbackStatus.textContent = syncResult.syncPending
+            ? 'Firebase ထဲမှာ သိမ်းပြီးပါပြီ။ Sheet sync ကို နောက်တစ်ကြိမ် ပြန်ကြိုးစားပါမည်။'
+            : '';
         feedbackReviewPanel.hidden = true;
         feedbackSuccess.hidden = false;
         feedbackSuccess.scrollIntoView({ behavior: 'smooth', block: 'start' });

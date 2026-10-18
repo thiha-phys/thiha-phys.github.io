@@ -322,7 +322,7 @@ getDeliveryCities()
     })
     .catch((error) => {
         console.error('Unable to load delivery cities.', error);
-        cityStatus.textContent = 'Firebase master data ကို ရယူမရပါ။ Firebase Auth နှင့် master data ကို စစ်ဆေးပါ။';
+        cityStatus.textContent = `Firebase မှာယူမှုအချက်အလက်ကို ရယူမရပါ။ ${error.message}`;
         confirmOrderButton.disabled = true;
     });
 

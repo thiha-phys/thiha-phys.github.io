@@ -37,6 +37,6 @@ loadOrderMasterData()
         console.error('Unable to load the Firebase book catalog.', error);
         const message = document.createElement('p');
         message.className = 'form-status';
-        message.textContent = 'စာအုပ်စာရင်းကို Firebase မှ ရယူမရပါ။';
+        message.textContent = `စာအုပ်စာရင်းကို Firebase မှ ရယူမရပါ။ ${error.message}`;
         bookGrid.replaceChildren(message);
     });

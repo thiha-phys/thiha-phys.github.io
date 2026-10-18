@@ -13,12 +13,13 @@
       "$orderId": {
         ".read": "auth != null && data.child('ownerUid').val() === auth.uid",
         ".write": "auth != null && !data.exists() && newData.child('ownerUid').val() === auth.uid && newData.child('syncStatus').val() === 'pending'",
-        ".validate": "newData.hasChildren(['ownerUid', 'syncStatus', 'createdAt', 'request']) && newData.numChildren() === 4",
+        ".validate": "newData.hasChildren(['ownerUid', 'syncStatus', 'createdAt', 'request'])",
         "ownerUid": { ".validate": "newData.isString()" },
         "syncStatus": { ".validate": "newData.val() === 'pending'" },
         "createdAt": { ".validate": "newData.isString()" },
+        "$other": { ".validate": false },
         "request": {
-          ".validate": "newData.hasChildren(['name', 'phone', 'phone2', 'deliveryCity', 'address', 'deliveryService', 'carDetails', 'paymentMethod', 'items']) && newData.numChildren() === 9",
+          ".validate": "newData.hasChildren(['name', 'phone', 'phone2', 'deliveryCity', 'address', 'deliveryService', 'carDetails', 'paymentMethod', 'items'])",
           "name": { ".validate": "newData.isString() && newData.val().length <= 120" },
           "phone": { ".validate": "newData.isString() && newData.val().length <= 30" },
           "phone2": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 30)" },
@@ -28,26 +29,49 @@
           "carDetails": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 240)" },
           "paymentMethod": { ".validate": "newData.val() === 'COD' || newData.val() === 'KBZ Pay'" },
           "items": {
-            ".validate": "newData.hasChildren() && newData.numChildren() <= 20",
+            ".validate": "newData.hasChildren()",
             "$itemIndex": {
-              ".validate": "newData.hasChildren(['id', 'quantity']) && newData.numChildren() === 2",
+              ".validate": "newData.hasChildren(['id', 'quantity'])",
               "id": { ".validate": "newData.isString() && newData.val().length <= 80" },
-              "quantity": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000" }
+              "quantity": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000" },
+              "$other": { ".validate": false }
             }
-          }
+          },
+          "$other": { ".validate": false }
         }
       }
     },
     "profiles": {
+      ".indexOn": ["syncStatus"],
       "$phone": {
-        ".read": true,
-        ".write": true
+        ".read": "auth != null",
+        ".write": "auth != null"
       }
     },
     "recommendations": {
+      ".indexOn": ["syncStatus"],
       "$recommendationId": {
         ".read": false,
-        ".write": true
+        ".write": "auth != null && !data.exists() && newData.child('ownerUid').val() === auth.uid && newData.child('syncStatus').val() === 'pending'",
+        ".validate": "newData.hasChildren(['ownerUid', 'name', 'phone', 'job', 'books', 'otherSuggestion', 'syncStatus', 'submittedAt'])",
+        "ownerUid": { ".validate": "newData.isString()" },
+        "name": { ".validate": "newData.isString() && newData.val().length <= 120" },
+        "phone": { ".validate": "newData.isString() && newData.val().length <= 30" },
+        "job": { ".validate": "newData.val() === 'teacher' || newData.val() === 'student'" },
+        "otherSuggestion": { ".validate": "newData.isString() && newData.val().length <= 2000" },
+        "syncStatus": { ".validate": "newData.val() === 'pending'" },
+        "submittedAt": { ".validate": "newData.isString()" },
+        "books": {
+          ".validate": "newData.hasChildren()",
+          "$bookIndex": {
+            ".validate": "newData.hasChildren(['id', 'rating', 'suggestion'])",
+            "id": { ".validate": "newData.isString()" },
+            "rating": { ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 5" },
+            "suggestion": { ".validate": "newData.isString() && newData.val().length <= 1000" },
+            "$other": { ".validate": false }
+          }
+        },
+        "$other": { ".validate": false }
       }
     }
   }
