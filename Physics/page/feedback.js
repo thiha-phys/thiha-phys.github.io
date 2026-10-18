@@ -148,7 +148,7 @@ submitFeedbackButton.addEventListener('click', async () => {
     submitFeedbackButton.disabled = true;
     feedbackStatus.textContent = 'ပေးပို့နေပါသည်။ ခဏစောင့်ပေးပါ။';
     try {
-        await sendProfileToSheet('submitFeedback', {
+        await sendProfileRequest('submitFeedback', {
             phone: reviewedFeedback.phone,
             job: reviewedFeedback.job,
             books: reviewedFeedback.books,

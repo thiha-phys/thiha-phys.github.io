@@ -524,17 +524,17 @@
                 }
 
                 connectionNote.textContent = 'အချက်အလက်တွေကို သိမ်းနေပါတယ်...';
-                await sendProfileToSheet('create', {
+                await sendProfileRequest('create', {
                     name: profile.name,
                     job: profile.occupation,
                     email: profile.email,
                     phone: profile.phone
                 });
             } catch (error) {
-                console.error('Unable to create the profile in Google Sheets.', error);
+                console.error('Unable to create the profile in the configured storage backend.', error);
                 connectionNote.textContent = error.code === 'PHONE_EXISTS'
                     ? 'ဒီဖုန်းနံပါတ်နဲ့ အကောင့်ရှိပြီးသားပါ။ Login ဝင်ပါ။'
-                    : `Sheet ထဲသို့ အချက်အလက်ပို့မရပါ။ ${error.message}`;
+                    : `Server ထဲသို့ အချက်အလက်ပို့မရပါ။ ${error.message}`;
                 return;
             }
 
@@ -567,14 +567,19 @@
                     phone: formatPhoneNumber(result.profile.phone)
                 };
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(profile));
-                window.location.href = '../index.html';
+                const returnTo = new URLSearchParams(window.location.search).get('returnTo');
+                const safeReturnTo = returnTo && returnTo.startsWith('/Physics/') &&
+                    !returnTo.startsWith('/Physics/page/login.html')
+                    ? returnTo
+                    : '../index.html';
+                window.location.replace(safeReturnTo);
             } catch (error) {
                 if (error.code === 'PHONE_NOT_FOUND') {
                     connectionNote.textContent = 'ဒီဖုန်းနံပါတ်ကို စာရင်းများထဲမှာ မတွေ့ပါ။ ဖုန်းနံပါတ်ကို စစ်ဆေးပါ။';
                     return;
                 }
 
-                console.error('Unable to verify the profile in Google Sheets.', error);
+                console.error('Unable to verify the profile in the configured storage backend.', error);
                 connectionNote.textContent = /Action must.*create.*update/i.test(error.message)
                     ? 'Login server မှာ account ရှာဖွေစစ်ဆေးတဲ့လုပ်ဆောင်ချက် မပါသေးပါ။ လက်ရှိ Code.gs ကို Apps Script မှာ Deploy > Manage deployments မှတစ်ဆင့် version အသစ်တင်ပေးပါ။'
                     : `Login မလုပ်နိုင်ပါ။ ${error.message}`;
