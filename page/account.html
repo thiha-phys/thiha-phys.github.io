@@ -456,7 +456,6 @@
 
     </div>
 
-    <script src="firebase-order-api.js"></script>
     <script src="profile-api.js"></script>
     <script>
         const editButton = document.getElementById('edit-profile-button');
@@ -575,10 +574,9 @@
                 updatedProfile[field] = field === 'phone' ? formatPhoneNumber(normalizedPhone) : value;
             }
 
-            let syncResult;
             try {
                 profileStatus.textContent = 'သင့်ဧ။် account ဆိုင်ရာ အချက်အလက်တွေ ပြင်ဆင်နေပါတယ်...';
-                syncResult = await sendProfileRequest('update', {
+                await sendProfileRequest('update', {
                     name: updatedProfile.name,
                     job: updatedProfile.occupation,
                     email: updatedProfile.email,
@@ -586,18 +584,18 @@
                     lookupPhone: savedProfileForUpdate.phone
                 });
             } catch (error) {
-                console.error('Unable to update the profile in Firebase.', error);
+                console.error('Unable to update the account profile.', error);
                 profileStatus.textContent = error.code === 'PHONE_NOT_FOUND'
-                    ? 'ဒီဖုန်းနံပါတ်နဲ့ ကိုက်ညီတဲ့ Firebase account ကို မတွေ့ပါ။'
-                    : `Firebase ထဲမှာ update မလုပ်နိုင်ပါ။ ${error.message}`;
+                    ? 'ဒီဖုန်းနံပါတ်နဲ့ ကိုက်ညီတဲ့ account ကို မတွေ့ပါ။'
+                    : `Account ကို update မလုပ်နိုင်ပါ။ ${error.message}`;
                 return;
             }
 
             try {
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(updatedProfile));
             } catch (error) {
-                console.error('Firebase was updated, but the profile could not be saved in this browser.', error);
-                profileStatus.textContent = 'Firebase ထဲမှာ update လုပ်ပြီးပါပြီ၊ ဒါပေမယ့် ဒီ browser မှာ account ကို သိမ်းမရပါ။';
+                console.error('The account was updated, but the profile could not be saved in this browser.', error);
+                profileStatus.textContent = 'Account ကို update လုပ်ပြီးပါပြီ၊ ဒါပေမယ့် ဒီ browser မှာ account ကို သိမ်းမရပါ။';
                 return;
             }
 
@@ -606,9 +604,7 @@
                 element.textContent = updatedProfile[field];
             }
 
-            profileStatus.textContent = syncResult.syncPending
-                ? 'Firebase ထဲမှာ သိမ်းပြီးပါပြီ။ Sheet sync ကို နောက်တစ်ကြိမ် ပြန်ကြိုးစားပါမည်။'
-                : '';
+            profileStatus.textContent = '';
             closeEditForm();
         });
     </script>

@@ -51,13 +51,11 @@ function getPricing() {
 }
 
 function roundDeliveryWeight(weight) {
+    if (weight <= 0) return 0;
     const weightUnits = Math.round(weight * 100000);
-    if (weightUnits <= 60000) return 0.5;
     const wholeKg = Math.floor(weightUnits / 100000);
     const fractionalUnits = weightUnits - wholeKg * 100000;
-    if (fractionalUnits <= 20000) return wholeKg;
-    if (fractionalUnits < 60000) return wholeKg + 0.5;
-    return wholeKg + 1;
+    return fractionalUnits < 60000 ? wholeKg + 0.5 : wholeKg + 1;
 }
 
 function getSelectedDeliveryService() {
@@ -81,7 +79,7 @@ function getRoyalDeliveryFee(weight, city) {
 function getFinalRoyalDeliveryFee(weight, city) {
     const billableWeight = Math.ceil(weight - 0.000000001);
     const feeIncludingService = getRoyalDeliveryFee(billableWeight, city);
-    return (Math.floor(feeIncludingService / 500) + 1) * 500;
+    return Math.ceil(feeIncludingService / 500 - 0.000000001) * 500;
 }
 
 function updatePaymentOptions(totalWithDelivery) {
@@ -222,7 +220,7 @@ orderForm.querySelectorAll('input[name="deliveryService"]').forEach((input) => {
 
 function renderOrderBooks(masterData) {
     orderBookList.replaceChildren();
-    orderBooks = getFirebaseOrderBooks(masterData);
+    orderBooks = getOrderBooks(masterData);
     orderBooks.forEach((book) => {
         const row = document.createElement('article');
         row.className = 'order-book';
@@ -322,7 +320,7 @@ getDeliveryCities()
     })
     .catch((error) => {
         console.error('Unable to load delivery cities.', error);
-        cityStatus.textContent = `Firebase မှာယူမှုအချက်အလက်ကို ရယူမရပါ။ ${error.message}`;
+        cityStatus.textContent = `မှာယူမှုအချက်အလက်ကို ရယူမရပါ။ ${error.message}`;
         confirmOrderButton.disabled = true;
     });
 
@@ -673,12 +671,10 @@ orderForm.addEventListener('submit', async (event) => {
         orderSubmitted = true;
         displayReceipt(lastReceipt);
         orderSuccessDialog.showModal();
-        orderStatus.textContent = result.syncPending
-            ? `မှာယူမှုကို Firebase တွင် သိမ်းထားပြီးပါပြီ။ Sheet sync ကို ထပ်မံကြိုးစားနေပါသည်။ Order ID: ${result.orderId}`
-            : 'မှာယူမှုကို လက်ခံရရှိပါပြီ။ ဘောက်ချာကို Print / Save PDF သို့မဟုတ် ဘောက်ချာပုံ Share ကို အသုံးပြုပါ။';
+        orderStatus.textContent = 'မှာယူမှုကို လက်ခံရရှိပါပြီ။ ဘောက်ချာကို Print / Save PDF သို့မဟုတ် ဘောက်ချာပုံ Share ကို အသုံးပြုပါ။';
     } catch (error) {
         console.error('Unable to submit the book order.', error);
-        orderStatus.textContent = 'မှာယူမှု မအောင်မြင်ပါ။ Firebase ချိတ်ဆက်မှုကို စစ်ပြီး ထပ်မံကြိုးစားပါ။';
+        orderStatus.textContent = `မှာယူမှု မအောင်မြင်ပါ။ ${error.message}`;
     } finally {
         confirmOrderButton.disabled = orderSubmitted;
         confirmOrderButton.textContent = orderSubmitted ? 'မှာယူပြီးပါပြီ' : 'မှာယူမှု အတည်ပြုမည်';

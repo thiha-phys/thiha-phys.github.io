@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <script src="/customer/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>G12 Physics - Chapter 4 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .problem-list-container { padding: 10px 20px 80px; display: flex; flex-direction: column; gap: 16px; }
+    .problem-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; box-shadow: 0 3px 10px rgba(0,0,0,.04); padding: 16px; }
+    .problem-number { margin-bottom: 10px; }
+    .problem-number span { background: #eff6ff; border-radius: 6px; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; }
+    .problem-content { color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+    .problem-question { margin-top: 0; }
+    .problem-question > strong { color: #2563eb; }
+    .problem-content hr { border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0; }
+    .problem-content summary { color: #059669; cursor: pointer; font-weight: 600; }
+    .problem-answer { background: #f8fafc; border-radius: 8px; color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; line-height: 2; margin-top: 10px; overflow-wrap: anywhere; padding: 12px; }
+    .problem-answer p { margin: 7px 0; }
+    .calculation-table-wrap { margin: 8px 0; overflow-x: auto; }
+    .calculation-table { border-collapse: collapse; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; max-width: 100%; min-width: 0; width: max-content; }
+    .calculation-table td { border-bottom: 1px solid #e2e8f0; padding: 6px 4px; vertical-align: middle; }
+    .calculation-table tr:first-child td { background: #eff6ff; font-weight: 600; }
+    .calculation-result { color: #dc2626; font-weight: 700; }
+    @media (max-width: 600px) { .problem-list-container { padding-left: 12px; padding-right: 12px; } .problem-card { padding: 12px; } .problem-answer { padding: 8px; } }
+  </style>
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] } };</script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn" aria-label="အခန်းစာရင်းသို့ ပြန်သွားရန်"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+      <h1 class="page-title">Chapter 4 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+    <div class="grade-banner">
+      <h2>Chapter 4 - Sources of energy and environmental impacts</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း 11 ပုဒ်)</p>
+    </div>
+    <main class="problem-list-container"><article class="problem-card">
+  <div class="problem-number"><span>Eg.1</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; At present day, the rate of formation of fossil fuels (coal, petroleum, natural gas) is estimated to be about 4 billion kW (4 × l0<sup>9</sup> kW) and the world&#x27;s consumption of energy is of the order of 10<sup>17</sup> Btu/year. Show that the rate of consumption of fossil fuel is of the same order of magnitude as the rate of their formation and these energy sources are therefore non-renewable.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td><p>1 Btu = 1055 J </p><p>1 year = 365 \(\times \) 24 \(\times \) 3600 = 3.15 \(\times \) 10<sup>7</sup> s</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>The rate of formation of fossil fuel</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&emsp;= 4 billion kW = 4 × l0<sup>9</sup> × l0<sup>3 </sup>W</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&emsp;= <strong>4 </strong><strong>×</strong><strong> l0</strong><sup><strong>12</strong></sup><strong> J s</strong><sup><strong>-1</strong></sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>The world&#x27;s consumption of energy</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&emsp;= 10<sup>17</sup> Btu/year = \(\frac{{10}^{17}\,\mathrm{Btu}}{1\,\mathrm{year}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&emsp;= \(\frac{{10}^{17}\,\times \,1055\,J}{1\,\times 3.15\,\times \,{10}^{7}\,s}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&emsp;= <strong>3.35 </strong>\(\times \)<strong> 10</strong><sup><strong>12</strong></sup><strong> J s</strong><sup><strong>-1</strong></sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>Hence, the rate of consumption of fossil fuel is of the same order of magnitude as the rate of their formation and these energy sources are therefore non-renewable.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.2</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A home requires 62 kWh of heat on winter day to maintain a constant indoor temperature of 20\(℃\). Assume that the temperature of hot water outlet is 60\(℃\). (i) How much collector surface area does it need for a solar heating system that has a 20\(\%\) efficiency? (ii) How large does the storage tank have to be to provide this much energy? (The average solar radiation <strong>per day</strong> in winter is about 6.5 kWh m<sup>-2</sup>)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="5"><p>\({∆Q}_{\mathrm{req}}\)= 62 kWh, \({∆Q}_{\mathrm{input}}\) = 6.5 kWh m<sup>-2</sup></p><p>\(\eta \) = 20\(\%\) = 0.2</p></td></tr><tr><td><p>(i)</p></td><td><p>\(\eta \,\) </p></td><td><p>=</p></td><td colspan="3"><p>\(\frac{{∆Q}_{\mathrm{output}}}{{∆Q}_{\mathrm{input}}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\({∆Q}_{\mathrm{output}}\) </p></td><td><p>=</p></td><td colspan="3"><p>\({∆Q}_{\mathrm{input}}\) \(\times \) \(\eta \)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td colspan="3"><p>6.5 kWh m<sup>-2 </sup>\(\times \) 0.2</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td colspan="3"><p><strong>1.3 k </strong><strong>Wh</strong><strong> m</strong><sup><strong>-2</strong></sup></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Collector surface area</p></td><td><p>=</p></td><td><p>\(\frac{{∆Q}_{\mathrm{req}}}{{∆Q}_{\mathrm{output}}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{62\,\mathrm{kWh}}{1.3\,k\,\mathrm{Wh}\,{m}^{-2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>47.69 </strong>\(\approx \)<strong> </strong><strong>48 m</strong><sup><strong>2</strong></sup></p></td></tr><tr><td><p>(ii)</p></td><td><p>1 k Wh </p></td><td><p>=</p></td><td colspan="3"><p>3.6 \(\times \) 10<sup>6</sup> J</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\({∆Q}_{\mathrm{req}}\) </p></td><td><p>=</p></td><td colspan="3"><p>62 kWh = 62\(\times \) 3.6 \(\times \) 10<sup>6</sup> J</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(∆\)T</p></td><td><p>=</p></td><td colspan="3"><p>60 – 20 = 40\(℃\) = 40 K</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="5"><p>c = 4184 J kg<sup>-1</sup> K<sup>-1</sup> </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\({∆Q}_{\mathrm{req}}\) </p></td><td><p>=</p></td><td colspan="3"><p>m c \(∆\)T</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>m</p></td><td><p>=</p></td><td colspan="3"><p>\(\frac{{∆Q}_{\mathrm{req}}}{c\,∆T}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td colspan="3"><p>\(\frac{62\,\times \,3.6\,\times \,1{0}^{6}}{4184\,\times 40}\) = <strong>1333.6 kg</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="5"><p>Volume of storage tank should be <strong>1334 </strong><strong>L</strong>.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; The band gap of GaAs is 1.4 eV. Calculate the minimum wavelength of light for photovoltaic generation in a GaAs solar cell.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>E = 1.4 eV = 1.4 \(\times \) 1.6 \(\times \) 10<sup>-19</sup> J, \(\lambda \) = ?</p><p>h = 6.626 \(\times \) 10<sup>-34</sup> J s, c = 3 \(\times \) 10<sup>8</sup> m s<sup>-1</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>E</p></td><td><p>=</p></td><td><p>\(\frac{h\,c}{\lambda }\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\lambda \) </p></td><td><p>=</p></td><td><p>\(\frac{h\,c}{E}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{6.626\,\times \,1{0}^{-34}\,\times \,3\,\times \,{10}^{8}}{1.4\,\times \,1.6\,\times \,{10}^{-19}\,\,}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>8.87 \(\times \) 10<sup>-7</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>887 </strong>\(\times \)<strong> 10</strong><sup><strong>-9</strong></sup><strong> m (or) 887 nm</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A 100 ft \(\times \) 50 ft building has a flat roof. What is the average solar energy received by the roof in a month? (The solar radiation <strong>per day</strong> in winter is about 1600 Btu ft<sup>-2</sup>)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td><p>A = 100 ft \(\times \) 50 ft = 5000 ft<sup>2 </sup></p><p>t = 1 month = 30 days</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>Solar radiation per day = 1600 Btu ft<sup>-2</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>Energy received by roof in month</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>= 1600 Btu ft<sup>-2</sup> \(\times \) 5000 ft<sup>2</sup> \(\times \) 30</p><p>= 240 000 000 = <strong>24 </strong>\(\times \)<strong> 10</strong><sup><strong>7</strong></sup><strong> Btu</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Calculate the solar energy received by a standard hot water collector of dimensions  1 m \(\times \) 2 m, over one hour at around noon, it the irradiance stays fairly constant at about 800 W m<sup>-2</sup>.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td><p>A = 1 m \(\times \) 2 m = 2 m<sup>2</sup>, t = 1 h = 3600 s</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>Solar radiation = 800 W m<sup>-2</sup> = 800 J s<sup>-1</sup> m<sup>-2</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>Solar energy received by 2 m<sup>2</sup> in 1 h </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>= 800 J s<sup>-1</sup> m<sup>-2 </sup>\(\times \)<sup> </sup>3600 s \(\times \) 2 m<sup>2</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>= <strong>5.76 </strong>\(\times \)<strong> 10</strong><sup><strong>6</strong></sup><strong> J</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Determine the input power of the wind if the wind speed is 20 m s<sup>-1</sup> and blade length is 20 m. Density of air is 1.3 kg m<sup>-3</sup>.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>v = 20 m s<sup>-1</sup>,\(\rho \) = 1.3 kg m<sup>-</sup><sup>3</sup>,r = 20 m,P = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>A = \(\pi \) r<sup>2</sup> = 3.142 \(\times \) 20<sup>2</sup> m<sup>2</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\frac{1}{2}\) \(\rho \) A v<sup>3</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{2}\) \(\times \) 1.3 \(\times \) 3.142 \(\times \) 20<sup>2</sup> \(\times \) 20<sup>3</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>6.535 \(\times \) 10<sup>6</sup> W = <strong>6.535 MW</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.12</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; The wind is blowing at 10 m s<sup>-1</sup>, how much total power produced by the wind turbine if the blades are 45 m long? Density of air is 1.3 kg m<sup>-3</sup>.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>v = 10 m s<sup>-1</sup>, \(\rho \) = 1.3 kg m<sup>-3</sup></p><p>r = 45 m, &emsp;P = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>A = \(\pi \) r<sup>2</sup> = 3.142 \(\times \) 45<sup>2</sup> m<sup>2</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\frac{1}{2}\) \(\rho \) A v<sup>3</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{2}\) \(\times \) 1.3 \(\times \) 3.142 \(\times \) 45<sup>2</sup>  \(\times \) 10<sup>3</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>4.136 \(\times \) 10<sup>6</sup> W = <strong>4.136 MW</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; At a hydroelectric power plant, the water pressure head is at a height of 300 m and the water flow available is 100 m<sup>3</sup> s<sup>-1</sup>. If the turbine generator efficiency is 60\(\%\), estimate the electric power available from the plant. (g = 9.8 m s<sup>-2</sup>, \(\rho \) = 1000 kg m<sup>-3</sup>)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>h = 300 m, \(\overset{̇}{V}\) = 100 m<sup>3</sup> s<sup>-1</sup>, \(\eta \) = 60\(\%\) = 0.6 </p><p>g = 9.8 m s<sup>-2</sup>, \(\rho \) = 1000 kg m<sup>-3</sup>, P = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\eta \) \(\rho \) \(\overset{̇}{V}\) g h</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.6 \(\times \) 1000 \(\times \) 100 \(\times \) 9.8 \(\times \) 300</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>176.4 \(\times \) 10<sup>6</sup> W = <strong>176.4 MW</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.10</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An important hydroelectric plant has a head of 100 m and water volumetric flow rate of 10 000 m<sup>3</sup> s<sup>-1</sup>. The turbine generator efficiency is 60\(\%\). What is the maximum power that the plant can produce? (Density of water = 1000 kg m<sup>-3</sup>)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>h = 100 m, \(\overset{̇}{V}\) = 10 000 m<sup>3</sup> s<sup>-1</sup>,</p><p>\(\eta \) = 60\(\%\) = 0.6, g = 9.8 m s<sup>-2</sup>, </p><p>\(\rho \) = 1000 kg m<sup>-3</sup>, P = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\eta \) \(\rho \) \(\overset{̇}{V}\) g h</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.6 \(\times \) 1000 \(\times \) 10 000 \(\times \) 9.8 \(\times \) 100</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>5880 \(\times \) 10<sup>6</sup> W = <strong>5880 MW</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.11</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A dam which maximum head of 200 m produces to 2000 MW electrical power. What is the rate of falling water on the turbines? The turbine generator efficiency is 50\(\%\). (Density of water = 1000 kg m<sup>-3</sup>).</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>h = 200 m, \(\overset{̇}{V}\) = ?, \(\eta \) = 50\(\%\) = 0.5</p><p>g = 9.8 m s<sup>-2</sup>, \(\rho \) = 1000 kg m<sup>-3</sup></p><p>P = 2000 MW = 2000\(\times \) 10<sup>6 </sup>W</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\eta \) \(\rho \) \(\overset{̇}{V}\) g h</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\overset{̇}{V}\) </p></td><td><p>=</p></td><td><p>\(\frac{P}{\eta \,\rho \,g\,h}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{2000\,\times \,1{0}^{6}\,}{0.5\,\times 1000\,\times \,9.8\,\times \,200}\) = <strong>2040 m</strong><sup><strong>3</strong></sup><strong> s</strong><sup><strong>-1</strong></sup></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.8</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; The hydro turbine receives water from a reservoir at an elevation of 100 m above it. What is the minimum water flow in kg s<sup>-1</sup> to produce a steady turbine output of 50 MW if the turbine generator efficiency is 75 \(\%\)?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>h = 100 m, \(\eta \) = 75\(\%\) = 0.75</p><p>P = 50 MW = 50 \(\times \) 10<sup>6 </sup>W</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\eta \) \(\rho \) \(\overset{̇}{V}\) g h</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\eta \) \(\rho \) \(\frac{V}{t}\) g h</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\eta \) \(\frac{m}{t}\) g h&emsp;&emsp;(\(\because \) m = \(\rho \) V)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{m}{t}\) </p></td><td><p>=</p></td><td><p>\(\frac{P}{\eta \,g\,h}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{m}{t}\) </p></td><td><p>=</p></td><td><p>\(\frac{50\,\times \,1{0}^{6}\,}{0.75\,\times \,9.8\,\times \,100}\) = <strong>68027 kg s</strong><sup><strong>-1</strong></sup></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article></main>
+  </div>
+  <script src="calculation-format.js"></script>
+</body>
+</html>

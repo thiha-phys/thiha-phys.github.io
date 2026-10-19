@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <script src="/customer/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>G12 Physics - Chapter 5 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .problem-list-container { padding: 10px 20px 80px; display: flex; flex-direction: column; gap: 16px; }
+    .problem-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; box-shadow: 0 3px 10px rgba(0,0,0,.04); padding: 16px; }
+    .problem-number { margin-bottom: 10px; }
+    .problem-number span { background: #eff6ff; border-radius: 6px; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; }
+    .problem-content { color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+    .problem-question { margin-top: 0; }
+    .problem-question > strong { color: #2563eb; }
+    .problem-content hr { border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0; }
+    .problem-content summary { color: #059669; cursor: pointer; font-weight: 600; }
+    .problem-answer { background: #f8fafc; border-radius: 8px; color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; line-height: 2; margin-top: 10px; overflow-wrap: anywhere; padding: 12px; }
+    .problem-answer p { margin: 7px 0; }
+    .calculation-table-wrap { margin: 8px 0; overflow-x: auto; }
+    .calculation-table { border-collapse: collapse; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; max-width: 100%; min-width: 0; width: max-content; }
+    .calculation-table td { border-bottom: 1px solid #e2e8f0; padding: 6px 4px; vertical-align: middle; }
+    .calculation-table tr:first-child td { background: #eff6ff; font-weight: 600; }
+    .calculation-result { color: #dc2626; font-weight: 700; }
+    @media (max-width: 600px) { .problem-list-container { padding-left: 12px; padding-right: 12px; } .problem-card { padding: 12px; } .problem-answer { padding: 8px; } }
+  </style>
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] } };</script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn" aria-label="အခန်းစာရင်းသို့ ပြန်သွားရန်"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+      <h1 class="page-title">Chapter 5 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+    <div class="grade-banner">
+      <h2>Chapter 5 - Heat Transfer and Thermodynamics</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း 18 ပုဒ်)</p>
+    </div>
+    <main class="problem-list-container"><article class="problem-card">
+  <div class="problem-number"><span>Eg.1</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A person walking at a regular speed generations heat at the rate of 0.07 W. If the surface area of the body is 1.5 m<sup>2</sup> and heat is to be generated 0.03 m below the skin, what should be the temperature difference between the skin and interior of the body if the heat is to be conducted to the surface of the skin? (\(k\) = 5 \(\times \) 10<sup>-5</sup> W m<sup>-1</sup> K<sup>-1</sup>)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>H = 0.07 W, A = 1.5 m<sup>2</sup>, <em>l</em> = 0.03 m</p><p>T<sub>2</sub> – T<sub>1</sub> = ?, \(k\) = 5 \(\times \) 10<sup>-5</sup> W m<sup>-1</sup> K<sup>-1</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By rate of heat conduction,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>cond</sub></p></td><td><p>=</p></td><td><p>\(k\)<em> A</em> \(\frac{{T}_{2}\,-\,{T}_{1}}{l}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>T<sub>2</sub> – T<sub>1</sub></p></td><td><p>=</p></td><td><p>\(\frac{{H}_{\mathrm{cond}\,}l}{k\,A}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{0.07\times 0.03\,}{5\,\times \,1{0}^{-5}\,\times 1.5}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>28 K (or) 28 </strong>\(℃\)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.9</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; The area and thickness of a glass plate of a window are 0.25 m<sup>2</sup> and 4 mm respectively. The temperature of inside surface of glass plate is 25 \(℃\) and its outside temperature is 26\(℃\). Find the amount of heat that passes through the glass plate in one hour. The thermal conductivity of glass is 0.78 W m<sup>-1</sup> K<sup>-1</sup>.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>A = 0.25 m<sup>2</sup>, <em>l</em> = 4 mm = 4 \(\times \) 10<sup>-3</sup> m</p><p>T<sub>2</sub> = 26 \(℃\) = 26 + 273 = 299 K</p><p>T<sub>1</sub> = 25 \(℃\) = 25 + 273 = 298 K</p><p>\(k\) = 0.78 W m<sup>-1</sup> K<sup>-1</sup>, \(∆\)Q = ? </p><p>t = 1 h = 3600 s</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By rate of heat conduction,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>cond</sub></p></td><td><p>=</p></td><td><p>\(k\)<em> A</em> \(\frac{{T}_{2}\,-\,{T}_{1}}{l}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>cond</sub></p></td><td><p>=</p></td><td><p>\(\frac{∆Q}{t}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{∆Q}{t}\) </p></td><td><p>=</p></td><td><p>\(k\)<em> A</em> \(\frac{{T}_{2}\,-\,{T}_{1}}{l}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(∆\)Q</p></td><td><p>=</p></td><td><p>\(k\)<em> A</em> \(\frac{{T}_{2}\,-\,{T}_{1}}{l}\) t</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.78 \(\times \) 0.25 \(\frac{(299\,-\,298\,)}{4\,\times \,1{0}^{-3}}\) \(\times \) 3600</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>175 500 J</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.10</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; How much <strong>heat per second</strong> is conducted through a wooden wall of area 25 m<sup>2</sup> and thickness 0.04 m if the temperature inside is 20 \(℃\) and the temperature outside is -10 \(℃\) ? The thermal conductivity of wood is 8.37 \(\times \) 10<sup>-2</sup> W m<sup>-1</sup> K<sup>-1</sup>.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>A = 25 m<sup>2</sup>,<em> </em><em>l</em> = 0.04 m</p><p>T<sub>2</sub> = 20 \(℃\) = 20 + 273 = 293 K,</p><p>T<sub>1</sub> = - 10 \(℃\) = - 10 + 273 = 263 K </p><p>\(k\) = 8.37 \(\times \) 10<sup>-2</sup> W m<sup>-1</sup> K<sup>-1</sup>, H = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By rate of heat conduction,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>cond</sub></p></td><td><p>=</p></td><td><p>\(k\)<em> A</em> \(\frac{{T}_{2}\,-\,{T}_{1}}{l}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>8.37 \(\times \) 10<sup>-2</sup> \(\times \) 25 \(\times \) \(\frac{(293\,-\,263)\,}{0.04}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1569.38 W</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>1569.38 J s</strong><sup><strong>-1</strong></sup></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.2</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A new computer chip with a surface area of 1 cm<sup>2</sup> <strong>generate</strong> 10 W of heat. Determine the <strong>convective heat transfer coefficient</strong> of the material needed to keep the temperature of the chip <strong>less than 20 </strong>\(℃\) above the environmental temperature. <strong>Can</strong> the chip be cooled with air, or will it require forced convection? Convective heat transfer coefficient of air is 2.5 to 25 W m<sup>-2</sup> K<sup>-1</sup>. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>A = 1 cm<sup>2</sup> = 1 (10<sup>-2</sup> m)<sup>2</sup> = 1 \(\times \) 10<sup>-4</sup> m<sup>2</sup>,</p><p>H = -10 W (generate)</p><p>T<sub>2</sub> – T<sub>1</sub> = - 20 \(℃\) = - 20 K (T<sub>1</sub> &gt; T<sub>2</sub>)</p><p>q = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By rate of heat convection,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>conv</sub></p></td><td><p>=</p></td><td><p>q A (T<sub>2</sub> – T<sub>1</sub>)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>q</p></td><td><p>=</p></td><td><p>\(\frac{{H}_{\mathrm{conv}}}{A\,({T}_{2}-\,{T}_{1})}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{-\,10}{1\,\times 1{0}^{-4}\,(-20)}\,\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>5000 </strong><strong>W m</strong><sup><strong>-2</strong></sup><strong> K</strong><sup><strong>-1</strong></sup></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Since convective heat transfer coefficient of air is very much less than 5000 W m<sup>-2</sup> K<sup>-1</sup>, the chip cannot be cooled with air. Therefore, it will require the forced convection. </p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; In a room, the temperature of water in a kettle is 80 \(℃\). The room temperature is    30 \(℃\) and the surface area of the kittle is 0.02 m<sup>2</sup>. If the emissivity is 0.9. Find the rate of heat loss due to radiation. (\(\sigma \) = 5.685 \(\times \) 10<sup>-8</sup> W m<sup>-2</sup> K<sup>-4</sup>)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>T<sub>2</sub> = 80 \(℃\) = 80 + 273 = 353 K</p><p>T<sub>1</sub> = 30 \(℃\) = 30 + 273 = 303 K</p><p>A = 0.02 m<sup>2</sup>, e = 0.9</p><p>H = ?&emsp;\(\sigma \) = 5.685 \(\times \) 10<sup>-8</sup> W m<sup>-2</sup> K<sup>-4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By rate of heat radiation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>rad</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A T<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>out</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A \({T}_{2}^{4}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>in</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A \({T}_{1}^{4}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>lost</sub></p></td><td><p>=</p></td><td><p>H<sub>out</sub> - H<sub>in</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A \({T}_{2}^{4}\) - e \(\sigma \)<strong> </strong>A \({T}_{1}^{4}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A (\({T}_{2}^{4}\) - \({T}_{1}^{4}\))</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.9\(\times \)5.685\(\times \)10<sup>-8</sup>\(\times \)0.02(\({353}^{4}\) - \({303}^{4}\))</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>7.26 W</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.11</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; The filament of a 100 W electric bulb is made of tungsten. The emissivity of tungsten is 0.3 and its length is 0.2 m. Find the diameter of the filament, if its temperature is 3000 K when the bulb is switched on. (\(\sigma \) = 5.685 \(\times \) 10<sup>-8</sup> W m<sup>-2</sup> K<sup>-4</sup>)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>H = 100 W, e = 0.3, <em>l</em> = 0.2 m, T = 3000 K,</p><p>d = ?, \(\sigma \) = 5.685 \(\times \) 10<sup>-8</sup> W m<sup>-2</sup> K<sup>-4</sup></p><p>Area of filament, A = 2 \(\pi \) r <em>l</em> = \(\pi \) 2r <em>l</em> = \(\pi \) d <em>l</em></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By rate of heat radiation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>rad</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A T<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>rad</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>\(\pi \) d <em>l</em> T<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d</p></td><td><p>=</p></td><td><p>\(\frac{{H}_{\mathrm{rad}}}{e\,\sigma \,\pi \,l\,{T}^{4}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{100}{0.3\,\times \,5.685\,\times \,1{0}^{-8}\,\times \,3.142\,\times \,0.2\,\times \,{3000}^{4}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>d</p></td><td><p>=</p></td><td><p>0.000115 = <strong>1.153 </strong>\(\times \,1{0}^{-4}\)<strong> m</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.12</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; The temperature of the filament is 2500 K when the bulb is switched on. The diameter of the filament is 0.1 mm and it is made of metal of emissivity 0.35. If the power is    40 W, find the length of the filament. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>T = 2500 K, d = 0.1 mm = 0.1 \(\times \) 10<sup>-3</sup> m</p><p>e = 0.35, H = 40 W, <em>l</em> = ?</p><p>\(\sigma \) = 5.685 \(\times \) 10<sup>-8</sup> W m<sup>-2</sup> K<sup>-4</sup></p><p>Area of filament, A = \(\pi \) d <em>l</em></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By rate of heat radiation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>rad</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A T<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>rad</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>\(\pi \) d <em>l</em> T<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p><em>l</em></p></td><td><p>=</p></td><td><p>\(\frac{{H}_{\mathrm{rad}}}{e\,\sigma \,\pi \,d\,{T}^{4}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>= \(\frac{40}{0.35\,\times \,5.685\,\times \,1{0}^{-8}\,\times \,3.142\,\times \,0.1\,\times \,{10}^{-3}\,\times \,{2500}^{4}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p><em>l</em></p></td><td><p>=</p></td><td><p><strong>0.1638 m</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.14</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; If the rate of energy radiation from a blackbody of area 100 cm<sup>2</sup> is 42 W, find the temperature of that blackbody.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>A = 100 cm<sup>2</sup> = 100 (10<sup>-2</sup> m)<sup>2</sup> </p><p>                     = 100 \(\times \) 10<sup>-4</sup> m<sup>2</sup>,</p><p>H = 42 W, T = ?, e = 1 (for black body)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By rate of heat radiation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>rad</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A T<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>T<sup>4</sup></p></td><td><p>=</p></td><td><p>\(\frac{{H}_{\mathrm{rad}}}{e\,\sigma \,A}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>T</p></td><td><p>=</p></td><td><p>\(\sqrt[4]{\frac{{H}_{\mathrm{rad}}}{e\,\sigma \,A}}\)  </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>T</p></td><td><p>=</p></td><td><p>\(\sqrt[4]{\frac{42}{1\,\times \,5.685\,\times \,1{0}^{-8}\,\times \,100\,\times \,{10}^{-4}}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>T</p></td><td><p>=</p></td><td><p><strong>521.35 K</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.15</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Compare the rates of energy radiation of a blackbody at temperatures 327 \(℃\) and at 27 \(℃\).</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>T<sub>2</sub> = 327 \(℃\) = 327 + 273 = 600 K,</p><p>T<sub>1</sub> = 27 \(℃\) = 27 + 273 = 300 K</p><p>e = 1 (for black body) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By rate of heat radiation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>rad</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A T<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>2</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A \({T}_{2}^{4}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>1</sub></p></td><td><p>=</p></td><td><p>e \(\sigma \)<strong> </strong>A \({T}_{1}^{4}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{{H}_{2}}{{H}_{1}}\) </p></td><td><p>=</p></td><td><p>\(\frac{\,e\,\sigma \,A\,{T}_{2}^{4}}{\,e\,\sigma \,A\,{T}_{1}^{4}}\) = \(\frac{\,\,{T}_{2}^{4}}{\,\,{T}_{1}^{4}}\)  = (\(\frac{{T}_{2}}{{T}_{1}}\))<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\({\frac{600}{300}}^{4}\) = 2<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{{H}_{2}}{{H}_{1}}\) </p></td><td><p>=</p></td><td><p>16</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H<sub>2</sub></p></td><td><p>=</p></td><td><p><strong>16 H</strong><sub><strong>1</strong></sub></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.13</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; From calculations based on the radiation measurement of solar energy falling on the earth it is found that sun is radiating energy at a rate of 62.5 M W m<sup>-2</sup>. Assuming that the sun is emitting energy as a blackbody, find the temperature of the surface of the sun.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\({\epsilon }_{0}\) = 62.5 M W m<sup>-2</sup> = 62.5 \(\times \) 10<sup>6</sup> W m<sup>-2</sup>,</p><p>\(\sigma \) = 5.685 \(\times \) 10<sup>-8</sup> W m<sup>-2</sup> K<sup>-4</sup><sub>,</sub>&emsp;T = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By Stefan-Boltzmann’s law,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\({\epsilon }_{0}\) </p></td><td><p>=</p></td><td><p>\(\sigma \) T<sup>4</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>T<sup>4</sup></p></td><td><p>=</p></td><td><p>\(\frac{{\epsilon }_{0}}{\sigma }\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>T</p></td><td><p>=</p></td><td><p>\(\sqrt[4]{\frac{{\epsilon }_{0}}{\sigma }}\)  = \(\sqrt[4]{\frac{62.5\,\times \,1{0}^{6}}{5.685\,\times \,1{0}^{-8}}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>T</p></td><td><p>=</p></td><td><p><strong>5758 K</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.18</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An insulated system <strong>takes in</strong> 6.5 kcal of heat and has 2000 J of work done <strong>on it</strong>. What is the change in internal energy of the system? (1 kcal = 4184 J)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>Q = + 6.5 kcal&emsp;(takes in)</p><p>    = + 6.5 \(\times \) 4184 J = + 27196 J</p><p>W = - 2000 J (work done on the system)</p><p>\(∆\)U = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>According to first law of thermodynamics, </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(∆\)U</p></td><td><p>=</p></td><td><p>Q - W</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>27196 - (- 2000)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>+ 29196 J = <strong>+ 2.92 </strong>\(\times \)<strong> 10</strong><sup><strong>4</strong></sup><strong> J</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.19</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A heat engine undergoes a process in which its internal energy <strong>increases</strong> by 275 J while <strong>it is doing</strong> 360 J of work. How much heat is taken in (or given out) by the engine during this process? </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\(∆\)U = + 275 J (increases),</p><p>W = + 360 J (work done by the system)&emsp;</p><p>Q = ? </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>According to first law of thermodynamics, </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(∆\)U</p></td><td><p>=</p></td><td><p>Q - W</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>Q</p></td><td><p>=</p></td><td><p>\(∆\)U + W</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>275 + 360</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>+ 635 J </strong>(heat is taken in)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Find the change in internal energy of one mole of an ideal gas when its temperature change from 0\(℃\) to 100\(℃\).</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\(∆\)U = ?, n = 1 mole,</p><p>\(∆\)T = 100 – 0 = 100\(℃\) = 100 K,&emsp;</p><p>R = 8.3143 J mol<sup>-1</sup> K<sup>-1</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Change in internal energy</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(∆\)U</p></td><td><p>=</p></td><td><p>\(\frac{3}{2}\) n R \(∆\)T</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{3}{2}\) × 1 × 8.3143 × 100 </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1247.145 = <strong>+ 1.247 </strong>\(\times \)<strong> 10</strong><sup><strong>3</strong></sup><strong> J</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; In an isobaric pressure, a volume of a gas is expressed by absorption of heat constant pressure 2 atm. If the increment in volume is 0.5 m<sup>3</sup>, then find the work done by system.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>p = 2 atm = 2 \(\times \) 1.013 \(\times \) 10<sup>5</sup> Pa,&emsp;</p><p>V<sub>f</sub> – V<sub>i</sub> = 0.5 m<sup>3</sup>, W = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>For isobaric process,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>W</p></td><td><p>=</p></td><td><p>p (V<sub>f</sub> – V<sub>i</sub>)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>2 × 1.013 × 10<sup>5</sup> × 0.5</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>+ </strong><strong>1.013 </strong>\(\times \)<strong> 10</strong><sup><strong>5</strong></sup><strong> J</strong> (by the system)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; One gram of water (1 cm<sup>3</sup>) becomes 1671 cm<sup>3</sup> of steam when boiled at a pressure of   1 atm. The heat of vaporization at this pressure is 2265 J g<sup>-1</sup>. Compute the work done and the increase in internal energy.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>m = 1 g, p = 1 atm = 1.013 \(\times \) 10<sup>5</sup> Pa</p><p>L<sub>v</sub> = 2265 J g<sup>-1</sup></p><p>V<sub>i</sub> = 1 cm<sup>3</sup>,&emsp;V<sub>f</sub> = 1671 cm<sup>3</sup> </p><p>V<sub>f</sub> - V<sub>i</sub> = 1671 – 1 </p><p>&emsp;= 1670 cm<sup>3</sup></p><p>&emsp;= 1670 \(\times ({10}^{-2}\,m{)}^{3}\) </p><p>&emsp;= 1670 \(\times {10}^{-6}\) m<sup>3</sup></p><p>W = ?,&emsp;&emsp;\(∆\)U = ? </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>For isobaric process,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>W</p></td><td><p>=</p></td><td><p>p (V<sub>f</sub> – V<sub>i</sub>)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1.013 × 10<sup>5</sup> × 1670 ×\({10}^{-6}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>+ 169.171 J</strong> (by the system)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>Q</p></td><td><p>=</p></td><td><p>m L<sub>v</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1 × 2265 = <strong>+ 2265 J</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>According to first law of thermodynamics, </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(∆\)U</p></td><td><p>=</p></td><td><p>Q - W</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>2265 – 169.171</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>+ 2095.829 J</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.21</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; In an isothermal process (27\(℃\)), 2 kilomole of an ideal gas is compressed from a volume of 4 litre to 1 litre. Find the work done on the system. (R = 8.3143 J mol<sup>-1</sup> K<sup>-1</sup>)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>T = 27\(℃\) = 27 + 273 = 300 K,</p><p>n = 2 kmol = 2 \(\times \) 10<sup>3</sup> mol</p><p>V<sub>i</sub> = 4 L = 4 \(\times {10}^{-3}\) m<sup>3</sup></p><p>V<sub>f</sub> = 1 L = 1 \(\times {10}^{-3}\) m<sup>3</sup></p><p>R = 8.3143 J mol<sup>-1</sup> K<sup>-1</sup>,&emsp;W = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>For isothermal process, </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>W</p></td><td><p>=</p></td><td><p>n R T ln \(\frac{{V}_{f}}{{V}_{i}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>2 \(\times \) 10<sup>3</sup> \(\times \) 8.3143 \(\times \) 300 \(\times \) ln (\(\frac{1}{4}\))</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>W</p></td><td><p>=</p></td><td><p><strong>- 6915 640.32 J</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Since W is negative, work is done on the system.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.7</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An engine takes in 9220 J and does 1750 J of work each cycle while operating between 689\(℃\) and 397\(℃\). (a) What is its actual efficiency? (b) What is its maximum theoretical efficiency?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>Q<sub>H</sub> = 9220 J, W = 1750 J</p><p>T<sub>H</sub> = 689\(℃\) = 689 + 273 = 962 K,</p><p>T<sub>C</sub> = 397\(℃\) = 397 + 273 = 670 K</p></td></tr><tr><td><p>(a)</p></td><td><p>\(\eta \) </p></td><td><p>=</p></td><td><p>\(\frac{W}{{Q}_{H}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1750}{9220}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\eta \) </p></td><td><p>=</p></td><td><p> 0.19 = <strong>19 </strong>\(\%\)</p></td></tr><tr><td><p>(b)</p></td><td><p>\({\eta }_{C}\) </p></td><td><p>=</p></td><td><p>1 - \(\frac{{T}_{C}}{{T}_{H}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1 - \(\frac{670}{962}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\({\eta }_{C}\) </p></td><td><p>=</p></td><td><p> 0.304 = <strong>30.4 </strong>\(\%\)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.22</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An automobile engine has an efficiency of 20\(\%\) and produces an average of 23 000 J of mechanical work per second during operation. (i) How much <strong>heat input</strong> is required per second (ii) how much heat is discharged as <strong>waste</strong> <strong>heat</strong> from this engine per second?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\(\eta \) = 20\(\%\) = 0.2&emsp;W = 23 000 J</p><p>(i) Q<sub>H</sub> = ?&emsp;(ii) Q<sub>C</sub> = ?</p></td></tr><tr><td><p>(i)</p></td><td><p>\(\eta \) </p></td><td><p>=</p></td><td><p>\(\frac{W}{{Q}_{H}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>0.2</p></td><td><p>=</p></td><td><p>\(\frac{23\,000}{{Q}_{H}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\({Q}_{H}\) </p></td><td><p>=</p></td><td><p>\(\frac{23\,000}{0.2\,}\) = <strong>115 000 J</strong></p></td></tr><tr><td><p>(ii)</p></td><td><p>W</p></td><td><p>=</p></td><td><p>Q<sub>H</sub> - Q<sub>C</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>Q<sub>C</sub></p></td><td><p>=</p></td><td><p>Q<sub>H</sub> - W</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>115 000 - 23 000</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>92 000 J</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article></main>
+  </div>
+  <script src="calculation-format.js"></script>
+</body>
+</html>

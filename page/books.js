@@ -2,7 +2,7 @@ const bookGrid = document.getElementById('book-grid');
 
 loadOrderMasterData()
     .then(({ masterData }) => {
-        getFirebaseOrderBooks(masterData).forEach((book) => {
+        getOrderBooks(masterData).forEach((book) => {
             const card = document.createElement('article');
             card.className = 'book-card';
             const previewLink = document.createElement('a');
@@ -34,9 +34,9 @@ loadOrderMasterData()
         });
     })
     .catch((error) => {
-        console.error('Unable to load the Firebase book catalog.', error);
+        console.error('Unable to load the book catalog.', error);
         const message = document.createElement('p');
         message.className = 'form-status';
-        message.textContent = `စာအုပ်စာရင်းကို Firebase မှ ရယူမရပါ။ ${error.message}`;
+        message.textContent = `စာအုပ်စာရင်းကို ရယူမရပါ။ ${error.message}`;
         bookGrid.replaceChildren(message);
     });

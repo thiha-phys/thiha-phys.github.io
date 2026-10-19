@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <script src="/customer/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>G12 Physics - Chapter 7 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .problem-list-container { padding: 10px 20px 80px; display: flex; flex-direction: column; gap: 16px; }
+    .problem-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; box-shadow: 0 3px 10px rgba(0,0,0,.04); padding: 16px; }
+    .problem-number { margin-bottom: 10px; }
+    .problem-number span { background: #eff6ff; border-radius: 6px; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; }
+    .problem-content { color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+    .problem-question { margin-top: 0; }
+    .problem-question > strong { color: #2563eb; }
+    .problem-content hr { border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0; }
+    .problem-content summary { color: #059669; cursor: pointer; font-weight: 600; }
+    .problem-answer { background: #f8fafc; border-radius: 8px; color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; line-height: 2; margin-top: 10px; overflow-wrap: anywhere; padding: 12px; }
+    .problem-answer p { margin: 7px 0; }
+    .calculation-table-wrap { margin: 8px 0; overflow-x: auto; }
+    .calculation-table { border-collapse: collapse; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; max-width: 100%; min-width: 0; width: max-content; }
+    .calculation-table td { border-bottom: 1px solid #e2e8f0; padding: 6px 4px; vertical-align: middle; }
+    .calculation-table tr:first-child td { background: #eff6ff; font-weight: 600; }
+    .calculation-result { color: #dc2626; font-weight: 700; }
+    @media (max-width: 600px) { .problem-list-container { padding-left: 12px; padding-right: 12px; } .problem-card { padding: 12px; } .problem-answer { padding: 8px; } }
+  </style>
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] } };</script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn" aria-label="အခန်းစာရင်းသို့ ပြန်သွားရန်"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+      <h1 class="page-title">Chapter 7 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+    <div class="grade-banner">
+      <h2>Chapter 7 - Application of light and optical instruments</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း 19 ပုဒ်)</p>
+    </div>
+    <main class="problem-list-container"><article class="problem-card">
+  <div class="problem-number"><span>Eg.1</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A nature photographer wishes to photograph a 28 m tall tree from a distance of 58 m. What focal length of lens should be used if the image is to fill the 24 mm height of the film?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\({\mathrm{OO}}^{'}\) = + 28 m,&emsp;u = + 58 m </p><p>\({\mathrm{II}}^{'}\) = - 24 mm (real, inverted)</p><p>     = - 24 \(\times {10}^{-3}\) m, </p><p>f = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{I{I}^{'}}{O{O}^{'}}\) </p></td><td><p>=</p></td><td><p>- \(\frac{v}{u}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{-\,24\,\times \,{10}^{-3}}{28}\) </p></td><td><p>=</p></td><td><p>- \(\frac{v}{58}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>v</p></td><td><p>=</p></td><td><p>\(\frac{24\,\times \,{10}^{-3}}{28}\,\times \) 58</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>0.049 m</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Using lens formula,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{u}\) + \(\frac{1}{v}\)</p></td><td><p>=</p></td><td><p>\(\frac{1}{f}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{58}\) + \(\frac{1}{49.71\,\times \,{10}^{-3}}\)</p></td><td><p>=</p></td><td><p>\(\frac{1}{f}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>20.13</p></td><td><p>=</p></td><td><p>\(\frac{1}{f}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{20.13}\) </p></td><td><p>=</p></td><td><p>f</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>0.049</p></td><td><p>=</p></td><td><p>f</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>f</p></td><td><p>=</p></td><td><p><strong>0.049 m</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.2</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Calculate the power of the eyelens for viewing object at the longest and shortest distances possible with normal vision, assuming eyelens to retina distance of 2 cm.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="5"><p>P = ?,&emsp;&emsp;v = 2 cm = 0.02 m</p></td></tr><tr><td><p>(i)</p></td><td colspan="5"><p>object at the maximum (longest) distances of distinct vision, u = \(\infty \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="5"><p>Using lens formula,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{f}\) </p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>\(\frac{1}{u}\) + \(\frac{1}{v}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{f}\) </p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>\(\frac{1}{\infty }\) + \(\frac{1}{0.02}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{f}\) </p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>0 + 50&emsp;(\(\because \frac{1}{\infty }\) = 0)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{f}\) </p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>50 </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>Since, P = \(\frac{1}{f}\), P</p></td><td colspan="2"><p>=</p></td><td colspan="2"><p><strong>50 D</strong></p></td></tr><tr><td><p>(ii)</p></td><td colspan="5"><p>object at the least (shortest) distances of distinct vision, u = 25 cm = 0.25 m</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="5"><p>Using lens formula,</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>\(\frac{1}{f}\) </p></td><td colspan="2"><p>=</p></td><td><p>\(\frac{1}{u}\) + \(\frac{1}{v}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>\(\frac{1}{f}\) </p></td><td colspan="2"><p>=</p></td><td><p>\(\frac{1}{0.25}\) + \(\frac{1}{0.02}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>\(\frac{1}{f}\) </p></td><td colspan="2"><p>=</p></td><td><p>54 </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>Since, P = \(\frac{1}{f}\), P</p></td><td colspan="2"><p>=</p></td><td><p><strong>54 D</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.3</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A compound microscope consists of two thin converging lenses. The focal length of the objective is 10 mm and that of the eyepiece is 20 mm. If an object is placed 11 mm from the object ive, the instrument produces <strong>an image at infinity</strong>. Calculate the separation of the lenses and the magnifying power of the instrument. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="5"><p>Objective lens</p><p>f<sub>o</sub> = 10 mm</p><p>u<sub>o</sub> = 11 mm</p></td><td><p>Eyepiece lens</p><p>f<sub>e</sub> = 20 mm</p><p>v<sub>e</sub> = \(\infty \) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>L = ?,&emsp;&emsp;&emsp;MP = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>For image at infinity,</p><p>v<sub>e</sub> = \(\infty \),&emsp;&emsp;u<sub>e</sub> = f<sub>e</sub> = 20 mm</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>Using lens formula,</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p> \(\frac{1}{{f}_{o}}\)</p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>\(\frac{1}{{u}_{o}}\) + \(\frac{1}{{v}_{o}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>\(\frac{1}{10}\) </p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>\(\frac{1}{11}\) + \(\frac{1}{{v}_{o}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>\(\frac{1}{{v}_{o}}\) </p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>\(\frac{1}{10}\) - \(\frac{1}{11}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>\(\frac{1}{{v}_{o}}\) </p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>\(\frac{11}{110}\) - \(\frac{10}{110}\) = \(\frac{1}{110}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>v<sub>o</sub></p></td><td colspan="2"><p>=</p></td><td colspan="2"><p><strong>+ 110 mm</strong> (real image)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>L = v<sub>o</sub> + u<sub>e</sub> = 110 + 20 = <strong>130 mm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>MP</p></td><td colspan="2"><p>=</p></td><td colspan="3"><p>\(\frac{{v}_{o}}{{u}_{o}}\,\times \,\frac{250}{{u}_{e}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td colspan="2"><p>=</p></td><td colspan="3"><p>\(\frac{110}{11}\,\times \,\frac{250}{20}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td colspan="2"><p>=</p></td><td colspan="3"><p><strong>125</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A compound microscope 17 cm long has an eyepiece with a focal length of 2.5 cm and objective with focal length of 0.25 cm. What is the magnifying power for <strong>normal setting</strong>?</p><p>&emsp;(Hint: The magnified image of the objective lens forms at the focal point of the eyepiece for normal setting)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>Objective lens</p><p>f<sub>o</sub> = 0.25 cm</p><p>&nbsp;</p></td><td><p>Eyepiece lens</p><p>f<sub>e</sub> = 2.5 cm</p><p>v<sub>e</sub> = \(\infty \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>L = 17 cm,&emsp;&emsp;MP = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>For normal setting</p><p>v<sub>e</sub> = \(\infty \),&emsp;&emsp;u<sub>e</sub> = f<sub>e</sub> = 2.5 cm</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>L</p></td><td><p>=</p></td><td colspan="2"><p>v<sub>o</sub> + u<sub>e</sub> </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>17</p></td><td><p>=</p></td><td colspan="2"><p>v<sub>o</sub> + 2.5</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>v<sub>o</sub></p></td><td><p>=</p></td><td colspan="2"><p>17 – 2.5 = <strong>+ 14.5 cm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>Using lens formula,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{f}_{o}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{{u}_{o}}\) + \(\frac{1}{{v}_{o}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{0.25}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{{u}_{o}}\) + \(\frac{1}{14.5}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{u}_{o}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{0.25}\) - \(\frac{1}{14.5}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{u}_{o}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{114}{29}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>u<sub>o</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{29}{114}\) = <strong>0.25 cm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>MP</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{v}_{o}}{{u}_{o}}\,\times \,\frac{25}{{u}_{e}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>MP</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{14.5}{0.25}\,\times \,\frac{25}{2.5}\) = <strong>580 </strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.11</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A compound microscope consists of two thin lenses, an objective of focal length 20 mm and an eyepiece of focal length 50 mm, placed 220 mm apart. If <strong>the final image is viewed at infinity</strong>, calculate the distance of the object from the objective. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p>&nbsp;</p></td><td colspan="5"><p>Objective lens</p><p>f<sub>o</sub> = 20 mm</p><p>u<sub>o</sub> = ?</p></td><td><p>Eyepiece lens</p><p>f<sub>e</sub> = 50 mm</p><p>v<sub>e</sub> = \(\infty \) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>L = 220 mm</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>For image at infinity,</p><p>v<sub>e</sub> = \(\infty \),&emsp;&emsp;u<sub>e</sub> = f<sub>e</sub> = 50 mm</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>L</p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>v<sub>o</sub> + u<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>220</p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>v<sub>o</sub> + 50</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>v<sub>o</sub></p></td><td colspan="2"><p>=</p></td><td colspan="2"><p><strong>+ 170 mm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>Using lens formula,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&emsp;\(\frac{1}{{f}_{o}}\)</p></td><td colspan="2"><p>=</p></td><td colspan="3"><p>\(\frac{1}{{u}_{o}}\) + \(\frac{1}{{v}_{o}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{20}\) </p></td><td colspan="2"><p>=</p></td><td colspan="3"><p>\(\frac{1}{{u}_{o}}\) + \(\frac{1}{170}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{u}_{o}}\) </p></td><td colspan="2"><p>=</p></td><td colspan="3"><p>\(\frac{1}{20}\) - \(\frac{1}{170}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{u}_{o}}\) </p></td><td colspan="2"><p>=</p></td><td colspan="3"><p>\(\frac{3}{68}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>u<sub>o</sub></p></td><td colspan="2"><p>=</p></td><td colspan="3"><p>\(\frac{68}{3}\) = <strong>22.67 mm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>The object must be placed 22.67 mm from the objective lens. </p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A telescope consists of two converging lenses: an objective of focal length 500 mm and an eyepiece of focal length 50 mm. When the telescope is in <strong>normal adjustment</strong>: (i) What is the separation of the lenses? (ii) Where is the final image located? (iii) Is the image erect or inverted? (iv) What is the magnifying power?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="5"><p>Objective lens</p><p>f<sub>o</sub> = 500 mm</p></td><td><p>Eyepiece lens</p><p>f<sub>e</sub> = 50 mm</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>(i) L = ?&emsp;&emsp;(ii) v<sub>e</sub> = ?&emsp;</p><p>(iii) erect or inverted ?&emsp;(iv) MP = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>For telescope,</p><p>u<sub>o</sub> = \(\infty \),&emsp;&emsp;v<sub>o</sub> = f<sub>o</sub> = 500 mm</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="6"><p>For normal adjustment,</p><p>v<sub>e</sub> = \(\infty \),&emsp;&emsp;u<sub>e</sub> = f<sub>e</sub> = 50 mm</p></td></tr><tr><td><p>(i)</p></td><td><p>L</p></td><td colspan="2"><p>=</p></td><td colspan="3"><p>v<sub>o</sub> + u<sub>e</sub> </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td colspan="2"><p>=</p></td><td colspan="3"><p>f<sub>o</sub> + f<sub>e</sub> = 500 + 50 = <strong>550 mm</strong></p></td></tr><tr><td><p>(ii)</p></td><td colspan="6"><p>The final image is located at <strong>infinity</strong>.</p></td></tr><tr><td><p>(iii)</p></td><td colspan="6"><p>The image is <strong>inverted</strong>. (\(\because \) it uses two converging lenses)</p></td></tr><tr><td><p>(iv)</p></td><td colspan="2"><p>MP</p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>\(\frac{{v}_{o}}{{u}_{e}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>&nbsp;</p></td><td colspan="2"><p>=</p></td><td colspan="2"><p>\(\frac{{f}_{o}}{{f}_{e}}\) = \(\frac{500}{50}\) = <strong>10</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An astronomical telescope has its two-lens space 75.2 cm apart. If the objective lens has a focal length of 70 cm, what is the magnifying power of this telescope when viewing with a <strong>relaxed eye</strong>?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>Objective lens</p><p>f<sub>o</sub> = 70 cm </p></td><td><p>Eyepiece lens</p><p>f<sub>e</sub> = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>L = 75.2 cm&emsp;&emsp;MP = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>For telescope,</p><p>u<sub>o</sub> = \(\infty \),&emsp;&emsp;v<sub>o</sub> = f<sub>o</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>For relaxed eye,</p><p>v<sub>e</sub> = \(\infty \),&emsp;&emsp;u<sub>e</sub> = f<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>L</p></td><td><p>=</p></td><td colspan="2"><p>v<sub>o</sub> + u<sub>e</sub> </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>L</p></td><td><p>=</p></td><td colspan="2"><p>f<sub>o</sub> + f<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>75.2</p></td><td><p>=</p></td><td colspan="2"><p>70 + f<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>f<sub>e</sub></p></td><td><p>=</p></td><td colspan="2"><p>75.2 – 70 = <strong>5.2 cm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>MP</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{v}_{o}}{{u}_{e}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{f}_{o}}{{f}_{e}}\) = \(\frac{70}{5.2}\)  = <strong>13.46</strong> </p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.12</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A telescope consists of two converging lenses. When in <strong>normal adjustment</strong>, so that the image of a distance object is formed at infinity, the lenses are 450 mm apart, and the magnifying power is 8. What are the focal lengths of the two lenses? <strong>Is</strong> the image erect or inverted? </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>Objective lens</p><p>f<sub>o</sub> = ?</p></td><td><p>Eyepiece lens</p><p>f<sub>e</sub> = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>L = 450 mm&emsp;&emsp;MP = 8</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>For telescope,</p><p>u<sub>o</sub> = \(\infty \),&emsp;&emsp;v<sub>o</sub> = f<sub>o</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>For normal adjustment,</p><p>v<sub>e</sub> = \(\infty \),&emsp;&emsp;u<sub>e</sub> = f<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>L</p></td><td><p>=</p></td><td colspan="2"><p>v<sub>o</sub> + u<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>450</p></td><td><p>=</p></td><td colspan="2"><p>f<sub>o</sub> + f<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>f<sub>o</sub></p></td><td><p>=</p></td><td colspan="2"><p>450 - f<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>MP</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{v}_{o}}{{u}_{e}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>8</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{f}_{o}}{{f}_{e}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>8</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{450\,-\,{f}_{e}}{{f}_{e}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>8 f<sub>e</sub> </p></td><td><p>=</p></td><td colspan="2"><p>450 - f<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>9 f<sub>e</sub></p></td><td><p>=</p></td><td colspan="2"><p>450</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>f<sub>e</sub></p></td><td><p>=</p></td><td colspan="2"><p><strong>50 mm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>f<sub>o</sub></p></td><td><p>=</p></td><td colspan="2"><p>450 – 50 = <strong>400 mm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>The image is inverted with respect to the object because this type of telescopes uses two converging lenses.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.13</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A telescope consists of two thin converging lenses of focal lengths 100 cm and 10 cm respectively. It is used to view an object 2000 cm from the objective. What is the separation of the lenses if the final image is 25 cm from the eyelens? Determine the magnifying power for an observer whose eye is close to the eyelens.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="4"><p>For telescope, f<sub>o</sub> &gt; f<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Objective lens</p><p>f<sub>o</sub> = 100 cm</p><p>u<sub>o</sub> = 2000 cm,&emsp;</p><p>v<sub>o</sub> \(\neq \) f<sub>o</sub></p></td><td><p>Eyepiece lens</p><p>f<sub>e</sub> = 10 cm</p><p>v<sub>e</sub> = - 25 cm (virtual image),&emsp;u<sub>e</sub> \(\neq \) f<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>L = ?                        MP = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>Using lens formula,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{f}_{o}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{{u}_{o}}\) + \(\frac{1}{{v}_{o}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{100}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{2000}\) + \(\frac{1}{{v}_{o}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{v}_{o}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{100}\) - \(\frac{1}{2000}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{v}_{o}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{19}{2000}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>v<sub>o</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{2000}{19}\) = <strong>105.26 cm</strong> </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>Using lens formula,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&emsp;\(\frac{1}{{f}_{e}}\)</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{{u}_{e}}\) + \(\frac{1}{{v}_{e}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{10}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{{u}_{e}}\) + \(\frac{1}{(\,-\,25)}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{10}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{{u}_{e}}\) - \(\frac{1}{\,25}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{u}_{e}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{1}{10}\) + \(\frac{1}{25}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{u}_{e}}\) </p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{7}{50}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>u<sub>e</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{50}{7}\) = <strong>7.14 cm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>L</p></td><td><p>=</p></td><td colspan="2"><p>v<sub>o</sub> + u<sub>e</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td colspan="2"><p>105.26 + 7.14 = <strong>112.4 cm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>MP</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{v}_{o}}{{u}_{e}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{105.26}{7.14}\)  = <strong>14.74</strong> </p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; In a laser unit, laser beam of wavelength 6328 Å is emitted. How many photons are released per second if the output power is 1 mW? (Plank constant, h = 6.62 \(\times \,{10}^{-34}\) Js)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\(\lambda \) = 6328 Å = 6328 \(\times \) \({10}^{-10}\)m,&emsp;</p><p>h = 6.62 \(\times \,{10}^{-34}\) J s, c = 3 \(\times \,{10}^{8}\) m s<sup>-1</sup> </p><p>number of photon per second = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>P = 1 mW = 1 \(\times {10}^{-3}\) W = 1 \(\times {10}^{-3}\) J s<sup>-1</sup>,</p><p>Output energy in 1 s is \({10}^{-3}\) J.</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Energy of a photon,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&emsp;E</p></td><td><p>=</p></td><td><p>\(\frac{h\,c}{\lambda }\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{6.62\,\times \,{10}^{-34}\,\times \,3\,\times \,{10}^{8}}{6328\,\times \,{10}^{-10}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>3.14 </strong>\(\times \,{10}^{-19}\)<strong> J</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Number of photons per second</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>&emsp;= \(\frac{\mathrm{Output}\,\mathrm{energy}\,\mathrm{per}\,\mathrm{second}}{\mathrm{Energy}\,\mathrm{of}\,a\,\mathrm{photon}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>&emsp;= \(\frac{1\,\times \,{10}^{-3}}{3.14\,\times \,{10}^{-19}}\) = <strong>3.18 </strong>\(\times \,{10}^{15}\)<strong> photons</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>၁ စက္ကန့်မှာထွက်လာတဲ့ ဖိုတွန်အရေအတွက်ကိုရှာလိုပါ က ၁ စက္ကန့်မှာထုတ်လွှတ်တဲ့ စွမ်းအင်ကိုတည်ပြီး ဖိုတွန် ၁ လုံးက ပိုင်တဲ့စွမ်းအင်နှင့်စား။</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.7</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; How many photons are emitted in 1 s by a 7.5 mW of CO<sub>2</sub> laser with the wavelength of 10.6 \(\mu \)m? (Plank constant, h = 6.62 \(\times \,{10}^{-34}\) J s)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>\(\lambda \) = 10.6 \(\mu \)m = 10.6 \(\times \) \({10}^{-6}\)m,</p><p>h = 6.62 \(\times \,{10}^{-34}\) J s, c = 3 \(\times \,{10}^{8}\) m s<sup>-1</sup> </p><p>number of photon per second = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>P = 7.5 mW = 7.5 \(\times \,{10}^{-3}\) J s<sup>-1</sup></p><p>Output energy in 1 s is 7.5 \(\times {10}^{-3}\)  J.</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Energy of a photon,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>E</p></td><td><p>=</p></td><td><p>\(\frac{h\,c}{\lambda }\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{6.62\,\times \,{10}^{-34}\,\times \,3\,\times \,{10}^{8}}{10.6\,\times \,{10}^{-6}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>1.87 </strong>\(\times \,{10}^{-20}\)<strong> J</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Number of photons per second</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>&emsp;= \(\frac{\mathrm{Output}\,\mathrm{energy}\,\mathrm{per}\,\mathrm{second}}{\mathrm{Energy}\,\mathrm{of}\,a\,\mathrm{photon}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>&emsp;= \(\frac{7.5\,\times \,{10}^{-3}}{1.87\,\times \,{10}^{-20}}\) = <strong>4 </strong>\(\times {10}^{17}\)<strong> photons</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.14</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A He-Ne laser emits photons with energies of 3.14 \(\times \,{10}^{-19}\) J. What is the colour of the laser light? (Plank constant, h = 6.62 \(\times \,{10}^{-34}\) J s)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>E = 3.14 \(\times \,{10}^{-19}\) J,</p><p>h = 6.62 \(\times \,{10}^{-34}\) J s, c = 3 \(\times \,{10}^{8}\) m s<sup>-1</sup>,</p><p>\(\lambda \) = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Energy of a photon,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>E</p></td><td><p>=</p></td><td><p>\(\frac{h\,c}{\lambda }\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>3.14 \(\times \,{10}^{-19}\)</p></td><td><p>=</p></td><td><p>\(\frac{6.62\,\times \,{10}^{-34}\,\times \,3\,\times \,{10}^{8}}{\lambda }\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\lambda \) </p></td><td><p>=</p></td><td><p>\(\frac{6.62\,\times \,{10}^{-34}\,\times \,3\,\times \,{10}^{8}}{3.14\,\times \,{10}^{-19}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\lambda \) </p></td><td><p>=</p></td><td><p>632.48 \(\times \,{10}^{-9}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>632.48 nm</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>The colour of the laser light is <strong>red</strong>.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.15</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An optical fibre used for communications has a core of refractive index 1.55 which is surrounded by cladding of refractive index 1.45. Calculate the critical angle of the core-cladding boundary.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>refractive index of core, n<sub>1</sub> = 1.55,</p><p>refractive index of cladding, n<sub>2</sub> = 1.45</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>sin i<sub>c</sub></p></td><td><p>=</p></td><td><p><sub>1</sub> n <sub>2</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{{n}_{2}}{{n}_{1}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1.45}{1.55}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>i<sub>c</sub></p></td><td><p>=</p></td><td><p>sin<sup>-1</sup> \(\frac{1.45}{1.55}\) = <strong>69.31</strong>\(^\circ \)<strong> (or) 69</strong>\(^\circ \)<strong> 18</strong>\('\)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; The core of an optical fibre has a dimeter 2 \(\mu \)m and refractive index of 1.63. The refractive index of the cladding is 1.5. Determine the maximum angle for which the light rays incident on the end of fibre rod to total internal reflection at the core to cladding interface. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>d = 2 \(\mu \)m = 2 \(\times \,{10}^{-6}\) m</p><p>refractive index of core, n<sub>1</sub> = 1.63,</p><p>refractive index of cladding, n<sub>2</sub> = 1.5</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>sin i<sub>c</sub></p></td><td><p>=</p></td><td><p><sub>1</sub> n <sub>2</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{{n}_{2}}{{n}_{1}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1.5}{1.63}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>i<sub>c</sub></p></td><td><p>=</p></td><td><p>sin<sup>-1</sup> \(\frac{1.5}{1.63}\) = <strong>66.96</strong>\(^\circ \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>From figure,</p><p>r + i<sub>c</sub> + 90\(^\circ \) = 180\(^\circ \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>r = 180\(^\circ \) - 90\(^\circ \) - i<sub>c</sub> = 90\(^\circ \) - 66.96\(^\circ \) = <strong>23.04</strong>\(^\circ \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Refraction at air-core interference, </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By using Snell’s law,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>n<sub>1</sub></p></td><td><p>=</p></td><td><p>\(\frac{\sin i}{\sin r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>sin i</p></td><td><p>=</p></td><td><p>n<sub>1 </sub>sin r</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1.63 \(\times \) sin 23.04\(^\circ \)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>i</p></td><td><p>=</p></td><td><p>sin<sup>-1</sup> (1.63 \(\times \) sin 23\(^\circ \)) = <strong>39.64</strong>\(^\circ \)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.7</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A 10 W fluorescent lamp has a luminous intensity of 35 cd. Find luminous flux it emits.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p><em>I</em><sub><em>v</em></sub> = 35 cd, P = 10W,&emsp;\(\Phi \) = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Solid angle for a sphere, \(\Omega \) = 4 \(\pi \) <em>sr</em></p></td></tr><tr><td><p>&nbsp;</p></td><td><p><em>I</em><sub>v</sub></p></td><td><p>=</p></td><td><p> \(\frac{\Phi }{\Omega }\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\Phi \) </p></td><td><p>=</p></td><td><p><em>I</em><sub><em>v</em></sub><em> </em>\(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>35 \(\times \) 4 \(\pi \) = <strong>439.8 </strong><em><strong>lm</strong></em></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.11</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; The luminous intensity of a light source is 500 cd. Find the illuminance of a surface which is 10 m from source if light falls <strong>normally</strong> on it.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p><em>I</em><sub><em>v</em></sub> = 500 cd,&emsp;E<sub>v</sub><sub> </sub>= ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Just below the lamp,&emsp;r = 10 m, \(\theta \) = 0\(^\circ \)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p><em>E</em><sub>v</sub></p></td><td><p>=</p></td><td><p>\(\frac{{I}_{v}\cos \theta }{{r}^{2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{500\,\cos 0}{{10}^{2}}\)  = <strong>5 </strong><em><strong>lx</strong></em></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.8</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; The luminous intensity of a source is 200 cd. The mounting height of the lamp is 6 m from the ground. Find the illuminance on the ground E<sub>v</sub>: (i) just below the lamp, (ii) 3 m horizontally away from the lamp on the ground. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="4"><p><em>I</em><sub><em>v</em></sub> = 200 cd, E<sub>v</sub>= ?</p></td></tr><tr><td><p>(i)</p></td><td colspan="4"><p>Just below the lamp,&emsp;r = 6 m,&emsp;\(\theta \) = 0\(^\circ \)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p><em>E</em><sub>v</sub></p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{{I}_{v}\cos \theta }{{r}^{2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td colspan="2"><p>\(\frac{200\,\cos 0}{{6}^{2}}\)  = <strong>5.55 </strong><em><strong>lx</strong></em></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="4"><p>မတ်မျဉ်းနှင့် အလင်းဦးတည်ချက်ကြားထောင့် \(\theta \,\) အလင်းသည် ထောင့်မတ်ကျလာသဖြင့် \(\theta \) = 0\(^\circ \)</p></td></tr><tr><td><p>(ii)</p></td><td colspan="4"><p>3 m horizontally away from the lamp on the ground,</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>r<sup>2</sup></p></td><td><p>=</p></td><td><p>6<sup>2</sup> + 3<sup>2</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>r</p></td><td><p>=</p></td><td><p>\(\sqrt{36+9}\) = \(\sqrt{45}\) m</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>cos \(\theta \)</p></td><td><p>=</p></td><td><p>\(\frac{6}{r}\) = \(\frac{6}{\sqrt{45}}\) = 0.8944</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p><em>E</em><sub>v</sub></p></td><td><p>=</p></td><td><p>\(\frac{{I}_{v}\cos \theta }{{r}^{2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{200\,\times 0.8944}{{\sqrt{45}}^{2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{200\,\times \,0.8944}{45}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="2"><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>3.98 </strong><em><strong>lx</strong></em></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.16</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Light from a lamp is falling <strong>normally</strong> on a surface distant 10 m from the lamp and the illuminance on it is 10 lux. In order to increase the illuminance 9 times, what distance will the lamp be placed from the surface?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p>Just below the lamp,&emsp;\(\theta \) = 0\(^\circ \)</p><p>E<sub>v1 </sub>= 10 lux,&emsp;&emsp;r<sub>1</sub> = 10 m,  </p><p>E<sub>v2</sub> = 9 E<sub>v1</sub> = 90 lux,&emsp;r<sub>2</sub> = ?  </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By inverse square law of illuminance, </p></td></tr><tr><td><p>&nbsp;</p></td><td><p><em>E</em><sub>v</sub></p></td><td><p>\(\propto \)</p></td><td><p>\(\frac{1}{{r}^{2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p><em>E</em><sub>v</sub></p></td><td><p>=</p></td><td><p>\(\frac{1}{{r}^{2}}\) \(\times \) constant</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>E<sub>v</sub> r<sup>2</sup></p></td><td><p>=</p></td><td><p>Constant</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>E<sub>v2</sub> \({r}_{2}^{2}\)</p></td><td><p>=</p></td><td><p>E<sub>v1</sub> \({r}_{1}^{2}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>90 \({r}_{2}^{2}\)</p></td><td><p>=</p></td><td><p>10 \(\times \) 10<sup>2</sup></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\({r}_{2}^{2}\) </p></td><td><p>=</p></td><td><p>\(\frac{10\,\times 100}{90}\)<sub> </sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\({r}_{2}^{2}\) </p></td><td><p>=</p></td><td><p>\(\frac{100}{9}\)<sub> </sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>r<sub>2</sub></p></td><td><p>=</p></td><td><p>\(\frac{10}{3}\)<sub> </sub>= <strong>3.33 m</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.17</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Two light sources of 8 cd and 12 cd are placed on the same side of the photometer screen at a distance of 40 cm from it. Where should a 80 cd source be placed to balance the illuminance?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong></p></td><td colspan="3"><p><em>I</em><sub><em>v</em></sub><sub>1</sub> = 8 cd,&emsp;r<sub>1</sub> = 40 cm = 0.4 m</p><p><em>I</em><sub><em>v</em></sub><sub>2</sub> = 12 cd,&emsp;r<sub>2</sub> = 40 cm = 0.4 m</p><p><em>I</em><sub><em>v3</em></sub> = 80 cd,&emsp;r<sub>3</sub> = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td><p><em>E</em><sub>v</sub></p></td><td><p>=</p></td><td><p>\(\frac{{I}_{v}}{{r}^{2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>to balance the illuminance,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>E<sub>v1</sub> + E<sub>v2</sub></p></td><td><p>=</p></td><td><p>E<sub>v3</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{{I}_{v1}}{{r}_{1}^{2}}\) + \(\frac{{I}_{v2}}{{r}_{2}^{2}}\)</p></td><td><p>=</p></td><td><p>\(\frac{{I}_{v3}}{{r}_{3}^{2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{8}{{0.4}^{2}}\) + \(\frac{12}{{0.4}^{2}}\)</p></td><td><p>=</p></td><td><p>\(\frac{80}{{r}_{3}^{2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{0.4}^{2}}\) </p></td><td><p>=</p></td><td><p>\(\frac{4}{{r}_{3}^{2}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{0.4}\) </p></td><td><p>=</p></td><td><p>\(\frac{2}{{r}_{3}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>r<sub>3</sub></p></td><td><p>=</p></td><td><p>0.8 m = <strong>80 cm</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article></main>
+  </div>
+  <script src="calculation-format.js"></script>
+</body>
+</html>

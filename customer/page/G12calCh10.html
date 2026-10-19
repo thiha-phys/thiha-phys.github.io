@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <script src="/customer/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>G12 Physics - Chapter 10 Calculations</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .problem-list-container { padding: 10px 20px 80px; display: flex; flex-direction: column; gap: 16px; }
+    .problem-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; box-shadow: 0 3px 10px rgba(0,0,0,.04); padding: 16px; }
+    .problem-number { margin-bottom: 10px; }
+    .problem-number span { background: #eff6ff; border-radius: 6px; color: #2563eb; font-size: 12px; font-weight: 700; padding: 4px 10px; }
+    .problem-content { color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+    .problem-question { margin-top: 0; }
+    .problem-question > strong { color: #2563eb; }
+    .problem-content hr { border: 0; border-top: 1px dashed #e2e8f0; margin: 12px 0; }
+    .problem-content summary { color: #059669; cursor: pointer; font-weight: 600; }
+    .problem-answer { background: #f8fafc; border-radius: 8px; color: #1e293b; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; line-height: 2; margin-top: 10px; overflow-wrap: anywhere; padding: 12px; }
+    .problem-answer p { margin: 7px 0; }
+    .calculation-table-wrap { margin: 8px 0; overflow-x: auto; }
+    .calculation-table { border-collapse: collapse; font-family: 'Pyidaungsu', Arial, sans-serif; font-size: 15px; max-width: 100%; min-width: 0; width: max-content; }
+    .calculation-table td { border-bottom: 1px solid #e2e8f0; padding: 6px 4px; vertical-align: middle; }
+    .calculation-table tr:first-child td { background: #eff6ff; font-weight: 600; }
+    .calculation-result { color: #dc2626; font-weight: 700; }
+    @media (max-width: 600px) { .problem-list-container { padding-left: 12px; padding-right: 12px; } .problem-card { padding: 12px; } .problem-answer { padding: 8px; } }
+  </style>
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']] } };</script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="page-header">
+      <a href="G12cal.html" class="back-btn" aria-label="အခန်းစာရင်းသို့ ပြန်သွားရန်"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a>
+      <h1 class="page-title">Chapter 10 Calculations</h1>
+      <div class="header-placeholder"></div>
+    </header>
+    <div class="grade-banner">
+      <h2>Chapter 10 - Electrical energy, power and heating of electric current</h2>
+      <p>ပုစ္ဆာတွက်နည်းနှင့် အဖြေများ (စုစုပေါင်း 24 ပုဒ်)</p>
+    </div>
+    <main class="problem-list-container"><article class="problem-card">
+  <div class="problem-number"><span>Eg.1</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; When a battery is connected to a 2 \(\Omega \) resistor it drives a current of 0.6 A through the resistor. When it is connected to a 7 \(\Omega \) resistor it drives a current of 0.2 A through the resistor. Find the emf and the internal resistance of the battery. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>R<sub>1</sub> = 2 \(\Omega \),&emsp;I<sub>1</sub> = 0.6 A</p><p>R<sub>2</sub> = 7 \(\Omega \),&emsp;I<sub>2</sub> = 0.2 A</p><p>E = ?,&emsp;&emsp;r = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,&emsp;I = \(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I<sub>1</sub></p></td><td><p>=</p></td><td><p>\(\frac{E}{{R}_{1}\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>E</p></td><td><p>=</p></td><td><p>I<sub>1</sub> (R<sub>1</sub> + r)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.6 (2 + r) ---------- (1)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I<sub>2</sub></p></td><td><p>=</p></td><td><p>\(\frac{E}{{R}_{2}\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>E</p></td><td><p>=</p></td><td><p>I<sub>2</sub> (R<sub>2</sub> + r)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.2 (7 + r) ---------- (2)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>From Eq (1) and (2)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>0.6 (2 + r)</p></td><td><p>=</p></td><td><p>0.2 (7 + r)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{0.6}{0.2}\) (2 + r)</p></td><td><p>=</p></td><td><p>7 + r </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>3 (2 + r)</p></td><td><p>=</p></td><td><p>7 + r</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>6 + 3r</p></td><td><p>=</p></td><td><p>7 + r</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>2r</p></td><td><p>=</p></td><td><p>1</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>r</p></td><td><p>=</p></td><td><p><strong>0.5 </strong>\(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>r = 0.5 \(\Omega \) in eq (1)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>E</p></td><td><p>=</p></td><td><p>0.6 (2 + 0.5) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>1.5 V</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; In the electric circuit shown below, find the reading of the ammeter A when the switch is (i) open (ii) closed. (Neglect the internal resistance of the battery.)</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>R<sub>1</sub> = 3 \(\Omega \), &emsp;R<sub>2</sub> = R<sub>3</sub> = 2 \(\Omega \),&emsp;</p><p>E = 20 V,&emsp;r = 0 \(\Omega \)</p></td></tr><tr><td><p>(i)</p></td><td colspan="3"><p>When the switch is open,</p><p>R<sub>1</sub> and R<sub>2</sub> are connected in series,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>R<sub>1</sub> + R<sub>2</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>3 + 2 = 5 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation, </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{20}{5\,+\,0}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{20}{5}\) = <strong>4 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>\(\therefore \) When the switch is open, the reading of the ammeter A is 4 A.</p></td></tr><tr><td><p>(ii)</p></td><td colspan="3"><p>When the switch is closed,</p><p>R<sub>2</sub> and R<sub>3</sub> are connected in parallel,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{R}_{p}}\) </p></td><td><p>=</p></td><td><p>\(\frac{1}{{R}_{2}}\) + \(\frac{1}{{R}_{3}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{2}\) + \(\frac{1}{2}\)  =  \(\frac{2}{2}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{R}_{p}}\) </p></td><td><p>=</p></td><td><p>1</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R<sub>p</sub></p></td><td><p>=</p></td><td><p>1 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>R<sub>p</sub> and R<sub>1</sub> are connected in series,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>R<sub>1</sub> + R<sub>p</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>3 + 1 = 4 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation, </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{20}{4\,+\,0}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{20}{4}\) = <strong>5 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>\(\therefore \) When the switch is closed, the reading of the ammeter A is 5 A.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.2</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Find the current flowing through each resistor and the potential difference across the 1 \(\Omega \) resistor in the circuit diagram given below.</p><p>&emsp;R<sub>1</sub> = 4 \(\Omega \),&emsp;R<sub>2</sub> = 6 \(\Omega \),&emsp;R<sub>3</sub> = 1 \(\Omega \),</p><p>&emsp;E = 12 V&emsp;r = 0.6 \(\Omega \),</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>R<sub>1</sub> = 4 \(\Omega \), &emsp;R<sub>2</sub> = 6 \(\Omega \),&emsp;R<sub>3</sub> = 1 \(\Omega \),</p><p>E = 12 V,&emsp;r = 0.6 \(\Omega \)</p><p>I<sub>1</sub> = ?&emsp;&emsp;I<sub>2</sub> = ?&emsp;&emsp;I<sub>3</sub> = ?</p><p>V<sub>1</sub> = ?&emsp;&emsp;V<sub>2</sub> = ?&emsp;&emsp;V<sub>3</sub> = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>R<sub>1</sub> and R<sub>2</sub> are connected in parallel,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{R}_{p}}\) </p></td><td><p>=</p></td><td><p>\(\frac{1}{{R}_{1}}\) + \(\frac{1}{{R}_{2}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{4}\) + \(\frac{1}{6}\)  </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{R}_{p}}\) </p></td><td><p>=</p></td><td><p>\(\frac{5}{12}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R<sub>p</sub></p></td><td><p>=</p></td><td><p>\(\frac{12}{5}\) = 2.4 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>R<sub>p</sub> and R<sub>3</sub> are connected in series,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>R<sub>p</sub> + R<sub>3</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>2.4 + 1 = 3.4 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation, </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{12}{3.4\,+\,0.6}\) = \(\frac{12}{4.0}\) = <strong>3 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>I = I<sub>3</sub> = I<sub>p</sub> = <strong>3 A (in series)</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By Ohm’s law,&emsp;V = IR</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>V<sub>3</sub></p></td><td><p>=</p></td><td><p>I<sub>3</sub> R<sub>3 </sub>= 3 \(\times \) 1 = <strong>3 V</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>V<sub>p</sub></p></td><td><p>=</p></td><td><p>I<sub>p</sub> R<sub>p </sub>= 3 \(\times \) 2.4 = <strong>7.2 V</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>V<sub>p</sub> = V<sub>1</sub> = V<sub>2</sub> = <strong>7.2 V (in parallel)</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Since, V = I R,&emsp;I = \(\frac{V}{R}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I<sub>1</sub></p></td><td><p>=</p></td><td><p>\(\frac{{V}_{1}}{{R}_{1}}\) = \(\frac{7.2}{4}\) = <strong>1.8 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I<sub>2</sub></p></td><td><p>=</p></td><td><p>\(\frac{{V}_{2}}{{R}_{2}}\) = \(\frac{7.2}{6}\) = <strong>1.2 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>I<sub>1</sub> = 1.8 A&emsp;I<sub>2</sub> = 1.2 A&emsp;I<sub>3</sub> = 3A</p><p>V<sub>1</sub> = 7.2 V&emsp;V<sub>2</sub> = 7.2 V&emsp;V<sub>3</sub> = 3 V</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Two batteries each having an emf of 6 V and an internal resistance of 0.5 Ω are connected (i) in series and (ii) in parallel. Find the current in each case when the batteries are connected to a 1 Ω resistor. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>E<sub>1</sub> = E<sub>2</sub> = 6 V,&emsp;r<sub>1</sub> = r<sub>2</sub> = 0.5 \(\Omega \),</p><p>R = 1 Ω,&emsp;I = ?</p></td></tr><tr><td><p>(i)</p></td><td colspan="3"><p>When the batteries are connected in series,</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>In series aiding,</p><p>Resultant emf, E = E<sub>1</sub> + E<sub>2</sub> = 6 + 6 = 12 V</p><p>Resultant r = r<sub>1</sub> + r<sub>2</sub> = 0.5 + 0.5 = 1 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{12}{1+\,1}\)  = <strong>6 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>In series opposing,</p><p>Resultant emf, E = E<sub>1</sub> - E<sub>2</sub> = 6 - 6 = 0</p><p>Resultant r = r<sub>1</sub> + r<sub>2</sub> = 0.5 + 0.5 = 1 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{0}{1+\,1}\)  = <strong>0 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td></tr><tr><td><p>(ii)</p></td><td colspan="3"><p>When the batteries are connected in Parallel,</p><p>Resultant emf, E = E<sub>1</sub> = E<sub>2</sub> = 6 V</p><p>Resultant r = \(\frac{{r}_{1}}{2}\) = \(\frac{0.5}{2}\) = 0.25 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{6}{1\,+\,0.25}\)  = <strong>4.8 A</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.4</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A battery has an emf of 6 V and an internal resistance of 0.5 Ω. How many batteries are necessary to pass a current of 1 A through a 22 Ω resistor in an electric circuit? </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>E<sub>1</sub> = 6 V, r<sub>1</sub> = 0.5 \(\Omega \), R = 22 Ω, I = 1 A</p><p>Number of batteries, n = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By Ohm’s law, V = I R = 1 \(\times \) 22 = <strong>22 V</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Since V &gt; E, the batteries must be connected in series aiding.</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>In series aiding,</p><p>Resultant emf, E = E<sub>1</sub> + E<sub>2</sub> …… + E<sub>n</sub><sub> </sub></p><p>                           = 6 + 6 + …… + 6 = 6n</p><p>Resultant r = r<sub>1</sub> + r<sub>2</sub> …… + r<sub>n</sub><sub> </sub></p><p>                  = 0.5 + 0.5 + …… + 0.5 = 0.5n</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{6\,n}{R\,+\,0.5\,n}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I (R + 0.5 n)</p></td><td><p>=</p></td><td><p>6 n</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>1 (22 + 0.5 n)</p></td><td><p>=</p></td><td><p>6 n</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>22 + 0.5 n</p></td><td><p>=</p></td><td><p>6 n</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>22</p></td><td><p>=</p></td><td><p>5.5 n</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>n</p></td><td><p>=</p></td><td><p>\(\frac{22}{5.5}\) = <strong>4</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>\(\therefore \) 4 batteries are necessary.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; When a 12 V battery of negligible internal resistance is connected to a resistor, a current of 3 A flows through it. When another battery of emf 6 V is in the circuit in series with the first one, the current flowing through the resistor remains at 3 A. Find the internal resistance of the second battery.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>E = 12 V,&emsp;r = 0 \(\Omega \),&emsp;I = 3 A</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>3</p></td><td><p>=</p></td><td><p>\(\frac{12}{R\,+\,0}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>3 R</p></td><td><p>=</p></td><td><p>12</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p><strong>4 </strong>\(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>E<sub>1</sub> = 12 V,&emsp;r<sub>1</sub> = 0 \(\Omega \),&emsp;R = 4 \(\Omega \)</p><p>E<sub>2</sub> = 6 V,&emsp;r<sub>2</sub> = ? ,&emsp;&emsp;I = 3 A</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>In series aiding,</p><p>Resultant emf, E = E<sub>1</sub> + E<sub>2</sub> = 12 + 6 = 18 V</p><p>Resultant r = r<sub>1</sub> + r<sub>2</sub> = 0 + r<sub>2</sub> = r<sub>2</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\)  </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>3</p></td><td><p>=</p></td><td><p>\(\frac{18}{4\,+\,{r}_{2}}\)  </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>12 + 3 r<sub>2</sub></p></td><td><p>=</p></td><td><p>18</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>3 r<sub>2</sub></p></td><td><p>=</p></td><td><p>6</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>r<sub>2</sub></p></td><td><p>=</p></td><td><p><strong>2 </strong>\(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>\(\therefore \) The internal resistance of the second battery is 2 \(\Omega \).</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; When two 6 V batteries, having the same internal resistance and connected in series, are connected to a 5 \(\Omega \) resistor, the current in the circuit is 2 A. When these batteries are in parallel, a current of 1.5 A flows through when connected to another resistor. Find the resistance of the resistor. </p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="5"><p>E<sub>1</sub> = E<sub>2</sub> = 6 V,&emsp;r<sub>1</sub> = r<sub>2</sub>,&emsp;R = 5 \(\Omega \), I = 2 A</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="5"><p>In series aiding,</p><p>Resultant emf, E = E<sub>1</sub> + E<sub>2</sub> = 6 + 6 = 12 V</p><p>Resultant r = r<sub>1</sub> + r<sub>2</sub> = r<sub>1</sub> + r<sub>1</sub> = 2 r<sub>1</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="5"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td colspan="3"><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>2</p></td><td><p>=</p></td><td colspan="3"><p>\(\frac{12}{5\,+\,2{r}_{1}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>10 + 4 r<sub>1</sub></p></td><td><p>=</p></td><td colspan="3"><p>12</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>4 r<sub>1</sub></p></td><td><p>=</p></td><td colspan="3"><p>2</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>r<sub>1</sub></p></td><td><p>=</p></td><td colspan="3"><p><strong>0.5 </strong>\(\Omega \)&emsp;</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="5"><p>r<sub>1</sub> = r<sub>2</sub> = r = 0.5 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="5"><p>In parallel,</p><p>Resultant emf, E = E<sub>1</sub> = E<sub>2</sub> = 6 V</p><p>Resultant r = \(\frac{{r}_{1}}{2}\) = \(\frac{0.5}{2}\) = 0.25 \(\Omega \) </p><p>I = 1.5 A,&emsp;\({R}^{'}\) = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="5"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>1.5</p></td><td><p>=</p></td><td><p>\(\frac{\,6}{{R}^{'}\,+\,0.25}\)  </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>1.5 (\({R}^{'}\) + 0.25)</p></td><td><p>=</p></td><td><p>6</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>\({R}^{'}\) + 0.25</p></td><td><p>=</p></td><td><p>\(\frac{6}{1.5}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>\({R}^{'}\) + 0.25</p></td><td><p>=</p></td><td><p>4</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>\({R}^{'}\) </p></td><td><p>=</p></td><td><p>4 – 0.25</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>\({R}^{'}\) </p></td><td><p>=</p></td><td><p><strong>3.75 </strong>\(\Omega \)</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.5</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; If a current of 2 A flows through a 50 \(\Omega \) resistor for 30 min find the amount of electrical energy dissipated in the resistor.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>I = 2 A,&emsp;R = 50 \(\Omega \),&emsp;</p><p>t = 30 min = 30 min \(\times \,\frac{1\,h}{60\,\min}\) = \(\frac{1}{2}\) h,</p><p>W = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>W</p></td><td><p>=</p></td><td><p>I<sup>2</sup> R t</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>2<sup>2</sup> \(\times \) 50 \(\times \) \(\frac{1}{2}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>100 Wh </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>100 Wh \(\times \) \(\frac{1\,k\,\mathrm{Wh}}{1000\,\mathrm{Wh}}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>W</p></td><td><p>=</p></td><td><p><strong>0.1 k </strong><strong>Wh</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An electric lamp of 60 Ω connected to a 240 V mains line is used for 45 min. (i) Find the amount of electrical energy dissipated in the lamp. (ii) Find the cost of using it if electricity costs 35 kyats per unit.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>R = 60 \(\Omega \),&emsp;V = 240V,</p><p>t = 45 min = 45 min \(\times \,\frac{1\,h}{60\,\min}\) = \(\frac{3}{4}\) h,</p><p>(i) W = ?&emsp;(ii) cost of using = ?</p></td></tr><tr><td><p>(i)</p></td><td><p>W</p></td><td><p>=</p></td><td><p>\(\frac{{V}^{2}}{R}\) t</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{{240}^{2}}{60}\,\times \) \(\frac{3}{4}\) = 720 Wh</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>720 Wh \(\times \) \(\frac{1\,k\,\mathrm{Wh}}{1000\,\mathrm{Wh}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>0.72 k </strong><strong>Wh</strong></p></td></tr><tr><td><p>(ii)</p></td><td colspan="3"><p>1 kWh = 1 unit of electricity</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>0.72 kWh = 0.72 unit</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Cost of using 0.72 kWh</p><p>&emsp;= 0.72 \(\times \) 35 = <strong>25.2 kyats</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.6</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; When an air conditioner is connected to a 220 V mains line it draws a current of 10 A and is used for 6 h. (i) Find the amount of electrical energy consumed by it. (ii) Calculate the cost of using it if the electrical energy costs 50 kyats per unit.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>V = 220 V,&emsp;I = 10 A,&emsp;t = 6 h,                 </p><p>(i) W = ?&emsp;(ii) cost of using = ?</p></td></tr><tr><td><p>(i)</p></td><td><p>W</p></td><td><p>=</p></td><td><p>V I t</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>220 \(\times \) 10 \(\times \) 6 = 13200 Wh</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>13200 Wh \(\times \) \(\frac{1\,k\,\mathrm{Wh}}{1000\,\mathrm{Wh}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>13.2 k </strong><strong>Wh</strong></p></td></tr><tr><td><p>(ii)</p></td><td colspan="3"><p>1 kWh = 1 unit of electricity</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>13.2 kWh = 13.2 unit</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Cost of using 13.2 kWh </p><p>&emsp;= 50 \(\times \,\)13.2 = <strong>660 kyats</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.7</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; If a 1200 W electric iron is used for 50 min, by how many units does the electricity meter reading increase? Calculate the payment if one unit of electricity costs 35 kyats.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>P = 1200 W,&emsp;</p><p>t = 50 min = 50 min \(\times \,\frac{1\,h}{60\,\min}\) = \(\frac{5}{6}\) h,</p><p>W = ?&emsp;&emsp;payment = ?</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\frac{W}{t}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>W</p></td><td><p>=</p></td><td><p>P t</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1200 \(\times \) \(\frac{5}{6}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1000 Wh \(\times \) \(\frac{1\,k\,\mathrm{Wh}}{1000\,\mathrm{Wh}}\) = <strong>1 k </strong><strong>Wh</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>1 kWh = 1 unit of electricity</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p><strong>The electricity meter reading increases 1 unit of electricity.</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>The payment = 1 \(\times \) 35 = <strong>35 kyats</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.9</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; One 5 Ω, one 10 Ω and one 15 Ω resistors are connected in parallel. If each resistor has an electrical power rating of 0.5 W, find the maximum potential difference which may be supplied to the parallel combination and the current in each resistor.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>R<sub>1</sub> = 5 Ω, R<sub>2</sub> = 10 Ω, R<sub>3</sub> = 15 Ω,</p><p>P = 0.5 W, V<sub>max</sub> = ? I<sub>1</sub> = ?, I<sub>2</sub> = ?, I<sub>3</sub> = ?</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\frac{{V}^{2}}{R}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>V<sup>2</sup></p></td><td><p>=</p></td><td><p>P R</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\({V}_{\max}^{2}\) </p></td><td><p>=</p></td><td><p>P R<sub>min</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.5 \(\times \) 5 = 2.5 </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>V<sub>max</sub></p></td><td><p>=</p></td><td><p><strong>1.58 V</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>For parallel combination, </p><p>V<sub>max</sub> = V<sub>1</sub> = V<sub>2</sub> = V<sub>3</sub> = <strong>1.58 V</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By using Ohm’s law,&emsp;</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>V</p></td><td><p>=</p></td><td><p>I R</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{V}{R}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I<sub>1</sub></p></td><td><p>=</p></td><td><p>\(\frac{{V}_{1}}{{R}_{1}}\) = \(\frac{1.58}{5}\)  = <strong>0.316 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I<sub>2</sub></p></td><td><p>=</p></td><td><p>\(\frac{{V}_{2}}{{R}_{2}}\) = \(\frac{1.58}{10}\)  = <strong>0.158 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I<sub>3</sub></p></td><td><p>=</p></td><td><p>\(\frac{{V}_{3}}{{R}_{3}}\) = \(\frac{1.58}{15}\)  = <strong>0.105 A</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.8</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; If a 60 W electric lamp is connected to a 220 V mains line find (i) the current in the lamp (ii) the resistance of tungsten wire of the lamp (iii) the amount of charge passing through the filament in 1 min and (iv) the amount of heat produced by the filament in 1 min.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>P = 60 W,&emsp;V = 220 V</p><p>(i) I = ?&emsp;&emsp;(ii) R = ? </p><p>(iii) Q = ? t = 1 min = 60 s</p><p>(iv) H = ? t = 1 min = 60 s&emsp;</p><p>J = 4.2 J cal<sup>-1</sup></p></td></tr><tr><td><p>(i)</p></td><td><p>P</p></td><td><p>=</p></td><td><p>V I</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{P}{V}\) = \(\frac{60}{220}\)  = <strong>0.27</strong><strong>27</strong><strong> A</strong></p></td></tr><tr><td><p>(ii)</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\frac{{V}^{2}}{R}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>\(\frac{{V}^{2}}{P}\) = \(\frac{220\,\times \,220}{60}\) = <strong>806.67 </strong>\(\Omega \)</p></td></tr><tr><td><p>(iii)</p></td><td><p>Q</p></td><td><p>=</p></td><td><p>I t</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>0.2727 \(\times \) 60 = <strong>16.</strong><strong>36</strong><strong> C</strong></p></td></tr><tr><td><p>(iv)</p></td><td><p>H</p></td><td><p>=</p></td><td><p>\(\frac{V\,I\,t}{J}\)  = \(\frac{P\,t}{J}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{60\,\times \,60}{4.2}\)  = <strong>857.14 </strong><strong>cal</strong></p></td></tr><tr><td><p><strong>[OR]</strong></p></td><td><p>H</p></td><td><p>=</p></td><td><p>\(\frac{{V}^{2}\,t}{R\,J}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{{220}^{2}\,\times \,60}{806.67\,\times 4.2}\) = <strong>857.14 </strong><strong>cal</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.8</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An electric stove of 1200 W is connected to a 220 V mains line. (i) Find its resistance.   (ii) Find the current flowing through it. (iii) Find the amount of calories produced in one second by it. (iv) Find the electrical power produced by it when the voltage of the mains line drops to 180 V.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>P = 1200 W,&emsp;V = 220 V</p><p>(i) R = ?&emsp;(ii) I = ?&emsp;</p><p>(iii) H = ?,        t = 1 s</p><p>(iv) P = ?&emsp;V = 180 V, J = 4.2 J cal<sup>-1</sup></p></td></tr><tr><td><p>(i)</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\frac{{V}^{2}}{R}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>\(\frac{{V}^{2}}{P}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{220\,\times \,220}{1200}\) = <strong>40.33 </strong>\(\Omega \)</p></td></tr><tr><td><p>(ii)</p></td><td><p>P</p></td><td><p>=</p></td><td><p>V I</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{P}{V}\) = \(\frac{1200}{220}\)  = <strong>5.45 A</strong></p></td></tr><tr><td><p>(iii)</p></td><td><p>H</p></td><td><p>=</p></td><td><p>\(\frac{V\,I\,t}{J}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{P\,t}{J}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1200\,\times \,1}{4.2}\) = <strong>285.71 </strong><strong>cal</strong></p></td></tr><tr><td><p><strong>[OR]</strong></p></td><td><p>H</p></td><td><p>=</p></td><td><p> \(\frac{{V}^{2}\,t}{R\,J}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{{220}^{2}\,\times \,1}{40.33\,\times 4.2}\) = <strong>285.71 </strong><strong>cal</strong></p></td></tr><tr><td><p>(iv)</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\frac{{V}^{2}}{R}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{180\,\times \,180}{40.33}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>803.37 W</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.15</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An electric iron draws a current of 3 A when it is connected to a 220 V mains line. How many kcal of heat are produced per min?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>I = 3 A,&emsp;V = 220 V, &emsp;H = ? </p><p>t = 1 min = 60 s</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H</p></td><td><p>=</p></td><td><p>\(\frac{V\,I\,t}{J}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{220\,\times \,3\,\times \,60}{4.2}\) = <strong>9428.57 </strong><strong>cal</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>9428.57 cal \(\times \) \(\frac{1\,k\,\mathrm{cal}}{1000\,\mathrm{cal}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>9.43 k </strong><strong>cal</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.16</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Find the amount of calories produced per second <strong>by a 2 </strong>\(\Omega \)<strong> resistor</strong> in the circuit diagram shown below.</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>R = 2 \(\Omega \),&emsp;E = 6 V,&emsp;r = 1 \(\Omega \) </p><p>H = ?&emsp;&emsp;&emsp;t = 1 s</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R+r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{6}{2\,+1}\) = \(\frac{6}{3}\) = <strong>2 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By Joule’s law of electricity and heat,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H</p></td><td><p>=</p></td><td><p>\(\frac{{I}^{2}\,R\,t}{J}\) &emsp;(by a 2 \(\Omega \))</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{2\,\times \,2\,\times \,2\,\times \,1}{4.2}\) = <strong>1.905 </strong><strong>cal</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.18</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Find the amount of heat produced in 10 min <strong>by a 10 </strong>\(\Omega \)<strong> resistor</strong> in the circuit diagram shown below.</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>R = 10 \(\Omega \)</p><p>E<sub>1</sub> = 6 V,&emsp;r<sub>1</sub> = 0.5 \(\Omega \),</p><p>E<sub>2</sub> = 6 V,&emsp;r<sub>2</sub> = 0.5 \(\Omega \),</p><p>E<sub>3</sub> = 12 V,&emsp;r<sub>3</sub> = 1 \(\Omega \),         </p><p>H = ?&emsp;t = 10 min = 10 \(\times \) 60 = 600 s</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>The batteries are connected in series aiding,</p><p>Resultant emf, E = E<sub>1</sub> + E<sub>2</sub> + E<sub>3 </sub></p><p>                            = 6 + 6 + 12 = 24 V</p><p>Resultant r = r<sub>1</sub> + r<sub>2</sub> + r<sub>3</sub> </p><p>                  = 0.5 + 0.5 + 1 = 2 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{24}{10\,+\,2}\) = <strong>2 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By Joule’s law of electricity and heat,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H</p></td><td><p>=</p></td><td><p>\(\frac{{I}^{2}\,R\,t}{J}\) &emsp;(by 10 \(\Omega \) resistor)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H</p></td><td><p>=</p></td><td><p>\(\frac{2\,\times \,2\,\times \,10\,\times 600}{4.2}\) = <strong>5714.28 </strong><strong>cal</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.17</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Find the <strong>rate</strong> of production of heat <strong>by the equivalent resistance of resistors</strong> in the circuit diagram shown below. </p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>R<sub>1</sub> = 2 \(\Omega \), R<sub>2</sub> = 3 \(\Omega \), R<sub>3</sub> = 4 \(\Omega \), </p><p>E = 12 V, r = 1 \(\Omega \),</p><p>\(\frac{H}{t}\) = ?&emsp;<strong>(by the equivalent resistors)</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>R<sub>2</sub> and R<sub>3</sub> are connected in parallel,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{R}_{p}}\) </p></td><td><p>=</p></td><td><p>\(\frac{1}{{R}_{2}}\) + \(\frac{1}{{R}_{3}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{3}\) + \(\frac{1}{4}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{R}_{p}}\) </p></td><td><p>=</p></td><td><p>\(\frac{7}{12}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R<sub>p</sub></p></td><td><p>=</p></td><td><p>\(\frac{12}{7}\) = 1.71 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>R<sub>p</sub> and R<sub>1</sub> are connected in series,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>R<sub>1</sub> + R<sub>p</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>2 + 1.71 = 3.71 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{12}{3.71\,+\,1}\) = \(\frac{12}{4.71}\) = <strong>2.55 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By Joule’s law of electricity and heat,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H</p></td><td><p>=</p></td><td><p>\(\frac{{I}^{2}\,R\,t}{J}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{H}{t}\) </p></td><td><p>=</p></td><td><p>\(\frac{{I}^{2}\,R}{J}\) (by the equivalent resistors)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{2.55\,\times \,2.55\,\times \,3.71}{4.2}\) = <strong>5.744 </strong><strong>cal</strong><strong> s</strong><sup><strong>-1</strong></sup></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.19</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; Find the <strong>rate</strong> of production of heat <strong>in the battery</strong> in the circuit diagram shown below.</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>E = 12 V, r = 2 \(\Omega \),</p><p>R<sub>1</sub> = 1 \(\Omega \), R<sub>2</sub> = 1 \(\Omega \), R<sub>3</sub> = 1.5 \(\Omega \),         </p><p>\(\frac{H}{t}\) = ?            <strong>(in the battery)</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>R<sub>1</sub> and R<sub>2</sub> are connected in parallel,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{{R}_{p}}\) </p></td><td><p>=</p></td><td><p>\(\frac{1}{{R}_{1}}\) + \(\frac{1}{{R}_{2}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1}{1}\) + \(\frac{1}{1}\)  =  \(\frac{1\,+\,1}{1}\)  </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{1}{R}\) </p></td><td><p>=</p></td><td><p>\(\frac{2}{1}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>\(\frac{1}{2}\) = 0.5 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>R<sub>p</sub> and R<sub>3</sub> are connected in series,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>R<sub>p</sub> + R<sub>3</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>R</p></td><td><p>=</p></td><td><p>0.5 + 1.5 = 2 \(\Omega \)</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By circuit equation,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{E}{R\,+\,r}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{12}{2\,+\,2}\) = \(\frac{12}{4}\) = <strong>3 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>By Joule’s law of electricity and heat,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>H</p></td><td><p>=</p></td><td><p>\(\frac{{I}^{2}\,R\,t}{J}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{H}{t}\) </p></td><td><p>=</p></td><td><p>\(\frac{{I}^{2}\,R}{J}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>\(\frac{H}{t}\) </p></td><td><p>=</p></td><td><p>\(\frac{{I}^{2}\,r}{J}\) &emsp;(in the battery)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{3\,\times \,3\,\times \,\,2}{4.2}\) = <strong>4.286 </strong><strong>cal</strong><strong> s</strong><sup><strong>-1</strong></sup></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.10</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; What should the rating of the fuse be used for an electric stove of 1200 W, 220 V.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>P = 1200 W,&emsp;V = 220V</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P</p></td><td><p>=</p></td><td><p>V I</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>I</p></td><td><p>=</p></td><td><p>\(\frac{P}{V}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>\(\frac{1200}{220}\) = <strong>5.45 A</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>1200 W electric stove will draw 5.45 A to operate.</p><p>The rating of the fuse should be <strong>6 A</strong>.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Eg.10</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; A 3 A fuse is used in a circuit which contains a source of 220 V. Find the maximum power which can safely be consumed.</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>I<sub>max</sub> = 3 A (fuse),&emsp;V = 220V</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P<sub>max</sub></p></td><td><p>=</p></td><td><p>V I<sub>max</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>220 \(\times \) 3 = <strong>660 W</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.22</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An electric circuit installed in a house contains a 5 A fuse and the voltage is 220 V. Find the maximum electrical power which can safely be used?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>I<sub>max</sub> = 5 A (fuse),&emsp;V = 220V</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P<sub>max</sub></p></td><td><p>=</p></td><td><p>V I<sub>max</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>220 \(\times \) 5 = <strong>1100 W</strong></p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>Rev.9</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An electric circuit installed in a house contains a 5 A fuse and the voltage is 220 V. Can twenty 60 W electric lamps be used at the same time in that circuit?</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>I<sub>max</sub> = 5 A (fuse),&emsp;V = 220V</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P<sub>max</sub></p></td><td><p>=</p></td><td><p>V I<sub>max</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>220 \(\times \) 5 = <strong>1100 W</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Electrical power of twenty 60 W electric lamps,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P<sub>used</sub></p></td><td><p>=</p></td><td><p>20 \(\times \) 60 = <strong>1200 W</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Since, P<sub>used</sub> &gt; P<sub>max</sub></p><p><strong>No,</strong> twenty 60 W electric lamps cannot be used at the same time in that circuit.</p></td></tr></tbody></table></div></div>
+    </details>
+  </div>
+</article><article class="problem-card">
+  <div class="problem-number"><span>No.23</span></div>
+  <div class="problem-content">
+    <p class="problem-question"><strong>Q:</strong>&nbsp; An electric circuit installed in an office contains a 10 A fuse and the voltage is 220 V. Ten 100 W electric lamps and two 150 W refrigerators are being used there. (i) Find the cost of using all the lamps and two refrigerators for 10 h. (ii) Find the maximum number of   60 W electric lamps which can be safely used in addition. (Assume that electricity costs 50 kyats per unit)</p>
+    <hr>
+    <details>
+      <summary><strong>Ans:</strong> အဖြေနှင့် တွက်နည်းကြည့်ရန် နှိပ်ပါ</summary>
+      <div class="problem-answer"><div class="calculation-table-wrap"><table class="calculation-table"><tbody><tr><td><p><strong>Ans:</strong>&emsp;</p></td><td colspan="3"><p>I<sub>max</sub> = 10 A (fuse),&emsp;V = 220V</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P<sub>max</sub></p></td><td><p>=</p></td><td><p>V I<sub>max</sub></p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>220 \(\times \) 10 = <strong>2200 W</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Electrical power of Ten 100 W electric lamps and two 150 W refrigerators,</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>P<sub>used</sub></p></td><td><p>=</p></td><td><p>[10\(\times \)100] + [2\(\times \)150] = <strong>1300 W</strong></p></td></tr><tr><td><p>(i)</p></td><td><p>P</p></td><td><p>=</p></td><td><p>\(\frac{W}{t}\) </p></td></tr><tr><td><p>&nbsp;</p></td><td><p>W</p></td><td><p>=</p></td><td><p>P<sub>used</sub> t</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>1300 \(\times \) 10 = 13 000 Wh</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p>13 000 Wh \(\times \) \(\frac{1\,k\,\mathrm{Wh}}{1000\,\mathrm{Wh}}\)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>=</p></td><td><p><strong>13 kWh</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>1 kWh = 1 unit of electricity</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>13 kWh = 13 unit</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>Cost of using 13 kWh = 50 \(\times \,\)13 = <strong>650 kyats</strong></p></td></tr><tr><td><p>(ii)</p></td><td colspan="3"><p>Remaining power</p><p>&emsp;= P<sub>max</sub> – P<sub>used</sub> = 2200 – 1300 = 900 W</p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>n = \(\frac{\mathrm{Remaining}\,\mathrm{power}}{60}\)  = \(\frac{900}{60}\) = <strong>15 lamps</strong></p></td></tr><tr><td><p>&nbsp;</p></td><td colspan="3"><p>The maximum number of 60 W electric lamps which can be safely used in addition is 15 lamps.</p></td></tr></tbody></table></div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div>
+    </details>
+  </div>
+</article></main>
+  </div>
+  <script src="calculation-format.js"></script>
+</body>
+</html>

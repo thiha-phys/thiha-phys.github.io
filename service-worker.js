@@ -1,4 +1,4 @@
-const CACHE_NAME = 'physics-learning-hub-v6';
+const CACHE_NAME = 'physics-learning-hub-v7';
 const APP_SHELL = [
     './',
     './index.html',
@@ -18,7 +18,7 @@ const APP_SHELL = [
     './page/books.css',
     './page/books-data.js',
     './page/books.js',
-    './page/firebase-order-api.js',
+    './page/order-master-api.js',
     './page/book-preview.html',
     './page/book-preview.js',
     './page/order.html',

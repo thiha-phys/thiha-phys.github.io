@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <script src="/customer/auth-guard.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account - Physics Learning Hub</title>
+    <link rel="icon" type="image/png" href="../logo.png">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pyidaungsu', sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: none;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 84px;
+        }
+
+        /* Scrollable Content Area */
+        .content-area {
+            flex: 1;
+            width: 100%;
+            max-width: 920px;
+            margin: 0 auto;
+            overflow: visible;
+            padding: 0 24px;
+            padding-bottom: 100px;
+        }
+
+        /* Profile Header Card */
+        .profile-header-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 24px;
+            padding: 24px;
+            color: white;
+            text-align: center;
+            position: relative;
+            margin: 18px 0 24px;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.3);
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 16px auto;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ef4444; /* Matching your red accent */
+        }
+
+        .avatar-container .edit-avatar-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #ef4444;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+
+        .profile-header-card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .profile-header-card p {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Info Details Card */
+        .info-card {
+            background: #dbeafe;
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22);
+            margin-bottom: 24px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background-color: #fee2e2;
+            color: #ef4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-right: 14px;
+        }
+
+        .info-text {
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* Edit Button Style */
+        .btn-edit {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-edit:hover {
+            background-color: #dc2626;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            background: #fff;
+            color: #b91c1c;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-logout:hover {
+            background: #fef2f2;
+            border-color: #fca5a5;
+        }
+
+        .profile-edit-form {
+            margin-top: 16px;
+            padding: 18px;
+            background: #fff8db;
+            border: 1px solid #f5e7ad;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.16);
+        }
+
+        .form-field {
+            display: block;
+            margin-bottom: 14px;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .form-field input {
+            display: block;
+            width: 100%;
+            margin-top: 6px;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .form-field input:focus {
+            outline: 2px solid rgba(59, 130, 246, 0.25);
+            border-color: #3b82f6;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .form-actions button {
+            flex: 1;
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .btn-cancel {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        /* Floating Bottom Navigation (Matching your theme) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content;
+            max-width: calc(100vw - 24px);
+            background: rgba(19, 32, 49, 0.82);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 10px 30px 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+            box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.18),
+              0 10px 24px rgba(15, 23, 42, 0.2);
+            z-index: 9999;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #cbd5e1;
+            font-size: 11px;
+            gap: 4px;
+            flex: 0 0 auto;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            color: #cbd5e1;
+        }
+
+        .nav-item.active {
+            color: #ef4444;
+        }
+
+        .nav-item.active i {
+            color: #ef4444;
+        }
+
+        @media (max-width: 760px) {
+            body {
+                padding: 0;
+            }
+
+            .phone-container {
+                min-height: 100vh;
+            }
+
+            .content-area {
+                padding: 0 8px 100px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            body {
+                padding: 0;
+            }
+
+            .phone-container {
+                min-height: 100vh;
+            }
+
+            .content-area {
+                padding: 0 8px 100px;
+            }
+        }
+
+        @media (min-width: 761px) {
+            .bottom-nav {
+                position: static;
+                transform: none;
+                margin: 28px auto 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Main Content -->
+        <div class="content-area">
+            
+            <!-- Profile Header -->
+            <div class="profile-header-card">
+                <div class="avatar-container">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="User Profile">
+                    <div class="edit-avatar-btn">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                </div>
+                <h2 id="profile-name" data-profile-value="name">U Thiha Kyaw</h2>
+                <p id="profile-occupation" data-profile-value="occupation">Physics Teacher &amp; Developer</p>
+            </div>
+
+            <!-- Personal Information Section -->
+            <div class="section-title">
+                <span>ကိုယ်ရေးအချက်အလက်များ</span>
+            </div>
+
+            <div class="info-card">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="info-text">
+                        <div class="info-label">ဖုန်းနံပါတ် (Phone)</div>
+                        <div class="info-value" data-profile-value="phone">09 258 558 839</div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="info-text">
+                        <div class="info-label">အီးမေးလ် (Email)</div>
+                        <div class="info-value" data-profile-value="email">thihakyawphys73@gmail.com</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Button Tool -->
+            <button class="btn-edit" id="edit-profile-button" type="button" aria-expanded="false" aria-controls="profile-edit-form">
+                <i class="fa-solid fa-pen-to-square"></i> အချက်အလက်များ ပြင်ဆင်ရန် (Edit Profile)
+            </button>
+            <button class="btn-logout" id="logout-button" type="button">
+                <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+                အကောင့်မှ ထွက်ရန် (Log out)
+            </button>
+
+            <form class="profile-edit-form" id="profile-edit-form" hidden>
+                <label class="form-field">
+                    အမည် (Name)
+                    <input name="name" type="text" autocomplete="name" required>
+                </label>
+                <label class="form-field">
+                    အလုပ်အကိုင် (Job / Position)
+                    <input name="occupation" type="text" required>
+                </label>
+                <label class="form-field">
+                    ဖုန်းနံပါတ် (Phone)
+                    <input name="phone" type="tel" autocomplete="tel" required>
+                </label>
+                <label class="form-field">
+                    အီးမေးလ် (Email)
+                    <input name="email" type="email" autocomplete="email">
+                </label>
+                <div class="form-actions">
+                    <button class="btn-save" type="submit">Save</button>
+                    <button class="btn-cancel" id="cancel-edit-button" type="button">Cancel</button>
+                </div>
+            </form>
+
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="bottom-nav">
+            <a href="../index.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="announcement.html" class="nav-item">
+                <i class="fa-solid fa-message"></i>
+                <span>Announcement</span>
+            </a>
+            <a href="account.html" class="nav-item active">
+                <i class="fa-solid fa-user"></i>
+                <span>Account</span>
+            </a>
+        </div>
+
+    </div>
+
+    <script src="profile-api.js"></script>
+    <script>
+        const editButton = document.getElementById('edit-profile-button');
+        const editForm = document.getElementById('profile-edit-form');
+        const cancelButton = document.getElementById('cancel-edit-button');
+        const logoutButton = document.getElementById('logout-button');
+        const profileValues = Object.fromEntries(
+            [...document.querySelectorAll('[data-profile-value]')].map((element) => [
+                element.dataset.profileValue,
+                element
+            ])
+        );
+        const profileStatus = document.createElement('p');
+        profileStatus.setAttribute('role', 'status');
+        profileStatus.setAttribute('aria-live', 'polite');
+        profileStatus.style.cssText = 'margin-top:12px;color:#b91c1c;font-size:12px;';
+        editForm.after(profileStatus);
+        let savedProfileForUpdate = null;
+
+        logoutButton.addEventListener('click', () => {
+            try {
+                localStorage.removeItem('physicsLearningHubProfile');
+                window.location.replace('login.html');
+            } catch (error) {
+                console.error('Unable to clear the saved account session.', error);
+                profileStatus.textContent = 'အကောင့်မှ ထွက်မရပါ။ ထပ်မံကြိုးစားပါ။';
+            }
+        });
+
+        function getSavedProfile() {
+            const savedProfile = localStorage.getItem('physicsLearningHubProfile');
+            if (!savedProfile) {
+                return null;
+            }
+
+            const profile = JSON.parse(savedProfile);
+            if (!profile || typeof profile !== 'object') {
+                throw new Error('Saved profile data is not valid.');
+            }
+            return profile;
+        }
+
+        try {
+            const savedProfile = getSavedProfile();
+            if (savedProfile) {
+                savedProfileForUpdate = savedProfile;
+                for (const [field, element] of Object.entries(profileValues)) {
+                    if (field === 'email' && typeof savedProfile[field] === 'string') {
+                        element.textContent = savedProfile[field].trim();
+                    } else if (typeof savedProfile[field] === 'string' && savedProfile[field].trim()) {
+                        element.textContent = field === 'phone'
+                            ? formatPhoneNumber(savedProfile[field])
+                            : savedProfile[field].trim();
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Unable to load the saved profile.', error);
+            profileStatus.textContent = 'သိမ်းထားတဲ့ account အချက်အလက်တွေကို ဖတ်မရပါ။';
+        }
+
+        function openEditForm() {
+            for (const [field, element] of Object.entries(profileValues)) {
+                editForm.elements.namedItem(field).value = element.textContent.trim();
+            }
+            editForm.hidden = false;
+            editButton.setAttribute('aria-expanded', 'true');
+            editForm.elements.namedItem('name').focus();
+        }
+
+        function closeEditForm() {
+            editForm.reset();
+            editForm.hidden = true;
+            editButton.setAttribute('aria-expanded', 'false');
+        }
+
+        function formatPhoneNumber(value) {
+            const digits = normalizePhoneNumber(value);
+            return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8, 11)}`;
+        }
+
+        function normalizePhoneNumber(value) {
+            return value.replace(/[၀-၉]/g, (digit) =>
+                String(digit.charCodeAt(0) - '၀'.charCodeAt(0))
+            ).replace(/\D/g, '');
+        }
+
+        editButton.addEventListener('click', () => {
+            if (editForm.hidden) {
+                openEditForm();
+            } else {
+                closeEditForm();
+            }
+        });
+
+        cancelButton.addEventListener('click', closeEditForm);
+
+        editForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(editForm);
+            const updatedProfile = {};
+            const phone = formData.get('phone').trim();
+            const normalizedPhone = normalizePhoneNumber(phone);
+            if (!/^0\d{10}$/.test(normalizedPhone)) {
+                profileStatus.textContent = 'ဖုန်းနံပါတ်ကို 0x xxx xxx xxx ပုံစံအတိုင်း ဂဏန်း ၁၁ လုံး ထည့်ပါ။';
+                return;
+            }
+
+            if (!savedProfileForUpdate || typeof savedProfileForUpdate.phone !== 'string') {
+                profileStatus.textContent = 'Update လုပ်ဖို့ သိမ်းထားတဲ့ account ဖုန်းနံပါတ် မရှိပါ။';
+                return;
+            }
+
+            for (const [field, element] of Object.entries(profileValues)) {
+                const value = formData.get(field).trim();
+                updatedProfile[field] = field === 'phone' ? formatPhoneNumber(normalizedPhone) : value;
+            }
+
+            try {
+                profileStatus.textContent = 'သင့်ဧ။် account ဆိုင်ရာ အချက်အလက်တွေ ပြင်ဆင်နေပါတယ်...';
+                await sendProfileRequest('update', {
+                    name: updatedProfile.name,
+                    job: updatedProfile.occupation,
+                    email: updatedProfile.email,
+                    phone: updatedProfile.phone,
+                    lookupPhone: savedProfileForUpdate.phone
+                });
+            } catch (error) {
+                console.error('Unable to update the account profile.', error);
+                profileStatus.textContent = error.code === 'PHONE_NOT_FOUND'
+                    ? 'ဒီဖုန်းနံပါတ်နဲ့ ကိုက်ညီတဲ့ account ကို မတွေ့ပါ။'
+                    : `Account ကို update မလုပ်နိုင်ပါ။ ${error.message}`;
+                return;
+            }
+
+            try {
+                localStorage.setItem('physicsLearningHubProfile', JSON.stringify(updatedProfile));
+            } catch (error) {
+                console.error('The account was updated, but the profile could not be saved in this browser.', error);
+                profileStatus.textContent = 'Account ကို update လုပ်ပြီးပါပြီ၊ ဒါပေမယ့် ဒီ browser မှာ account ကို သိမ်းမရပါ။';
+                return;
+            }
+
+            savedProfileForUpdate = updatedProfile;
+            for (const [field, element] of Object.entries(profileValues)) {
+                element.textContent = updatedProfile[field];
+            }
+
+            profileStatus.textContent = '';
+            closeEditForm();
+        });
+    </script>
+
+</body>
+</html>

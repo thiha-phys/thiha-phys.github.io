@@ -22,7 +22,7 @@ try {
 }
 
 function renderFeedbackBooks(masterData) {
-feedbackBooks = getFirebaseOrderBooks(masterData);
+feedbackBooks = getOrderBooks(masterData);
 feedbackBooks.forEach((book) => {
     const card = document.createElement('article');
     card.className = 'feedback-book';
@@ -86,9 +86,9 @@ loadOrderMasterData()
         feedbackForm.hidden = false;
     })
     .catch((error) => {
-        console.error('Unable to load Firebase book names for feedback.', error);
+        console.error('Unable to load book names for feedback.', error);
         feedbackForm.hidden = true;
-        feedbackStatus.textContent = 'Firebase မှ စာအုပ်စာရင်းကို ရယူမရပါ။';
+        feedbackStatus.textContent = 'စာအုပ်စာရင်းကို ရယူမရပါ။';
     });
 
 function collectFeedback() {
@@ -165,16 +165,14 @@ submitFeedbackButton.addEventListener('click', async () => {
     submitFeedbackButton.disabled = true;
     feedbackStatus.textContent = 'ပေးပို့နေပါသည်။ ခဏစောင့်ပေးပါ။';
     try {
-        const syncResult = await sendProfileRequest('submitFeedback', {
+        await sendProfileRequest('submitFeedback', {
             name: reviewedFeedback.name,
             phone: reviewedFeedback.phone,
             job: reviewedFeedback.job,
             books: reviewedFeedback.books,
             otherSuggestion: reviewedFeedback.otherSuggestion
         });
-        feedbackStatus.textContent = syncResult.syncPending
-            ? 'Firebase ထဲမှာ သိမ်းပြီးပါပြီ။ Sheet sync ကို နောက်တစ်ကြိမ် ပြန်ကြိုးစားပါမည်။'
-            : '';
+        feedbackStatus.textContent = '';
         feedbackReviewPanel.hidden = true;
         feedbackSuccess.hidden = false;
         feedbackSuccess.scrollIntoView({ behavior: 'smooth', block: 'start' });

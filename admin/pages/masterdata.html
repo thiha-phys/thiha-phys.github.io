@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="my">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Master Data | UTHK Admin</title>
+    <link rel="icon" type="image/png" href="../logo.png"><link rel="apple-touch-icon" href="../icons/app-icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body><main class="page-shell">
+    <header class="page-top"><a class="back-button" href="../index.html" aria-label="Home"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">Master Data</h1><p class="page-subtitle">Customer app နှင့် Admin app နှစ်ခုလုံး အသုံးပြုမည့် စာအုပ်နှင့် ပို့ဆောင်ရေးအချက်အလက်</p></div></header>
+    <form id="master-data-form">
+        <section class="panel">
+            <h2>အထွေထွေ သတ်မှတ်ချက်များ</h2>
+            <div class="form-grid">
+                <label class="field">အုပ်ရေအလိုက် ဈေးနှုန်းအဆင့်များ<input id="price-thresholds" inputmode="numeric" placeholder="0, 10, 30, 50, 100" required></label>
+                <label class="field">Royal ဝန်ဆောင်ခ<input id="royal-service-fee" type="number" min="0" step="1" required></label>
+                <label class="field">COD အများဆုံးပမာဏ<input id="cod-max-total" type="number" min="0" step="1" required></label>
+            </div>
+        </section>
+        <section class="panel">
+            <div class="section-heading"><div><h2>စာအုပ်စာရင်း</h2></div><button id="add-book" class="secondary-button" type="button"><i class="fa-solid fa-plus"></i> စာအုပ်ထည့်ရန်</button></div>
+            <div class="master-table-wrap"><table class="master-table"><thead><tr><th>ဖွင့်ထား</th><th>ID</th><th>စာအုပ်အမည်</th><th>ပုံဖိုင်</th><th>အလေးချိန် (kg)</th><th>ဈေးနှုန်းအဆင့်များ</th><th>Order Qty column</th><th>Order Amount column</th></tr></thead><tbody id="books-rows"></tbody></table></div>
+        </section>
+        <section class="panel">
+            <div class="section-heading"><div><h2>ပို့ဆောင်မည့်မြို့များ</h2></div><button id="add-city" class="secondary-button" type="button"><i class="fa-solid fa-plus"></i> မြို့ထည့်ရန်</button></div>
+            <div class="master-table-wrap"><table class="master-table"><thead><tr><th>ID</th><th>English</th><th>မြန်မာ</th><th>၂ kg အထိ</th><th>နောက်ထပ် kg တစ်ခုစီ</th></tr></thead><tbody id="cities-rows"></tbody></table></div>
+        </section>
+        <section class="panel no-print"><div class="button-row"><button id="save-master-data" class="primary-button" type="submit"><i class="fa-solid fa-floppy-disk"></i> သိမ်းဆည်းရန်</button><button id="reload-master-data" class="secondary-button" type="button"><i class="fa-solid fa-rotate"></i> ပြန်ရယူရန်</button></div><p id="master-data-status" class="status-message" role="status" aria-live="polite"></p></section>
+    </form>
+</main>
+<script src="admin-api.js"></script><script src="masterdata.js"></script>
+</body></html>

@@ -23,8 +23,8 @@ if (!requestedBookId) {
 } else {
     loadOrderMasterData()
         .then(({ masterData }) => {
-            const book = getFirebaseOrderBooks(masterData).find((entry) => entry.id === requestedBookId);
-            if (!book) throw new Error('The book is missing from Firebase master data.');
+            const book = getOrderBooks(masterData).find((entry) => entry.id === requestedBookId);
+            if (!book) throw new Error('The book is missing from master data.');
             document.title = `${book.name} နမူနာ | Physics Learning Hub`;
             document.getElementById('reader-title').textContent = book.name;
             image.alt = `${book.name} နမူနာစာမျက်နှာ`;
@@ -51,9 +51,9 @@ if (!requestedBookId) {
             showPage();
         })
         .catch((error) => {
-            console.error('Unable to load the Firebase book catalog.', error);
+            console.error('Unable to load the book catalog.', error);
             document.getElementById('reader-title').textContent = 'စာအုပ်အချက်အလက် မရနိုင်ပါ';
-            message.textContent = 'Firebase မှ စာအုပ်စာရင်းကို ရယူမရပါ။';
+            message.textContent = 'စာအုပ်စာရင်းကို ရယူမရပါ။';
             previousButton.disabled = true;
             nextButton.disabled = true;
         });
