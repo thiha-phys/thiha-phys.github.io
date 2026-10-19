@@ -50,16 +50,19 @@ const ORDER_HEADERS = [
   'G11 Handbook Qty', 'G11 Handbook Amount',
   'G11 Objective Qty', 'G11 Objective Amount',
   'G10 Handbook Qty', 'G10 Handbook Amount',
-  'Total', 'Received', 'KPay Account', 'Pay Date',
+  'Total', 'Received', 'KPay Account', 'Pay Date', 'Payment Method',
   'Delivery Service', 'Delivery Fees', 'Total KG', 'Cash Collection',
-  'Facebook Name', 'Facebook Link', 'Royal Voucher', 'car inform',
-  'Confirm Service Charge', 'Confirm Service COD', 'Payment Method', 'Delivery Notes'
+  'Facebook Name', 'Facebook Link', 'car inform', 'Delivery Notes',
+  'Royal Voucher', 'Royal Shipment Service Charge', 'Royal Shipment COD Amount',
+  'Royal Shipment Weight', 'Royal Statement COD Charge',
+  'Royal Statement Paid Charge', 'Royal Statement Paid Date'
 ];
 const ORDER_CURRENCY_HEADERS = [
   'Special Amount', 'Practice Amount', 'OQ Amount', 'Solution Amount',
   'G11 Handbook Amount', 'G11 Objective Amount', 'G10 Handbook Amount',
   'Total', 'Received', 'Delivery Fees', 'Cash Collection',
-  'Confirm Service Charge', 'Confirm Service COD'
+  'Royal Shipment Service Charge', 'Royal Shipment COD Amount',
+  'Royal Statement COD Charge', 'Royal Statement Paid Charge'
 ];
 const ORDER_HEADER_ALIASES = {
   'Phone': 'Phone 1',
@@ -76,6 +79,10 @@ const ORDER_HEADER_ALIASES = {
   'Grade 10 Handbook Amount': 'G10 Handbook Amount',
   'Amount Received': 'Received',
   'Royal VOC No': 'Royal Voucher',
+  'Confirm Service Charge': 'Royal Shipment Service Charge',
+  'Confirm Service COD': 'Royal Shipment COD Amount',
+  'Royal Statement COD Charges': 'Royal Statement COD Charge',
+  'Royal Statement Paid Charges': 'Royal Statement Paid Charge',
   'Delivery': 'Delivery Service',
   'Facebook Account Name': 'Facebook Name'
 };
@@ -147,6 +154,12 @@ function doPost(e) {
     }
     if (action === 'syncRoyalShipments') {
       return syncRoyalShipments_(request.waybills);
+    }
+    if (action === 'importRoyalShipmentExport') {
+      return syncRoyalShipments_(request.entries);
+    }
+    if (action === 'importRoyalStatementExport') {
+      return syncRoyalStatements_(request.entries);
     }
     if (action === 'listShopOrders') {
       return jsonResponse_({
@@ -504,8 +517,9 @@ function syncRoyalShipments_(waybills) {
     const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getDisplayValues()[0];
     const columns = {
       voucher: headers.indexOf('Royal Voucher'),
-      serviceCharge: headers.indexOf('Confirm Service Charge'),
-      cod: headers.indexOf('Confirm Service COD'),
+      serviceCharge: headers.indexOf('Royal Shipment Service Charge'),
+      cod: headers.indexOf('Royal Shipment COD Amount'),
+      weight: headers.indexOf('Royal Shipment Weight'),
       notes: headers.indexOf('Delivery Notes')
     };
     const updatedRows = {};
@@ -522,6 +536,7 @@ function syncRoyalShipments_(waybills) {
       }
       row[columns.serviceCharge] = currencySheetValue_(result.serviceCharge);
       row[columns.cod] = currencySheetValue_(result.cod);
+      row[columns.weight] = result.weight;
       row[columns.notes] = sheetSafeText_(result.state);
     });
     Object.keys(updatedRows).forEach(function (rowNumber) {
@@ -530,10 +545,15 @@ function syncRoyalShipments_(waybills) {
       range.setValues([updatedRows[rowNumber]]);
       applyCurrencyRowFormats_(sheet, Number(rowNumber), headers, ORDER_CURRENCY_HEADERS);
     });
+    const publicResults = results.map(publicRoyalImportResult_);
     return jsonResponse_({
       ok: true,
-      results: results.map(publicRoyalImportResult_),
-      updated: Object.keys(updatedRows).length
+      results: publicResults,
+      updatedCount: Object.keys(updatedRows).length,
+      unmatchedCount: publicResults.filter(function (result) {
+        return result.result === 'unmatched' || result.result === 'phone-mismatch';
+      }).length,
+      duplicateCount: publicResults.filter(function (result) { return result.result === 'duplicate'; }).length
     });
   } finally {
     lock.releaseLock();
@@ -561,9 +581,10 @@ function normalizeRoyalWaybills_(waybills) {
     }
     const serviceCharge = Number(entry.serviceCharge);
     const cod = Number(entry.cod);
+    const weight = Number(entry.weight);
     if (!Number.isSafeInteger(serviceCharge) || serviceCharge < 0 ||
-        !Number.isSafeInteger(cod) || cod < 0) {
-      throw new Error('Service Charges and COD must be non-negative whole numbers.');
+        !Number.isSafeInteger(cod) || cod < 0 || !Number.isFinite(weight) || weight < 0) {
+      throw new Error('Weight, Service Charges, or COD is invalid.');
     }
     const receiver = requiredText_(entry.receiver, 'Receiver');
     const state = requiredText_(entry.state, 'State');
@@ -577,6 +598,7 @@ function normalizeRoyalWaybills_(waybills) {
       receiver: receiver,
       serviceCharge: String(serviceCharge),
       cod: String(cod),
+      weight: weight,
       state: normalizeRoyalState_(state),
       waybillDate: waybillDate,
       sourceIndex: index
@@ -638,6 +660,7 @@ function planRoyalImport_(sheet, entries) {
       waybillNo: entry.waybillNo,
       serviceCharge: entry.serviceCharge,
       cod: entry.cod,
+      weight: entry.weight,
       state: entry.state,
       phone: receiverPhones[0] || '',
       rowNumber: phoneMatches ? linkedRow.rowNumber : 0,
@@ -683,6 +706,7 @@ function planRoyalImport_(sheet, entries) {
       waybillNo: entry.waybillNo,
       serviceCharge: entry.serviceCharge,
       cod: entry.cod,
+      weight: entry.weight,
       state: entry.state,
       phone: receiverPhones[0] || '',
       rowNumber: order ? order.rowNumber : 0,
@@ -708,8 +732,108 @@ function publicRoyalImportResult_(result) {
     message: result.message,
     serviceCharge: result.serviceCharge,
     cod: result.cod,
+    weight: result.weight,
     rowNumber: result.rowNumber
   };
+}
+
+function syncRoyalStatements_(entries) {
+  if (!Array.isArray(entries) || entries.length === 0 || entries.length > 1000) {
+    throw new Error('Import must contain between 1 and 1,000 Royal statement rows.');
+  }
+  const seen = Object.create(null);
+  const normalized = entries.map(function (entry) {
+    if (!entry || typeof entry !== 'object') throw new Error('A Royal statement row is invalid.');
+    const waybillNo = requiredText_(entry.waybillNo, 'Waybill No');
+    const key = waybillNo.toLocaleUpperCase();
+    if (seen[key]) throw new Error('The Royal statement contains a duplicate waybill number: ' + waybillNo);
+    seen[key] = true;
+    const codCharges = Number(entry.codCharges);
+    const paidCharges = Number(entry.paidCharges);
+    if (!Number.isSafeInteger(codCharges) || codCharges < 0 ||
+        !Number.isSafeInteger(paidCharges) || paidCharges < 0) {
+      throw new Error('Royal statement charges must be non-negative whole numbers.');
+    }
+    return {
+      waybillNo: waybillNo,
+      codCharges: codCharges,
+      paidCharges: paidCharges,
+      paidDate: entry.paidDate == null ? '' : String(entry.paidDate).trim()
+    };
+  });
+
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const sheet = getOrdersSheet_();
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getDisplayValues()[0];
+    const columns = {
+      voucher: headers.indexOf('Royal Voucher'),
+      codCharges: headers.indexOf('Royal Statement COD Charge'),
+      paidCharges: headers.indexOf('Royal Statement Paid Charge'),
+      paidDate: headers.indexOf('Royal Statement Paid Date')
+    };
+    if (Object.values(columns).some(function (index) { return index < 0; })) {
+      throw new Error('The Book Orders sheet is missing Royal statement columns.');
+    }
+
+    const lastRow = sheet.getLastRow();
+    const matchingRows = Object.create(null);
+    if (lastRow > 1) {
+      sheet.getRange(2, 1, lastRow - 1, headers.length).getDisplayValues()
+        .forEach(function (row, index) {
+          const waybill = String(row[columns.voucher] || '').trim();
+          if (!waybill) return;
+          const key = waybill.toLocaleUpperCase();
+          if (!matchingRows[key]) matchingRows[key] = [];
+          matchingRows[key].push(index + 2);
+        });
+    }
+
+    const rowsToUpdate = Object.create(null);
+    const results = normalized.map(function (entry) {
+      const rows = matchingRows[entry.waybillNo.toLocaleUpperCase()] || [];
+      if (rows.length > 1) {
+        throw new Error('Duplicate Royal Voucher values were found in the sheet; statement import was stopped.');
+      }
+      if (!rows.length) {
+        return {
+          waybillNo: entry.waybillNo,
+          result: 'unmatched',
+          message: 'No matching Royal Voucher was found.'
+        };
+      }
+      const rowNumber = rows[0];
+      const row = rowsToUpdate[rowNumber] ||
+        sheet.getRange(rowNumber, 1, 1, headers.length).getDisplayValues()[0];
+      row[columns.codCharges] = currencySheetValue_(entry.codCharges);
+      row[columns.paidCharges] = currencySheetValue_(entry.paidCharges);
+      row[columns.paidDate] = sheetSafeText_(entry.paidDate);
+      rowsToUpdate[rowNumber] = row;
+      return {
+        waybillNo: entry.waybillNo,
+        rowNumber: rowNumber,
+        result: 'linked',
+        message: 'Royal statement values were updated.'
+      };
+    });
+
+    Object.keys(rowsToUpdate).forEach(function (rowNumber) {
+      const range = sheet.getRange(Number(rowNumber), 1, 1, headers.length);
+      range.setNumberFormat('@');
+      range.setValues([rowsToUpdate[rowNumber]]);
+      applyCurrencyRowFormats_(sheet, Number(rowNumber), headers, ORDER_CURRENCY_HEADERS);
+    });
+    return jsonResponse_({
+      ok: true,
+      results: results,
+      updatedCount: Object.keys(rowsToUpdate).length,
+      unmatchedCount: results.filter(function (result) { return result.result === 'unmatched'; }).length,
+      duplicateCount: 0
+    });
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 function royalPhoneCandidates_(receiver) {
