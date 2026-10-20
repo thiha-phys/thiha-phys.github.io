@@ -570,7 +570,7 @@
                 const returnTo = new URLSearchParams(window.location.search).get('returnTo');
                 const safeReturnTo = returnTo && returnTo.startsWith('/') &&
                     !returnTo.startsWith('//') &&
-                    !returnTo.startsWith('/customer/page/login')
+                    !returnTo.startsWith('/page/login')
                     ? returnTo
                     : '../index.html';
                 window.location.replace(safeReturnTo);

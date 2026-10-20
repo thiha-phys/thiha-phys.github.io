@@ -1,6 +1,6 @@
 (() => {
     const profileKey = 'physicsLearningHubProfile';
-    const loginPath = '/customer/page/login.html';
+    const loginPath = '/page/login.html';
     let profile = null;
 
     try {
