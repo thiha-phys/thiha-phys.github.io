@@ -356,34 +356,1351 @@
                 grid-column: 2;
             }
         }
+
+        body {
+            position: relative;
+            isolation: isolate;
+            overflow-x: hidden;
+            padding: 32px 18px;
+            background:
+                radial-gradient(ellipse at 12% 14%, rgba(44, 212, 231, 0.18), transparent 32%),
+                radial-gradient(ellipse at 88% 82%, rgba(109, 91, 255, 0.16), transparent 35%),
+                #081426;
+            color: #e9f2ff;
+        }
+
+        body::before,
+        body::after {
+            position: fixed;
+            z-index: -1;
+            color: rgba(116, 215, 240, 0.11);
+            font-family: Georgia, serif;
+            font-size: clamp(30px, 5vw, 64px);
+            font-weight: 700;
+            pointer-events: none;
+        }
+
+        body::before {
+            top: 8%;
+            left: 5%;
+            content: "F = ma";
+            transform: rotate(-12deg);
+        }
+
+        body::after {
+            right: 5%;
+            bottom: 8%;
+            content: "E = mc²";
+            transform: rotate(9deg);
+        }
+
+        .auth-shell {
+            max-width: 500px;
+            padding: 1px;
+            border: 1px solid rgba(112, 198, 235, 0.3);
+            border-radius: 28px;
+            background: linear-gradient(145deg, rgba(92, 226, 245, 0.55), rgba(123, 102, 255, 0.2) 45%, rgba(92, 226, 245, 0.12));
+            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.4), 0 0 50px rgba(61, 194, 224, 0.12);
+        }
+
+        .auth-shell::before {
+            display: none;
+        }
+
+        .auth-content {
+            padding: clamp(24px, 6vw, 42px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 27px;
+            background: linear-gradient(160deg, rgba(18, 37, 62, 0.98), rgba(10, 23, 42, 0.98));
+            box-shadow: none;
+        }
+
+        .brand {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .brand-icon {
+            width: 66px;
+            height: 66px;
+            margin: 0 auto 14px;
+            border: 1px solid rgba(76, 218, 238, 0.38);
+            background: linear-gradient(145deg, rgba(27, 190, 214, 0.2), rgba(107, 92, 255, 0.16));
+            color: #65e2f0;
+            box-shadow: 0 0 32px rgba(52, 218, 236, 0.18), inset 0 0 18px rgba(52, 218, 236, 0.08);
+        }
+
+        .brand-icon svg circle,
+        .brand-icon svg ellipse {
+            stroke: #68e5f2;
+        }
+
+        .brand-icon svg circle {
+            fill: #ffd166;
+        }
+
+        .brand h1 {
+            color: #f5f8ff;
+            font-size: clamp(21px, 5vw, 26px);
+            letter-spacing: -0.03em;
+        }
+
+        .brand p {
+            margin-top: 8px;
+            color: #a9bad2;
+            font-size: 13px;
+        }
+
+        .learning-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 13px;
+            padding: 6px 11px;
+            border: 1px solid rgba(96, 218, 235, 0.2);
+            border-radius: 999px;
+            background: rgba(67, 197, 220, 0.08);
+            color: #7de3ec;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .auth-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 23px;
+            padding: 5px;
+            border: 1px solid rgba(150, 183, 219, 0.13);
+            border-radius: 16px;
+            background: rgba(4, 14, 28, 0.58);
+        }
+
+        .auth-tab {
+            min-height: 58px;
+            padding: 9px 7px;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            background: transparent;
+            color: #a7b8cf;
+            font: inherit;
+            cursor: pointer;
+            transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .auth-tab span,
+        .auth-tab small {
+            display: block;
+        }
+
+        .auth-tab span {
+            color: inherit;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .auth-tab small {
+            margin-top: 3px;
+            color: #8295af;
+            font-size: 10px;
+        }
+
+        .auth-tab[aria-selected="true"] {
+            border-color: rgba(95, 222, 237, 0.33);
+            background: linear-gradient(135deg, rgba(34, 190, 213, 0.2), rgba(104, 98, 255, 0.18));
+            color: #ecfbff;
+            box-shadow: inset 0 0 18px rgba(49, 198, 220, 0.08), 0 4px 14px rgba(0, 0, 0, 0.14);
+        }
+
+        .auth-tab[aria-selected="true"] small {
+            color: #8de7ee;
+        }
+
+        .auth-tab:hover {
+            transform: translateY(-1px);
+        }
+
+        .auth-form h2 {
+            margin-bottom: 6px;
+            color: #f5f8ff;
+            font-size: 20px;
+            text-align: left;
+        }
+
+        .form-intro {
+            margin-bottom: 18px;
+            color: #a7b8cf;
+            font-size: 12px;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .field {
+            margin-top: 15px;
+            color: #c5d1e1;
+            font-size: 12px;
+        }
+
+        #signup-panel .field {
+            margin-bottom: 0;
+        }
+
+        .floating-field {
+            margin-top: 10px;
+        }
+
+        .floating-label {
+            background: #10243d;
+            color: #9aacc3;
+        }
+
+        .floating-field:focus-within .floating-label,
+        .floating-field input:not(:placeholder-shown) + .floating-label,
+        .floating-field select:valid + .floating-label {
+            color: #71dce9;
+        }
+
+        .input-icon {
+            color: #71cbd9;
+        }
+
+        .field input,
+        .field select {
+            min-height: 50px;
+            border: 1px solid rgba(151, 184, 219, 0.2);
+            border-radius: 13px;
+            background: rgba(4, 16, 31, 0.58);
+            color: #f1f7ff;
+            box-shadow: none;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #54cfdf;
+            box-shadow: 0 0 0 3px rgba(61, 204, 222, 0.12);
+        }
+
+        .field input::placeholder {
+            color: #879bb5;
+        }
+
+        .password-toggle {
+            color: #8ca4be;
+        }
+
+        .submit-button {
+            min-height: 52px;
+            margin-top: 22px;
+            border: 1px solid rgba(112, 244, 246, 0.4);
+            border-radius: 14px;
+            background: linear-gradient(100deg, #19b9cf, #4779ee 62%, #7a65ed);
+            color: #fff;
+            font-size: 15px;
+            letter-spacing: 0;
+            box-shadow: 0 9px 24px rgba(36, 154, 222, 0.22);
+        }
+
+        .submit-button:hover {
+            color: #fff;
+            box-shadow: 0 12px 28px rgba(36, 154, 222, 0.34);
+        }
+
+        .submit-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 12px rgba(36, 154, 222, 0.2);
+        }
+
+        .auth-switch {
+            margin-top: 15px;
+            color: #a7b8cf;
+            font-size: 12px;
+        }
+
+        .auth-switch button {
+            color: #7ae1ed;
+        }
+
+        .auth-switch button:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .account-tip {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 17px 0 0;
+            padding: 12px 13px;
+            border: 1px solid rgba(255, 209, 102, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 209, 102, 0.07);
+            color: #d3c9aa;
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        .account-tip i {
+            margin-top: 2px;
+            color: #ffd166;
+        }
+
+        .connection-note {
+            min-height: 0;
+            margin: 15px 0 0;
+            padding: 0;
+            border-radius: 12px;
+            color: #b5c6da;
+            font-size: 12px;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .connection-note:not(:empty) {
+            padding: 11px 13px;
+            border: 1px solid rgba(112, 198, 235, 0.2);
+            background: rgba(62, 158, 193, 0.08);
+        }
+
+        .connection-note.success {
+            border-color: rgba(91, 220, 170, 0.35);
+            background: rgba(36, 181, 129, 0.1);
+            color: #a7f2d3;
+        }
+
+        .connection-note.error {
+            border-color: rgba(255, 120, 120, 0.34);
+            background: rgba(226, 76, 94, 0.1);
+            color: #ffc0c5;
+        }
+
+        @media (min-width: 800px) {
+            .auth-shell {
+                max-width: 500px;
+            }
+
+            .auth-content {
+                display: block;
+                padding: 42px clamp(32px, 6vw, 52px);
+            }
+
+            .brand {
+                display: block;
+                margin-bottom: 24px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .auth-content {
+                padding: 22px 17px;
+            }
+
+            .auth-tab span {
+                font-size: 12px;
+            }
+        }
+
+        .brand-logo {
+            display: block;
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 10px;
+            padding: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            background: #fff;
+            object-fit: contain;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .brand {
+            margin-bottom: 20px;
+        }
+
+        .brand h1 {
+            font-size: clamp(20px, 5vw, 24px);
+        }
+
+        .welcome-panel {
+            text-align: center;
+        }
+
+        .physics-scene {
+            position: relative;
+            width: min(100%, 260px);
+            height: 160px;
+            margin: 0 auto 4px;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border: 1px solid rgba(94, 209, 232, 0.15);
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(46, 198, 220, 0.13), transparent 48%),
+                rgba(4, 16, 31, 0.35);
+        }
+
+        .physics-scene svg {
+            width: 220px;
+            max-width: 90%;
+            overflow: visible;
+        }
+
+        .physics-orbit {
+            stroke: rgba(110, 220, 236, 0.58);
+            stroke-width: 1.4;
+            stroke-dasharray: 5 4;
+        }
+
+        .physics-core {
+            fill: #ffd166;
+            filter: drop-shadow(0 0 8px rgba(255, 209, 102, 0.9));
+        }
+
+        .physics-glow {
+            fill: rgba(255, 209, 102, 0.08);
+            animation: core-pulse 2.2s ease-in-out infinite;
+        }
+
+        .physics-electron {
+            fill: #69e3f0;
+            filter: drop-shadow(0 0 6px rgba(105, 227, 240, 0.95));
+            transform-box: view-box;
+            transform-origin: 110px 75px;
+        }
+
+        .electron-one {
+            animation: electron-orbit 5s linear infinite;
+        }
+
+        .electron-two {
+            animation: electron-orbit 6.5s linear infinite reverse;
+        }
+
+        @keyframes electron-orbit {
+            to { transform: rotate(1turn); }
+        }
+
+        @keyframes core-pulse {
+            50% { opacity: 0.45; transform: scale(1.25); }
+        }
+
+        .physics-equation {
+            position: absolute;
+            right: 15px;
+            bottom: 12px;
+            color: rgba(140, 223, 236, 0.7);
+            font-family: Georgia, serif;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .welcome-eyebrow {
+            margin: 20px 0 7px;
+            color: #72dce9;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+        }
+
+        .welcome-panel h2 {
+            margin: 0;
+            color: #f5f8ff;
+            font-size: clamp(23px, 6vw, 29px);
+            letter-spacing: -0.03em;
+        }
+
+        .welcome-copy {
+            max-width: 300px;
+            margin: 9px auto 22px;
+            color: #a9bad2;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .welcome-actions {
+            display: grid;
+            gap: 10px;
+        }
+
+        .welcome-actions .submit-button {
+            margin-top: 0;
+        }
+
+        .create-button {
+            min-height: 48px;
+            border: 1px solid rgba(139, 169, 204, 0.28);
+            border-radius: 14px;
+            background: rgba(12, 28, 48, 0.55);
+            color: #d8e7f7;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .create-button:hover {
+            border-color: rgba(96, 218, 235, 0.55);
+            background: rgba(53, 184, 207, 0.12);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 23px;
+        }
+
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(151, 184, 219, 0.2);
+            border-radius: 50%;
+            background: rgba(4, 16, 31, 0.5);
+            color: #a9c2db;
+            text-decoration: none;
+            transition: color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-2px);
+            border-color: #63d8e7;
+            color: #76e5ef;
+        }
+
+        .auth-view[hidden],
+        .welcome-panel[hidden] {
+            display: none;
+        }
+
+        .back-button {
+            margin: 0 0 14px;
+            padding: 4px 0;
+            border: 0;
+            background: transparent;
+            color: #9cb1c9;
+            font: inherit;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            color: #7ae1ed;
+        }
+
+        .auth-tabs {
+            margin-bottom: 20px;
+        }
+
+        .auth-tab span {
+            font-size: 13px;
+        }
+
+        .auth-tab small {
+            display: none;
+        }
+
+        .auth-form h2 {
+            font-size: 19px;
+        }
+
+        .form-intro {
+            margin-bottom: 14px;
+            font-size: 12px;
+        }
+
+        .auth-switch {
+            margin-top: 18px;
+        }
+
+        .note-action {
+            margin-top: 9px;
+            padding: 7px 12px;
+            border: 1px solid rgba(112, 244, 246, 0.35);
+            border-radius: 10px;
+            background: rgba(42, 176, 199, 0.12);
+            color: #8ce8ef;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .note-action[hidden] {
+            display: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .physics-electron,
+            .physics-glow {
+                animation: none;
+            }
+        }
+
+        body {
+            align-items: flex-start;
+            padding: 28px 16px 22px;
+            background: #fff;
+            color: #16233a;
+        }
+
+        body::before,
+        body::after {
+            display: none;
+            content: none;
+        }
+
+        .auth-shell {
+            max-width: 520px;
+            padding: 0;
+            border: 1px solid #e8edf3;
+            border-radius: 24px;
+            background: #fff;
+            box-shadow: 0 12px 42px rgba(25, 52, 82, 0.08);
+        }
+
+        .auth-shell::before {
+            display: none;
+            content: none;
+            animation: none;
+        }
+
+        .auth-content {
+            padding: clamp(22px, 5vw, 38px);
+            border: 0;
+            border-radius: inherit;
+            background: #fff;
+        }
+
+        .brand {
+            margin: 0 0 12px;
+            text-align: left;
+        }
+
+        .brand-logo {
+            width: 50px;
+            height: 50px;
+            margin: 0 0 8px;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+            object-fit: contain;
+        }
+
+        .brand h1 {
+            color: #17243a;
+            font-size: 22px;
+            text-align: left;
+        }
+
+        .welcome-panel {
+            text-align: left;
+        }
+
+        .physics-scene {
+            width: 100%;
+            height: 118px;
+            margin: 2px 0 8px;
+            display: block;
+            overflow: visible;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        .physics-scene svg {
+            display: block;
+            width: 190px;
+            height: 118px;
+            max-width: 100%;
+            margin: 0;
+        }
+
+        .physics-orbit {
+            stroke: #76cbd7;
+            stroke-width: 1.5;
+            stroke-dasharray: 5 4;
+        }
+
+        .physics-electron {
+            fill: #258da7;
+            filter: drop-shadow(0 0 5px rgba(37, 141, 167, 0.34));
+        }
+
+        .physics-core {
+            fill: #f1b93b;
+            filter: drop-shadow(0 0 5px rgba(241, 185, 59, 0.3));
+        }
+
+        .physics-glow {
+            fill: rgba(241, 185, 59, 0.08);
+        }
+
+        .physics-equation {
+            right: auto;
+            bottom: 4px;
+            left: 160px;
+            color: #72839a;
+        }
+
+        .welcome-eyebrow {
+            display: none;
+        }
+
+        .welcome-panel h2 {
+            color: #17243a;
+            font-size: clamp(24px, 6vw, 30px);
+            text-align: left;
+        }
+
+        .welcome-copy {
+            max-width: 390px;
+            margin: 8px 0 18px;
+            color: #617086;
+            text-align: left;
+        }
+
+        .welcome-actions {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .welcome-actions .submit-button,
+        .create-button {
+            min-height: 48px;
+            border-radius: 12px;
+            padding: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .create-button {
+            border-color: #cdd8e5;
+            background: #fff;
+            color: #29415f;
+        }
+
+        .create-button:hover {
+            border-color: #42aabe;
+            background: #f3fbfc;
+            color: #1c778c;
+        }
+
+        .course-caption {
+            margin-top: 22px;
+            color: #29415f;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        .course-caption span {
+            margin-left: 8px;
+            color: #258da7;
+            letter-spacing: 0.02em;
+        }
+
+        .course-caption small {
+            display: block;
+            margin-top: 4px;
+            color: #8290a3;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+
+        .social-links {
+            justify-content: flex-start;
+            gap: 10px;
+            margin-top: 13px;
+            padding-top: 12px;
+            border-top: 1px solid #edf1f5;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-color: #e1e8ef;
+            background: #f8fafc;
+            color: #42617a;
+        }
+
+        .social-links a:hover {
+            border-color: #79c8d3;
+            background: #eefafb;
+            color: #147c92;
+        }
+
+        .auth-view .auth-tabs {
+            grid-template-columns: 1fr 1fr;
+            border-color: #e3eaf1;
+            background: #f5f8fb;
+        }
+
+        .auth-tab {
+            min-height: 46px;
+            border-color: transparent;
+            background: transparent;
+            color: #52667e;
+        }
+
+        .auth-tab[aria-selected="true"] {
+            border-color: #53b6c6;
+            background: #edf9fa;
+            color: #176f82;
+            box-shadow: none;
+        }
+
+        .auth-form h2 {
+            color: #17243a;
+        }
+
+        .form-intro {
+            color: #687a90;
+        }
+
+        .field {
+            color: #53677f;
+        }
+
+        .floating-label {
+            background: #fff;
+            color: #687a90;
+        }
+
+        .input-icon {
+            color: #398da0;
+        }
+
+        .field input,
+        .field select {
+            border-color: #d9e2eb;
+            background: #fff;
+            color: #1d2c42;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #45aabb;
+            box-shadow: 0 0 0 3px rgba(69, 170, 187, 0.12);
+        }
+
+        .auth-switch {
+            color: #687a90;
+        }
+
+        .auth-switch button,
+        .back-button {
+            color: #147c92;
+        }
+
+        .connection-note {
+            color: #40566f;
+        }
+
+        .connection-note:not(:empty) {
+            border-color: #d7e9ec;
+            background: #f2fafb;
+        }
+
+        .connection-note.success {
+            border-color: #bde8d5;
+            background: #f0fbf6;
+            color: #20704f;
+        }
+
+        .connection-note.error {
+            border-color: #f2d1d3;
+            background: #fff6f6;
+            color: #a13d48;
+        }
+
+        @media (min-width: 780px) {
+            .auth-shell {
+                max-width: 500px;
+            }
+        }
+
+        .auth-shell {
+            min-height: calc(100svh - 50px);
+        }
+
+        .auth-content {
+            min-height: calc(100svh - 52px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            margin-bottom: 4px;
+        }
+
+        .brand-mark {
+            min-height: 54px;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin-bottom: 5px;
+        }
+
+        .brand-logo {
+            flex: 0 0 auto;
+            margin: 0;
+        }
+
+        .brand-equation {
+            color: #42899a;
+            font-family: Georgia, serif;
+            font-size: 15px;
+            font-style: italic;
+            font-weight: 700;
+        }
+
+        .physics-scene {
+            height: 164px;
+            margin: 2px 0 8px;
+            display: grid;
+            place-items: center;
+        }
+
+        .physics-scene svg {
+            width: 210px;
+            height: 144px;
+        }
+
+        .physics-equation {
+            right: auto;
+            bottom: auto;
+            left: auto;
+            color: #7193a1;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .equation-energy {
+            top: 8px;
+            right: 7%;
+        }
+
+        .equation-wave {
+            bottom: 12px;
+            left: 8%;
+        }
+
+        .equation-momentum {
+            right: 8%;
+            bottom: 20px;
+            color: #b18b35;
+        }
+
+        .physics-electron {
+            fill: #258da7;
+            filter: drop-shadow(0 0 6px rgba(37, 141, 167, 0.4));
+        }
+
+        .physics-core {
+            fill: #f1b93b;
+            filter: drop-shadow(0 0 8px rgba(241, 185, 59, 0.45));
+        }
+
+        .welcome-copy {
+            margin-bottom: 16px;
+        }
+
+        .auth-view {
+            flex: 1 0 auto;
+        }
+
+        .auth-view .auth-form form {
+            display: grid;
+            gap: 13px;
+        }
+
+        .auth-view .field {
+            margin: 0;
+        }
+
+        .auth-view .floating-field {
+            margin-top: 11px;
+        }
+
+        .auth-view .submit-button {
+            margin-top: 8px;
+        }
+
+        .auth-view .auth-switch {
+            margin-top: 18px;
+        }
+
+        .course-footer {
+            margin-top: auto;
+            padding-top: 16px;
+            text-align: center;
+        }
+
+        .course-caption {
+            margin-top: 0;
+            font-size: 10px;
+        }
+
+        .course-caption span {
+            margin-left: 5px;
+        }
+
+        .course-caption small {
+            margin-top: 3px;
+            font-size: 10px;
+        }
+
+        .social-links {
+            justify-content: center;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        @media (max-height: 700px) {
+            .auth-shell,
+            .auth-content {
+                min-height: calc(100svh - 32px);
+            }
+
+            .course-footer {
+                padding-top: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .auth-shell,
+            .auth-content {
+                min-height: calc(100svh - 36px);
+            }
+
+            .physics-scene {
+                height: 148px;
+            }
+
+            .physics-scene svg {
+                width: 188px;
+                height: 136px;
+            }
+
+            .equation-energy {
+                right: 2%;
+            }
+
+            .equation-wave {
+                left: 1%;
+            }
+
+            .equation-momentum {
+                right: 2%;
+            }
+
+            .auth-view .field input,
+            .auth-view .field select {
+                min-height: 54px;
+            }
+        }
+
+        .auth-shell {
+            width: min(100%, 520px);
+            max-width: 520px;
+            min-height: calc(100svh - 50px);
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .auth-content {
+            min-height: calc(100svh - 50px);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        .brand {
+            margin: 0 0 10px;
+            text-align: center;
+        }
+
+        .brand-logo {
+            margin: 0 auto 8px;
+        }
+
+        .brand h1 {
+            text-align: center;
+        }
+
+        .physics-scene {
+            position: relative;
+        }
+
+        .physics-equation {
+            z-index: 1;
+            padding: 2px 4px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.86);
+        }
+
+        .equation-force {
+            top: 42px;
+            left: 5%;
+            color: #34899b;
+        }
+
+        .equation-energy {
+            top: 8px;
+            right: 7%;
+        }
+
+        .equation-wave {
+            bottom: 10px;
+            left: 12%;
+        }
+
+        .equation-momentum {
+            right: 11%;
+            bottom: 17px;
+        }
+
+        .auth-view {
+            width: 100%;
+            flex: 0 0 auto;
+            padding: clamp(18px, 5vw, 30px);
+            border: 1px solid #e5ebf2;
+            border-radius: 22px;
+            background: #fff;
+            box-shadow: 0 12px 42px rgba(25, 52, 82, 0.08);
+        }
+
+        .course-footer {
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .brand {
+            margin-bottom: 18px;
+        }
+
+        .physics-scene {
+            height: 190px;
+            margin: 18px 0 18px;
+        }
+
+        .physics-scene svg {
+            width: 220px;
+            height: 150px;
+        }
+
+        .physics-orbit {
+            fill: none;
+            stroke-width: 2;
+            stroke-dasharray: none;
+            opacity: 0.88;
+            filter: drop-shadow(0 1px 3px rgba(37, 141, 167, 0.18));
+        }
+
+        .orbit-one {
+            stroke: #37abc1;
+        }
+
+        .orbit-two {
+            stroke: #8a76db;
+        }
+
+        .orbit-three {
+            stroke: #e2a849;
+        }
+
+        .physics-glow {
+            fill: rgba(237, 75, 82, 0.14);
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: nucleus-pulse 2.4s ease-in-out infinite;
+        }
+
+        .physics-core {
+            fill: #ed4b52;
+            filter: drop-shadow(0 0 7px rgba(237, 75, 82, 0.5));
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: nucleus-breathe 2.4s ease-in-out infinite;
+        }
+
+        .nucleus-highlight {
+            fill: rgba(255, 255, 255, 0.88);
+            pointer-events: none;
+        }
+
+        .electron-halo {
+            fill: rgba(44, 162, 190, 0.12);
+            animation: electron-halo 2.2s ease-in-out infinite;
+        }
+
+        .physics-electron {
+            fill: #178ba8;
+            filter: drop-shadow(0 0 5px rgba(23, 139, 168, 0.42));
+        }
+
+        .electron-motion {
+            display: block;
+        }
+
+        .electron-static {
+            display: none;
+        }
+
+        @keyframes nucleus-pulse {
+            50% {
+                opacity: 0.58;
+                transform: scale(1.22);
+            }
+        }
+
+        @keyframes nucleus-breathe {
+            50% {
+                transform: scale(1.13);
+            }
+        }
+
+        @keyframes electron-halo {
+            50% {
+                opacity: 0.38;
+                transform: scale(1.22);
+            }
+        }
+
+        .welcome-panel h2 {
+            margin-top: 15px;
+        }
+
+        .welcome-copy {
+            margin-top: 12px;
+            margin-bottom: 24px;
+        }
+
+        .welcome-actions {
+            gap: 14px;
+        }
+
+        .physics-scene {
+            margin-bottom: 38px;
+        }
+
+        .designer-credit {
+            margin: 12px 0 0;
+            color: #8290a3;
+            font-size: 10px;
+            letter-spacing: 0.02em;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .physics-glow,
+            .physics-core {
+                animation: none;
+            }
+
+            .electron-motion {
+                display: none;
+            }
+
+            .electron-static {
+                display: block;
+            }
+
+            .electron-static .electron-halo {
+                animation: none;
+            }
+        }
     </style>
     <link rel="stylesheet" href="brand.css">
 </head>
-<body>
+<body class="has-inline-brand">
     <main class="auth-shell">
       <div class="auth-content">
         <header class="brand">
-            <div class="brand-icon" aria-hidden="true">
-                <svg viewBox="0 0 48 48" fill="none">
-                    <circle cx="24" cy="24" r="3.5" fill="#5276d8"/>
-                    <ellipse cx="24" cy="24" rx="19" ry="7" stroke="#5276d8" stroke-width="2.5"/>
-                    <ellipse cx="24" cy="24" rx="19" ry="7" transform="rotate(60 24 24)" stroke="#5276d8" stroke-width="2.5"/>
-                    <ellipse cx="24" cy="24" rx="19" ry="7" transform="rotate(120 24 24)" stroke="#5276d8" stroke-width="2.5"/>
-                </svg>
-            </div>
+            <img class="brand-logo" src="../logo.png" alt="">
             <h1>Physics Learning Hub</h1>
-            <p>သင်ခန်းစာများကို ဆက်လက်လေ့လာရန် ဝင်ရောက်ပါ</p>
         </header>
 
+        <section class="welcome-panel" id="welcome-panel" aria-labelledby="welcome-heading">
+            <div class="physics-scene" aria-hidden="true">
+                <svg viewBox="0 0 220 150" fill="none">
+                    <circle class="physics-glow" cx="110" cy="75" r="22"/>
+                    <circle class="physics-core" cx="110" cy="75" r="11"/>
+                    <circle class="nucleus-highlight" cx="106" cy="71" r="3"/>
+                    <path class="physics-orbit orbit-one" id="orbit-path-one" d="M186 75 A76 27 0 1 1 34 75 A76 27 0 1 1 186 75"/>
+                    <path class="physics-orbit orbit-two" id="orbit-path-two" d="M148 140.818 A76 27 60 1 1 72 9.182 A76 27 60 1 1 148 140.818"/>
+                    <path class="physics-orbit orbit-three" id="orbit-path-three" d="M72 140.818 A76 27 120 1 1 148 9.182 A76 27 120 1 1 72 140.818"/>
+                    <g class="electron-motion">
+                        <animateMotion dur="5s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-one"/></animateMotion>
+                        <circle class="electron-halo" r="9"/>
+                        <circle class="physics-electron" r="5"/>
+                    </g>
+                    <g class="electron-motion">
+                        <animateMotion dur="6.5s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-two"/></animateMotion>
+                        <circle class="electron-halo" r="8"/>
+                        <circle class="physics-electron" r="4"/>
+                    </g>
+                    <g class="electron-motion">
+                        <animateMotion dur="8s" repeatCount="indefinite" rotate="0"><mpath href="#orbit-path-three"/></animateMotion>
+                        <circle class="electron-halo" r="8"/>
+                        <circle class="physics-electron" r="4"/>
+                    </g>
+                    <g class="electron-static">
+                        <circle class="electron-halo" cx="186" cy="75" r="9"/>
+                        <circle class="physics-electron" cx="186" cy="75" r="5"/>
+                        <circle class="electron-halo" cx="148" cy="140.818" r="8"/>
+                        <circle class="physics-electron" cx="148" cy="140.818" r="4"/>
+                        <circle class="electron-halo" cx="72" cy="140.818" r="8"/>
+                        <circle class="physics-electron" cx="72" cy="140.818" r="4"/>
+                    </g>
+                </svg>
+                <span class="physics-equation equation-force">F = ma</span>
+                <span class="physics-equation equation-energy">E = mc²</span>
+                <span class="physics-equation equation-wave">c = fλ</span>
+                <span class="physics-equation equation-momentum">p = mv</span>
+            </div>
+            <h2 id="welcome-heading">Make sense of physics.</h2>
+            <p class="welcome-copy">Explore lessons, practice questions, and quizzes in one place.</p>
+            <div class="welcome-actions">
+                <button class="submit-button" type="button" data-show-panel="login">Log in</button>
+                <button class="create-button" type="button" data-show-panel="signup">Create account</button>
+            </div>
+        </section>
+
+        <div class="auth-view" id="auth-view" hidden>
+        <button class="back-button" id="back-to-welcome" type="button"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Welcome</button>
+        <nav class="auth-tabs" role="tablist" aria-label="Account options">
+            <button class="auth-tab" id="login-tab" type="button" role="tab" aria-selected="true" aria-controls="login-panel">
+                <span>Log in</span>
+            </button>
+            <button class="auth-tab" id="signup-tab" type="button" role="tab" aria-selected="false" aria-controls="signup-panel">
+                <span>Sign up</span>
+            </button>
+        </nav>
+
         <section class="auth-form" id="login-panel" aria-labelledby="login-heading">
-            <h2 id="login-heading">ပြန်လည်ဝင်ရောက်ရန်</h2>
-            <p class="form-intro">ဖုန်းနံပါတ်နှင့် password ကိုမှန်ကန်စွာ ထည့်ပါ။</p>
+            <h2 id="login-heading">Welcome back</h2>
+            <p class="form-intro">Use your phone number and password.</p>
             <form data-auth-form="login">
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-phone" aria-hidden="true"></i>
-                        <input name="phone" type="tel" autocomplete="tel" placeholder=" " required>
-                        <span class="floating-label">ဖုန်းနံပါတ် (Phone)</span>
+                        <input name="phone" type="tel" autocomplete="tel" placeholder=" " inputmode="tel" required>
+                        <span class="floating-label">Phone number</span>
                     </span>
                 </label>
                 <label class="field">
@@ -394,20 +1711,19 @@
                         <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
                     </span>
                 </label>
-                <button class="submit-button" type="submit">LOGIN ဝင်ရန်</button>
+                <button class="submit-button" type="submit"><i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i> Log in</button>
             </form>
-            <p class="auth-switch">အကောင့်မရှိသေးဘူးလား? <button id="signup-tab" type="button" aria-controls="signup-panel">Create Account</button></p>
+            <p class="auth-switch">New here? <button type="button" data-show-panel="signup">Create an account</button></p>
         </section>
 
         <section class="auth-form" id="signup-panel" aria-labelledby="signup-heading" hidden>
-            <h2 id="signup-heading">Create Account</h2>
-            <p class="form-intro">လိုအပ်တဲ့ အချက်အလက်တွေ ဖြည့်ပေးပါ။</p>
+            <h2 id="signup-heading">Create your account</h2>
             <form data-auth-form="signup">
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-user" aria-hidden="true"></i>
                         <input name="name" type="text" autocomplete="name" placeholder=" " required>
-                        <span class="floating-label">အမည် (Name)</span>
+                        <span class="floating-label">Full name</span>
                     </span>
                 </label>
                 <label class="field">
@@ -418,13 +1734,13 @@
                             <option value="Teacher">Teacher</option>
                             <option value="Student">Student</option>
                         </select>
-                        <span class="floating-label">Select job</span>
+                        <span class="floating-label">I am a...</span>
                     </span>
                 </label>
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
-                        <input name="email" type="text" autocomplete="email" placeholder=" ">
+                        <input name="email" type="email" autocomplete="email" placeholder=" ">
                         <span class="floating-label">Email</span>
                     </span>
                 </label>
@@ -432,15 +1748,29 @@
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-phone" aria-hidden="true"></i>
                         <input name="phone" type="tel" autocomplete="tel" placeholder=" " required>
-                        <span class="floating-label">ဖုန်းနံပါတ် (Phone)</span>
+                        <span class="floating-label">Phone number</span>
                     </span>
                 </label>
-                <button class="submit-button" type="submit">REGISTER <i class="fa-solid fa-user-plus" aria-hidden="true"></i></button>
+                <button class="submit-button" type="submit"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Create account</button>
             </form>
-            <p class="auth-switch">အကောင့်ရှိပြီးသားလား? <button id="login-tab" type="button" aria-controls="login-panel">Login ဝင်ရန်</button></p>
+            <p class="auth-switch">Already registered? <button type="button" data-show-panel="login">Log in</button></p>
         </section>
 
         <p class="connection-note" id="connection-note" role="status" aria-live="polite"></p>
+        <button class="note-action" id="note-action" type="button" hidden>Create account</button>
+        </div>
+        <footer class="course-footer">
+            <div class="course-caption">
+                PHYSICS <span>GRADE 10 · 11 · 12</span>
+                <small>Government of Myanmar Course</small>
+            </div>
+            <nav class="social-links" aria-label="Contact">
+                <a href="https://www.facebook.com/share/1KJXqFuXFi/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+                <a href="viber://chat?number=%2B959258554839" aria-label="Viber"><i class="fa-brands fa-viber" aria-hidden="true"></i></a>
+                <a href="tel:+959258554839" aria-label="Call"><i class="fa-solid fa-phone" aria-hidden="true"></i></a>
+            </nav>
+            <p class="designer-credit">Designed By U Thiha Kyaw</p>
+        </footer>
       </div>
     </main>
 
@@ -450,21 +1780,62 @@
         const signupTab = document.getElementById('signup-tab');
         const loginPanel = document.getElementById('login-panel');
         const signupPanel = document.getElementById('signup-panel');
+        const welcomePanel = document.getElementById('welcome-panel');
+        const authView = document.getElementById('auth-view');
         const connectionNote = document.getElementById('connection-note');
-
-        if (new URLSearchParams(window.location.search).has('created')) {
-            connectionNote.textContent = 'အကောင့်ဖွင့်ပြီးပါပြီ။ ဖုန်းနံပါတ်နဲ့ Password ကိုသုံးပြီး Login ဝင်ပါ။';
-        }
+        const noteAction = document.getElementById('note-action');
+        const loginPhone = document.querySelector('[data-auth-form="login"] [name="phone"]');
+        const signupPhone = document.querySelector('[data-auth-form="signup"] [name="phone"]');
 
         function showPanel(panelName) {
             const isLogin = panelName === 'login';
+            welcomePanel.hidden = true;
+            authView.hidden = false;
             loginPanel.hidden = !isLogin;
             signupPanel.hidden = isLogin;
+            loginTab.setAttribute('aria-selected', String(isLogin));
+            signupTab.setAttribute('aria-selected', String(!isLogin));
             connectionNote.textContent = '';
+            connectionNote.className = 'connection-note';
+            noteAction.hidden = true;
+            window.scrollTo(0, 0);
         }
 
         loginTab.addEventListener('click', () => showPanel('login'));
         signupTab.addEventListener('click', () => showPanel('signup'));
+        document.getElementById('back-to-welcome').addEventListener('click', () => {
+            authView.hidden = true;
+            welcomePanel.hidden = false;
+            connectionNote.textContent = '';
+            noteAction.hidden = true;
+            window.scrollTo(0, 0);
+        });
+        document.querySelectorAll('[data-show-panel]').forEach((button) => {
+            button.addEventListener('click', () => showPanel(button.dataset.showPanel));
+        });
+        noteAction.addEventListener('click', () => {
+            signupPhone.value = loginPhone.value;
+            showPanel('signup');
+        });
+
+        function showLoginWithMessage(phone, message, type = 'success') {
+            loginPhone.value = formatPhoneNumber(phone);
+            showPanel('login');
+            connectionNote.textContent = message;
+            connectionNote.classList.add(type);
+        }
+
+        const query = new URLSearchParams(window.location.search);
+        if (query.has('created')) {
+            showPanel('login');
+            connectionNote.textContent = 'Account created. Log in with your phone number.';
+            connectionNote.classList.add('success');
+        }
+        if (query.get('mode') === 'signup') {
+            showPanel('signup');
+        } else if (query.has('returnTo')) {
+            showPanel('login');
+        }
 
         function formatPhoneNumber(value) {
             const digits = value.replace(/[၀-၉]/g, (digit) =>
@@ -500,7 +1871,8 @@
             const phone = form.elements.namedItem('phone').value;
             const normalizedPhone = normalizePhoneNumber(phone);
             if (!normalizedPhone) {
-                connectionNote.textContent = 'ဖုန်းနံပါတ် ထည့်ပါ။';
+                connectionNote.textContent = 'Enter your phone number.';
+                connectionNote.classList.add('error');
                 return;
             }
 
@@ -512,10 +1884,10 @@
             };
 
             try {
-                connectionNote.textContent = 'ဒီဖုန်းနံပါတ်နဲ့ အကောင့်ရှိမရှိ စစ်ဆေးနေပါတယ်...';
+                connectionNote.textContent = 'Checking phone number...';
                 try {
                     await findProfileByPhone(normalizedPhone);
-                    connectionNote.textContent = 'ဒီဖုန်းနံပါတ်နဲ့ အကောင့်ရှိပြီးသားပါ။ အကောင့်အသစ် ထပ်ဖွင့်လို့မရပါ။ Login ဝင်ပါ။';
+                    showLoginWithMessage(normalizedPhone, 'This phone number is already registered. Please log in.', 'error');
                     return;
                 } catch (error) {
                     if (error.code !== 'PHONE_NOT_FOUND') {
@@ -523,7 +1895,7 @@
                     }
                 }
 
-                connectionNote.textContent = 'အချက်အလက်တွေကို သိမ်းနေပါတယ်...';
+                connectionNote.textContent = 'Creating your account...';
                 await sendProfileRequest('create', {
                     name: profile.name,
                     job: profile.occupation,
@@ -532,13 +1904,16 @@
                 });
             } catch (error) {
                 console.error('Unable to create the profile in the configured storage backend.', error);
-                connectionNote.textContent = error.code === 'PHONE_EXISTS'
-                    ? 'ဒီဖုန်းနံပါတ်နဲ့ အကောင့်ရှိပြီးသားပါ။ Login ဝင်ပါ။'
-                    : `အချက်အလက်သိမ်းမရပါ။ ${error.message}`;
+                if (error.code === 'PHONE_EXISTS') {
+                    showLoginWithMessage(normalizedPhone, 'This phone number is already registered. Please log in.', 'error');
+                } else {
+                    connectionNote.textContent = `Could not create your account. ${error.message}`;
+                    connectionNote.classList.add('error');
+                }
                 return;
             }
 
-            window.location.href = 'login.html?created=1';
+            showLoginWithMessage(normalizedPhone, 'Account created. Log in with your phone number and password.');
         });
 
         document.querySelector('[data-auth-form="login"]').addEventListener('submit', async (event) => {
@@ -548,16 +1923,18 @@
             const password = form.elements.namedItem('password').value;
 
             if (!phone) {
-                connectionNote.textContent = 'ဖုန်းနံပါတ် ထည့်ပါ။';
+                connectionNote.textContent = 'Enter your phone number.';
+                connectionNote.classList.add('error');
                 return;
             }
 
             if (password !== 'phys1') {
-                connectionNote.textContent = 'Password မှားနေပါတယ်။';
+                connectionNote.textContent = 'Incorrect password.';
+                connectionNote.classList.add('error');
                 return;
             }
 
-            connectionNote.textContent = 'Account ကို စစ်ဆေးနေပါတယ်...';
+            connectionNote.textContent = 'Checking account...';
             try {
                 const result = await findProfileByPhone(phone);
                 const profile = {
@@ -576,14 +1953,17 @@
                 window.location.replace(safeReturnTo);
             } catch (error) {
                 if (error.code === 'PHONE_NOT_FOUND') {
-                    connectionNote.textContent = 'ဒီဖုန်းနံပါတ်ကို စာရင်းများထဲမှာ မတွေ့ပါ။ ဖုန်းနံပါတ်ကို စစ်ဆေးပါ။';
+                    connectionNote.textContent = 'No account found for this phone number.';
+                    connectionNote.classList.add('error');
+                    noteAction.hidden = false;
                     return;
                 }
 
                 console.error('Unable to verify the profile in the configured storage backend.', error);
                 connectionNote.textContent = /Action must.*create.*update/i.test(error.message)
-                    ? 'Login server မှာ account ရှာဖွေစစ်ဆေးတဲ့လုပ်ဆောင်ချက် မပါသေးပါ။ လက်ရှိ Code.gs ကို Apps Script မှာ Deploy > Manage deployments မှတစ်ဆင့် version အသစ်တင်ပေးပါ။'
-                    : `Login မလုပ်နိုင်ပါ။ ${error.message}`;
+                    ? 'Account service needs to be updated. Please contact support.'
+                    : `Could not log in. ${error.message}`;
+                connectionNote.classList.add('error');
             }
         });
     </script>

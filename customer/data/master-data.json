@@ -1,0 +1,1915 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-20T16:54:25Z",
+  "settings": {
+    "priceThresholds": [
+      0,
+      10,
+      30,
+      50,
+      100
+    ],
+    "royalServiceFee": 300,
+    "codMaxTotal": 150000
+  },
+  "books": {
+    "special": {
+      "id": "special",
+      "name": "သင်ရိုးကုန် အထူးထုတ်",
+      "quantityHeader": "Special Qty",
+      "amountHeader": "Special Amount",
+      "weight": 0.7,
+      "prices": [
+        20000,
+        19000,
+        18000,
+        17000,
+        16000
+      ],
+      "image": "special.jpeg",
+      "active": true
+    },
+    "practice": {
+      "id": "practice",
+      "name": "Practice Book",
+      "quantityHeader": "Practice Qty",
+      "amountHeader": "Practice Amount",
+      "weight": 0.44925,
+      "prices": [
+        13000,
+        12000,
+        11500,
+        11000,
+        10500
+      ],
+      "image": "practice.jpeg",
+      "active": true
+    },
+    "old-questions": {
+      "id": "old-questions",
+      "name": "မေးခွန်းဟောင်းစာအုပ်",
+      "quantityHeader": "OQ Qty",
+      "amountHeader": "OQ Amount",
+      "weight": 0.4668,
+      "prices": [
+        11000,
+        10000,
+        9500,
+        9000,
+        8800
+      ],
+      "image": "oq.jpeg",
+      "active": true
+    },
+    "solution": {
+      "id": "solution",
+      "name": "တွက်စာသီးသန့်စာအုပ်",
+      "quantityHeader": "Solution Qty",
+      "amountHeader": "Solution Amount",
+      "weight": 0.10437,
+      "prices": [
+        5000,
+        4500,
+        4000,
+        4000,
+        3800
+      ],
+      "image": "solution.jpeg",
+      "active": true
+    },
+    "g11-handbook": {
+      "id": "g11-handbook",
+      "name": "Grade 11 handbook",
+      "quantityHeader": "G11 Handbook Qty",
+      "amountHeader": "G11 Handbook Amount",
+      "weight": 0.3,
+      "prices": [
+        10000,
+        9000,
+        8500,
+        8000,
+        8000
+      ],
+      "image": "G11H.jpeg",
+      "active": true
+    },
+    "g11-objective": {
+      "id": "g11-objective",
+      "name": "Grade 11 တစ်မှတ်တန် သီးသန့်စာအုပ်",
+      "quantityHeader": "G11 Objective Qty",
+      "amountHeader": "G11 Objective Amount",
+      "weight": 0.25,
+      "prices": [
+        8000,
+        7000,
+        6500,
+        6500,
+        6500
+      ],
+      "image": "G11O.jpeg",
+      "active": true
+    },
+    "g10-handbook": {
+      "id": "g10-handbook",
+      "name": "Grade 10 handbook",
+      "quantityHeader": "G10 Handbook Qty",
+      "amountHeader": "G10 Handbook Amount",
+      "weight": 0.2,
+      "prices": [
+        10000,
+        9000,
+        8500,
+        8000,
+        8000
+      ],
+      "image": "G10H.jpeg",
+      "active": true
+    }
+  },
+  "deliveryCities": {
+    "hinthada": {
+      "id": "hinthada",
+      "english": "Hinthada",
+      "myanmar": "ဟင်္သာတ",
+      "label": "Hinthada (ဟင်္သာတ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "maubin": {
+      "id": "maubin",
+      "english": "Maubin",
+      "myanmar": "မအူပင်",
+      "label": "Maubin (မအူပင်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "mawlamyinegyun": {
+      "id": "mawlamyinegyun",
+      "english": "Mawlamyinegyun",
+      "myanmar": "မော်လမြိုင်ကျွန်း",
+      "label": "Mawlamyinegyun (မော်လမြိုင်ကျွန်း)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "myaungmya": {
+      "id": "myaungmya",
+      "english": "Myaungmya",
+      "myanmar": "မြောင်းမြ",
+      "label": "Myaungmya (မြောင်းမြ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "nyaungtone": {
+      "id": "nyaungtone",
+      "english": "Nyaungtone",
+      "myanmar": "ညောင်တုန်း",
+      "label": "Nyaungtone (ညောင်တုန်း)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "pathein": {
+      "id": "pathein",
+      "english": "Pathein",
+      "myanmar": "ပုသိမ်",
+      "label": "Pathein (ပုသိမ်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "pyapon": {
+      "id": "pyapon",
+      "english": "Pyapon",
+      "myanmar": "ဖျာပုံ",
+      "label": "Pyapon (ဖျာပုံ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "wakema": {
+      "id": "wakema",
+      "english": "Wakema",
+      "myanmar": "ဝါးခယ်မ",
+      "label": "Wakema (ဝါးခယ်မ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "kyaiklat": {
+      "id": "kyaiklat",
+      "english": "Kyaiklat",
+      "myanmar": "ကျိုက်လတ်",
+      "label": "Kyaiklat (ကျိုက်လတ်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "pantanaw": {
+      "id": "pantanaw",
+      "english": "Pantanaw",
+      "myanmar": "ပန်းတနော်",
+      "label": "Pantanaw (ပန်းတနော်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "zalun": {
+      "id": "zalun",
+      "english": "Zalun",
+      "myanmar": "ဇလွန်",
+      "label": "Zalun (ဇလွန်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "bogale": {
+      "id": "bogale",
+      "english": "Bogale",
+      "myanmar": "ဘိုကလေး",
+      "label": "Bogale (ဘိုကလေး)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "labutta": {
+      "id": "labutta",
+      "english": "Labutta",
+      "myanmar": "လပွတ္တာ",
+      "label": "Labutta (လပွတ္တာ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "danubyu": {
+      "id": "danubyu",
+      "english": "Danubyu",
+      "myanmar": "ဓနုဖြူ",
+      "label": "Danubyu (ဓနုဖြူ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "ngathaingchaung": {
+      "id": "ngathaingchaung",
+      "english": "Ngathaingchaung",
+      "myanmar": "ငသိုင်းချောင်း",
+      "label": "Ngathaingchaung (ငသိုင်းချောင်း)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "yegyi": {
+      "id": "yegyi",
+      "english": "Yegyi",
+      "myanmar": "ရေကြည်",
+      "label": "Yegyi (ရေကြည်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "kyonpyaw": {
+      "id": "kyonpyaw",
+      "english": "Kyonpyaw",
+      "myanmar": "ကျုံပျော်",
+      "label": "Kyonpyaw (ကျုံပျော်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "ahtaung": {
+      "id": "ahtaung",
+      "english": "Ahtaung",
+      "myanmar": "အထောင်",
+      "label": "Ahtaung (အထောင်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "kyaunggon": {
+      "id": "kyaunggon",
+      "english": "Kyaunggon",
+      "myanmar": "ကျောင်းကုန်း",
+      "label": "Kyaunggon (ကျောင်းကုန်း)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "thabaung": {
+      "id": "thabaung",
+      "english": "Thabaung",
+      "myanmar": "သာပေါင်း",
+      "label": "Thabaung (သာပေါင်း)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "chaung-thar": {
+      "id": "chaung-thar",
+      "english": "Chaung Thar",
+      "myanmar": "ချောင်းသာ",
+      "label": "Chaung Thar (ချောင်းသာ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "myanaung": {
+      "id": "myanaung",
+      "english": "Myanaung",
+      "myanmar": "မြန်အောင်",
+      "label": "Myanaung (မြန်အောင်)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "kyangin": {
+      "id": "kyangin",
+      "english": "Kyangin",
+      "myanmar": "ကြံခင်း",
+      "label": "Kyangin (ကြံခင်း)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "paungde": {
+      "id": "paungde",
+      "english": "Paungde",
+      "myanmar": "ပေါင်းတည်",
+      "label": "Paungde (ပေါင်းတည်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "einme": {
+      "id": "einme",
+      "english": "Einme",
+      "myanmar": "အိမ်မဲ",
+      "label": "Einme (အိမ်မဲ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "dedaye": {
+      "id": "dedaye",
+      "english": "Dedaye",
+      "myanmar": "ဒေးဒရဲ",
+      "label": "Dedaye (ဒေးဒရဲ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "kangyidaunt": {
+      "id": "kangyidaunt",
+      "english": "Kangyidaunt",
+      "myanmar": "ကန်ကြီးထောင့်",
+      "label": "Kangyidaunt (ကန်ကြီးထောင့်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "ngapudaw": {
+      "id": "ngapudaw",
+      "english": "Ngapudaw",
+      "myanmar": "ငပုတော",
+      "label": "Ngapudaw (ငပုတော)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "ingapu": {
+      "id": "ingapu",
+      "english": "Ingapu",
+      "myanmar": "အင်္ဂပူ",
+      "label": "Ingapu (အင်္ဂပူ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "lemyethna": {
+      "id": "lemyethna",
+      "english": "Lemyethna",
+      "myanmar": "လေးမျက်နှာ",
+      "label": "Lemyethna (လေးမျက်နှာ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "kyonemangay": {
+      "id": "kyonemangay",
+      "english": "Kyonemangay",
+      "myanmar": "ကျုံမငေး",
+      "label": "Kyonemangay (ကျုံမငေး)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "htugyi": {
+      "id": "htugyi",
+      "english": "Htugyi",
+      "myanmar": "ထူးကြီး",
+      "label": "Htugyi (ထူးကြီး)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "darka": {
+      "id": "darka",
+      "english": "Darka",
+      "myanmar": "ဒါးက",
+      "label": "Darka (ဒါးက)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "ngwesaung": {
+      "id": "ngwesaung",
+      "english": "Ngwesaung",
+      "myanmar": "ငွေဆောင်",
+      "label": "Ngwesaung (ငွေဆောင်)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "atthoke": {
+      "id": "atthoke",
+      "english": "Atthoke",
+      "myanmar": "အသုတ်",
+      "label": "Atthoke (အသုတ်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "sar-ma-lauk": {
+      "id": "sar-ma-lauk",
+      "english": "Sar Ma Lauk",
+      "myanmar": "ဆားမလောက်",
+      "label": "Sar Ma Lauk (ဆားမလောက်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "bago": {
+      "id": "bago",
+      "english": "Bago",
+      "myanmar": "ပဲခူး",
+      "label": "Bago (ပဲခူး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "nyaunglebin": {
+      "id": "nyaunglebin",
+      "english": "Nyaunglebin",
+      "myanmar": "ညောင်လေးပင်",
+      "label": "Nyaunglebin (ညောင်လေးပင်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "daik-u": {
+      "id": "daik-u",
+      "english": "Daik-U",
+      "myanmar": "ဒိုက်ဦး",
+      "label": "Daik-U (ဒိုက်ဦး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "phyu": {
+      "id": "phyu",
+      "english": "Phyu",
+      "myanmar": "ဖြူး",
+      "label": "Phyu (ဖြူး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "pyay": {
+      "id": "pyay",
+      "english": "Pyay",
+      "myanmar": "ပြည်",
+      "label": "Pyay (ပြည်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "taungoo": {
+      "id": "taungoo",
+      "english": "Taungoo",
+      "myanmar": "တောင်ငူ",
+      "label": "Taungoo (တောင်ငူ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "tharyarwaddy": {
+      "id": "tharyarwaddy",
+      "english": "Tharyarwaddy",
+      "myanmar": "သာယာဝတီ",
+      "label": "Tharyarwaddy (သာယာဝတီ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "thonese": {
+      "id": "thonese",
+      "english": "Thonese",
+      "myanmar": "သုံးဆယ်",
+      "label": "Thonese (သုံးဆယ်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "gyobingauk": {
+      "id": "gyobingauk",
+      "english": "Gyobingauk",
+      "myanmar": "ကြို့ပင်ကောက်",
+      "label": "Gyobingauk (ကြို့ပင်ကောက်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "nattalin": {
+      "id": "nattalin",
+      "english": "Nattalin",
+      "myanmar": "နတ်တလင်း",
+      "label": "Nattalin (နတ်တလင်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "yae-ni": {
+      "id": "yae-ni",
+      "english": "Yae Ni",
+      "myanmar": "ရေနီ",
+      "label": "Yae Ni (ရေနီ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "letpadan": {
+      "id": "letpadan",
+      "english": "Letpadan",
+      "myanmar": "လက်ပံတန်း",
+      "label": "Letpadan (လက်ပံတန်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "thanatpin": {
+      "id": "thanatpin",
+      "english": "Thanatpin",
+      "myanmar": "သနပ်ပင်",
+      "label": "Thanatpin (သနပ်ပင်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "lower-minhla": {
+      "id": "lower-minhla",
+      "english": "Lower MinHla",
+      "myanmar": "အောက်မင်းလှ",
+      "label": "Lower MinHla (အောက်မင်းလှ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kaytumaddy": {
+      "id": "kaytumaddy",
+      "english": "Kaytumaddy",
+      "myanmar": "ကေတုမတီ",
+      "label": "Kaytumaddy (ကေတုမတီ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "shwedaung": {
+      "id": "shwedaung",
+      "english": "ShweDaung",
+      "myanmar": "ရွှေတောင်",
+      "label": "ShweDaung (ရွှေတောင်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "inntakaw": {
+      "id": "inntakaw",
+      "english": "Inntakaw",
+      "myanmar": "အင်းတကော်",
+      "label": "Inntakaw (အင်းတကော်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "waw": {
+      "id": "waw",
+      "english": "Waw",
+      "myanmar": "ဝေါ",
+      "label": "Waw (ဝေါ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kyauktaga": {
+      "id": "kyauktaga",
+      "english": "Kyauktaga",
+      "myanmar": "ကျောက်တံခါး",
+      "label": "Kyauktaga (ကျောက်တံခါး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "yedashay": {
+      "id": "yedashay",
+      "english": "Yedashay",
+      "myanmar": "ရေတာရှည်",
+      "label": "Yedashay (ရေတာရှည်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "zigon": {
+      "id": "zigon",
+      "english": "Zigon",
+      "myanmar": "ဇီးကုန်း",
+      "label": "Zigon (ဇီးကုန်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "oktwin": {
+      "id": "oktwin",
+      "english": "Oktwin",
+      "myanmar": "အုတ်တွင်း",
+      "label": "Oktwin (အုတ်တွင်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "okeshitpin": {
+      "id": "okeshitpin",
+      "english": "OkeShitPin",
+      "myanmar": "ဥရှစ်ပင်",
+      "label": "OkeShitPin (ဥရှစ်ပင်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "penwegon": {
+      "id": "penwegon",
+      "english": "Penwegon",
+      "myanmar": "ပဲနွယ်ကုန်း",
+      "label": "Penwegon (ပဲနွယ်ကုန်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "hpayargyi": {
+      "id": "hpayargyi",
+      "english": "HpaYarGyi",
+      "myanmar": "ဘုရားကြီး",
+      "label": "HpaYarGyi (ဘုရားကြီး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "monyo": {
+      "id": "monyo",
+      "english": "Monyo",
+      "myanmar": "မိုးညို",
+      "label": "Monyo (မိုးညို)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "paungtale": {
+      "id": "paungtale",
+      "english": "Paungtale",
+      "myanmar": "ပေါင်းတလည်",
+      "label": "Paungtale (ပေါင်းတလည်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "okpho": {
+      "id": "okpho",
+      "english": "Okpho",
+      "myanmar": "အုတ်ဖို",
+      "label": "Okpho (အုတ်ဖို)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "thegon": {
+      "id": "thegon",
+      "english": "Thegon",
+      "myanmar": "သဲကုန်း",
+      "label": "Thegon (သဲကုန်း)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "shwegyin": {
+      "id": "shwegyin",
+      "english": "Shwegyin",
+      "myanmar": "ရွှေကျင်",
+      "label": "Shwegyin (ရွှေကျင်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "pyuntasa": {
+      "id": "pyuntasa",
+      "english": "Pyuntasa",
+      "myanmar": "ပြွန်တန်ဆာ",
+      "label": "Pyuntasa (ပြွန်တန်ဆာ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "innma": {
+      "id": "innma",
+      "english": "Innma",
+      "myanmar": "အင်းမ",
+      "label": "Innma (အင်းမ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kanyutkwin": {
+      "id": "kanyutkwin",
+      "english": "Kanyutkwin",
+      "myanmar": "ကညွတ်ကွင်း",
+      "label": "Kanyutkwin (ကညွတ်ကွင်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "tharkaya": {
+      "id": "tharkaya",
+      "english": "Tharkaya",
+      "myanmar": "သာဂရ",
+      "label": "Tharkaya (သာဂရ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "myohla": {
+      "id": "myohla",
+      "english": "Myohla",
+      "myanmar": "မြို့လှ",
+      "label": "Myohla (မြို့လှ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kawa": {
+      "id": "kawa",
+      "english": "Kawa",
+      "myanmar": "ကဝ",
+      "label": "Kawa (ကဝ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "sitkwin": {
+      "id": "sitkwin",
+      "english": "Sitkwin",
+      "myanmar": "စစ်ကွင်း",
+      "label": "Sitkwin (စစ်ကွင်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "oaethaekone": {
+      "id": "oaethaekone",
+      "english": "Oaethaekone",
+      "myanmar": "အိုးသည်ကုန်း",
+      "label": "Oaethaekone (အိုးသည်ကုန်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "shwelaung": {
+      "id": "shwelaung",
+      "english": "Shwelaung",
+      "myanmar": "ရွှေတောင်",
+      "label": "Shwelaung (ရွှေတောင်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "nyaungchayhtauk": {
+      "id": "nyaungchayhtauk",
+      "english": "NyaungChayHtauk",
+      "myanmar": "ညောင်ခြေထောက်",
+      "label": "NyaungChayHtauk (ညောင်ခြေထောက်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "swar": {
+      "id": "swar",
+      "english": "Swar",
+      "myanmar": "ဆွာ",
+      "label": "Swar (ဆွာ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "padaung": {
+      "id": "padaung",
+      "english": "Padaung",
+      "myanmar": "ပန်းတောင်း",
+      "label": "Padaung (ပန်းတောင်း)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "hakha": {
+      "id": "hakha",
+      "english": "Hakha",
+      "myanmar": "ဟားခါး",
+      "label": "Hakha (ဟားခါး)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "myitkyina": {
+      "id": "myitkyina",
+      "english": "Myitkyina",
+      "myanmar": "မြစ်ကြီးနား",
+      "label": "Myitkyina (မြစ်ကြီးနား)",
+      "upTo2Kg": 5850,
+      "nextKg": 1800
+    },
+    "mogaung": {
+      "id": "mogaung",
+      "english": "Mogaung",
+      "myanmar": "မိုးကောင်း",
+      "label": "Mogaung (မိုးကောင်း)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "mohnyin": {
+      "id": "mohnyin",
+      "english": "Mohnyin",
+      "myanmar": "မိုးညှင်း",
+      "label": "Mohnyin (မိုးညှင်း)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "hpakan": {
+      "id": "hpakan",
+      "english": "Hpakan",
+      "myanmar": "ဖားကန့်",
+      "label": "Hpakan (ဖားကန့်)",
+      "upTo2Kg": 5850,
+      "nextKg": 1800
+    },
+    "bhamaw": {
+      "id": "bhamaw",
+      "english": "Bhamaw",
+      "myanmar": "ဗန်းမော်",
+      "label": "Bhamaw (ဗန်းမော်)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "waingmaw": {
+      "id": "waingmaw",
+      "english": "Waingmaw",
+      "myanmar": "ဝိုင်းမော်",
+      "label": "Waingmaw (ဝိုင်းမော်)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "danai": {
+      "id": "danai",
+      "english": "Danai",
+      "myanmar": "တနိုင်း",
+      "label": "Danai (တနိုင်း)",
+      "upTo2Kg": 5850,
+      "nextKg": 1800
+    },
+    "namti": {
+      "id": "namti",
+      "english": "Namti",
+      "myanmar": "နမ္မတီး",
+      "label": "Namti (နမ္မတီး)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "momauk": {
+      "id": "momauk",
+      "english": "Momauk",
+      "myanmar": "မိုးမောက်",
+      "label": "Momauk (မိုးမောက်)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "loikaw": {
+      "id": "loikaw",
+      "english": "Loikaw",
+      "myanmar": "လွိုင်ကော်",
+      "label": "Loikaw (လွိုင်ကော်)",
+      "upTo2Kg": 5850,
+      "nextKg": 1800
+    },
+    "hpa-an": {
+      "id": "hpa-an",
+      "english": "Hpa-An",
+      "myanmar": "ဘားအံ",
+      "label": "Hpa-An (ဘားအံ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "myawaddy": {
+      "id": "myawaddy",
+      "english": "Myawaddy",
+      "myanmar": "မြဝတီ",
+      "label": "Myawaddy (မြဝတီ)",
+      "upTo2Kg": 8100,
+      "nextKg": 2250
+    },
+    "kawkareik": {
+      "id": "kawkareik",
+      "english": "Kawkareik",
+      "myanmar": "ကော့ကရိတ်",
+      "label": "Kawkareik (ကော့ကရိတ်)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "hlaingbwe": {
+      "id": "hlaingbwe",
+      "english": "Hlaingbwe",
+      "myanmar": "လှိုင်းဘွဲ့",
+      "label": "Hlaingbwe (လှိုင်းဘွဲ့)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "myaingkalay": {
+      "id": "myaingkalay",
+      "english": "Myaingkalay",
+      "myanmar": "မြိုင်ကလေး",
+      "label": "Myaingkalay (မြိုင်ကလေး)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "bagan": {
+      "id": "bagan",
+      "english": "Bagan",
+      "myanmar": "ပုဂံ",
+      "label": "Bagan (ပုဂံ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "nyaung-u": {
+      "id": "nyaung-u",
+      "english": "Nyaung-U",
+      "myanmar": "ညောင်ဦး",
+      "label": "Nyaung-U (ညောင်ဦး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kyaukse": {
+      "id": "kyaukse",
+      "english": "Kyaukse",
+      "myanmar": "ကျောက်ဆည်",
+      "label": "Kyaukse (ကျောက်ဆည်)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "mandalay": {
+      "id": "mandalay",
+      "english": "Mandalay",
+      "myanmar": "မန္တလေး",
+      "label": "Mandalay (မန္တလေး)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "meiktila": {
+      "id": "meiktila",
+      "english": "Meiktila",
+      "myanmar": "မိတ္ထီလာ",
+      "label": "Meiktila (မိတ္ထီလာ)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "wundwin": {
+      "id": "wundwin",
+      "english": "Wundwin",
+      "myanmar": "ဝမ်းတွင်း",
+      "label": "Wundwin (ဝမ်းတွင်း)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "mahlaing": {
+      "id": "mahlaing",
+      "english": "Mahlaing",
+      "myanmar": "မလှိုင်",
+      "label": "Mahlaing (မလှိုင်)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "mogok": {
+      "id": "mogok",
+      "english": "Mogok",
+      "myanmar": "မိုးကုတ်",
+      "label": "Mogok (မိုးကုတ်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "myingyan": {
+      "id": "myingyan",
+      "english": "Myingyan",
+      "myanmar": "မြင်းခြံ",
+      "label": "Myingyan (မြင်းခြံ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "pyawbwe": {
+      "id": "pyawbwe",
+      "english": "Pyawbwe",
+      "myanmar": "ပျော်ဘွယ်",
+      "label": "Pyawbwe (ပျော်ဘွယ်)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "pyin-oo-lwin": {
+      "id": "pyin-oo-lwin",
+      "english": "Pyin Oo Lwin",
+      "myanmar": "ပြင်ဦးလွင်",
+      "label": "Pyin Oo Lwin (ပြင်ဦးလွင်)",
+      "upTo2Kg": 2975,
+      "nextKg": 1275
+    },
+    "yamethin": {
+      "id": "yamethin",
+      "english": "Yamethin",
+      "myanmar": "ရမည်းသင်း",
+      "label": "Yamethin (ရမည်းသင်း)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "kyaukpadaung": {
+      "id": "kyaukpadaung",
+      "english": "Kyaukpadaung",
+      "myanmar": "ကျောက်ပန်းတောင်း",
+      "label": "Kyaukpadaung (ကျောက်ပန်းတောင်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "sintgaing": {
+      "id": "sintgaing",
+      "english": "Sintgaing",
+      "myanmar": "စဉ့်ကိုင်",
+      "label": "Sintgaing (စဉ့်ကိုင်)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "kume": {
+      "id": "kume",
+      "english": "Kume",
+      "myanmar": "ကူမဲ",
+      "label": "Kume (ကူမဲ)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "thazi": {
+      "id": "thazi",
+      "english": "Thazi",
+      "myanmar": "သာစည်",
+      "label": "Thazi (သာစည်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "madaya": {
+      "id": "madaya",
+      "english": "Madaya",
+      "myanmar": "မတ္တရာ",
+      "label": "Madaya (မတ္တရာ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "myitthar": {
+      "id": "myitthar",
+      "english": "Myitthar",
+      "myanmar": "မြစ်သား",
+      "label": "Myitthar (မြစ်သား)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "paukkhaung": {
+      "id": "paukkhaung",
+      "english": "Paukkhaung",
+      "myanmar": "ပေါက်ခေါင်း",
+      "label": "Paukkhaung (ပေါက်ခေါင်း)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "ohn-chaw": {
+      "id": "ohn-chaw",
+      "english": "Ohn Chaw",
+      "myanmar": "အုန်းချော",
+      "label": "Ohn Chaw (အုန်းချော)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "taungtha": {
+      "id": "taungtha",
+      "english": "Taungtha",
+      "myanmar": "တောင်သာ",
+      "label": "Taungtha (တောင်သာ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "anesakhan": {
+      "id": "anesakhan",
+      "english": "Anesakhan",
+      "myanmar": "အနီးစခန်း",
+      "label": "Anesakhan (အနီးစခန်း)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "amarapura": {
+      "id": "amarapura",
+      "english": "Amarapura",
+      "myanmar": "အမရပူရ",
+      "label": "Amarapura (အမရပူရ)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "myintnge": {
+      "id": "myintnge",
+      "english": "Myintnge",
+      "myanmar": "မြင့်ငယ်",
+      "label": "Myintnge (မြင့်ငယ်)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "natoegyi": {
+      "id": "natoegyi",
+      "english": "Natoegyi",
+      "myanmar": "နွားထိုးကြီး",
+      "label": "Natoegyi (နွားထိုးကြီး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "han-myint-mo": {
+      "id": "han-myint-mo",
+      "english": "Han Myint Mo",
+      "myanmar": "ဟန်မြင့်မိုရ်",
+      "label": "Han Myint Mo (ဟန်မြင့်မိုရ်)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "tada-u": {
+      "id": "tada-u",
+      "english": "Tada-U",
+      "myanmar": "တံတားဦး",
+      "label": "Tada-U (တံတားဦး)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "zeepingyi": {
+      "id": "zeepingyi",
+      "english": "Zeepingyi",
+      "myanmar": "ဇီးပင်ကြီး",
+      "label": "Zeepingyi (ဇီးပင်ကြီး)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "patheingyi": {
+      "id": "patheingyi",
+      "english": "Patheingyi",
+      "myanmar": "ပုသိမ်ကြီး",
+      "label": "Patheingyi (ပုသိမ်ကြီး)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "aunglan": {
+      "id": "aunglan",
+      "english": "Aunglan",
+      "myanmar": "အောင်လံ",
+      "label": "Aunglan (အောင်လံ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "chauk": {
+      "id": "chauk",
+      "english": "Chauk",
+      "myanmar": "ချောက်",
+      "label": "Chauk (ချောက်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "magway": {
+      "id": "magway",
+      "english": "Magway",
+      "myanmar": "မကွေး",
+      "label": "Magway (မကွေး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "minbu": {
+      "id": "minbu",
+      "english": "Minbu",
+      "myanmar": "မင်းဘူး",
+      "label": "Minbu (မင်းဘူး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "pakokku": {
+      "id": "pakokku",
+      "english": "Pakokku",
+      "myanmar": "ပခုက္ကူ",
+      "label": "Pakokku (ပခုက္ကူ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "yesagyo": {
+      "id": "yesagyo",
+      "english": "Yesagyo",
+      "myanmar": "ရေစကြို",
+      "label": "Yesagyo (ရေစကြို)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "taungtwingyi": {
+      "id": "taungtwingyi",
+      "english": "Taungtwingyi",
+      "myanmar": "တောင်တွင်းကြီး",
+      "label": "Taungtwingyi (တောင်တွင်းကြီး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "thayed": {
+      "id": "thayed",
+      "english": "Thayed",
+      "myanmar": "သရက်",
+      "label": "Thayed (သရက်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "yenanchaung": {
+      "id": "yenanchaung",
+      "english": "Yenanchaung",
+      "myanmar": "ရေနံချောင်း",
+      "label": "Yenanchaung (ရေနံချောင်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "pwintbyu": {
+      "id": "pwintbyu",
+      "english": "Pwintbyu",
+      "myanmar": "ပွင့်ဖြူ",
+      "label": "Pwintbyu (ပွင့်ဖြူ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "natmauk": {
+      "id": "natmauk",
+      "english": "NatMauk",
+      "myanmar": "နတ်မောက်",
+      "label": "NatMauk (နတ်မောက်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "salin": {
+      "id": "salin",
+      "english": "Salin",
+      "myanmar": "စလင်း",
+      "label": "Salin (စလင်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "sinhpyukyun": {
+      "id": "sinhpyukyun",
+      "english": "SinHpyuKyun",
+      "myanmar": "ဆင်ဖြူကျွန်း",
+      "label": "SinHpyuKyun (ဆင်ဖြူကျွန်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "satthwar": {
+      "id": "satthwar",
+      "english": "Satthwar",
+      "myanmar": "ဆတ်သွား",
+      "label": "Satthwar (ဆတ်သွား)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "myothit": {
+      "id": "myothit",
+      "english": "Myothit",
+      "myanmar": "မြို့သစ်",
+      "label": "Myothit (မြို့သစ်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kamma": {
+      "id": "kamma",
+      "english": "Kamma",
+      "myanmar": "ကံမ (သရက်)",
+      "label": "Kamma (ကံမ (သရက်))",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "mindone": {
+      "id": "mindone",
+      "english": "Mindone",
+      "myanmar": "မင်းတုန်း",
+      "label": "Mindone (မင်းတုန်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "ngape": {
+      "id": "ngape",
+      "english": "Ngape",
+      "myanmar": "ငဖဲ",
+      "label": "Ngape (ငဖဲ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "upper-minhla": {
+      "id": "upper-minhla",
+      "english": "Upper Minhla",
+      "myanmar": "အထက်မင်းလှ",
+      "label": "Upper Minhla (အထက်မင်းလှ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "saku": {
+      "id": "saku",
+      "english": "Saku",
+      "myanmar": "စကု",
+      "label": "Saku (စကု)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "salay": {
+      "id": "salay",
+      "english": "Salay",
+      "myanmar": "စလေ",
+      "label": "Salay (စလေ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "seik-phyu": {
+      "id": "seik-phyu",
+      "english": "Seik Phyu",
+      "myanmar": "ဆိပ်ဖြူ",
+      "label": "Seik Phyu (ဆိပ်ဖြူ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kamma-pakokku": {
+      "id": "kamma-pakokku",
+      "english": "Kamma (Pakokku)",
+      "myanmar": "ကံမ (ပခုက္ကူ)",
+      "label": "Kamma (Pakokku) (ကံမ (ပခုက္ကူ))",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "sinbaungwe": {
+      "id": "sinbaungwe",
+      "english": "SinBaungWe",
+      "myanmar": "ဆင်ပေါင်ဝဲ",
+      "label": "SinBaungWe (ဆင်ပေါင်ဝဲ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "mawlamyine": {
+      "id": "mawlamyine",
+      "english": "Mawlamyine",
+      "myanmar": "မော်လမြိုင်",
+      "label": "Mawlamyine (မော်လမြိုင်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "bilin": {
+      "id": "bilin",
+      "english": "Bilin",
+      "myanmar": "ဘီးလင်း",
+      "label": "Bilin (ဘီးလင်း)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "mudon": {
+      "id": "mudon",
+      "english": "Mudon",
+      "myanmar": "မုဒုံ",
+      "label": "Mudon (မုဒုံ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "thaton": {
+      "id": "thaton",
+      "english": "Thaton",
+      "myanmar": "သထုံ",
+      "label": "Thaton (သထုံ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "ye": {
+      "id": "ye",
+      "english": "Ye",
+      "myanmar": "ရေး",
+      "label": "Ye (ရေး)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "thanbyuzayat": {
+      "id": "thanbyuzayat",
+      "english": "Thanbyuzayat",
+      "myanmar": "သံဖြူဇရပ်",
+      "label": "Thanbyuzayat (သံဖြူဇရပ်)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "kyaikto": {
+      "id": "kyaikto",
+      "english": "Kyaikto",
+      "myanmar": "ကျိုက်ထို",
+      "label": "Kyaikto (ကျိုက်ထို)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "paung": {
+      "id": "paung",
+      "english": "Paung",
+      "myanmar": "ပေါင်",
+      "label": "Paung (ပေါင်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "mottama": {
+      "id": "mottama",
+      "english": "Mottama",
+      "myanmar": "မုတ္တမ",
+      "label": "Mottama (မုတ္တမ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "kyaikmaraw": {
+      "id": "kyaikmaraw",
+      "english": "Kyaikmaraw",
+      "myanmar": "ကျိုက်မရော",
+      "label": "Kyaikmaraw (ကျိုက်မရော)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "kyaikkhami": {
+      "id": "kyaikkhami",
+      "english": "Kyaikkhami",
+      "myanmar": "ကျိုက္ခမီ",
+      "label": "Kyaikkhami (ကျိုက္ခမီ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "kyaikkaw": {
+      "id": "kyaikkaw",
+      "english": "Kyaikkaw",
+      "myanmar": "ကျိုက်ကော်",
+      "label": "Kyaikkaw (ကျိုက်ကော်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "chaungzone": {
+      "id": "chaungzone",
+      "english": "Chaungzone",
+      "myanmar": "ချောင်းဆုံ",
+      "label": "Chaungzone (ချောင်းဆုံ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "thein-za-yat": {
+      "id": "thein-za-yat",
+      "english": "Thein Za Yat",
+      "myanmar": "သိမ်ဇရပ်",
+      "label": "Thein Za Yat (သိမ်ဇရပ်)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "zinkyaik": {
+      "id": "zinkyaik",
+      "english": "ZinKyaik",
+      "myanmar": "ဇင်းကျိုက်",
+      "label": "ZinKyaik (ဇင်းကျိုက်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "naypyidaw": {
+      "id": "naypyidaw",
+      "english": "Naypyidaw",
+      "myanmar": "နေပြည်တော်",
+      "label": "Naypyidaw (နေပြည်တော်)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "tatkon": {
+      "id": "tatkon",
+      "english": "Tatkon",
+      "myanmar": "တပ်ကုန်း",
+      "label": "Tatkon (တပ်ကုန်း)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "tharwuthti": {
+      "id": "tharwuthti",
+      "english": "Tharwuthti",
+      "myanmar": "သာဝတ္ထိ",
+      "label": "Tharwuthti (သာဝတ္ထိ)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "zeyawaddy": {
+      "id": "zeyawaddy",
+      "english": "Zeyawaddy",
+      "myanmar": "ဇေယျဝတီ",
+      "label": "Zeyawaddy (ဇေယျဝတီ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "sittwe": {
+      "id": "sittwe",
+      "english": "Sittwe",
+      "myanmar": "စစ်တွေ",
+      "label": "Sittwe (စစ်တွေ)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "toungup": {
+      "id": "toungup",
+      "english": "Toungup",
+      "myanmar": "တောင်ကုတ်",
+      "label": "Toungup (တောင်ကုတ်)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "thandwe": {
+      "id": "thandwe",
+      "english": "Thandwe",
+      "myanmar": "သံတွဲ",
+      "label": "Thandwe (သံတွဲ)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "kyaukpyu": {
+      "id": "kyaukpyu",
+      "english": "Kyaukpyu",
+      "myanmar": "ကျောက်ဖြူ",
+      "label": "Kyaukpyu (ကျောက်ဖြူ)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "min-pyar": {
+      "id": "min-pyar",
+      "english": "Min Pyar",
+      "myanmar": "မင်းပြား",
+      "label": "Min Pyar (မင်းပြား)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "ann": {
+      "id": "ann",
+      "english": "Ann",
+      "myanmar": "အန်း",
+      "label": "Ann (အန်း)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "kyauktaw": {
+      "id": "kyauktaw",
+      "english": "Kyauktaw",
+      "myanmar": "ကျောက်တော်",
+      "label": "Kyauktaw (ကျောက်တော်)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "mrauk-u": {
+      "id": "mrauk-u",
+      "english": "Mrauk-U",
+      "myanmar": "မြောက်ဦး",
+      "label": "Mrauk-U (မြောက်ဦး)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "ramree": {
+      "id": "ramree",
+      "english": "Ramree",
+      "myanmar": "ရမ်းဗြဲ",
+      "label": "Ramree (ရမ်းဗြဲ)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "kalay": {
+      "id": "kalay",
+      "english": "Kalay",
+      "myanmar": "ကလေး",
+      "label": "Kalay (ကလေး)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "monywa": {
+      "id": "monywa",
+      "english": "Monywa",
+      "myanmar": "မုံရွာ",
+      "label": "Monywa (မုံရွာ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "sagaing": {
+      "id": "sagaing",
+      "english": "Sagaing",
+      "myanmar": "စစ်ကိုင်း",
+      "label": "Sagaing (စစ်ကိုင်း)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "shwebo": {
+      "id": "shwebo",
+      "english": "Shwebo",
+      "myanmar": "ရွှေဘို",
+      "label": "Shwebo (ရွှေဘို)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "tamu": {
+      "id": "tamu",
+      "english": "Tamu",
+      "myanmar": "တမူး",
+      "label": "Tamu (တမူး)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "katha": {
+      "id": "katha",
+      "english": "Katha",
+      "myanmar": "ကသာ",
+      "label": "Katha (ကသာ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "kawlin": {
+      "id": "kawlin",
+      "english": "Kawlin",
+      "myanmar": "ကောလင်း",
+      "label": "Kawlin (ကောလင်း)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "tigyaing": {
+      "id": "tigyaing",
+      "english": "Tigyaing",
+      "myanmar": "ထီးချိုင့်",
+      "label": "Tigyaing (ထီးချိုင့်)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "myinmu": {
+      "id": "myinmu",
+      "english": "Myinmu",
+      "myanmar": "မြင်းမူ",
+      "label": "Myinmu (မြင်းမူ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "seikkhun": {
+      "id": "seikkhun",
+      "english": "Seikkhun",
+      "myanmar": "ဆိပ်ခွန်",
+      "label": "Seikkhun (ဆိပ်ခွန်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "pyinywa": {
+      "id": "pyinywa",
+      "english": "Pyinywa",
+      "myanmar": "ပြင်ရွာ",
+      "label": "Pyinywa (ပြင်ရွာ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "indaw": {
+      "id": "indaw",
+      "english": "Indaw",
+      "myanmar": "အင်းတော်",
+      "label": "Indaw (အင်းတော်)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "aungpan": {
+      "id": "aungpan",
+      "english": "Aungpan",
+      "myanmar": "အောင်ပန်း",
+      "label": "Aungpan (အောင်ပန်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kalaw": {
+      "id": "kalaw",
+      "english": "Kalaw",
+      "myanmar": "ကလော",
+      "label": "Kalaw (ကလော)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "lashio": {
+      "id": "lashio",
+      "english": "Lashio",
+      "myanmar": "လားရှိုး",
+      "label": "Lashio (လားရှိုး)",
+      "upTo2Kg": 5850,
+      "nextKg": 1800
+    },
+    "kyaukme": {
+      "id": "kyaukme",
+      "english": "Kyaukme",
+      "myanmar": "ကျောက်မဲ",
+      "label": "Kyaukme (ကျောက်မဲ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "hsipaw": {
+      "id": "hsipaw",
+      "english": "Hsipaw",
+      "myanmar": "သီပေါ",
+      "label": "Hsipaw (သီပေါ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "muse": {
+      "id": "muse",
+      "english": "Muse",
+      "myanmar": "မူဆယ်",
+      "label": "Muse (မူဆယ်)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "taunggyi": {
+      "id": "taunggyi",
+      "english": "Taunggyi",
+      "myanmar": "တောင်ကြီး",
+      "label": "Taunggyi (တောင်ကြီး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "yatsauk": {
+      "id": "yatsauk",
+      "english": "Yatsauk",
+      "myanmar": "ရပ်စောက်",
+      "label": "Yatsauk (ရပ်စောက်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "pinlaung": {
+      "id": "pinlaung",
+      "english": "Pinlaung",
+      "myanmar": "ပင်လောင်း",
+      "label": "Pinlaung (ပင်လောင်း)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "kengtung": {
+      "id": "kengtung",
+      "english": "Kengtung",
+      "myanmar": "ကျိုင်းတုံ",
+      "label": "Kengtung (ကျိုင်းတုံ)",
+      "upTo2Kg": 8550,
+      "nextKg": 2250
+    },
+    "tachileik": {
+      "id": "tachileik",
+      "english": "Tachileik",
+      "myanmar": "တာချီလိတ်",
+      "label": "Tachileik (တာချီလိတ်)",
+      "upTo2Kg": 8550,
+      "nextKg": 2250
+    },
+    "nyaungshwe": {
+      "id": "nyaungshwe",
+      "english": "Nyaungshwe",
+      "myanmar": "ညောင်ရွှေ",
+      "label": "Nyaungshwe (ညောင်ရွှေ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "ayetharyar": {
+      "id": "ayetharyar",
+      "english": "Ayetharyar",
+      "myanmar": "အေးသာယာ",
+      "label": "Ayetharyar (အေးသာယာ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "hopong": {
+      "id": "hopong",
+      "english": "Hopong",
+      "myanmar": "ဟိုပုံး",
+      "label": "Hopong (ဟိုပုံး)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "nawnghkio": {
+      "id": "nawnghkio",
+      "english": "Nawnghkio",
+      "myanmar": "နောင်ချို",
+      "label": "Nawnghkio (နောင်ချို)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "pindaya": {
+      "id": "pindaya",
+      "english": "Pindaya",
+      "myanmar": "ပင်းတယ",
+      "label": "Pindaya (ပင်းတယ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "loilem": {
+      "id": "loilem",
+      "english": "Loilem",
+      "myanmar": "လွိုင်လင်",
+      "label": "Loilem (လွိုင်လင်)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "hehoe": {
+      "id": "hehoe",
+      "english": "HeHoe",
+      "myanmar": "ဟဲဟိုး",
+      "label": "HeHoe (ဟဲဟိုး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "ywangan": {
+      "id": "ywangan",
+      "english": "Ywangan",
+      "myanmar": "ရွာငံ",
+      "label": "Ywangan (ရွာငံ)",
+      "upTo2Kg": 4500,
+      "nextKg": 1350
+    },
+    "namhkam": {
+      "id": "namhkam",
+      "english": "Namhkam",
+      "myanmar": "နမ့်ခမ်း",
+      "label": "Namhkam (နမ့်ခမ်း)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "namtu": {
+      "id": "namtu",
+      "english": "Namtu",
+      "myanmar": "နမ္မတူ",
+      "label": "Namtu (နမ္မတူ)",
+      "upTo2Kg": 4950,
+      "nextKg": 1350
+    },
+    "kutkai": {
+      "id": "kutkai",
+      "english": "Kutkai",
+      "myanmar": "ကွတ်ခိုင်",
+      "label": "Kutkai (ကွတ်ခိုင်)",
+      "upTo2Kg": 3600,
+      "nextKg": 1350
+    },
+    "shwenyaung": {
+      "id": "shwenyaung",
+      "english": "Shwenyaung",
+      "myanmar": "ရွှေညောင်",
+      "label": "Shwenyaung (ရွှေညောင်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "dawei": {
+      "id": "dawei",
+      "english": "Dawei",
+      "myanmar": "ထားဝယ်",
+      "label": "Dawei (ထားဝယ်)",
+      "upTo2Kg": 6750,
+      "nextKg": 1800
+    },
+    "myeik": {
+      "id": "myeik",
+      "english": "Myeik",
+      "myanmar": "မြိတ်",
+      "label": "Myeik (မြိတ်)",
+      "upTo2Kg": 8100,
+      "nextKg": 2250
+    },
+    "kawthoung": {
+      "id": "kawthoung",
+      "english": "Kawthoung",
+      "myanmar": "ကော့သောင်း",
+      "label": "Kawthoung (ကော့သောင်း)",
+      "upTo2Kg": 8550,
+      "nextKg": 2250
+    },
+    "yangon": {
+      "id": "yangon",
+      "english": "Yangon",
+      "myanmar": "ရန်ကုန်",
+      "label": "Yangon (ရန်ကုန်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "hlegu": {
+      "id": "hlegu",
+      "english": "Hlegu",
+      "myanmar": "လှည်းကူး",
+      "label": "Hlegu (လှည်းကူး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "thongwa": {
+      "id": "thongwa",
+      "english": "Thongwa",
+      "myanmar": "သုံးခွ",
+      "label": "Thongwa (သုံးခွ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "hmawbi": {
+      "id": "hmawbi",
+      "english": "Hmawbi",
+      "myanmar": "မှော်ဘီ",
+      "label": "Hmawbi (မှော်ဘီ)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "taikkyi": {
+      "id": "taikkyi",
+      "english": "Taikkyi",
+      "myanmar": "တိုက်ကြီး",
+      "label": "Taikkyi (တိုက်ကြီး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "twantay": {
+      "id": "twantay",
+      "english": "Twantay",
+      "myanmar": "တွံတေး",
+      "label": "Twantay (တွံတေး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kyauktan": {
+      "id": "kyauktan",
+      "english": "Kyauktan",
+      "myanmar": "ကျောက်တန်း",
+      "label": "Kyauktan (ကျောက်တန်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kungyangone": {
+      "id": "kungyangone",
+      "english": "Kungyangone",
+      "myanmar": "ကွမ်းခြံကုန်း",
+      "label": "Kungyangone (ကွမ်းခြံကုန်း)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "ahpyauk": {
+      "id": "ahpyauk",
+      "english": "Ahpyauk",
+      "myanmar": "အဖျောက်",
+      "label": "Ahpyauk (အဖျောက်)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    },
+    "kawhmu": {
+      "id": "kawhmu",
+      "english": "Kawhmu",
+      "myanmar": "ကော့မှူး",
+      "label": "Kawhmu (ကော့မှူး)",
+      "upTo2Kg": 4050,
+      "nextKg": 1350
+    }
+  }
+}

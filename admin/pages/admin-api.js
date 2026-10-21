@@ -1,5 +1,6 @@
 (function () {
     const API_URL = 'https://script.google.com/macros/s/AKfycbyK1T-_1zj9vgLpLu7HCumy-D-aB8rkSPGkNs-aXTVZqlrhP_qkncYwgmPc_0xU8SmX/exec';
+    const MASTER_DATA_URL = 'https://uthkphysics.pages.dev/data/master-data.json';
     const DB_NAME = 'uthk-admin-cache';
     const DB_VERSION = 1;
     const CACHE_STORE = 'snapshots';
@@ -352,29 +353,91 @@
     }
 
     async function getMasterData() {
-        const result = await request('getMasterData');
-        const masterData = result.masterData;
+        const response = await fetch(MASTER_DATA_URL, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Master data request failed (${response.status}).`);
+        const masterData = await response.json();
         if (!masterData || !masterData.settings || !masterData.books || !masterData.deliveryCities) {
             throw new Error('Order master data is missing or incomplete.');
+        }
+        if (masterData.schemaVersion !== 1) {
+            throw new Error('This admin version does not support the master data format.');
         }
         window.AdminMasterData = masterData;
         window.AdminBooks = (Array.isArray(masterData.books)
             ? masterData.books
             : Object.entries(masterData.books).map(([id, book]) => ({ ...book, id: book.id || id })))
             .filter((book) => book && book.active !== false)
-            .map((book) => ({ ...book, price: Number(book.price ?? book.prices?.[0] ?? 0) }));
+            .map((book) => {
+                const safePrice = book && book.price !== null && book.price !== undefined
+                    ? book.price
+                    : (book && book.prices && book.prices.length ? book.prices[0] : 0);
+                return { ...book, price: Number(safePrice) };
+            });
         return masterData;
     }
 
-    async function saveMasterData(masterData) {
-        const result = await request('saveMasterData', { masterData });
-        window.AdminMasterData = result.masterData;
-        window.AdminBooks = (Array.isArray(result.masterData.books)
-            ? result.masterData.books
-            : Object.entries(result.masterData.books).map(([id, book]) => ({ ...book, id: book.id || id })))
+    function saveMasterData(masterData) {
+        const { priceThresholds, royalServiceFee, codMaxTotal } = masterData.settings || {};
+        if (!Array.isArray(priceThresholds) || !priceThresholds.length ||
+            priceThresholds[0] !== 0 ||
+            priceThresholds.some((value, index) =>
+                !Number.isSafeInteger(value) || value < 0 ||
+                (index > 0 && value <= priceThresholds[index - 1])) ||
+            !Number.isSafeInteger(royalServiceFee) || royalServiceFee < 0 ||
+            !Number.isSafeInteger(codMaxTotal) || codMaxTotal < 0) {
+            throw new Error('အထွေထွေ သတ်မှတ်ချက်များကို စစ်ဆေးပါ။ ဈေးနှုန်းအဆင့်များသည် 0 မှစ၍ အစဉ်လိုက်ဖြစ်ရပါမည်။');
+        }
+        const books = Object.entries(masterData.books || {});
+        const cities = Object.entries(masterData.deliveryCities || {});
+        if (!books.length || !cities.length) {
+            throw new Error('စာအုပ်နှင့် ပို့ဆောင်မည့်မြို့ အနည်းဆုံးတစ်ခုစီ လိုအပ်ပါသည်။');
+        }
+        books.forEach(([id, book]) => {
+            if (!book || book.id !== id || !book.name || !book.image ||
+                !Array.isArray(book.prices) || book.prices.length !== priceThresholds.length ||
+                book.prices.some((price) => !Number.isSafeInteger(price) || price < 0) ||
+                !Number.isFinite(book.weight) || book.weight <= 0) {
+                throw new Error(`စာအုပ်အချက်အလက် မမှန်ပါ: ${id}`);
+            }
+        });
+        cities.forEach(([id, city]) => {
+            if (!city || city.id !== id || !city.english || !city.myanmar ||
+                !Number.isFinite(city.upTo2Kg) || city.upTo2Kg < 0 ||
+                !Number.isFinite(city.nextKg) || city.nextKg < 0) {
+                throw new Error(`မြို့အချက်အလက် မမှန်ပါ: ${id}`);
+            }
+        });
+
+        const savedMasterData = {
+            schemaVersion: 1,
+            updatedAt: new Date().toISOString(),
+            settings: masterData.settings,
+            books: masterData.books,
+            deliveryCities: masterData.deliveryCities
+        };
+        const content = JSON.stringify(savedMasterData, null, 2) + '\n';
+        const file = new Blob([content], { type: 'application/json;charset=utf-8' });
+        const downloadUrl = URL.createObjectURL(file);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = 'master-data.json';
+        document.body.append(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+
+        window.AdminMasterData = savedMasterData;
+        window.AdminBooks = (Array.isArray(savedMasterData.books)
+            ? savedMasterData.books
+            : Object.entries(savedMasterData.books).map(([id, book]) => ({ ...book, id: book.id || id })))
             .filter((book) => book && book.active !== false)
-            .map((book) => ({ ...book, price: Number(book.price ?? book.prices?.[0] ?? 0) }));
-        return result.masterData;
+            .map((book) => {
+                const safePrice = book && book.price !== null && book.price !== undefined
+                    ? book.price
+                    : (book && book.prices && book.prices.length ? book.prices[0] : 0);
+                return { ...book, price: Number(safePrice) };
+            });
+        return savedMasterData;
     }
 
     async function getDeliveryCities() {

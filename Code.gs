@@ -141,7 +141,7 @@ function doPost(e) {
       return jsonResponse_({ ok: true, masterData: getOrderMasterData_() });
     }
     if (action === 'saveMasterData') {
-      return saveOrderMasterData_(request.masterData);
+      throw new Error('Master data is read-only in this API. Update it from the protected Admin app.');
     }
     if (action === 'createOrder') {
       return createBookOrder_(request.order);
@@ -284,33 +284,28 @@ function doPost(e) {
 }
 
 function getOrderMasterData_() {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  if (!spreadsheet) {
-    throw new Error('Bind this Apps Script project to the target Google Sheet.');
-  }
-  let sheet = spreadsheet.getSheetByName('Master Data');
-  if (!sheet) sheet = spreadsheet.insertSheet('Master Data');
-  if (sheet.getLastRow() === 0) {
-    sheet.getRange(1, 1, 1, 3).setValues([['Type', 'ID', 'Data JSON']]);
-    sheet.setFrozenRows(1);
-  }
-  if (sheet.getLastRow() === 1) {
-    writeOrderMasterData_(sheet, defaultOrderMasterData_());
+  const cache = CacheService.getScriptCache();
+  const cachedMasterData = cache.get('orderMasterData');
+  if (cachedMasterData) {
+    const masterData = JSON.parse(cachedMasterData);
+    validateOrderMasterData_(masterData);
+    return masterData;
   }
 
-  const masterData = { settings: null, books: {}, deliveryCities: {} };
-  const rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getDisplayValues();
-  rows.forEach(function (row) {
-    if (!row[0] || !row[2]) return;
-    const value = JSON.parse(row[2]);
-    if (row[0] === 'settings') masterData.settings = value;
-    if (row[0] === 'book') masterData.books[row[1]] = Object.assign({ id: row[1] }, value);
-    if (row[0] === 'city') masterData.deliveryCities[row[1]] = Object.assign({ id: row[1] }, value);
+  const response = UrlFetchApp.fetch('https://uthkphysics.pages.dev/data/master-data.json', {
+    headers: { Accept: 'application/json' },
+    muteHttpExceptions: true
   });
-  if (!masterData.settings || !Object.keys(masterData.books).length ||
-      !Object.keys(masterData.deliveryCities).length) {
-    throw new Error('Order master data is missing or incomplete.');
+  if (response.getResponseCode() !== 200) {
+    throw new Error('Unable to retrieve the published order master data (' +
+      response.getResponseCode() + ').');
   }
+  const masterData = JSON.parse(response.getContentText());
+  if (masterData.schemaVersion !== 1) {
+    throw new Error('The published order master data format is not supported.');
+  }
+  validateOrderMasterData_(masterData);
+  cache.put('orderMasterData', JSON.stringify(masterData), 60);
   return masterData;
 }
 

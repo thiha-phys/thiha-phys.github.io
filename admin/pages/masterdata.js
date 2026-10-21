@@ -177,11 +177,11 @@ form.addEventListener('submit', async (event) => {
     const button = document.getElementById('save-master-data');
     button.disabled = true;
     status.className = 'status-message';
-    status.textContent = 'Master Data သိမ်းဆည်းနေသည်…';
+    status.textContent = 'Master Data စစ်ဆေးပြီး JSON ဖိုင်ထုတ်နေသည်…';
     try {
         const saved = await AdminApi.saveMasterData(collectMasterData());
         loadForm(saved);
-        status.textContent = 'Master Data သိမ်းပြီးပါပြီ။ Customer app နှင့် Admin order/voucher များတွင် အသစ်ပြောင်းလဲပါမည်။';
+        status.textContent = 'JSON ဖိုင်ကို download လုပ်ပြီးပါပြီ။ Customer app တွင် ပြောင်းလဲမှုသက်ရောက်ရန် ဖိုင်ကို repository ထဲ အစားထိုးတင်ပြီး hosting သို့ publish လုပ်ပါ။';
         status.classList.add('success');
     } catch (error) {
         status.textContent = `Master Data သိမ်းမရပါ။ ${error.message}`;

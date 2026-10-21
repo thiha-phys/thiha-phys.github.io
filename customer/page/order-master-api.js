@@ -1,4 +1,5 @@
 const ORDER_API_URL = 'https://script.google.com/macros/s/AKfycbyK1T-_1zj9vgLpLu7HCumy-D-aB8rkSPGkNs-aXTVZqlrhP_qkncYwgmPc_0xU8SmX/exec';
+const MASTER_DATA_URL = new URL('../data/master-data.json', document.currentScript.src);
 
 async function callOrderApi(action, payload = {}) {
     const response = await fetch(ORDER_API_URL, {
@@ -17,10 +18,16 @@ async function callOrderApi(action, payload = {}) {
 }
 
 async function loadOrderMasterData() {
-    const result = await callOrderApi('getMasterData');
-    const masterData = result.masterData;
+    const response = await fetch(MASTER_DATA_URL);
+    if (!response.ok) {
+        throw new Error(`Master data request failed (${response.status}).`);
+    }
+    const masterData = await response.json();
     if (!masterData || !masterData.books || !masterData.deliveryCities || !masterData.settings) {
         throw new Error('Order master data is missing or incomplete.');
+    }
+    if (masterData.schemaVersion !== 1) {
+        throw new Error('This app version does not support the master data format.');
     }
     const thresholds = masterData.settings.priceThresholds;
     if (!Array.isArray(thresholds) || thresholds.length === 0 ||
@@ -41,7 +48,7 @@ async function loadOrderMasterData() {
 }
 
 function getOrderBooks(masterData) {
-    const books = masterData?.books || {};
+    const books = masterData && masterData.books ? masterData.books : {};
     return (Array.isArray(books) ? books : Object.entries(books).map(([id, book]) => ({ ...book, id: book.id || id })))
         .filter((book) => book && book.active !== false);
 }
