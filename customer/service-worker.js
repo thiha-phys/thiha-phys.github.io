@@ -1,7 +1,8 @@
-const CACHE_NAME = 'physics-learning-hub-v16';
+const CACHE_NAME = 'physics-learning-hub-v17';
 const APP_SHELL = [
     './',
     './index.html',
+    './auth-guard.js',
     './style.css',
     './page/brand.css',
     './manifest.webmanifest',

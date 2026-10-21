@@ -13,6 +13,8 @@
         typeof profile === 'object' &&
         typeof profile.name === 'string' && profile.name.trim() &&
         typeof profile.phone === 'string' && profile.phone.trim();
+    const isHomePage = window.location.pathname === '/' ||
+        window.location.pathname === '/index.html';
 
     if (isSignedIn || window.location.pathname === loginPath) {
         return;
@@ -20,6 +22,8 @@
 
     const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
     const loginUrl = new URL(loginPath, window.location.origin);
-    loginUrl.searchParams.set('returnTo', returnTo);
+    if (!isHomePage) {
+        loginUrl.searchParams.set('returnTo', returnTo);
+    }
     window.location.replace(loginUrl.toString());
 })();
