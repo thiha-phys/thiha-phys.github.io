@@ -4,21 +4,6 @@
     const isLoginPage = window.location.pathname === loginPath;
     let profile = null;
 
-    if (!isLoginPage) {
-        try {
-            if (localStorage.getItem('physicsLearningHubTheme') === 'dark') {
-                document.documentElement.dataset.theme = 'dark';
-            }
-        } catch (error) {
-            console.error('Unable to read the saved app theme.', error);
-        }
-
-        const themeStylesheet = document.createElement('link');
-        themeStylesheet.rel = 'stylesheet';
-        themeStylesheet.href = '/theme.css';
-        document.head.append(themeStylesheet);
-    }
-
     try {
         profile = JSON.parse(localStorage.getItem(profileKey) || 'null');
     } catch (error) {

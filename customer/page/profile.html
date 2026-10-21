@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <script src="/auth-guard.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f4f7fb">
-    <title>Account | Physics Learning Hub</title>
+    <title>Profile | Physics Learning Hub</title>
     <link rel="icon" type="image/png" href="../logo.png">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,17 +21,6 @@
             --account-shadow: 0 8px 24px rgba(31, 48, 73, 0.06);
         }
 
-        :root[data-theme="dark"] {
-            color-scheme: dark;
-            --account-bg: #111827;
-            --account-card: #1f2937;
-            --account-text: #f3f4f6;
-            --account-muted: #aab5c5;
-            --account-border: #374151;
-            --account-accent: #8bb5ff;
-            --account-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
         * {
             box-sizing: border-box;
         }
@@ -42,7 +31,6 @@
             background: var(--account-bg);
             color: var(--account-text);
             font-family: 'Pyidaungsu', Arial, sans-serif;
-            transition: background-color 0.2s ease, color 0.2s ease;
         }
 
         .account-shell {
@@ -370,43 +358,6 @@
             cursor: pointer;
         }
 
-        .bottom-nav {
-            position: fixed;
-            z-index: 10;
-            bottom: 12px;
-            left: 50%;
-            display: flex;
-            width: min(360px, calc(100vw - 32px));
-            justify-content: space-around;
-            margin: 0;
-            padding: 10px 17px 8px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 24px;
-            background: rgba(19, 32, 49, 0.92);
-            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.2);
-            backdrop-filter: blur(12px);
-            transform: translateX(-50%);
-        }
-
-        .nav-item {
-            display: flex;
-            min-width: 70px;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: #cbd5e1;
-            font-size: 11px;
-            text-decoration: none;
-        }
-
-        .nav-item i {
-            font-size: 18px;
-        }
-
-        .nav-item.active {
-            color: #ff7373;
-        }
-
         @media (min-width: 761px) {
             .account-shell {
                 padding-top: 36px;
@@ -418,69 +369,57 @@
     <main class="account-shell">
         <section class="account-view" id="account-view">
             <header class="page-header">
-                <h1 data-i18n="profileTitle">Profile</h1>
+                <h1>Profile</h1>
             </header>
 
             <section class="profile-summary" aria-label="Account">
                 <div class="avatar" id="profile-avatar" aria-hidden="true">P</div>
                 <div>
                     <h2 id="summary-name">Your account</h2>
-                    <p id="summary-email"></p>
+                    <p id="summary-role"></p>
                 </div>
             </section>
 
             <section class="settings-section" aria-labelledby="account-section-title">
-                <h2 class="section-title" id="account-section-title" data-i18n="account">Account</h2>
+                <h2 class="section-title" id="account-section-title">Account</h2>
                 <div class="settings-list">
                     <button class="setting-row" id="manage-profile-button" type="button">
                         <span class="setting-icon"><i class="fa-regular fa-user" aria-hidden="true"></i></span>
-                        <span class="setting-label" data-i18n="manageProfile">Manage Profile</span>
+                        <span class="setting-label">Manage Profile</span>
                         <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
                     </button>
                     <button class="setting-row" type="button" data-dialog="security-dialog">
                         <span class="setting-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></span>
-                        <span class="setting-label" data-i18n="passwordSecurity">Password &amp; Security</span>
-                        <span class="setting-value" data-i18n="comingSoon">Coming soon</span>
+                        <span class="setting-label">Password &amp; Security</span>
+                        <span class="setting-value">Coming soon</span>
                         <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
                     </button>
                     <button class="setting-row" type="button" data-dialog="notification-dialog">
                         <span class="setting-icon"><i class="fa-regular fa-bell" aria-hidden="true"></i></span>
-                        <span class="setting-label" data-i18n="notifications">Notifications</span>
-                        <span class="setting-value" data-i18n="comingSoon">Coming soon</span>
-                        <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
-                    </button>
-                    <button class="setting-row" id="language-button" type="button">
-                        <span class="setting-icon"><i class="fa-solid fa-language" aria-hidden="true"></i></span>
-                        <span class="setting-label" data-i18n="language">Language</span>
-                        <span class="setting-value" id="language-value">English</span>
+                        <span class="setting-label">Notifications</span>
+                        <span class="setting-value">Coming soon</span>
                         <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
                     </button>
                 </div>
             </section>
 
             <section class="settings-section" aria-labelledby="preferences-section-title">
-                <h2 class="section-title" id="preferences-section-title" data-i18n="preferences">Preferences</h2>
+                <h2 class="section-title" id="preferences-section-title">Preferences</h2>
                 <div class="settings-list">
                     <button class="setting-row" type="button" data-dialog="about-dialog">
                         <span class="setting-icon"><i class="fa-regular fa-circle-question" aria-hidden="true"></i></span>
-                        <span class="setting-label" data-i18n="aboutUs">About Us</span>
-                        <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
-                    </button>
-                    <button class="setting-row" id="theme-button" type="button">
-                        <span class="setting-icon"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></span>
-                        <span class="setting-label" data-i18n="theme">Theme</span>
-                        <span class="setting-value" id="theme-value">Light</span>
+                        <span class="setting-label">About Us</span>
                         <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
                     </button>
                 </div>
             </section>
 
             <section class="settings-section" aria-labelledby="support-section-title">
-                <h2 class="section-title" id="support-section-title" data-i18n="support">Support</h2>
+                <h2 class="section-title" id="support-section-title">Support</h2>
                 <div class="settings-list">
                     <a class="setting-row" href="contact.html">
                         <span class="setting-icon"><i class="fa-regular fa-circle-question" aria-hidden="true"></i></span>
-                        <span class="setting-label" data-i18n="helpCenter">Help Center</span>
+                        <span class="setting-label">Help Center</span>
                         <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -490,69 +429,69 @@
         <section class="profile-view" id="profile-view" hidden>
             <button class="back-button" id="profile-back-button" type="button">
                 <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
-                <span data-i18n="backToProfile">Back to Profile</span>
+                <span>Back to Profile</span>
             </button>
-            <h1 class="section-title" data-i18n="manageProfile">Manage Profile</h1>
+            <h1 class="section-title">Manage Profile</h1>
             <div class="profile-details">
                 <div class="profile-detail">
                     <i class="fa-regular fa-user" aria-hidden="true"></i>
                     <div class="profile-detail-copy">
-                        <span class="profile-detail-label" data-i18n="name">Name</span>
+                        <span class="profile-detail-label">Name</span>
                         <span class="profile-detail-value" data-profile-value="name"></span>
                     </div>
                 </div>
                 <div class="profile-detail">
                     <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
                     <div class="profile-detail-copy">
-                        <span class="profile-detail-label" data-i18n="occupation">Occupation</span>
+                        <span class="profile-detail-label">Occupation</span>
                         <span class="profile-detail-value" data-profile-value="occupation"></span>
                     </div>
                 </div>
                 <div class="profile-detail">
                     <i class="fa-solid fa-phone" aria-hidden="true"></i>
                     <div class="profile-detail-copy">
-                        <span class="profile-detail-label" data-i18n="phone">Phone</span>
+                        <span class="profile-detail-label">Phone</span>
                         <span class="profile-detail-value" data-profile-value="phone"></span>
                     </div>
                 </div>
                 <div class="profile-detail">
                     <i class="fa-regular fa-envelope" aria-hidden="true"></i>
                     <div class="profile-detail-copy">
-                        <span class="profile-detail-label" data-i18n="email">Email</span>
+                        <span class="profile-detail-label">Email</span>
                         <span class="profile-detail-value" data-profile-value="email"></span>
                     </div>
                 </div>
             </div>
             <button class="profile-action" id="edit-profile-button" type="button" aria-expanded="false" aria-controls="profile-edit-form">
                 <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
-                <span data-i18n="editProfile">Edit Profile</span>
+                <span>Edit Profile</span>
             </button>
             <form class="profile-edit-form" id="profile-edit-form" hidden>
                 <label class="form-field">
-                    <span data-i18n="name">Name</span>
+                    <span>Name</span>
                     <input name="name" type="text" autocomplete="name" required>
                 </label>
                 <label class="form-field">
-                    <span data-i18n="occupation">Occupation</span>
+                    <span>Occupation</span>
                     <input name="occupation" type="text" required>
                 </label>
                 <label class="form-field">
-                    <span data-i18n="phone">Phone</span>
+                    <span>Phone</span>
                     <input name="phone" type="tel" autocomplete="tel" required>
                 </label>
                 <label class="form-field">
-                    <span data-i18n="email">Email</span>
+                    <span>Email</span>
                     <input name="email" type="email" autocomplete="email">
                 </label>
                 <div class="form-actions">
-                    <button class="btn-save" type="submit" data-i18n="save">Save</button>
-                    <button class="btn-cancel" id="cancel-edit-button" type="button" data-i18n="cancel">Cancel</button>
+                    <button class="btn-save" type="submit">Save</button>
+                    <button class="btn-cancel" id="cancel-edit-button" type="button">Cancel</button>
                 </div>
             </form>
             <p class="profile-status" id="profile-status" role="status" aria-live="polite"></p>
             <button class="btn-logout" id="logout-button" type="button">
                 <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
-                <span data-i18n="logout">Log out</span>
+                <span>Log out</span>
             </button>
         </section>
 
@@ -573,67 +512,23 @@
     </main>
 
     <dialog id="security-dialog">
-        <h2 data-i18n="passwordSecurity">Password &amp; Security</h2>
-        <p data-i18n="securityMessage">Password and security settings will be available in a future update.</p>
-        <button class="dialog-close" type="button" data-close-dialog data-i18n="close">Close</button>
+        <h2>Password &amp; Security</h2>
+        <p>Password and security settings will be available in a future update.</p>
+        <button class="dialog-close" type="button" data-close-dialog>Close</button>
     </dialog>
     <dialog id="notification-dialog">
-        <h2 data-i18n="notifications">Notifications</h2>
-        <p data-i18n="notificationMessage">Phone notifications are not available on the web yet. You can manage them in the Android app when it is released.</p>
-        <button class="dialog-close" type="button" data-close-dialog data-i18n="close">Close</button>
+        <h2>Notifications</h2>
+        <p>Phone notifications are not available on the web yet. You can manage them in the Android app when it is released.</p>
+        <button class="dialog-close" type="button" data-close-dialog>Close</button>
     </dialog>
     <dialog id="about-dialog">
-        <h2 data-i18n="aboutUs">About Us</h2>
-        <p data-i18n="aboutMessage">Physics Learning Hub helps Myanmar students learn Grade 10, 11, and 12 physics with lessons, explanations, practice questions, and learning resources for the Myanmar Government curriculum. Created by U Thiha Kyaw.</p>
-        <button class="dialog-close" type="button" data-close-dialog data-i18n="close">Close</button>
+        <h2>About Us</h2>
+        <p>Physics Learning Hub helps Myanmar students learn Grade 10, 11, and 12 physics with lessons, explanations, practice questions, and learning resources for the Myanmar Government curriculum. Created by U Thiha Kyaw.</p>
+        <button class="dialog-close" type="button" data-close-dialog>Close</button>
     </dialog>
 
     <script src="profile-api.js"></script>
     <script>
-        const translations = {
-            en: {
-                profileTitle: 'Profile', account: 'Account', manageProfile: 'Manage Profile',
-                passwordSecurity: 'Password & Security', notifications: 'Notifications',
-                comingSoon: 'Coming soon', language: 'Language', preferences: 'Preferences',
-                aboutUs: 'About Us', theme: 'Theme', support: 'Support', helpCenter: 'Help Center',
-                backToProfile: 'Back to Profile', name: 'Name', occupation: 'Occupation',
-                phone: 'Phone', email: 'Email', editProfile: 'Edit Profile', save: 'Save',
-                cancel: 'Cancel', logout: 'Log out', close: 'Close', light: 'Light', dark: 'Dark',
-                yourAccount: 'Your account',
-                securityMessage: 'Password and security settings will be available in a future update.',
-                notificationMessage: 'Phone notifications are not available on the web yet. You can manage them in the Android app when it is released.',
-                aboutMessage: 'Physics Learning Hub helps Myanmar students learn Grade 10, 11, and 12 physics with lessons, explanations, practice questions, and learning resources for the Myanmar Government curriculum. Created by U Thiha Kyaw.',
-                logoutError: 'Unable to log out. Please try again.',
-                profileReadError: 'Unable to read your saved profile.',
-                invalidPhone: 'Enter an 11-digit phone number starting with 0.',
-                missingPhone: 'The saved account phone number is required to update your profile.',
-                updateError: 'Unable to update your profile.',
-                phoneNotFound: 'No account was found for this phone number.',
-                saveError: 'Your profile was updated, but could not be saved in this browser.'
-            },
-            my: {
-                profileTitle: 'ကိုယ်ရေးအချက်အလက်', account: 'အကောင့်', manageProfile: 'ကိုယ်ရေးအချက်အလက် စီမံရန်',
-                passwordSecurity: 'စကားဝှက်နှင့် လုံခြုံရေး', notifications: 'အသိပေးချက်များ',
-                comingSoon: 'မကြာမီလာမည်', language: 'ဘာသာစကား', preferences: 'အက်ပ်ဆက်တင်များ',
-                aboutUs: 'အက်ပ်အကြောင်း', theme: 'အသွင်အပြင်', support: 'အကူအညီ',
-                helpCenter: 'အကူအညီစင်တာ', backToProfile: 'ကိုယ်ရေးအချက်အလက်သို့ ပြန်သွားရန်',
-                name: 'အမည်', occupation: 'အလုပ်အကိုင်', phone: 'ဖုန်းနံပါတ်', email: 'အီးမေးလ်',
-                editProfile: 'ကိုယ်ရေးအချက်အလက် ပြင်ဆင်ရန်', save: 'သိမ်းရန်', cancel: 'မလုပ်တော့ပါ',
-                logout: 'အကောင့်မှ ထွက်ရန်', close: 'ပိတ်ရန်', light: 'အလင်း', dark: 'အမှောင်',
-                yourAccount: 'သင့်အကောင့်',
-                securityMessage: 'စကားဝှက်နှင့် လုံခြုံရေးဆိုင်ရာ ဆက်တင်များကို နောင်လာမည့် အပ်ဒိတ်တွင် ထည့်သွင်းပါမည်။',
-                notificationMessage: 'Web app တွင် ဖုန်းအသိပေးချက်များကို လက်ရှိအသုံးပြု၍ မရသေးပါ။ Android app ထွက်ရှိလာပါက ထိုနေရာတွင် ဖွင့်/ပိတ်နိုင်ပါမည်။',
-                aboutMessage: 'Physics Learning Hub သည် မြန်မာနိုင်ငံရှိ Grade 10၊ 11၊ 12 ကျောင်းသားများအတွက် မြန်မာအစိုးရသင်ရိုးနှင့်အညီ ရူပဗေဒသင်ခန်းစာ၊ ရှင်းလင်းချက်၊ လေ့ကျင့်ခန်းမေးခွန်းများနှင့် သင်ယူရေးအထောက်အကူများကို ပံ့ပိုးပေးပါသည်။ U Thiha Kyaw မှ ဖန်တီးထားပါသည်။',
-                logoutError: 'အကောင့်မှ ထွက်မရပါ။ ထပ်မံကြိုးစားပါ။',
-                profileReadError: 'သိမ်းထားသော ကိုယ်ရေးအချက်အလက်ကို ဖတ်မရပါ။',
-                invalidPhone: '0 ဖြင့်စသော ဂဏန်း ၁၁ လုံး ဖုန်းနံပါတ်ကို ထည့်ပါ။',
-                missingPhone: 'ကိုယ်ရေးအချက်အလက်ပြင်ရန် သိမ်းထားသော အကောင့်ဖုန်းနံပါတ် လိုအပ်ပါသည်။',
-                updateError: 'ကိုယ်ရေးအချက်အလက်ကို ပြင်ဆင်၍ မရပါ။',
-                phoneNotFound: 'ဤဖုန်းနံပါတ်နှင့် ကိုက်ညီသော အကောင့်ကို မတွေ့ပါ။',
-                saveError: 'အချက်အလက် ပြင်ဆင်ပြီးပါပြီ၊ သို့သော် ဤ browser တွင် သိမ်းမရပါ။'
-            }
-        };
-
         const accountView = document.getElementById('account-view');
         const profileView = document.getElementById('profile-view');
         const editButton = document.getElementById('edit-profile-button');
@@ -645,40 +540,7 @@
                 element
             ])
         );
-        let currentLanguage = 'en';
         let savedProfileForUpdate = null;
-
-        function text(key) {
-            return translations[currentLanguage][key];
-        }
-
-        function applyLanguage(language) {
-            currentLanguage = language;
-            document.documentElement.lang = language;
-            document.querySelectorAll('[data-i18n]').forEach((element) => {
-                element.textContent = text(element.dataset.i18n);
-            });
-            document.getElementById('language-value').textContent =
-                language === 'en' ? 'English' : 'မြန်မာ';
-            document.title = `${text('profileTitle')} | Physics Learning Hub`;
-            try {
-                localStorage.setItem('physicsLearningHubLanguage', language);
-            } catch (error) {
-                console.error('Unable to save the selected language.', error);
-            }
-        }
-
-        function applyTheme(theme) {
-            document.documentElement.dataset.theme = theme;
-            document.getElementById('theme-value').textContent = text(theme);
-            document.querySelector('meta[name="theme-color"]').content =
-                theme === 'dark' ? '#111827' : '#f4f7fb';
-            try {
-                localStorage.setItem('physicsLearningHubTheme', theme);
-            } catch (error) {
-                console.error('Unable to save the selected theme.', error);
-            }
-        }
 
         function showProfileView() {
             accountView.hidden = true;
@@ -724,38 +586,31 @@
                 element.textContent = typeof value === 'string' ? value.trim() : '';
             }
             document.getElementById('summary-name').textContent =
-                typeof profile.name === 'string' && profile.name.trim() ? profile.name.trim() : text('yourAccount');
-            document.getElementById('summary-email').textContent =
-                typeof profile.email === 'string' ? profile.email.trim() : '';
+                typeof profile.name === 'string' && profile.name.trim() ? profile.name.trim() : 'Your account';
+            const role = typeof profile.occupation === 'string'
+                ? profile.occupation.trim().toLowerCase()
+                : '';
+            document.getElementById('summary-role').textContent =
+                role === 'teacher' ? 'Teacher' : role === 'student' ? 'Student' : '';
             const name = typeof profile.name === 'string' ? profile.name.trim() : '';
             document.getElementById('profile-avatar').textContent = name ? name.charAt(0).toUpperCase() : 'P';
         }
 
         try {
-            const language = localStorage.getItem('physicsLearningHubLanguage');
-            const theme = localStorage.getItem('physicsLearningHubTheme');
-            applyLanguage(language === 'my' ? 'my' : 'en');
-            applyTheme(theme === 'dark' ? 'dark' : 'light');
             const profile = JSON.parse(localStorage.getItem('physicsLearningHubProfile') || 'null');
             if (profile && typeof profile === 'object') {
                 savedProfileForUpdate = profile;
                 renderProfile(profile);
             } else {
-                document.getElementById('summary-name').textContent = text('yourAccount');
+                document.getElementById('summary-name').textContent = 'Your account';
             }
         } catch (error) {
             console.error('Unable to load account settings or saved profile.', error);
-            profileStatus.textContent = text('profileReadError');
+            profileStatus.textContent = 'Unable to read your saved profile.';
         }
 
         document.getElementById('manage-profile-button').addEventListener('click', showProfileView);
         document.getElementById('profile-back-button').addEventListener('click', showAccountView);
-        document.getElementById('language-button').addEventListener('click', () => {
-            applyLanguage(currentLanguage === 'en' ? 'my' : 'en');
-        });
-        document.getElementById('theme-button').addEventListener('click', () => {
-            applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
-        });
         document.querySelectorAll('[data-dialog]').forEach((button) => {
             button.addEventListener('click', () => {
                 document.getElementById(button.dataset.dialog).showModal();
@@ -785,7 +640,7 @@
                 window.location.replace('login.html');
             } catch (error) {
                 console.error('Unable to clear the saved account session.', error);
-                profileStatus.textContent = text('logoutError');
+                profileStatus.textContent = 'Unable to log out. Please try again.';
             }
         });
 
@@ -795,12 +650,12 @@
             const phone = String(formData.get('phone') || '').trim();
             const normalizedPhone = normalizePhoneNumber(phone);
             if (!/^0\d{10}$/.test(normalizedPhone)) {
-                profileStatus.textContent = text('invalidPhone');
+                profileStatus.textContent = 'Enter an 11-digit phone number starting with 0.';
                 return;
             }
 
             if (!savedProfileForUpdate || typeof savedProfileForUpdate.phone !== 'string') {
-                profileStatus.textContent = text('missingPhone');
+                profileStatus.textContent = 'The saved account phone number is required to update your profile.';
                 return;
             }
 
@@ -824,8 +679,8 @@
             } catch (error) {
                 console.error('Unable to update the account profile.', error);
                 profileStatus.textContent = error.code === 'PHONE_NOT_FOUND'
-                    ? text('phoneNotFound')
-                    : `${text('updateError')} ${error.message}`;
+                    ? 'No account was found for this phone number.'
+                    : `Unable to update your profile. ${error.message}`;
                 return;
             }
 
@@ -833,7 +688,7 @@
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(updatedProfile));
             } catch (error) {
                 console.error('The account was updated, but the profile could not be saved in this browser.', error);
-                profileStatus.textContent = text('saveError');
+                profileStatus.textContent = 'Your profile was updated, but could not be saved in this browser.';
                 return;
             }
 
