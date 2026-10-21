@@ -5,9 +5,7 @@ body:not(.has-inline-brand)::after {
     right: 12px;
     width: 48px;
     height: 48px;
-    border-radius: 50%;
-    background: #fff url('../logo.png') center / contain no-repeat;
-    box-shadow: 0 1px 8px rgba(15, 23, 42, 0.16);
+    background: transparent url('../logo.png') center / contain no-repeat;
     content: '';
     pointer-events: none;
 }

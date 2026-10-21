@@ -1,0 +1,170 @@
+:root[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+:root[data-theme="dark"] body {
+    background-color: #111827 !important;
+    color: #e5e7eb !important;
+}
+
+:root[data-theme="dark"] body :is(
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    label,
+    li,
+    a,
+    button,
+    td,
+    th,
+    strong,
+    small,
+    legend,
+    dt,
+    dd
+) {
+    color: #e5e7eb !important;
+}
+
+:root[data-theme="dark"] body :is(
+    header,
+    main,
+    nav:not(.bottom-nav),
+    section,
+    article,
+    aside,
+    footer:not(.bottom-nav),
+    form,
+    fieldset,
+    details,
+    table,
+    th,
+    td,
+    [class*="app-container"],
+    [class*="page-container"],
+    [class*="page-content"],
+    [class*="main-content"],
+    [class*="content-area"],
+    [class*="content-card"],
+    [class*="info-card"],
+    [class*="setting-list"],
+    [class*="profile-card"],
+    [class*="chapter-card"],
+    [class*="question-card"],
+    [class*="problem-card"],
+    [class*="answer-card"],
+    [class*="quiz-card"],
+    [class*="topic-card"],
+    [class*="book-card"],
+    [class*="order-card"],
+    [class*="feedback-card"],
+    [class*="contact-card"],
+    [class*="contact-profile"],
+    [class*="contact-link"],
+    [class*="paper-card"],
+    [class*="list-card"],
+    [class*="card-"],
+    [class*="-card"],
+    [class*="panel"],
+    [class*="-box"],
+    [class*="form-card"],
+    [class*="modal"],
+    [class*="dialog"],
+    [class*="table-container"],
+    [class*="table-wrapper"],
+    [class*="question-container"],
+    [class*="chapter-container"],
+    [class*="problem-container"],
+    [class*="topic-container"],
+    [class*="list-container"],
+    [class*="section-container"],
+    [class*="content-wrapper"],
+    [class*="page-shell"],
+    [class*="page-header"]
+) {
+    background-color: #1f2937 !important;
+    color: #e5e7eb !important;
+    border-color: #374151 !important;
+}
+
+:root[data-theme="dark"] body :is(
+    input,
+    select,
+    textarea,
+    button:not(.nav-item),
+    [role="button"]
+) {
+    background-color: #273449;
+    color: #f3f4f6;
+    border-color: #4b5563;
+}
+
+:root[data-theme="dark"] body :is(
+    .setting-row:hover,
+    .btn-cancel,
+    .back-btn,
+    .filter-chip,
+    .tab-button,
+    .page-number
+) {
+    background-color: #374151 !important;
+}
+
+:root[data-theme="dark"] body :is(
+    .section-title,
+    .info-label,
+    .profile-detail-label,
+    .setting-value,
+    .setting-arrow,
+    .muted,
+    .text-muted,
+    small
+) {
+    color: #aab5c5 !important;
+}
+
+:root[data-theme="dark"] body :is(
+    .hero-card,
+    .grade-banner,
+    .banner-card,
+    .promo-banner,
+    .icon-box,
+    .setting-icon,
+    .category-box,
+    .service-item
+) {
+    color: inherit;
+}
+
+:root[data-theme="dark"] body .bottom-nav {
+    background-color: rgba(17, 24, 39, 0.94) !important;
+    border-color: #374151 !important;
+}
+
+:root[data-theme="dark"] body .bottom-nav .nav-item {
+    background: transparent !important;
+    color: #cbd5e1 !important;
+}
+
+:root[data-theme="dark"] body .bottom-nav .nav-item.active,
+:root[data-theme="dark"] body .bottom-nav .nav-item.active i {
+    color: #ff7373 !important;
+}
+
+:root[data-theme="dark"] body img,
+:root[data-theme="dark"] body svg,
+:root[data-theme="dark"] body canvas,
+:root[data-theme="dark"] body video {
+    background-color: transparent;
+}
+
+:root[data-theme="dark"] body .physics-scene,
+:root[data-theme="dark"] body .simulation-stage,
+:root[data-theme="dark"] body .simulation-canvas {
+    background-color: #111827 !important;
+}
