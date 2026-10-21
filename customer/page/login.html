@@ -396,55 +396,78 @@
 
         .wave-backdrop {
             position: fixed;
-            z-index: -1;
+            z-index: 0;
             inset: 0;
             overflow: hidden;
             pointer-events: none;
-            opacity: 0.95;
-            filter: blur(1px);
         }
 
-        .wave-backdrop svg {
+        .wave-blob {
+            position: absolute;
             display: block;
-            width: 100%;
-            height: 100%;
-            opacity: 0.9;
+            border-radius: 58% 42% 44% 56% / 47% 55% 45% 53%;
+            filter: blur(42px);
+            opacity: 0.52;
+            will-change: transform, border-radius;
         }
 
-        .wave-track {
-            transform-box: fill-box;
-            transform-origin: center;
-            animation: wave-drift 44s linear infinite;
+        .wave-blob-one {
+            top: -19%;
+            right: -25%;
+            width: min(92vw, 680px);
+            aspect-ratio: 1;
+            background:
+                radial-gradient(ellipse at 35% 34%, rgba(255, 170, 148, 0.54), transparent 59%),
+                radial-gradient(ellipse at 70% 62%, rgba(151, 143, 241, 0.48), transparent 64%);
+            animation: wave-float-one 32s ease-in-out infinite alternate;
         }
 
-        .wave-track.wave-track-two {
-            animation-duration: 58s;
-            animation-direction: reverse;
+        .wave-blob-two {
+            top: 25%;
+            left: -38%;
+            width: min(100vw, 760px);
+            height: min(70vh, 620px);
+            background:
+                radial-gradient(ellipse at 44% 48%, rgba(70, 118, 213, 0.46), transparent 62%),
+                radial-gradient(ellipse at 70% 58%, rgba(97, 179, 216, 0.36), transparent 66%);
+            animation: wave-float-two 38s ease-in-out infinite alternate;
         }
 
-        .wave-track.wave-track-three {
-            animation-duration: 70s;
+        .wave-blob-three {
+            right: -32%;
+            bottom: -26%;
+            width: min(94vw, 720px);
+            height: min(74vh, 660px);
+            background:
+                radial-gradient(ellipse at 38% 38%, rgba(80, 177, 191, 0.4), transparent 63%),
+                radial-gradient(ellipse at 64% 68%, rgba(111, 143, 219, 0.34), transparent 67%);
+            animation: wave-float-three 42s ease-in-out infinite alternate;
         }
 
-        .ambient-wave {
-            fill: none;
-            stroke-width: 2.2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            vector-effect: non-scaling-stroke;
-            filter: drop-shadow(0 0 18px rgba(92, 196, 255, 0.18));
-        }
-
-        @keyframes wave-drift {
-            0% {
-                transform: translateX(-6%) translateY(0);
+        @keyframes wave-float-one {
+            to {
+                transform: translate3d(-5vw, 7vh, 0) rotate(16deg) scale(1.08);
+                border-radius: 43% 57% 62% 38% / 55% 42% 58% 45%;
             }
-            50% {
-                transform: translateX(3%) translateY(8px);
+        }
+
+        @keyframes wave-float-two {
+            to {
+                transform: translate3d(9vw, -5vh, 0) rotate(-13deg) scale(1.1);
+                border-radius: 62% 38% 47% 53% / 42% 57% 43% 58%;
             }
-            100% {
-                transform: translateX(-6%) translateY(0);
+        }
+
+        @keyframes wave-float-three {
+            to {
+                transform: translate3d(-7vw, -8vh, 0) rotate(12deg) scale(1.08);
+                border-radius: 45% 55% 59% 41% / 58% 43% 57% 42%;
             }
+        }
+
+        .auth-shell {
+            position: relative;
+            z-index: 1;
         }
 
         .auth-shell {
@@ -1665,7 +1688,7 @@
                 animation: none;
             }
 
-            .wave-track {
+            .wave-blob {
                 animation: none;
             }
 
@@ -1686,34 +1709,9 @@
 </head>
 <body class="has-inline-brand">
     <div class="wave-backdrop" aria-hidden="true">
-        <svg viewBox="0 0 1440 900" preserveAspectRatio="none" focusable="false">
-            <defs>
-                <linearGradient id="wave-gradient-one" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0" stop-color="#6dcfe6" stop-opacity="0.06"/>
-                    <stop offset="0.5" stop-color="#6f8ce8" stop-opacity="0.32"/>
-                    <stop offset="1" stop-color="#6dcfe6" stop-opacity="0.06"/>
-                </linearGradient>
-                <linearGradient id="wave-gradient-two" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0" stop-color="#9478ea" stop-opacity="0.05"/>
-                    <stop offset="0.5" stop-color="#67d5db" stop-opacity="0.24"/>
-                    <stop offset="1" stop-color="#9478ea" stop-opacity="0.05"/>
-                </linearGradient>
-                <linearGradient id="wave-gradient-three" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0" stop-color="#f1b95d" stop-opacity="0.04"/>
-                    <stop offset="0.5" stop-color="#7ea4ea" stop-opacity="0.18"/>
-                    <stop offset="1" stop-color="#f1b95d" stop-opacity="0.04"/>
-                </linearGradient>
-            </defs>
-            <g class="wave-track wave-track-one">
-                <path class="ambient-wave" stroke="url(#wave-gradient-one)" d="M-120 210 C 30 150 180 150 330 210 S 630 270 780 210 S 1080 150 1230 210 S 1530 270 1680 210"/>
-            </g>
-            <g class="wave-track wave-track-two">
-                <path class="ambient-wave" stroke="url(#wave-gradient-two)" d="M-120 470 C 30 390 180 390 330 470 S 630 550 780 470 S 1080 390 1230 470 S 1530 550 1680 470"/>
-            </g>
-            <g class="wave-track wave-track-three">
-                <path class="ambient-wave" stroke="url(#wave-gradient-three)" d="M-120 730 C 30 670 180 670 330 730 S 630 790 780 730 S 1080 670 1230 730 S 1530 790 1680 730"/>
-            </g>
-        </svg>
+        <span class="wave-blob wave-blob-one"></span>
+        <span class="wave-blob wave-blob-two"></span>
+        <span class="wave-blob wave-blob-three"></span>
     </div>
     <main class="auth-shell">
       <div class="auth-content">
