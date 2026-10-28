@@ -3,6 +3,23 @@ const masterDataReady = AdminApi.getMasterData().catch((error) => {
     console.warn('Unable to load current book labels for vouchers.', error);
 });
 
+function formatVoucherCacheTime(updatedAt) {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h23'
+    }).formatToParts(new Date(updatedAt))
+        .reduce((values, part) => {
+            values[part.type] = part.value;
+            return values;
+        }, {});
+    return `Refresh · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
+}
+
 function renderVoucherMatches(query) {
     const results = document.getElementById('voucher-results');
     results.replaceChildren();
@@ -10,7 +27,7 @@ function renderVoucherMatches(query) {
         .sort((a, b) => String(b['Ordered Date'] || b['Order Date'] || '')
             .localeCompare(String(a['Ordered Date'] || a['Order Date'] || '')));
     if (!matches.length) {
-        results.innerHTML = '<div class="empty-state">ကိုက်ညီသော အမှာစာ မတွေ့ပါ။</div>';
+        results.innerHTML = '<div class="empty-state">No matching orders found.</div>';
         return 0;
     }
     matches.slice(0, 50).forEach((order) => {
@@ -62,24 +79,24 @@ function formatReceiptDate(value) {
 }
 
 function displayVoucher(order) {
-    document.getElementById('receipt-voucher').textContent = `ဘောက်ချာအမှတ် ${order['Voucher No']}`;
+    document.getElementById('receipt-voucher').textContent = `Voucher No. ${order['Voucher No']}`;
     const info = document.getElementById('receipt-info');
     info.replaceChildren();
     const deliveryService = order['Delivery Service'] || order.Delivery;
     const orderedDate = order['Ordered Date'] || order['Order Date'];
     const deliveredDate = order['Deliver Date'] || order['Delivered Date'] || order['Order Confirm'];
     const infoRows = [
-        ['အမည်', order.Name],
-        ['ဖုန်းနံပါတ် ၁', order['Phone 1'] || order.Phone],
-        ['ဖုန်းနံပါတ် ၂', order['Phone 2']],
-        ['လိပ်စာ', order.Address],
-        ['မှာယူသည့်ရက်', orderedDate],
-        ['ပို့ဆောင်ရေး', deliveryService === 'Car' ? 'ကားတင်ရန်' : deliveryService],
-        ['ပို့ဆောင်သည့်ရက်', formatReceiptDate(deliveredDate)],
-        ['ငွေပေးချေမှု', order['Payment Method']]
+        ['Name', order.Name],
+        ['Phone (Personal)', order['Phone 1'] || order.Phone],
+        ['Phone (Work)', order['Phone 2']],
+        ['Address', order.Address],
+        ['Order Date', orderedDate],
+        ['Delivery', deliveryService === 'Car' ? 'Bus Gate Delivery' : deliveryService],
+        ['Delivered Date', formatReceiptDate(deliveredDate)],
+        ['Payment Method', order['Payment Method']]
     ];
     if (deliveryService === 'Car') {
-        infoRows.push(['ကားဂိတ် / ကားအမည်', order['car inform'] || order['Delivery Notes']]);
+        infoRows.push(['Bus Gate / Bus Name', order['car inform'] || order['Delivery Notes']]);
     }
     infoRows.forEach(([label, value]) => addReceiptLine(info, label, String(value || '')));
     const itemList = document.getElementById('receipt-items');
@@ -95,17 +112,17 @@ function displayVoucher(order) {
     const deliveryFee = Number(order['Delivery Fees'] || 0);
     const totalKg = Number(order['Total KG'] || 0);
     if (Number.isFinite(totalKg) && totalKg > 0) {
-        addReceiptLine(totals, 'စုစုပေါင်းအလေးချိန်', `${totalKg} kg`);
+        addReceiptLine(totals, 'Total Weight', `${totalKg} kg`);
     }
     if (deliveryService) {
-        const feeLine = addReceiptLine(totals, 'ပို့ခ', deliveryService === 'Car'
-            ? 'ကားဂိတ်တွင် သီးခြားပေးချေရန်'
+        const feeLine = addReceiptLine(totals, 'Delivery Fee', deliveryService === 'Car'
+            ? 'Pay separately at the bus gate'
             : formatKyats(deliveryFee));
         feeLine.classList.add('receipt-delivery-line');
     }
     const bookTotal = Number(order.Total || 0);
-    addReceiptLine(totals, 'စာအုပ်ဖိုးစုစုပေါင်း', formatKyats(bookTotal));
-    addReceiptLine(totals, 'ငွေကောက် COD', formatKyats(order['Cash Collection']))
+    addReceiptLine(totals, 'Books Subtotal', formatKyats(bookTotal));
+    addReceiptLine(totals, 'Cash Collection (COD)', formatKyats(order['Cash Collection']))
         .classList.add('receipt-cash-line');
     document.getElementById('receipt-total').textContent =
         formatKyats(bookTotal + deliveryFee);
@@ -121,19 +138,19 @@ document.getElementById('voucher-search-form').addEventListener('submit', async 
     try {
         const cached = await AdminApi.getCachedOrders();
         if (!cached) {
-            status.textContent = 'ဖုန်းတွင်း data မရှိသေးပါ။ refresh ကိုနှိပ်ပါ။';
+            status.textContent = 'No saved data yet. Select Refresh to load orders.';
             return;
         }
         orders = cached.data;
         document.getElementById('voucher-cache-status').textContent =
-            `ဖုန်းတွင်းသိမ်းထားသည် · ${new Date(cached.updatedAt).toLocaleString('my-MM')}`;
+            formatVoucherCacheTime(cached.updatedAt);
         const count = renderVoucherMatches(document.getElementById('voucher-query').value);
         status.textContent = count
-            ? `${count.toLocaleString('my-MM')} ခုတွေ့သည်။ ဘောက်ချာထုတ်မည့်အမှာကို ရွေးပါ။`
-            : 'အမှာစာ မတွေ့ပါ။';
+            ? `${count.toLocaleString('en-US')} orders found. Select an order to create a voucher.`
+            : 'No matching orders found.';
     } catch (error) {
         console.error('Unable to search cached orders for a voucher.', error);
-        status.textContent = 'ဖုန်းတွင်း data ကို ဖတ်မရပါ။ refresh ကိုနှိပ်ပါ။';
+        status.textContent = 'Unable to read saved data. Select Refresh to try again.';
         status.classList.add('error');
     }
 });
@@ -143,19 +160,19 @@ document.getElementById('refresh-vouchers').addEventListener('click', async (eve
     const status = document.getElementById('voucher-status');
     button.disabled = true;
     status.className = 'status-message';
-    status.textContent = 'Google Sheet မှ အမှာစာများ ရယူနေသည်…';
+    status.textContent = 'Refreshing orders…';
     try {
         const cached = await AdminApi.refreshOrders();
         orders = cached.data;
         document.getElementById('voucher-cache-status').textContent =
-            `ဖုန်းတွင်းသိမ်းထားသည် · ${new Date(cached.updatedAt).toLocaleString('my-MM')}`;
+            formatVoucherCacheTime(cached.updatedAt);
         const count = renderVoucherMatches(document.getElementById('voucher-query').value);
         status.textContent = count
-            ? `${count.toLocaleString('my-MM')} ခုတွေ့သည်။ ဘောက်ချာထုတ်မည့်အမှာကို ရွေးပါ။`
-            : 'ဖုန်းတွင်း search bar တွင် ရှာနိုင်ပါပြီ။';
+            ? `${count.toLocaleString('en-US')} orders found. Select an order to create a voucher.`
+            : 'Enter a search term to find an order.';
     } catch (error) {
         console.error('Unable to refresh orders for vouchers.', error);
-        status.textContent = 'Google Sheet မှ data မရယူနိုင်ပါ။ Internet/API ကို စစ်ပါ။';
+        status.textContent = 'Unable to refresh orders. Check your internet connection and try again.';
         status.classList.add('error');
     } finally {
         button.disabled = false;

@@ -26,8 +26,18 @@ button:disabled { cursor: wait; opacity: .65; }
 .brand span { display: grid; line-height: 1.25; }
 .brand strong { font-size: 17px; letter-spacing: .06em; }
 .brand small { font-size: 10px; letter-spacing: .13em; color: var(--muted); }
-.topbar-note { color: #63718a; font-size: 13px; }
-.topbar-note i { color: #25a875; margin-right: 6px; }
+.topbar-note { display: inline-flex; align-items: center; gap: 8px; color: #63718a; font-size: 13px; }
+.admin-status-check {
+    width: 23px;
+    height: 23px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: #24a875;
+    box-shadow: 0 3px 8px rgba(36, 168, 117, .24);
+}
+.topbar-note .admin-status-check .admin-line-icon { width: 14px; height: 14px; stroke-width: 2.5; }
 .welcome-panel { display: flex; justify-content: space-between; align-items: center; min-height: 180px; padding: 32px 38px; border-radius: 23px; color: #fff; background: linear-gradient(120deg, #1d3f7b, #367de5 72%, #66a6f7); box-shadow: 0 18px 38px rgba(39, 98, 185, .18); overflow: hidden; }
 .welcome-panel .eyebrow { color: #cfe1ff; }
 .welcome-panel h1 { margin: 4px 0 8px; font-size: clamp(27px, 4vw, 38px); line-height: 1.35; }
@@ -90,7 +100,7 @@ button:disabled { cursor: wait; opacity: .65; }
 .profiles-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 350px));
-    justify-content: start;
+    justify-content: center;
     gap: 14px;
 }
 .profile-card {
@@ -110,7 +120,9 @@ button:disabled { cursor: wait; opacity: .65; }
 .profile-card-header {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 12px;
+    text-align: left;
 }
 .profile-avatar {
     width: 46px;
@@ -129,6 +141,7 @@ button:disabled { cursor: wait; opacity: .65; }
     min-width: 0;
     display: grid;
     gap: 2px;
+    text-align: left;
 }
 .profile-heading h3 {
     margin: 0;
@@ -145,12 +158,16 @@ button:disabled { cursor: wait; opacity: .65; }
 .profile-meta {
     padding-top: 11px;
     border-top: 1px solid #f0d6d9;
+    display: grid;
+    justify-items: start;
+    gap: 6px;
 }
 .profile-contact-row {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 7px 15px;
+    justify-content: flex-start;
+    min-width: 0;
+    max-width: 100%;
 }
 .profile-contact {
     min-width: 0;
@@ -387,6 +404,7 @@ button:disabled { cursor: wait; opacity: .65; }
 .history-mode.is-active { border-color: #3978e8; color: #2f6ed8; background: #edf4ff; box-shadow: 0 0 0 2px rgba(57,120,232,.08); }
 .history-tools { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
 .history-tools[hidden] { display: none; }
+#search-tools { grid-template-columns: 1fr; }
 .history-refresh-row { display: flex; justify-content: flex-end; align-items: center; gap: 9px; min-height: 34px; margin: 0 0 9px; }
 .icon-button { width: 38px; height: 38px; display: inline-grid; place-items: center; flex: 0 0 auto; border: 1px solid #dce3ed; border-radius: 11px; color: #3978e8; background: #fff; }
 .icon-button:hover { border-color: #9bbbf2; background: #f4f8ff; }
@@ -448,6 +466,22 @@ button:disabled { cursor: wait; opacity: .65; }
 .search-row { display: flex; gap: 10px; }
 .search-row .search-input { flex: 1; }
 .search-hint { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+.history-count {
+    width: fit-content;
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    margin: 12px 0;
+    padding: 5px 12px;
+    border: 1px solid #800020;
+    border-radius: 999px;
+    color: #fff;
+    background: #800020;
+    box-shadow: 0 5px 12px rgba(48, 0, 15, .28);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+}
 .edit-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
 .edit-field { display: grid; gap: 5px; font-size: 11px; color: var(--muted); }
 .edit-field input, .edit-field select { min-height: 41px; width: 100%; border: 1px solid #dce3ed; border-radius: 9px; padding: 8px 10px; color: var(--ink); background: #fff; }
@@ -580,3 +614,4 @@ button:disabled { cursor: wait; opacity: .65; }
     .receipt { border-radius: 0; }
     .no-print { display: none !important; }
 }
+    text-align: center;

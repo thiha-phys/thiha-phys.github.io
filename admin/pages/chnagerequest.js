@@ -1,10 +1,10 @@
 const fieldGroups = [
     {
-        title: 'မှာယူသူအချက်အလက်',
+        title: 'Customer Information',
         fields: ['Name', 'Phone', 'Phone 2', 'Address', 'Order Date']
     },
     {
-        title: 'စာအုပ်စာရင်းနှင့် ကျသင့်ငွေ',
+        title: 'Books and Amounts',
         fields: [
             'Special Qty', 'Special Amount', 'Practice Qty', 'Practice Amount',
             'Old Questions Qty', 'Old Questions Amount', 'Solution Qty', 'Solution Amount',
@@ -14,19 +14,36 @@ const fieldGroups = [
         ]
     },
     {
-        title: 'ငွေပေးချေမှုနှင့် ပို့ဆောင်မှုအခြေအနေ',
+        title: 'Payment and Delivery Status',
         fields: [
             'Payment Method', 'Amount Received', 'KPay Account', 'Pay Date',
             'Delivered Date', 'Delivery', 'Royal VOC No'
         ]
     },
     {
-        title: 'လူမှုကွန်ရက်အချက်အလက်',
+        title: 'Social Media Information',
         fields: ['Facebook Account Name', 'Facebook Link']
     }
 ];
 let orders = [];
 let selectedOrder = null;
+
+function formatHistoryCacheTime(updatedAt) {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h23'
+    }).formatToParts(new Date(updatedAt))
+        .reduce((values, part) => {
+            values[part.type] = part.value;
+            return values;
+        }, {});
+    return `Refresh · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
+}
 
 function dateInputValue(value) {
     const text = String(value || '').trim();
@@ -51,7 +68,7 @@ function showMatches(query) {
     const resultList = document.getElementById('lookup-results');
     resultList.replaceChildren();
     if (!matches.length) {
-        resultList.innerHTML = '<div class="empty-state">အမှာစာ မတွေ့ပါ။</div>';
+        resultList.innerHTML = '<div class="empty-state">No matching orders found.</div>';
         return 0;
     }
     matches.slice(0, 50).forEach((order) => {
@@ -68,13 +85,13 @@ function showMatches(query) {
 function openOrder(order) {
     selectedOrder = order;
     document.getElementById('lookup-status').textContent =
-        `ဘောက်ချာ ${order['Voucher No']} ကိုရွေးချယ်ထားသည်။`;
+        `Voucher ${order['Voucher No']} selected.`;
     document.getElementById('edit-panel').hidden = false;
     const container = document.getElementById('edit-fields');
     container.replaceChildren();
     const voucherLabel = document.createElement('label');
     voucherLabel.className = 'edit-field';
-    voucherLabel.textContent = 'Voucher No (ပြင်မရပါ)';
+    voucherLabel.textContent = 'Voucher No. (Cannot be changed)';
     const voucherInput = document.createElement('input');
     voucherInput.value = order['Voucher No'];
     voucherInput.disabled = true;
@@ -107,14 +124,14 @@ function openOrder(order) {
                 ['COD', 'KBZ Pay'].forEach((method) => {
                     const option = document.createElement('option');
                     option.value = method;
-                    option.textContent = method === 'COD' ? 'COD (ပစ္စည်းရောက်မှ ငွေချေ)' : method;
+                    option.textContent = method === 'COD' ? 'COD (Cash on Delivery)' : method;
                     input.append(option);
                 });
                 const currentMethod = orderField(order, field);
                 if (currentMethod && !['COD', 'KBZ Pay'].includes(currentMethod)) {
                     const existing = document.createElement('option');
                     existing.value = currentMethod;
-                    existing.textContent = `${currentMethod} (လက်ရှိ)`;
+                    existing.textContent = `${currentMethod} (Current)`;
                     input.append(existing);
                 }
                 input.value = currentMethod || 'KBZ Pay';
@@ -141,19 +158,19 @@ document.getElementById('lookup-form').addEventListener('submit', async (event) 
     try {
         const cached = await AdminApi.getCachedOrders();
         if (!cached) {
-            status.textContent = 'ဖုန်းတွင်း data မရှိသေးပါ။ အပေါ်က refresh ကိုနှိပ်ပါ။';
+            status.textContent = 'No saved data yet. Select Refresh above to load orders.';
             return;
         }
         orders = cached.data;
         document.getElementById('lookup-cache-status').textContent =
-            `ဖုန်းတွင်းသိမ်းထားသည် · ${new Date(cached.updatedAt).toLocaleString('my-MM')}`;
+            formatHistoryCacheTime(cached.updatedAt);
         const count = showMatches(document.getElementById('lookup-query').value);
         status.textContent = count
-            ? `${count.toLocaleString('my-MM')} ခုတွေ့သည်။ ပြင်ဆင်မည့်အမှာကို ရွေးပါ။`
-            : 'အမှာစာ မတွေ့ပါ။';
+            ? `${count.toLocaleString('en-US')} orders found. Select an order to edit.`
+            : 'No matching orders found.';
     } catch (error) {
         console.error('Unable to search cached orders for editing.', error);
-        status.textContent = 'ဖုန်းတွင်း data ကို ဖတ်မရပါ။ refresh ကိုနှိပ်ပါ။';
+        status.textContent = 'Unable to read saved data. Select Refresh to try again.';
         status.classList.add('error');
     }
 });
@@ -163,25 +180,25 @@ document.getElementById('refresh-orders').addEventListener('click', async (event
     const status = document.getElementById('lookup-status');
     button.disabled = true;
     status.className = 'status-message';
-    status.textContent = 'Google Sheet မှ အမှာစာများ ရယူနေသည်…';
+    status.textContent = 'Refreshing orders…';
     try {
         const cached = await AdminApi.refreshOrders();
         orders = cached.data;
         document.getElementById('lookup-cache-status').textContent =
-            `ဖုန်းတွင်းသိမ်းထားသည် · ${new Date(cached.updatedAt).toLocaleString('my-MM')}`;
+            formatHistoryCacheTime(cached.updatedAt);
         const query = document.getElementById('lookup-query').value;
         if (query.trim()) {
             const count = showMatches(query);
             status.textContent = count
-                ? `${count.toLocaleString('my-MM')} ခုတွေ့သည်။ ပြင်ဆင်မည့်အမှာကို ရွေးပါ။`
-                : 'အမှာစာ မတွေ့ပါ။';
+                ? `${count.toLocaleString('en-US')} orders found. Select an order to edit.`
+                : 'No matching orders found.';
         } else {
             document.getElementById('lookup-results').replaceChildren();
-            status.textContent = 'Data အသစ်သိမ်းပြီးပါပြီ။ ရှာဖွေရန်အချက်အလက် ထည့်ပါ။';
+            status.textContent = 'Orders refreshed. Enter a search term to find an order.';
         }
     } catch (error) {
         console.error('Unable to refresh orders for editing.', error);
-        status.textContent = 'Google Sheet မှ data မရယူနိုင်ပါ။ Internet/API ကို စစ်ပါ။';
+        status.textContent = 'Unable to refresh orders. Check your internet connection and try again.';
         status.classList.add('error');
     } finally {
         button.disabled = false;
@@ -191,13 +208,13 @@ document.getElementById('refresh-orders').addEventListener('click', async (event
 document.getElementById('edit-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!selectedOrder) return;
-    if (!window.confirm(`ဘောက်ချာ ${selectedOrder['Voucher No']} အမှာစာကို ရှိပြီးသား row ထဲတွင် ပြင်ဆင်သိမ်းမလား?`)) return;
+    if (!window.confirm(`Save changes to order ${selectedOrder['Voucher No']} in its existing row?`)) return;
     const status = document.getElementById('edit-status');
     const button = document.getElementById('save-order');
     const updated = { voucherNo: selectedOrder['Voucher No'] };
     new FormData(event.currentTarget).forEach((value, key) => { updated[key] = String(value).trim(); });
     status.className = 'status-message';
-    status.textContent = 'ပြင်ဆင်ချက် သိမ်းဆည်းနေသည်…';
+    status.textContent = 'Saving changes…';
     button.disabled = true;
     try {
         const result = await AdminApi.updateOrder(updated);
@@ -205,14 +222,14 @@ document.getElementById('edit-form').addEventListener('submit', async (event) =>
         const index = orders.findIndex((order) => order['Voucher No'] === updated.voucherNo);
         if (index >= 0) orders[index] = result.order;
         status.textContent = result.localCacheError
-            ? 'အမှာစာကို Sheet ထဲတွင် ပြင်ဆင်သိမ်းပြီးပါပြီ။ ဖုန်းတွင်း cache မပြောင်းနိုင်ပါ။ Refresh လုပ်ပါ။'
+            ? 'Order updated in Google Sheets, but the local cache could not be updated. Refresh the orders.'
             : result.cacheNeedsRefresh
-                ? 'အမှာစာကို Sheet ထဲတွင် ပြင်ဆင်သိမ်းပြီးပါပြီ။ အပြည့်အစုံ data အတွက် refresh လုပ်ပါ။'
-                : 'အမှာစာကို Sheet ထဲနှင့် ဖုန်းတွင်း data တွင် ပြင်ဆင်သိမ်းပြီးပါပြီ။';
+                ? 'Order updated in Google Sheets. Refresh to load the complete data.'
+                : 'Order updated in Google Sheets and the local data.';
         status.classList.add('success');
     } catch (error) {
         console.error('Unable to update the order.', error);
-        status.textContent = 'ပြင်ဆင်ချက် မသိမ်းနိုင်ပါ။ Google Sheet API ကို စစ်ဆေးပါ။';
+        status.textContent = 'Unable to save changes. Check the Google Sheets API.';
         status.classList.add('error');
     } finally {
         button.disabled = false;

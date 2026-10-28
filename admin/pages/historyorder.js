@@ -19,6 +19,23 @@ function formatOrderDateEnglish(value) {
         }).format(parsed);
 }
 
+function formatHistoryCacheTime(updatedAt) {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h23'
+    }).formatToParts(new Date(updatedAt))
+        .reduce((values, part) => {
+            values[part.type] = part.value;
+            return values;
+        }, {});
+    return `Refresh · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
+}
+
 function renderDetailLine(label, value) {
     return `<div class="order-detail-line"><span>${escapeText(label)}</span><strong>${escapeText(value || '—')}</strong></div>`;
 }
@@ -107,7 +124,7 @@ function renderOrders() {
     listElement.replaceChildren();
     if (!matches.length) {
         listElement.innerHTML = '<div class="empty-state">ကိုက်ညီသော အမှာစာ မတွေ့ပါ။</div>';
-        statusElement.textContent = 'ကိုက်ညီသော အမှာစာ 0 ခု';
+        statusElement.textContent = '0 orders shown';
         return;
     }
     matches.forEach((order) => {
@@ -138,7 +155,7 @@ function renderOrders() {
             ${renderOrderDetails(order)}`;
         listElement.append(card);
     });
-    statusElement.textContent = `${matches.length.toLocaleString('my-MM')} ခု ပြထားသည်`;
+    statusElement.textContent = `${matches.length.toLocaleString('en-US')} orders shown`;
 }
 
 function setMode(mode) {
@@ -151,10 +168,10 @@ function setMode(mode) {
     document.getElementById('search-tools').hidden = mode !== 'search';
     document.getElementById('date-tools').hidden = mode !== 'date';
     document.getElementById('mode-description').textContent = {
-        search: 'ဘောက်ချာနံပါတ်၊ အမည် သို့မဟုတ် ဖုန်းနံပါတ်ဖြင့် ရှာပါ။',
-        date: 'စတင်ရက်နှင့် နောက်ဆုံးရက်ကို ရွေးပြီး ထိုကာလအတွင်း မှာယူမှုများကို ကြည့်ပါ။',
-        undelivered: 'Delivered Date မရှိသေးသော အမှာစာများကို ပြထားသည်။',
-        unpaid: 'လက်ခံရရှိငွေသည် စုစုပေါင်းထက် နည်းနေသေးသော အမှာစာများကို ပြထားသည်။'
+        search: 'Search by voucher number, name, or phone number.',
+        date: 'Choose a start and end date to view orders in that period.',
+        undelivered: 'Showing orders that have not been delivered.',
+        unpaid: 'Showing orders with an outstanding balance.'
     }[mode];
     renderOrders();
 }
@@ -173,16 +190,16 @@ async function loadOrders() {
         ]);
         const cached = await AdminApi.getCachedOrders();
         if (!cached) {
-            statusElement.textContent = 'ဖုန်းတွင်း data မရှိသေးပါ။ ညာဘက် refresh ကိုနှိပ်ပါ။';
+            statusElement.textContent = 'No saved data yet. Select Refresh to load orders.';
             return;
         }
         allOrders = cached.data;
         document.getElementById('history-cache-status').textContent =
-            `ဖုန်းတွင်းသိမ်းထားသည် · ${new Date(cached.updatedAt).toLocaleString('my-MM')}`;
+            formatHistoryCacheTime(cached.updatedAt);
         renderOrders();
     } catch (error) {
         console.error('Unable to read cached order history.', error);
-        statusElement.textContent = 'ဖုန်းတွင်း data ကို ဖတ်မရပါ။ refresh ကိုနှိပ်၍ ထပ်စမ်းပါ။';
+        statusElement.textContent = 'Unable to read saved data. Select Refresh to try again.';
         statusElement.classList.add('error');
     }
 }
@@ -192,15 +209,15 @@ document.getElementById('refresh-history').addEventListener('click', async (even
     const cacheStatus = document.getElementById('history-cache-status');
     button.disabled = true;
     statusElement.className = 'status-message';
-    statusElement.textContent = 'Google Sheet မှ အမှာစာများ ရယူနေသည်…';
+    statusElement.textContent = 'Refreshing orders…';
     try {
         const cached = await AdminApi.refreshOrders();
         allOrders = cached.data;
-        cacheStatus.textContent = `ဖုန်းတွင်းသိမ်းထားသည် · ${new Date(cached.updatedAt).toLocaleString('my-MM')}`;
+        cacheStatus.textContent = formatHistoryCacheTime(cached.updatedAt);
         renderOrders();
     } catch (error) {
         console.error('Unable to refresh order history.', error);
-        statusElement.textContent = 'Google Sheet မှ data မရယူနိုင်ပါ။ Internet/API ကို စစ်ပါ။';
+        statusElement.textContent = 'Unable to refresh orders. Check your internet connection and try again.';
         statusElement.classList.add('error');
     } finally {
         button.disabled = false;

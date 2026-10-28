@@ -32,13 +32,11 @@ function renderProfileCard(profile) {
             </div>
         </div>
         <div class="profile-meta">
-            <div class="profile-contact-row">
-                ${email ? `<a class="profile-contact" href="mailto:${escapeText(email)}">${emailIcon}<span>${escapeText(email)}</span></a>` : ''}
-                ${phoneDigits
-                    ? `<a class="profile-contact profile-phone" href="tel:${escapeText(phoneDigits)}">${phoneIcon}<span>${escapeText(profile.phone || phoneDigits)}</span></a>`
-                    : ''}
-                ${!email && !phoneDigits ? '<span class="profile-empty-contact">No contact details</span>' : ''}
-            </div>
+            ${email ? `<div class="profile-contact-row"><a class="profile-contact" href="mailto:${escapeText(email)}">${emailIcon}<span>${escapeText(email)}</span></a></div>` : ''}
+            ${phoneDigits
+                ? `<div class="profile-contact-row"><a class="profile-contact profile-phone" href="tel:${escapeText(phoneDigits)}">${phoneIcon}<span>${escapeText(profile.phone || phoneDigits)}</span></a></div>`
+                : ''}
+            ${!email && !phoneDigits ? '<div class="profile-contact-row"><span class="profile-empty-contact">No contact details</span></div>' : ''}
         </div>
     `;
 

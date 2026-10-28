@@ -17,7 +17,7 @@ function renderOrdersChart(orders) {
         const date = new Date();
         date.setDate(date.getDate() - offset);
         const iso = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-        days.push({ iso, label: date.toLocaleDateString('my-MM', { day: 'numeric' }), count: 0 });
+        days.push({ iso, label: date.toLocaleDateString('en-GB', { day: 'numeric' }), count: 0 });
     }
     const countsByDate = new Map(days.map((day) => [day.iso, day]));
     orders.forEach((order) => {
@@ -49,16 +49,29 @@ function renderDashboard(orders) {
     const received = orders.reduce((sum, order) => sum + Number(order['Amount Received'] || 0), 0);
     const outstanding = orders.reduce((sum, order) =>
         sum + Math.max(0, Number(order.Total || 0) - Number(order['Amount Received'] || 0)), 0);
-    document.getElementById('stat-orders').textContent = Number(orders.length).toLocaleString('my-MM');
+    document.getElementById('stat-orders').textContent = Number(orders.length).toLocaleString('en-US');
     document.getElementById('stat-received').textContent = formatKyats(received);
     document.getElementById('stat-outstanding').textContent = formatKyats(outstanding);
     document.getElementById('stat-delivered').textContent =
-        Number(orders.filter((order) => order['Delivered Date']).length).toLocaleString('my-MM');
+        Number(orders.filter((order) => order['Delivered Date']).length).toLocaleString('en-US');
     renderOrdersChart(orders);
 }
 
 function formatCacheTime(updatedAt) {
-    return `ဖုန်းတွင်းသိမ်းထားသည် · ${new Date(updatedAt).toLocaleString('my-MM')}`;
+    const parts = new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h23'
+    }).formatToParts(new Date(updatedAt))
+        .reduce((values, part) => {
+            values[part.type] = part.value;
+            return values;
+        }, {});
+    return `Refresh · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
 }
 
 async function loadDashboard() {
@@ -66,14 +79,14 @@ async function loadDashboard() {
     try {
         const cached = await AdminApi.getCachedOrders();
         if (!cached) {
-            update.textContent = 'Data ရယူရန် refresh ကိုနှိပ်ပါ။';
+            update.textContent = 'Refresh to load data';
             return;
         }
         renderDashboard(cached.data);
         update.textContent = formatCacheTime(cached.updatedAt);
     } catch (error) {
         console.error('Unable to read cached dashboard data.', error);
-        update.textContent = 'ဖုန်းတွင်း data ကို ဖတ်မရပါ။ refresh နှိပ်ပါ။';
+        update.textContent = 'Unable to load cached data. Refresh to try again.';
         update.classList.add('error');
     }
 }
@@ -83,14 +96,14 @@ document.getElementById('refresh-dashboard').addEventListener('click', async (ev
     const update = document.getElementById('dashboard-updated');
     button.disabled = true;
     update.classList.remove('error');
-    update.textContent = 'Google Sheet မှ data ရယူနေသည်…';
+    update.textContent = 'Refreshing…';
     try {
         const cached = await AdminApi.refreshOrders();
         renderDashboard(cached.data);
         update.textContent = formatCacheTime(cached.updatedAt);
     } catch (error) {
         console.error('Unable to refresh dashboard data.', error);
-        update.textContent = 'Google Sheet မှ data မရယူနိုင်ပါ။ Internet/API ကို စစ်ပါ။';
+        update.textContent = 'Refresh failed. Check the internet connection and try again.';
         update.classList.add('error');
     } finally {
         button.disabled = false;

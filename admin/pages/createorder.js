@@ -69,7 +69,7 @@ function updatePaymentOptions(totalWithDelivery) {
     const carDelivery = selectedDeliveryService() === 'Car';
     const unavailable = carDelivery || totalWithDelivery >= codMaxTotal;
     document.getElementById('cod-hint').textContent =
-        `စုစုပေါင်း ${formatKyats(codMaxTotal)} နှင့်အထက် သို့မဟုတ် ကားတင်ရန်ဆိုပါက KBZ Pay သာ ရွေးနိုင်ပါသည်။`;
+        `COD is unavailable for orders of ${formatKyats(codMaxTotal)} or more, or for Bus Gate Delivery. Please select KBZ Pay.`;
     cod.disabled = unavailable;
     cod.closest('.payment-option').hidden = carDelivery;
     document.getElementById('cod-hint').hidden = !unavailable || carDelivery;
@@ -95,18 +95,18 @@ function updateSummary() {
         amount.textContent = formatKyats(pricing.amounts[index]);
     });
     totalElement.textContent = formatKyats(pricing.total);
-    weightElement.textContent = `စုစုပေါင်းအလေးချိန်: ${pricing.weight} kg`;
+    weightElement.textContent = `Total weight: ${pricing.weight} kg`;
 
     if (service === 'Car') {
-        feeElement.textContent = 'ကားဂိတ်တွင် သီးခြားပေးချေရန်';
+        feeElement.textContent = 'Pay separately at the bus gate';
         feeIsKnown = true;
-        deliveryNote.textContent = 'ကားတင်ပြီးပါက ကားတင်ဘောက်ချာ ပြန်ပို့ပေးပါမည်။';
+        deliveryNote.textContent = 'Please send the bus ticket after dispatch.';
     } else if (service === 'Royal' && city) {
         deliveryFee = getRoyalDeliveryFee(pricing.weight, city);
         feeIsKnown = true;
-        deliveryNote.textContent = 'Royal delivery service အပ်ပြီးပါက ဘောက်ချာ ပို့ပေးပါမည်။';
+        deliveryNote.textContent = 'The Royal Delivery voucher will be sent after dispatch.';
     } else {
-        feeElement.textContent = 'မြို့နှင့်ဝန်ဆောင်မှု ရွေးပါ';
+        feeElement.textContent = 'Select a city and service';
         deliveryNote.textContent = '';
     }
     deliveryNote.hidden = !deliveryNote.textContent;
@@ -115,7 +115,7 @@ function updateSummary() {
     const totalPayable = pricing.total + deliveryFee;
     payableElement.textContent = feeIsKnown
         ? formatKyats(totalPayable)
-        : 'တွက်ချက်ရန်လိုအပ်သည်';
+        : 'Calculation required';
     updatePaymentOptions(feeIsKnown ? totalPayable : pricing.total);
 }
 
@@ -137,7 +137,7 @@ function renderBookInputs() {
         input.step = '1';
         input.value = '0';
         input.inputMode = 'numeric';
-        input.setAttribute('aria-label', `${book.name} အုပ်ရေ`);
+        input.setAttribute('aria-label', `${book.name} quantity`);
         const amount = document.createElement('small');
         amount.className = 'book-amount';
         amount.dataset.bookAmount = book.id;
@@ -161,32 +161,32 @@ function receiptRow(label, value) {
 }
 
 function showReceipt(order) {
-    document.getElementById('receipt-voucher').textContent = `ဘောက်ချာအမှတ် ${order.voucherNo}`;
+    document.getElementById('receipt-voucher').textContent = `Voucher No. ${order.voucherNo}`;
     const content = document.getElementById('receipt-content');
     content.replaceChildren();
     const receiptRows = [
-        ['အမည်', order.name],
-        ['ဖုန်းနံပါတ် ၁', order.phone],
-        ['ဖုန်းနံပါတ် ၂', order.phone2],
-        ['လိပ်စာ', order.address],
-        ['မှာယူသည့်ရက်', order.orderDate],
-        ['ပို့ဆောင်ရေး', order.deliveryService === 'Car' ? 'ကားတင်ရန်' : 'Royal Delivery Service'],
-        ['ငွေပေးချေမှု', order.paymentMethod]
+        ['Name', order.name],
+        ['Phone (Personal)', order.phone],
+        ['Phone (Work)', order.phone2],
+        ['Address', order.address],
+        ['Order Date', order.orderDate],
+        ['Delivery', order.deliveryService === 'Car' ? 'Bus Gate Delivery' : 'Royal Delivery Service'],
+        ['Payment Method', order.paymentMethod]
     ];
     if (order.deliveryService === 'Car') {
-        receiptRows.push(['ကားဂိတ် / ကားအမည်', order.carInfo || order.deliveryNotes]);
+        receiptRows.push(['Bus Gate / Bus Name', order.carInfo || order.deliveryNotes]);
     }
     receiptRows.forEach(([label, value]) => content.append(receiptRow(label, value)));
     order.items.filter((item) => item.quantity > 0).forEach((item) =>
         content.append(receiptRow(`${item.name} × ${item.quantity}`, formatKyats(item.amount))));
     const totals = document.getElementById('receipt-totals');
     totals.replaceChildren();
-    totals.append(receiptRow('စုစုပေါင်းအလေးချိန်', `${order.totalKg} kg`));
-    totals.append(receiptRow('စာအုပ်ဖိုးစုစုပေါင်း', formatKyats(order.total)));
-    totals.append(receiptRow('ပို့ခ', order.deliveryService === 'Car'
-        ? 'ကားဂိတ်တွင် သီးခြားပေးချေရန်'
+    totals.append(receiptRow('Total Weight', `${order.totalKg} kg`));
+    totals.append(receiptRow('Books Subtotal', formatKyats(order.total)));
+    totals.append(receiptRow('Delivery Fee', order.deliveryService === 'Car'
+        ? 'Pay separately at the bus gate'
         : formatKyats(order.deliveryFees)));
-    totals.append(receiptRow('ငွေကောက်', formatKyats(order.cashCollection)));
+    totals.append(receiptRow('Cash Collection', formatKyats(order.cashCollection)));
     document.getElementById('receipt-total').textContent = formatKyats(order.payableTotal);
     document.getElementById('created-receipt').hidden = false;
     document.getElementById('created-receipt').scrollIntoView({ behavior: 'smooth' });
@@ -221,14 +221,14 @@ AdminApi.getDeliveryCities()
         });
         document.getElementById('delivery-city').disabled = false;
         document.getElementById('city-status').textContent =
-            `${cities.length} မြို့ ရှိပါသည်။ English သို့မဟုတ် မြန်မာအမည်ဖြင့် ရှာပါ။`;
+            `${cities.length} cities available. Search by English or Myanmar name.`;
         document.getElementById('submit-order').disabled = false;
         updateSummary();
     })
     .catch((error) => {
         console.error('Unable to load delivery cities.', error);
         document.getElementById('city-status').textContent =
-            'မြို့စာရင်းကို ရယူမရပါ။ အင်တာနက်နှင့် Google Sheet API ကို စစ်ဆေးပါ။';
+            'Unable to load cities. Check your internet connection and the Google Sheets API.';
         document.getElementById('submit-order').disabled = true;
     });
 
@@ -240,18 +240,18 @@ form.addEventListener('submit', async (event) => {
     if (!form.reportValidity()) return;
     const pricing = getPricing();
     if (pricing.quantities.some((quantity) => !Number.isSafeInteger(quantity) || quantity < 0)) {
-        status.textContent = 'အုပ်ရေကို ၀ နှင့်အထက် ကိန်းပြည့်ဖြင့် ထည့်ပါ။';
+        status.textContent = 'Enter a whole-number quantity of 0 or more.';
         status.classList.add('error');
         return;
     }
     if (pricing.total <= 0) {
-        status.textContent = 'အနည်းဆုံး စာအုပ်တစ်အုပ်၏ အရေအတွက်ကို ထည့်ပါ။';
+        status.textContent = 'Enter a quantity for at least one book.';
         status.classList.add('error');
         return;
     }
     const city = selectedCity();
     if (!city) {
-        status.textContent = 'မြို့စာရင်းမှ ပို့ဆောင်မည့်မြို့ကို ရွေးပါ။';
+        status.textContent = 'Select a delivery city from the city list.';
         status.classList.add('error');
         return;
     }
@@ -261,12 +261,12 @@ form.addEventListener('submit', async (event) => {
     const totalPayable = pricing.total + deliveryFee;
     const paymentMethod = form.querySelector('input[name="paymentMethod"]:checked')?.value || '';
     if (service === 'Car' && paymentMethod !== 'KBZ Pay') {
-        status.textContent = 'ကားတင်ရန်အတွက် KBZ Pay တစ်မျိုးတည်းသာ ရွေးချယ်နိုင်ပါသည်။';
+        status.textContent = 'Only KBZ Pay is available for Bus Gate Delivery.';
         status.classList.add('error');
         return;
     }
     if (paymentMethod === 'COD' && totalPayable >= codMaxTotal) {
-        status.textContent = `စုစုပေါင်း ${formatKyats(codMaxTotal)} နှင့်အထက်ဖြစ်သဖြင့် COD ရွေး၍မရပါ။`;
+        status.textContent = `COD is unavailable for orders of ${formatKyats(codMaxTotal)} or more.`;
         status.classList.add('error');
         return;
     }
@@ -287,7 +287,7 @@ form.addEventListener('submit', async (event) => {
     };
     const button = document.getElementById('submit-order');
     button.disabled = true;
-    status.textContent = 'အမှာစာ သိမ်းဆည်းနေသည်…';
+    status.textContent = 'Saving order…';
     try {
         const result = await AdminApi.createOrder(order);
         submitted = true;
@@ -296,15 +296,15 @@ form.addEventListener('submit', async (event) => {
         });
         showReceipt(result.order);
         status.textContent = result.localCacheError
-            ? 'အမှာစာကို Google Sheet တွင် သိမ်းပြီးပါပြီ။ ဖုန်းတွင်း cache မပြောင်းနိုင်ပါ။'
+            ? 'Order saved to Google Sheets, but the local cache could not be updated.'
             : result.cacheNeedsRefresh
-                ? 'အမှာစာကို Google Sheet တွင် သိမ်းပြီးပါပြီ။ Data အပြည့်အစုံအတွက် refresh လုပ်ပါ။'
-                : 'အမှာစာသိမ်းပြီးပါပြီ။ ဘောက်ချာကို ပုံအဖြစ်သိမ်း၊ မျှဝေ သို့မဟုတ် Print / Save PDF လုပ်နိုင်ပါသည်။';
+                ? 'Order saved to Google Sheets. Refresh to load the complete data.'
+                : 'Order saved. You can save, share, or print the voucher as a PDF.';
         status.classList.add(result.localCacheError || result.cacheNeedsRefresh ? 'error' : 'success');
-        button.textContent = 'မှာယူပြီးပါပြီ';
+        button.textContent = 'Order Confirmed';
     } catch (error) {
         console.error('Unable to create order.', error);
-        status.textContent = 'အမှာစာသိမ်းမရပါ။ Internet နှင့် Google Sheet API ကို စစ်ဆေးပါ။';
+        status.textContent = 'Unable to save the order. Check your internet connection and the Google Sheets API.';
         status.classList.add('error');
     } finally {
         button.disabled = submitted;

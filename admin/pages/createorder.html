@@ -2,71 +2,71 @@
 <html lang="my">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>အမှာစာအသစ် | UTHK Admin</title>
+    <title>New Order | UTHK Admin</title>
     <link rel="icon" type="image/png" href="../logo.png"><link rel="apple-touch-icon" href="../icons/app-icon-192.png"><link rel="manifest" href="../manifest.webmanifest"><link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body><main class="page-shell">
-    <header class="page-top"><a class="back-button" href="../index.html" aria-label="Home"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">အမှာစာအသစ်</h1><p class="page-subtitle">မှာယူသူနှင့် စာအုပ်အရေအတွက် ဖြည့်ပြီး အမှာစာနှင့် ဘောက်ချာဖန်တီးပါ။</p></div></header>
+    <header class="page-top"><a class="back-button" href="tools.html" aria-label="Back to Workspace"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">New Order</h1><p class="page-subtitle">Enter customer details and book quantities to create an order and voucher.</p></div></header>
     <form id="create-order-form">
-        <section class="panel"><h2>မှာယူသူအချက်အလက်</h2><div class="form-grid">
-            <label class="field">အမည်<input name="name" autocomplete="name" required></label>
-            <label class="field">ဖုန်းနံပါတ် ၁<input name="phone" type="tel" inputmode="tel" autocomplete="tel" required></label>
-            <label class="field">ဖုန်းနံပါတ် ၂ (ရှိပါက)<input name="phone2" type="tel" inputmode="tel" autocomplete="tel-national"></label>
+        <section class="panel"><h2>Customer Information</h2><div class="form-grid">
+            <label class="field">Name<input name="name" autocomplete="name" required></label>
+            <label class="field">Phone (Personal)<input name="phone" type="tel" inputmode="tel" autocomplete="tel" required></label>
+            <label class="field">Phone (Work, optional)<input name="phone2" type="tel" inputmode="tel" autocomplete="tel-national"></label>
         </div></section>
         <section class="panel">
-            <h2>ပို့ဆောင်မည့်လိပ်စာ</h2>
+            <h2>Delivery Address</h2>
             <div class="form-grid">
-                <label class="field">မြို့အမည်
-                    <input id="delivery-city" name="deliveryCity" list="delivery-city-options" autocomplete="off" placeholder="English သို့မဟုတ် မြန်မာအမည်ဖြင့် ရှာပါ" required disabled>
+                <label class="field">City
+                    <input id="delivery-city" name="deliveryCity" list="delivery-city-options" autocomplete="off" placeholder="Search by English or Myanmar name" required disabled>
                     <datalist id="delivery-city-options"></datalist>
                 </label>
-                <label class="field">ရပ်ကွက်၊ လမ်း၊ အိမ်အမှတ်
+                <label class="field">Township, Street, House No.
                     <input name="address" autocomplete="street-address" required>
                 </label>
             </div>
-            <p id="city-status" class="search-hint" role="status">မြို့စာရင်းကို ရယူနေသည်…</p>
+            <p id="city-status" class="search-hint" role="status">Loading cities…</p>
         </section>
         <section class="panel">
-            <h2>စာအုပ်နှင့် အုပ်ရေ</h2>
-            <p class="search-hint">လျှော့ဈေးကို စာအုပ်အမျိုးအစားတစ်မျိုးချင်း၏ အုပ်ရေအလိုက် တွက်ပါမည်။</p>
+            <h2>Books and Quantities</h2>
+            <p class="search-hint">Discounts are calculated based on the quantity of each book title.</p>
             <div id="book-quantities" class="form-grid"></div>
-            <div class="receipt-total"><span>စာအုပ်ဖိုးစုစုပေါင်း</span><strong id="order-total">0 ကျပ်</strong></div>
-            <p id="order-weight" class="search-hint">စုစုပေါင်းအလေးချိန်: 0 kg</p>
+            <div class="receipt-total"><span>Books Subtotal</span><strong id="order-total">0 ကျပ်</strong></div>
+            <p id="order-weight" class="search-hint">Total weight: 0 kg</p>
         </section>
         <section class="panel">
-            <h2>ပို့ဆောင်ရေး</h2>
+            <h2>Delivery</h2>
             <div class="delivery-choice-list">
                 <label class="payment-option"><input type="radio" name="deliveryService" value="Royal" required> Royal Delivery Service</label>
-                <label class="payment-option"><input type="radio" name="deliveryService" value="Car" required> ကားတင်ရန်</label>
+                <label class="payment-option"><input type="radio" name="deliveryService" value="Car" required> Bus Gate Delivery</label>
             </div>
-            <label id="car-details-field" class="field delivery-extra" hidden>ကားဂိတ်အမည်နှင့် ကားအမည်
-                <input name="carDetails" autocomplete="off" placeholder="ဥပမာ - အောင်မင်္ဂလာကားဂိတ် / Express အမည်">
+            <label id="car-details-field" class="field delivery-extra" hidden>Bus Gate and Bus Name
+                <input name="carDetails" autocomplete="off" placeholder="For example: Aung Mingalar Bus Gate / Express name">
             </label>
             <p id="delivery-note" class="search-hint" hidden></p>
             <div class="delivery-summary" aria-live="polite">
-                <p>ပို့ခ <strong id="delivery-fee">မြို့နှင့်ဝန်ဆောင်မှု ရွေးပါ</strong></p>
-                <p class="payable-total">စုစုပေါင်းကျသင့်ငွေ <strong id="payable-total">တွက်ချက်ရန်လိုအပ်သည်</strong></p>
+                <p>Delivery Fee <strong id="delivery-fee">Select a city and service</strong></p>
+                <p class="payable-total">Total Payable <strong id="payable-total">Calculation required</strong></p>
             </div>
         </section>
         <section class="panel">
-            <h2>ငွေပေးချေမှု</h2>
+            <h2>Payment</h2>
             <div class="delivery-choice-list">
-                <label class="payment-option"><input type="radio" name="paymentMethod" value="COD" required> အိမ်ရောက်ငွေချေ (COD)</label>
+                <label class="payment-option"><input type="radio" name="paymentMethod" value="COD" required> Cash on Delivery (COD)</label>
                 <label class="payment-option"><input type="radio" name="paymentMethod" value="KBZ Pay" required checked> KBZ Pay</label>
             </div>
             <p class="search-hint">KBZ Pay — 09-258 554 839, U Thiha Kyaw</p>
-            <p id="cod-hint" class="search-hint" hidden>စုစုပေါင်း ၁၅၀,၀၀၀ ကျပ်နှင့်အထက် သို့မဟုတ် ကားတင်ရန်ဆိုပါက KBZ Pay သာ ရွေးနိုင်ပါသည်။</p>
+            <p id="cod-hint" class="search-hint" hidden></p>
         </section>
-        <section class="panel no-print"><div class="button-row"><button class="primary-button" id="submit-order" type="submit"><i class="fa-solid fa-circle-check"></i> အမှာစာ အတည်ပြုရန်</button></div><p id="order-status" class="status-message" role="status"></p></section>
+        <section class="panel no-print"><div class="button-row"><button class="primary-button" id="submit-order" type="submit"><i class="fa-solid fa-circle-check"></i> Confirm Order</button></div><p id="order-status" class="status-message" role="status"></p></section>
     </form>
     <section id="created-receipt" class="receipt" hidden>
-        <div class="receipt-head"><div class="receipt-heading"><p class="eyebrow">PHYSICS LEARNING HUB</p><h2>မှာယူမှု ဘောက်ချာ</h2><strong id="receipt-voucher"></strong></div><img class="receipt-logo" src="../logo.png" alt="UTHK logo"></div>
+        <div class="receipt-head"><div class="receipt-heading"><p class="eyebrow">PHYSICS LEARNING HUB</p><h2>Order Voucher</h2><strong id="receipt-voucher"></strong></div><img class="receipt-logo" src="../logo.png" alt="UTHK logo"></div>
         <div id="receipt-content" class="receipt-grid"></div>
         <div id="receipt-totals"></div>
-        <div class="receipt-total"><span>စုစုပေါင်းကျသင့်ငွေ</span><strong id="receipt-total"></strong></div>
+        <div class="receipt-total"><span>Total Amount Due</span><strong id="receipt-total"></strong></div>
         <div class="button-row no-print">
-            <button id="share-created-receipt" class="secondary-button" type="button"><i class="fa-solid fa-share-nodes"></i> မျှဝေရန်</button>
+            <button id="share-created-receipt" class="secondary-button" type="button"><i class="fa-solid fa-share-nodes"></i> Share</button>
             <button id="print-created-receipt" class="primary-button" type="button"><i class="fa-solid fa-print"></i> Print / Save PDF</button>
         </div>
         <p id="created-receipt-action-status" class="status-message no-print" role="status"></p>
