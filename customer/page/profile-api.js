@@ -1,4 +1,4 @@
-const PROFILE_API_URL = 'https://script.google.com/macros/s/AKfycbzwBTUNW-g4swMZszKX4eN1iLlM-8iVogUsb00FVnEQzqNLE0UG_5kCCv2etmsg9Jff/exec';
+const PROFILE_API_URL = 'https://script.google.com/macros/s/AKfycbzIdbnosK3NE_RItCHF-JFD-Olz4CJ0tBqrANyU4ORfHRZYxVgvAkQhMTNeAH3ZQRvz7A/exec';
 
 function normalizePhoneNumber(value) {
     return String(value ?? '')
