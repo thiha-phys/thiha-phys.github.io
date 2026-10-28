@@ -9,7 +9,7 @@ Cloudflare Pages projects use separate output directories:
 
 `Code.gs` is deployed at:
 
-`https://script.google.com/macros/s/AKfycbyK1T-_1zj9vgLpLu7HCumy-D-aB8rkSPGkNs-aXTVZqlrhP_qkncYwgmPc_0xU8SmX/exec`
+`https://script.google.com/macros/s/AKfycbzwBTUNW-g4swMZszKX4eN1iLlM-8iVogUsb00FVnEQzqNLE0UG_5kCCv2etmsg9Jff/exec`
 
 The customer order flow and the Admin order tools use this API for order creation, order list/update actions, and Royal shipment/statement imports. Order price and delivery fees are validated server-side against the published master data. The legacy `getMasterData` action remains read-only for older clients; it fetches the static JSON and caches it briefly. `saveMasterData` is disabled.
 
@@ -25,7 +25,7 @@ The customer JSON is public by design and is not a place for secrets. Its cache 
 
 `sms.gs` is deployed at:
 
-`https://script.google.com/macros/s/AKfycbzIdbnosK3NE_RItCHF-JFD-Olz4CJ0tBqrANyU4ORfHRZYxVgvAkQhMTNeAH3ZQRvz7A/exec`
+`https://script.google.com/macros/s/AKfycbzwBTUNW-g4swMZszKX4eN1iLlM-8iVogUsb00FVnEQzqNLE0UG_5kCCv2etmsg9Jff/exec`
 
 The app uses `create`, `update`, `lookup`, and `submitFeedback` actions.
 

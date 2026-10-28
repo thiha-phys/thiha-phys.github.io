@@ -1,4 +1,4 @@
-const ORDER_API_URL = 'https://script.google.com/macros/s/AKfycbyK1T-_1zj9vgLpLu7HCumy-D-aB8rkSPGkNs-aXTVZqlrhP_qkncYwgmPc_0xU8SmX/exec';
+const ORDER_API_URL = 'https://script.google.com/macros/s/AKfycbzwBTUNW-g4swMZszKX4eN1iLlM-8iVogUsb00FVnEQzqNLE0UG_5kCCv2etmsg9Jff/exec';
 const MASTER_DATA_URL = new URL('../data/master-data.json', document.currentScript.src);
 
 async function callOrderApi(action, payload = {}) {
