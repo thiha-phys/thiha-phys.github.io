@@ -20,6 +20,8 @@ function renderProfileCard(profile) {
     const email = String(profile.email || '').trim();
     const job = String(profile.job || '').trim();
     const name = String(profile.name || '').trim() || 'Unnamed profile';
+    const emailIcon = '<i class="fa-regular fa-envelope" aria-hidden="true"></i>';
+    const phoneIcon = '<i class="fa-solid fa-phone" aria-hidden="true"></i>';
 
     article.innerHTML = `
         <div class="profile-card-header">
@@ -30,15 +32,12 @@ function renderProfileCard(profile) {
             </div>
         </div>
         <div class="profile-meta">
-            <div class="profile-row">
-                <span class="profile-label">Email</span>
-                <a href="${email ? `mailto:${escapeText(email)}` : '#'}" class="profile-value ${email ? '' : 'is-empty'}">${escapeText(email || 'No email')}</a>
-            </div>
-            <div class="profile-row">
-                <span class="profile-label">Phone</span>
+            <div class="profile-contact-row">
+                ${email ? `<a class="profile-contact" href="mailto:${escapeText(email)}">${emailIcon}<span>${escapeText(email)}</span></a>` : ''}
                 ${phoneDigits
-                    ? `<a class="profile-value profile-phone" href="tel:${escapeText(phoneDigits)}">${escapeText(profile.phone || phoneDigits)}</a>`
-                    : '<span class="profile-value is-empty">No phone</span>'}
+                    ? `<a class="profile-contact profile-phone" href="tel:${escapeText(phoneDigits)}">${phoneIcon}<span>${escapeText(profile.phone || phoneDigits)}</span></a>`
+                    : ''}
+                ${!email && !phoneDigits ? '<span class="profile-empty-contact">No contact details</span>' : ''}
             </div>
         </div>
     `;
