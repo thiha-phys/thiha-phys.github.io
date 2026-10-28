@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="my">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7fb">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Profiles | UTHK Admin</title>
+</head>
+<body>
+    <main class="page-shell profiles-page">
+        <header class="page-top">
+            <div class="tools-heading-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-6 8c.8-2.3 3-3.5 6-3.5s5.2 1.2 6 3.5M16 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm3 9c-.7-1.8-2.6-3-5-3.2"/></svg>
+            </div>
+            <div>
+                <h1 class="page-title">Profiles</h1>
+            </div>
+        </header>
+
+        <section class="profiles-summary panel">
+            <div class="profiles-summary-label">Registered users</div>
+            <div class="profiles-summary-row">
+                <strong id="profile-count">0</strong>
+                <span>people</span>
+            </div>
+        </section>
+
+        <section class="profiles-grid" id="profiles-grid" aria-live="polite"></section>
+    </main>
+
+    <script src="admin-api.js"></script>
+    <script src="admin-nav.js"></script>
+    <script src="profiles.js"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 (function () {
     const API_URL = 'https://script.google.com/macros/s/AKfycbzwBTUNW-g4swMZszKX4eN1iLlM-8iVogUsb00FVnEQzqNLE0UG_5kCCv2etmsg9Jff/exec';
+    const PROFILE_API_URL = 'https://script.google.com/macros/s/AKfycbzIdbnosK3NE_RItCHF-JFD-Olz4CJ0tBqrANyU4ORfHRZYxVgvAkQhMTNeAH3ZQRvz7A/exec';
     const MASTER_DATA_URL = 'https://uthkphysics.pages.dev/data/master-data.json';
     const DB_NAME = 'uthk-admin-cache';
     const DB_VERSION = 1;
@@ -352,6 +353,18 @@
         return result;
     }
 
+    async function requestProfile(action, payload = {}) {
+        const response = await fetch(PROFILE_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+            body: JSON.stringify({ action, ...payload })
+        });
+        if (!response.ok) throw new Error(`Profile service request failed (${response.status}).`);
+        const result = await response.json();
+        if (!result.ok) throw new Error(result.message || result.error || 'Profile service rejected the request.');
+        return result;
+    }
+
     async function getMasterData() {
         const response = await fetch(MASTER_DATA_URL, { cache: 'no-store' });
         if (!response.ok) throw new Error(`Master data request failed (${response.status}).`);
@@ -550,6 +563,14 @@
         return BOOK_SHOPS.map((shop) => ({ ...shop }));
     }
 
+    async function getProfiles() {
+        const result = await requestProfile('listProfiles');
+        if (!Array.isArray(result.profiles)) {
+            throw new Error('The profile list returned by the profile backend is invalid.');
+        }
+        return result.profiles;
+    }
+
     async function getShopOrders(shopId) {
         const result = await request('listShopOrders', { shopId });
         if (!Array.isArray(result.orders)) {
@@ -600,6 +621,7 @@
         importRoyalShipmentExport,
         importRoyalStatementExport,
         getShops,
+        getProfiles,
         getShopOrders,
         createShopOrder,
         updateShopOrder,

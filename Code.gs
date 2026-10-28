@@ -1292,6 +1292,62 @@ function buildOrderAddress_(order, city) {
   return requiredText_(details.join(', '), 'Address');
 }
 
+function getTelegramConfig_() {
+  const botToken = PropertiesService.getScriptProperties().getProperty('TELEGRAM_BOT_TOKEN');
+  const chatId = PropertiesService.getScriptProperties().getProperty('TELEGRAM_CHAT_ID');
+  return { botToken, chatId };
+}
+
+function sendTelegramOrderNotification_(order, voucherNo, orderDate, paymentMethod, booksTotal, deliveryFees, totalPayable, itemRows) {
+  const config = getTelegramConfig_();
+  if (!config.botToken || !config.chatId) {
+    console.warn('Telegram notification skipped: missing bot token or chat id.');
+    return;
+  }
+
+  const quantityTotal = (itemRows || []).reduce(function (sum, item) {
+    return sum + Number(item.quantity || 0);
+  }, 0);
+
+  const bookLines = (itemRows || []).map(function (item) {
+    return '- ' + item.name + ' x ' + item.quantity + ' = ' + item.amount;
+  });
+
+  const displayDate = orderDate || '';
+  const text = [
+    '📚 NEW BOOK ORDER',
+    '',
+    String(voucherNo),
+    String(order.name || ''),
+    String(order.phone || order.phone1 || ''),
+    String(order.address || ''),
+    '',
+    bookLines.length ? bookLines.join('\n') : '- No books selected',
+    '',
+    'Quantity: ' + quantityTotal,
+    '',
+    'Total: ' + booksTotal,
+    'Delivery Fee: ' + deliveryFees,
+    'Payment Method: ' + paymentMethod,
+    displayDate
+  ].join('\n');
+
+  const url = 'https://api.telegram.org/bot' + config.botToken + '/sendMessage';
+  const response = UrlFetchApp.fetch(url, {
+    method: 'post',
+    payload: {
+      chat_id: config.chatId,
+      text: text,
+      parse_mode: 'HTML'
+    },
+    muteHttpExceptions: true
+  });
+
+  if (response.getResponseCode() >= 400) {
+    console.warn('Telegram notification failed: ' + response.getContentText());
+  }
+}
+
 function createBookOrder_(order) {
   if (!order || typeof order !== 'object') {
     throw new Error('Order data is required.');
@@ -1449,6 +1505,26 @@ function createBookOrder_(order) {
     applyCurrencyRowFormats_(
       sheet, nextRow, headers, ORDER_CURRENCY_HEADERS.concat(dynamicAmountHeaders)
     );
+
+    try {
+      sendTelegramOrderNotification_(
+        {
+          name: name,
+          phone: formatPhone_(phone),
+          address: address
+        },
+        voucherNo,
+        orderDate,
+        paymentMethod,
+        String(total),
+        String(deliveryFees),
+        String(totalPayable),
+        itemRows
+      );
+    } catch (error) {
+      console.warn('Telegram notification failed after order save: ' + error.message);
+    }
+
     return jsonResponse_({
       ok: true,
       order: {

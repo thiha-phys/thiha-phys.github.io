@@ -15,8 +15,11 @@ function doPost(e) {
     if (action === 'submitFeedback') {
       return submitRecommendation_(profile);
     }
+    if (action === 'listProfiles') {
+      return jsonResponse_({ ok: true, profiles: listProfiles_() });
+    }
     if (action !== 'create' && action !== 'update' && action !== 'lookup') {
-      throw new Error('Action must be "create", "update", or "lookup".');
+      throw new Error('Action must be "create", "update", "lookup", or "listProfiles".');
     }
     if (!profile || typeof profile !== 'object') {
       throw new Error('Profile data is required.');
@@ -113,6 +116,24 @@ function doPost(e) {
     console.error(error);
     return jsonResponse_({ ok: false, error: error.message });
   }
+}
+
+function listProfiles_() {
+  const sheet = getProfilesSheet_();
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return [];
+
+  return sheet.getRange(2, 1, lastRow - 1, HEADERS.length).getDisplayValues()
+    .filter(function (row) { return String(row[0] || '').trim() !== ''; })
+    .map(function (row) {
+      const phone = formatPhone_(normalizePhone_(row[3] || ''));
+      return {
+        name: String(row[0] || '').trim(),
+        job: String(row[1] || '').trim(),
+        email: String(row[2] || '').trim(),
+        phone: phone
+      };
+    });
 }
 
 function normalizeProfile_(profile) {
