@@ -656,7 +656,10 @@
 
     if ('serviceWorker' in navigator && window.isSecureContext) {
         const workerUrl = new URL('../service-worker.js', APP_SCRIPT);
-        navigator.serviceWorker.register(workerUrl, { scope: new URL('../', APP_SCRIPT).pathname })
+        navigator.serviceWorker.register(workerUrl, {
+            scope: new URL('../', APP_SCRIPT).pathname,
+            updateViaCache: 'none'
+        })
             .catch((error) => console.error('Unable to register the offline app shell.', error));
     }
 })();

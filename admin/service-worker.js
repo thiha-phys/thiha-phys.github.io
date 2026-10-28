@@ -1,4 +1,4 @@
-const CACHE_NAME = 'uthk-admin-shell-v21';
+const CACHE_NAME = 'uthk-admin-shell-v22';
 const APP_FILES = [
     './index.html',
     './style.css',
