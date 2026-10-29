@@ -167,6 +167,9 @@ function doPost(e) {
         orders: listShopOrders_(request.shopId)
       });
     }
+    if (action === 'getShopOverview') {
+      return jsonResponse_({ ok: true, overview: getShopOverview_() });
+    }
     if (action === 'createShopOrder') {
       return createShopOrder_(request.shopId, request.order);
     }
@@ -906,6 +909,45 @@ function listShopOrders_(shopId) {
         });
         return order;
       });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function getShopOverview_() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const overview = {
+      totalOrders: 0,
+      amountReceived: 0,
+      outstanding: 0,
+      delivered: 0
+    };
+    const totalColumn = SHOP_ORDER_HEADERS.indexOf('Total');
+    const receivedColumn = SHOP_ORDER_HEADERS.indexOf('Received');
+    const deliveredColumn = SHOP_ORDER_HEADERS.indexOf('Delivered Date');
+    BOOK_SHOPS.forEach(function (shop) {
+      const sheet = getShopOrdersSheet_(shop.id, false);
+      if (!sheet) return;
+      const lastRow = sheet.getLastRow();
+      if (lastRow < 2) return;
+
+      const rows = sheet.getRange(2, 1, lastRow - 1, SHOP_ORDER_HEADERS.length)
+        .getValues();
+      rows.forEach(function (row) {
+        if (row[0] === '') return;
+        const total = shopNumber_(row[totalColumn], 'Total');
+        const received = shopNumber_(row[receivedColumn], 'Received');
+        overview.totalOrders += 1;
+        overview.amountReceived += received;
+        overview.outstanding += Math.max(0, total - received);
+        if (String(row[deliveredColumn] || '').trim()) {
+          overview.delivered += 1;
+        }
+      });
+    });
+    return overview;
   } finally {
     lock.releaseLock();
   }

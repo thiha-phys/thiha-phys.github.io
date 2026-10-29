@@ -579,6 +579,16 @@
         return result.orders;
     }
 
+    async function getShopOverview() {
+        const result = await request('getShopOverview');
+        const overview = result.overview;
+        if (!overview || !['totalOrders', 'amountReceived', 'outstanding', 'delivered']
+            .every((key) => Number.isFinite(overview[key]) && overview[key] >= 0)) {
+            throw new Error('The store overview returned by Google Sheets is invalid.');
+        }
+        return overview;
+    }
+
     async function createShopOrder(shopId, order) {
         return request('createShopOrder', { shopId, order });
     }
@@ -623,6 +633,7 @@
         getShops,
         getProfiles,
         getShopOrders,
+        getShopOverview,
         createShopOrder,
         updateShopOrder,
         getCachedStock,

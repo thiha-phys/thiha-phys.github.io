@@ -91,6 +91,37 @@ async function loadDashboard() {
     }
 }
 
+async function loadStoreOverview(button) {
+    const update = document.getElementById('store-overview-updated');
+    if (button) button.disabled = true;
+    update.classList.remove('error');
+    update.textContent = 'Loading store orders…';
+    try {
+        const overview = await AdminApi.getShopOverview();
+        document.getElementById('store-stat-orders').textContent =
+            Number(overview.totalOrders).toLocaleString('en-US');
+        document.getElementById('store-stat-received').textContent = formatKyats(overview.amountReceived);
+        document.getElementById('store-stat-outstanding').textContent = formatKyats(overview.outstanding);
+        document.getElementById('store-stat-delivered').textContent =
+            Number(overview.delivered).toLocaleString('en-US');
+        update.textContent = `Updated · ${new Intl.DateTimeFormat('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hourCycle: 'h23'
+        }).format(new Date())}`;
+    } catch (error) {
+        console.error('Unable to load the store overview.', error);
+        update.textContent = error.message || 'Unable to load store orders.';
+        update.classList.add('error');
+    } finally {
+        if (button) button.disabled = false;
+    }
+}
+
 document.getElementById('refresh-dashboard').addEventListener('click', async (event) => {
     const button = event.currentTarget;
     const update = document.getElementById('dashboard-updated');
@@ -110,4 +141,9 @@ document.getElementById('refresh-dashboard').addEventListener('click', async (ev
     }
 });
 
+document.getElementById('refresh-store-overview').addEventListener('click', (event) =>
+    loadStoreOverview(event.currentTarget)
+);
+
 loadDashboard();
+loadStoreOverview();
