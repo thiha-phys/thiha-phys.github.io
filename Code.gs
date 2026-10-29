@@ -167,6 +167,15 @@ function doPost(e) {
         orders: listShopOrders_(request.shopId)
       });
     }
+    if (action === 'listUndeliveredShopOrders') {
+      return jsonResponse_({ ok: true, orders: listUndeliveredShopOrders_() });
+    }
+    if (action === 'listShopOrdersByStatus') {
+      return jsonResponse_({
+        ok: true,
+        orders: listShopOrdersByStatus_(request.status)
+      });
+    }
     if (action === 'getShopOverview') {
       return jsonResponse_({ ok: true, overview: getShopOverview_() });
     }
@@ -914,6 +923,48 @@ function listShopOrders_(shopId) {
   }
 }
 
+function listUndeliveredShopOrders_() {
+  return listShopOrdersByStatus_('undelivered');
+}
+
+function listShopOrdersByStatus_(status) {
+  if (status !== 'undelivered' && status !== 'unpaid') {
+    throw new Error('Invalid store order status.');
+  }
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const matchingOrders = [];
+    const deliveredColumn = SHOP_ORDER_HEADERS.indexOf('Delivered Date');
+    const totalColumn = SHOP_ORDER_HEADERS.indexOf('Total');
+    const receivedColumn = SHOP_ORDER_HEADERS.indexOf('Received');
+    BOOK_SHOPS.forEach(function (shop) {
+      const sheet = getShopOrdersSheet_(shop.id, false);
+      if (!sheet) return;
+      const lastRow = sheet.getLastRow();
+      if (lastRow < 2) return;
+
+      sheet.getRange(2, 1, lastRow - 1, SHOP_ORDER_HEADERS.length)
+        .getValues()
+        .forEach(function (row) {
+          if (row[0] === '') return;
+          const delivered = Boolean(String(row[deliveredColumn] || '').trim());
+          const unpaid = shopNumber_(row[receivedColumn], 'Received') <
+            shopNumber_(row[totalColumn], 'Total');
+          if ((status === 'undelivered' && delivered) || (status === 'unpaid' && !unpaid)) return;
+          const order = { shopId: shop.id, shopName: shop.name };
+          SHOP_ORDER_HEADERS.forEach(function (header, index) {
+            order[header] = row[index];
+          });
+          matchingOrders.push(order);
+        });
+    });
+    return matchingOrders;
+  } finally {
+    lock.releaseLock();
+  }
+}
+
 function getShopOverview_() {
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
@@ -922,7 +973,7 @@ function getShopOverview_() {
       totalOrders: 0,
       amountReceived: 0,
       outstanding: 0,
-      delivered: 0
+      undelivered: 0
     };
     const totalColumn = SHOP_ORDER_HEADERS.indexOf('Total');
     const receivedColumn = SHOP_ORDER_HEADERS.indexOf('Received');
@@ -942,9 +993,7 @@ function getShopOverview_() {
         overview.totalOrders += 1;
         overview.amountReceived += received;
         overview.outstanding += Math.max(0, total - received);
-        if (String(row[deliveredColumn] || '').trim()) {
-          overview.delivered += 1;
-        }
+        if (!String(row[deliveredColumn] || '').trim()) overview.undelivered += 1;
       });
     });
     return overview;

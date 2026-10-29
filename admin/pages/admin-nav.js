@@ -11,7 +11,8 @@
         'shops.html',
         'shop.html',
         'shop-order.html',
-        'shop-history.html'
+        'shop-history.html',
+        'undelivered-shop-orders.html'
     ];
     const isTools = toolsPages.includes(pageName);
 

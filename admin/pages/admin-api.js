@@ -579,10 +579,21 @@
         return result.orders;
     }
 
+    async function getShopOrdersByStatus(status) {
+        if (!['undelivered', 'unpaid'].includes(status)) {
+            throw new Error('The requested store order status is invalid.');
+        }
+        const result = await request('listShopOrdersByStatus', { status });
+        if (!Array.isArray(result.orders)) {
+            throw new Error('The filtered shop order list returned by Google Sheets is invalid.');
+        }
+        return result.orders;
+    }
+
     async function getShopOverview() {
         const result = await request('getShopOverview');
         const overview = result.overview;
-        if (!overview || !['totalOrders', 'amountReceived', 'outstanding', 'delivered']
+        if (!overview || !['totalOrders', 'amountReceived', 'outstanding', 'undelivered']
             .every((key) => Number.isFinite(overview[key]) && overview[key] >= 0)) {
             throw new Error('The store overview returned by Google Sheets is invalid.');
         }
@@ -633,6 +644,7 @@
         getShops,
         getProfiles,
         getShopOrders,
+        getShopOrdersByStatus,
         getShopOverview,
         createShopOrder,
         updateShopOrder,

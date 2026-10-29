@@ -2,7 +2,8 @@ const listElement = document.getElementById('order-list');
 const statusElement = document.getElementById('history-status');
 let orderItems = [];
 let allOrders = [];
-let activeMode = 'search';
+const requestedMode = new URLSearchParams(window.location.search).get('mode');
+let activeMode = ['undelivered', 'unpaid'].includes(requestedMode) ? requestedMode : 'search';
 
 function formatOrderDateEnglish(value) {
     const text = String(value || '').trim();
@@ -117,7 +118,7 @@ function renderOrders() {
         if (activeMode === 'date') {
             return Boolean(date) && (!from || date >= from) && (!to || date <= to);
         }
-        if (activeMode === 'undelivered') return !order['Delivered Date'];
+        if (activeMode === 'undelivered') return !String(order['Delivered Date'] || '').trim();
         return received < total;
     }).sort((a, b) => String(b['Order Date'] || '').localeCompare(String(a['Order Date'] || '')));
 
@@ -130,7 +131,7 @@ function renderOrders() {
     matches.forEach((order) => {
         const card = document.createElement('details');
         card.className = 'order-card';
-        const delivered = Boolean(order['Delivered Date']);
+        const delivered = Boolean(String(order['Delivered Date'] || '').trim());
         const paid = Number(order['Amount Received'] || 0) >= Number(order.Total || 0);
         const paymentMethod = paymentMethodLabel(order['Payment Method']);
         card.innerHTML = `
@@ -170,8 +171,8 @@ function setMode(mode) {
     document.getElementById('mode-description').textContent = {
         search: 'Search by voucher number, name, or phone number.',
         date: 'Choose a start and end date to view orders in that period.',
-        undelivered: 'Showing orders that have not been delivered.',
-        unpaid: 'Showing orders with an outstanding balance.'
+        undelivered: 'မပို့ရသေးသော အမှာစာများကို ပြသနေသည်။',
+        unpaid: 'Showing orders that have not been paid in full.'
     }[mode];
     renderOrders();
 }
@@ -230,4 +231,5 @@ document.getElementById('refresh-history').addEventListener('click', async (even
 document.querySelectorAll('.history-mode').forEach((button) =>
     button.addEventListener('click', () => setMode(button.dataset.mode))
 );
+setMode(activeMode);
 loadOrders();

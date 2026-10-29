@@ -13,6 +13,8 @@ Cloudflare Pages projects use separate output directories:
 
 The customer order flow and the Admin order tools use this API for order creation, order list/update actions, and Royal shipment/statement imports. Order price and delivery fees are validated server-side against the published master data. The legacy `getMasterData` action remains read-only for older clients; it fetches the static JSON and caches it briefly. `saveMasterData` is disabled.
 
+The Admin store overview and book-store-orders page use the `getShopOverview` and `listShopOrdersByStatus` actions. Deploy `Code.gs` to the Apps Script Web App when publishing these Admin changes.
+
 ## Static Master Data
 
 `customer/data/master-data.json` is the single source of truth for book prices, delivery cities, and order settings. The customer app loads it as a static asset and includes it in its offline cache. The Admin reads the public file, validates edits, and downloads a replacement `master-data.json`; no Cloudflare Access, payment card, backend function, or browser-side GitHub credential is required.

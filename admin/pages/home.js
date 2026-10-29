@@ -52,8 +52,8 @@ function renderDashboard(orders) {
     document.getElementById('stat-orders').textContent = Number(orders.length).toLocaleString('en-US');
     document.getElementById('stat-received').textContent = formatKyats(received);
     document.getElementById('stat-outstanding').textContent = formatKyats(outstanding);
-    document.getElementById('stat-delivered').textContent =
-        Number(orders.filter((order) => order['Delivered Date']).length).toLocaleString('en-US');
+    document.getElementById('stat-undelivered').textContent =
+        Number(orders.filter((order) => !String(order['Delivered Date'] || '').trim()).length).toLocaleString('en-US');
     renderOrdersChart(orders);
 }
 
@@ -102,8 +102,8 @@ async function loadStoreOverview(button) {
             Number(overview.totalOrders).toLocaleString('en-US');
         document.getElementById('store-stat-received').textContent = formatKyats(overview.amountReceived);
         document.getElementById('store-stat-outstanding').textContent = formatKyats(overview.outstanding);
-        document.getElementById('store-stat-delivered').textContent =
-            Number(overview.delivered).toLocaleString('en-US');
+        document.getElementById('store-stat-undelivered').textContent =
+            Number(overview.undelivered).toLocaleString('en-US');
         update.textContent = `Updated · ${new Intl.DateTimeFormat('en-GB', {
             day: '2-digit',
             month: 'short',
