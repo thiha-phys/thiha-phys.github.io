@@ -12,7 +12,9 @@
         'shop.html',
         'shop-order.html',
         'shop-history.html',
-        'undelivered-shop-orders.html'
+        'undelivered-shop-orders.html',
+        'order-profiles.html',
+        'feedback.html'
     ];
     const isTools = toolsPages.includes(pageName);
 

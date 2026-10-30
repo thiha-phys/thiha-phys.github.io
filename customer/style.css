@@ -223,15 +223,25 @@ svg {
     cursor: grabbing;
 }
 .banner-track {
-    display: flex;
+    position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.5s ease;
 }
 .banner-slide {
-    flex: 0 0 100%;
-    min-width: 0;
+    position: absolute;
+    inset: 0;
     height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+}
+.banner-slide.is-active {
+    z-index: 1;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.45s ease;
 }
 .banner-slide img {
     display: block;
@@ -240,6 +250,35 @@ svg {
     object-fit: cover;
     object-position: center;
 }
+.weather-slide-card {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    overflow: hidden;
+    padding: 14px clamp(18px, 4vw, 36px);
+    color: #fff;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(116, 211, 255, .32), transparent 34%),
+        linear-gradient(120deg, #123c72, #167b91 68%, #20a98d);
+}
+.weather-slide-copy {
+    z-index: 1;
+    display: grid;
+    min-width: 0;
+    gap: 2px;
+}
+.weather-slide-eyebrow { color: #d6f5ff; font-size: clamp(9px, 1.8vw, 12px); font-weight: 700; }
+.weather-average { font-size: clamp(27px, 7vw, 46px); line-height: 1.15; letter-spacing: -.04em; }
+.weather-condition { font-size: clamp(12px, 2.4vw, 16px); font-weight: 600; }
+.weather-updated, .weather-clock, .weather-status { color: rgba(239, 251, 255, .86); font-size: clamp(8px, 1.7vw, 11px); line-height: 1.45; }
+.weather-slide-icon { display: grid; width: clamp(52px, 12vw, 88px); height: clamp(52px, 12vw, 88px); flex: 0 0 auto; place-items: center; border: 1px solid rgba(255,255,255,.25); border-radius: 26px; background: rgba(255,255,255,.12); }
+.weather-slide-icon i { color: #ffe898; font-size: clamp(28px, 7vw, 48px); filter: drop-shadow(0 5px 12px rgba(0,0,0,.2)); }
+.weather-attribution { position: absolute; right: 12px; bottom: 5px; color: rgba(239, 251, 255, .72); font-size: 8px; }
+
 .slider-dots {
     display: flex;
     justify-content: center;

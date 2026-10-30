@@ -170,6 +170,15 @@
             'G11O.jpeg',
             'G10H.jpeg'
         ];
+        const weatherLocations = [
+            { latitude: 16.8661, longitude: 96.1951 },
+            { latitude: 21.9588, longitude: 96.0891 },
+            { latitude: 19.7633, longitude: 96.0785 },
+            { latitude: 25.3833, longitude: 97.4 },
+            { latitude: 20.15, longitude: 92.9 },
+            { latitude: 16.75, longitude: 94.6333 },
+            { latitude: 14.1, longitude: 98.2 }
+        ];
         const bannerTrack = document.querySelector('.banner-track');
         const sliderDots = document.querySelector('.slider-dots');
         const bannerFrame = document.querySelector('.banner-frame');
@@ -192,56 +201,191 @@
             dot.type = 'button';
             dot.setAttribute('aria-label', `ကြော်ငြာပုံ ${index + 1}`);
             dot.addEventListener('click', () => {
-                showSlide(bookPromoImages.length > 1 ? index + 1 : index);
+                showSlide(index);
                 restartAutoAdvance();
             });
             sliderDots.append(dot);
         });
 
-        if (bookPromoImages.length > 1) {
-            const firstSlide = bannerTrack.firstElementChild;
-            const lastSlide = bannerTrack.lastElementChild;
-            const leadingLoopSlide = lastSlide.cloneNode(true);
-            const trailingLoopSlide = firstSlide.cloneNode(true);
-            leadingLoopSlide.setAttribute('aria-hidden', 'true');
-            trailingLoopSlide.setAttribute('aria-hidden', 'true');
-            leadingLoopSlide.querySelector('img').alt = '';
-            trailingLoopSlide.querySelector('img').alt = '';
-            bannerTrack.prepend(leadingLoopSlide);
-            bannerTrack.append(trailingLoopSlide);
-        }
+        const weatherSlide = document.createElement('div');
+        weatherSlide.className = 'banner-slide weather-slide';
+        weatherSlide.innerHTML = `
+            <div class="weather-slide-card">
+                <div class="weather-slide-copy">
+                    <span class="weather-slide-eyebrow"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> မြန်မာနိုင်ငံ · မြို့ကြီးများဧ။် ပျမ်းမျှ အပူချိန်</span>
+                    <strong class="weather-average">—°C</strong>
+                    <span class="weather-condition">ရာသီဥတု အချက်အလက်ကို ရယူနေပါသည်။</span>
+                    <span class="weather-updated"></span>
+                    <span class="weather-clock"></span>
+                    <span class="weather-status" role="status" aria-live="polite"></span>
+                </div>
+                <span class="weather-slide-icon" aria-hidden="true"><i class="weather-icon fa-solid fa-cloud-sun"></i></span>
+                <a class="weather-attribution" href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Weather data · Open-Meteo</a>
+            </div>`;
+        bannerTrack.append(weatherSlide);
+        const weatherSlideIndex = bookPromoImages.length;
+        const weatherDot = document.createElement('button');
+        weatherDot.className = 'dot';
+        weatherDot.type = 'button';
+        weatherDot.setAttribute('aria-label', 'မြန်မာနိုင်ငံ ရာသီဥတု');
+        weatherDot.addEventListener('click', () => {
+            showSlide(weatherSlideIndex);
+            restartAutoAdvance();
+        });
+        sliderDots.append(weatherDot);
 
-        let currentSlide = 0;
+        const totalSlides = bookPromoImages.length + 1;
+        let currentSlide = -1;
         const dots = sliderDots.querySelectorAll('.dot');
+        const slides = bannerTrack.querySelectorAll('.banner-slide');
 
         function showSlide(index) {
-            currentSlide = index;
-            bannerTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            currentSlide = (index + totalSlides) % totalSlides;
+            slides.forEach((slide, slideIndex) => {
+                const isActive = slideIndex === currentSlide;
+                slide.classList.toggle('is-active', isActive);
+                slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+            });
             dots.forEach((dot, dotIndex) => {
-                const activeIndex = (currentSlide - 1 + bookPromoImages.length) % bookPromoImages.length;
-                const isActive = dotIndex === activeIndex;
+                const isActive = dotIndex === currentSlide;
                 dot.classList.toggle('active', isActive);
                 dot.setAttribute('aria-current', isActive ? 'true' : 'false');
             });
         }
 
-        bannerTrack.addEventListener('transitionend', (event) => {
-            if (event.target !== bannerTrack || event.propertyName !== 'transform' ||
-                (currentSlide !== 0 && currentSlide !== bookPromoImages.length + 1)) return;
-            bannerTrack.style.transition = 'none';
-            showSlide(currentSlide === 0 ? bookPromoImages.length : 1);
-            bannerTrack.offsetHeight;
-            bannerTrack.style.transition = '';
-        });
-
         function restartAutoAdvance() {
             window.clearInterval(autoAdvanceTimer);
-            if (bookPromoImages.length > 1) {
+            if (totalSlides > 1) {
                 autoAdvanceTimer = window.setInterval(() => {
                     showSlide(currentSlide + 1);
                 }, 5000);
             }
         }
+
+        const weatherDescriptions = {
+            0: ['နေသာ', 'fa-sun'],
+            1: ['အများအားဖြင့် နေသာ', 'fa-sun'],
+            2: ['တိမ်အနည်းငယ်ရှိ', 'fa-cloud-sun'],
+            3: ['တိမ်ထူ', 'fa-cloud'],
+            45: ['မြူဆိုင်း', 'fa-smog'],
+            48: ['မြူဆိုင်း', 'fa-smog'],
+            51: ['မိုးဖွဲ', 'fa-cloud-rain'],
+            53: ['မိုးဖွဲ', 'fa-cloud-rain'],
+            55: ['မိုးဖွဲ', 'fa-cloud-rain'],
+            56: ['မိုးဖွဲ', 'fa-cloud-rain'],
+            57: ['မိုးဖွဲ', 'fa-cloud-rain'],
+            61: ['မိုးရွာ', 'fa-cloud-rain'],
+            63: ['မိုးရွာ', 'fa-cloud-rain'],
+            65: ['မိုးသည်း', 'fa-cloud-showers-heavy'],
+            66: ['မိုးရွာ', 'fa-cloud-rain'],
+            67: ['မိုးသည်း', 'fa-cloud-showers-heavy'],
+            71: ['နှင်းကျ', 'fa-snowflake'],
+            73: ['နှင်းကျ', 'fa-snowflake'],
+            75: ['နှင်းသည်း', 'fa-snowflake'],
+            77: ['နှင်းမှုန်', 'fa-snowflake'],
+            80: ['မိုးပြတ်ရွာ', 'fa-cloud-showers-heavy'],
+            81: ['မိုးပြတ်ရွာ', 'fa-cloud-showers-heavy'],
+            82: ['မိုးသည်းထန်စွာ ရွာ', 'fa-cloud-showers-heavy'],
+            85: ['နှင်းကျ', 'fa-snowflake'],
+            86: ['နှင်းသည်း', 'fa-snowflake'],
+            95: ['မိုးကြိုးမုန်တိုင်း', 'fa-cloud-bolt'],
+            96: ['မိုးကြိုးမုန်တိုင်း', 'fa-cloud-bolt'],
+            99: ['မိုးကြိုးမုန်တိုင်း', 'fa-cloud-bolt']
+        };
+        const formatWeatherTime = (date) => new Intl.DateTimeFormat('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hourCycle: 'h23',
+            timeZone: 'Asia/Yangon'
+        }).format(date);
+        const formatWeatherUpdateTime = (value) => {
+            const date = new Date(value);
+            return Number.isNaN(date.getTime())
+                ? value
+                : new Intl.DateTimeFormat('en-GB', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hourCycle: 'h23',
+                    timeZone: 'Asia/Yangon'
+                }).format(date);
+        };
+        const updateWeatherClock = () => {
+            const now = new Date();
+            document.querySelectorAll('.weather-clock').forEach((element) => {
+                element.textContent = `ယခုအချိန် · ${formatWeatherTime(now)}`;
+            });
+        };
+        const loadMyanmarWeather = async () => {
+            document.querySelectorAll('.weather-status').forEach((element) => {
+                element.textContent = 'Weather API မှ အချက်အလက်ရယူနေပါသည်။';
+            });
+            const url = new URL('https://api.open-meteo.com/v1/forecast');
+            url.searchParams.set('latitude', weatherLocations.map((location) => location.latitude).join(','));
+            url.searchParams.set('longitude', weatherLocations.map((location) => location.longitude).join(','));
+            url.searchParams.set('current', 'temperature_2m,weather_code');
+            url.searchParams.set('timezone', 'Asia/Yangon');
+            const response = await fetch(url, { cache: 'no-store' });
+            if (!response.ok) throw new Error(`Weather service request failed (${response.status}).`);
+            const data = await response.json();
+            if (!Array.isArray(data) || data.length !== weatherLocations.length) {
+                throw new Error('Weather service returned an unexpected number of locations.');
+            }
+            const readings = data.map((location) => location && location.current);
+            if (readings.some((current) =>
+                !current || !Number.isFinite(Number(current.temperature_2m)) ||
+                !Number.isFinite(Number(current.weather_code)) || !current.time
+            )) {
+                throw new Error('Weather service returned incomplete current conditions.');
+            }
+
+            const averageTemperature = readings.reduce((total, current) =>
+                total + Number(current.temperature_2m), 0) / readings.length;
+            const weatherCounts = new Map();
+            readings.forEach((current) => {
+                const code = Number(current.weather_code);
+                weatherCounts.set(code, (weatherCounts.get(code) || 0) + 1);
+            });
+            const representativeCode = [...weatherCounts.entries()]
+                .sort((a, b) => b[1] - a[1])[0][0];
+            const [description, icon] = weatherDescriptions[representativeCode] ||
+                ['ရာသီဥတု အခြေအနေ', 'fa-cloud'];
+            document.querySelectorAll('.weather-average').forEach((element) => {
+                element.textContent = `${averageTemperature.toFixed(1)}°C`;
+            });
+            document.querySelectorAll('.weather-condition').forEach((element) => {
+                element.textContent = description;
+            });
+            document.querySelectorAll('.weather-icon').forEach((element) => {
+                element.className = `weather-icon fa-solid ${icon}`;
+            });
+            document.querySelectorAll('.weather-updated').forEach((element) => {
+                element.textContent = `အချက်အလက်ပြင်ဆင်ချိန် · ${formatWeatherUpdateTime(readings[0].time)}`;
+            });
+            document.querySelectorAll('.weather-status').forEach((element) => {
+                element.textContent = '';
+            });
+        };
+
+        updateWeatherClock();
+        window.setInterval(updateWeatherClock, 1000);
+        loadMyanmarWeather().catch((error) => {
+            console.error('Unable to load current Myanmar weather.', error);
+            document.querySelectorAll('.weather-status').forEach((element) => {
+                element.textContent = 'ရာသီဥတုအချက်အလက်ကို ယခုမရနိုင်ပါ။ အင်တာနက်ချိတ်ဆက်မှုကို စစ်ဆေးပါ။';
+            });
+        });
+        window.setInterval(() => {
+            loadMyanmarWeather().catch((error) => {
+                console.error('Unable to refresh current Myanmar weather.', error);
+                document.querySelectorAll('.weather-status').forEach((element) => {
+                    element.textContent = 'ရာသီဥတုအချက်အလက်ကို ပြန်လည်ရယူမရပါ။';
+                });
+            });
+        }, 15 * 60 * 1000);
 
         bannerFrame.addEventListener('pointerdown', (event) => {
             if (!event.isPrimary || event.button !== 0) return;
@@ -267,7 +411,7 @@
         });
 
         if (bookPromoImages.length > 0) {
-            showSlide(bookPromoImages.length > 1 ? 1 : 0);
+            showSlide(0);
             restartAutoAdvance();
         }
     </script>

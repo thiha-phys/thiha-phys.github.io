@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="my">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7fb">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Customer Feedback | UTHK Admin</title>
+</head>
+<body>
+    <main class="page-shell feedback-admin-page">
+        <header class="page-top">
+            <a class="back-button" href="tools.html" aria-label="Back to Workspace"><i class="fa-solid fa-arrow-left"></i></a>
+            <div>
+                <h1 class="page-title">Customer Feedback</h1>
+                <p class="page-subtitle">Customer book ratings and recommendations.</p>
+            </div>
+        </header>
+
+        <section class="panel">
+            <div class="history-refresh-row">
+                <span id="feedback-admin-status" class="muted small" role="status" aria-live="polite">Loading feedback…</span>
+                <button id="refresh-feedback" class="icon-button" type="button" aria-label="Refresh feedback" title="Refresh">
+                    <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="feedback-list" class="feedback-admin-list" aria-live="polite"></section>
+    </main>
+    <script src="admin-api.js"></script>
+    <script src="admin-nav.js"></script>
+    <script src="feedback.js"></script>
+</body>
+</html>

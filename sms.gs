@@ -18,8 +18,11 @@ function doPost(e) {
     if (action === 'listProfiles') {
       return jsonResponse_({ ok: true, profiles: listProfiles_() });
     }
+    if (action === 'listFeedback') {
+      return jsonResponse_({ ok: true, feedback: listRecommendations_() });
+    }
     if (action !== 'create' && action !== 'update' && action !== 'lookup') {
-      throw new Error('Action must be "create", "update", "lookup", or "listProfiles".');
+      throw new Error('Action must be "create", "update", "lookup", "listProfiles", or "listFeedback".');
     }
     if (!profile || typeof profile !== 'object') {
       throw new Error('Profile data is required.');
@@ -134,6 +137,63 @@ function listProfiles_() {
         phone: phone
       };
     });
+}
+
+function listRecommendations_() {
+  const sheet = getRecommendationsSheet_();
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return [];
+
+  const rows = sheet.getRange(2, 1, lastRow - 1, RECOMMENDATION_HEADERS.length)
+    .getDisplayValues();
+  return rows.filter(function (row) {
+    return String(row[0] || '').trim() !== '';
+  }).map(function (row) {
+    const books = RECOMMENDATION_BOOKS.map(function (book, index) {
+      const column = 4 + index * 2;
+      return {
+        id: book.id,
+        rating: Number(row[column] || 0),
+        suggestion: String(row[column + 1] || '')
+      };
+    });
+    return {
+      submittedAt: String(row[0] || ''),
+      name: String(row[1] || ''),
+      job: String(row[3] || '').toLocaleLowerCase(),
+      books: books,
+      otherSuggestion: String(row[RECOMMENDATION_HEADERS.length - 1] || '')
+    };
+  }).reverse();
+}
+
+function getRecommendationsSheet_() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  if (!spreadsheet) {
+    throw new Error('Bind this Apps Script project to the target Google Sheet.');
+  }
+  let sheet = spreadsheet.getSheetByName(RECOMMENDATION_SHEET_NAME);
+  if (!sheet) sheet = spreadsheet.insertSheet(RECOMMENDATION_SHEET_NAME);
+  if (sheet.getMaxColumns() < RECOMMENDATION_HEADERS.length) {
+    sheet.insertColumnsAfter(
+      sheet.getMaxColumns(),
+      RECOMMENDATION_HEADERS.length - sheet.getMaxColumns()
+    );
+  }
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, RECOMMENDATION_HEADERS.length)
+      .setValues([RECOMMENDATION_HEADERS]);
+    sheet.setFrozenRows(1);
+  } else {
+    const actualHeaders = sheet.getRange(1, 1, 1, RECOMMENDATION_HEADERS.length)
+      .getDisplayValues()[0];
+    if (RECOMMENDATION_HEADERS.some(function (header, index) {
+      return actualHeaders[index] !== header;
+    })) {
+      throw new Error('The first row of the Recommendations sheet does not match the expected columns.');
+    }
+  }
+  return sheet;
 }
 
 function normalizeProfile_(profile) {
@@ -324,33 +384,7 @@ function submitRecommendation_(feedback) {
     );
     row.push(sheetSafeText_(otherSuggestion));
 
-    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-    if (!spreadsheet) {
-      throw new Error('Bind this Apps Script project to the target Google Sheet.');
-    }
-    let sheet = spreadsheet.getSheetByName(RECOMMENDATION_SHEET_NAME);
-    if (!sheet) sheet = spreadsheet.insertSheet(RECOMMENDATION_SHEET_NAME);
-    if (sheet.getMaxColumns() < RECOMMENDATION_HEADERS.length) {
-      sheet.insertColumnsAfter(
-        sheet.getMaxColumns(),
-        RECOMMENDATION_HEADERS.length - sheet.getMaxColumns()
-      );
-    }
-
-    if (sheet.getLastRow() === 0) {
-      sheet.getRange(1, 1, 1, RECOMMENDATION_HEADERS.length)
-        .setValues([RECOMMENDATION_HEADERS]);
-      sheet.setFrozenRows(1);
-    } else {
-      const actualHeaders = sheet.getRange(1, 1, 1, RECOMMENDATION_HEADERS.length)
-        .getDisplayValues()[0];
-      if (RECOMMENDATION_HEADERS.some(function (header, index) {
-        return actualHeaders[index] !== header;
-      })) {
-        throw new Error('The first row of the Recommendations sheet does not match the expected columns.');
-      }
-    }
-
+    const sheet = getRecommendationsSheet_();
     const nextRow = sheet.getLastRow() + 1;
     const range = sheet.getRange(nextRow, 1, 1, RECOMMENDATION_HEADERS.length);
     range.setNumberFormat('@');

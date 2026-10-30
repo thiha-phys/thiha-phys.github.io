@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="my">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7fb">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Order Profile | UTHK Admin</title>
+</head>
+<body>
+    <main class="page-shell order-profiles-page">
+        <header class="page-top">
+            <a class="back-button" href="tools.html" aria-label="Back to Workspace"><i class="fa-solid fa-arrow-left"></i></a>
+            <div>
+                <h1 class="page-title">Order Profile</h1>
+                <p class="page-subtitle">Customer details summarized from book orders.</p>
+            </div>
+        </header>
+
+        <section class="profiles-summary panel">
+            <div class="profiles-summary-label">Customers who placed orders</div>
+            <div class="profiles-summary-row"><strong id="order-profile-count">—</strong><span>people</span></div>
+        </section>
+
+        <section class="panel order-profiles-toolbar">
+            <label class="field" for="order-profile-search">Search name, address, or phone
+                <input id="order-profile-search" class="search-input" type="search" autocomplete="off">
+            </label>
+            <div class="history-refresh-row">
+                <span id="order-profiles-status" class="muted small" role="status" aria-live="polite">Loading order profiles…</span>
+                <button id="refresh-order-profiles" class="icon-button" type="button" aria-label="Refresh order profiles" title="Refresh">
+                    <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="order-profiles-grid" class="order-profiles-grid" aria-live="polite"></section>
+    </main>
+    <script src="admin-api.js"></script>
+    <script src="admin-nav.js"></script>
+    <script src="order-profiles.js"></script>
+</body>
+</html>

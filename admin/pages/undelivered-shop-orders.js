@@ -36,7 +36,7 @@ function renderShopOrders() {
     if (!matching.length) {
         const statusLabel = activeShopOrderMode === 'unpaid' ? 'unpaid' : 'undelivered';
         undeliveredShopOrderList.innerHTML =
-            `<div class="empty-state">No ${statusLabel} book store orders found.</div>`;
+            `<div class="empty-state">No ${statusLabel} store orders found.</div>`;
         undeliveredShopStatus.textContent = '0 invoices shown';
         return;
     }

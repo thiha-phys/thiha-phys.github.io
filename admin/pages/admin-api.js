@@ -571,6 +571,14 @@
         return result.profiles;
     }
 
+    async function getFeedback() {
+        const result = await requestProfile('listFeedback');
+        if (!Array.isArray(result.feedback)) {
+            throw new Error('The feedback list returned by the profile backend is invalid.');
+        }
+        return result.feedback;
+    }
+
     async function getShopOrders(shopId) {
         const result = await request('listShopOrders', { shopId });
         if (!Array.isArray(result.orders)) {
@@ -643,6 +651,7 @@
         importRoyalStatementExport,
         getShops,
         getProfiles,
+        getFeedback,
         getShopOrders,
         getShopOrdersByStatus,
         getShopOverview,
