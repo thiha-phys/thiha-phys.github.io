@@ -1849,7 +1849,6 @@
                         <span class="floating-label">Full name</span>
                     </span>
                 </label>
-                <fieldset class="field job-field"><legend>Job</legend><input type="hidden" name="job" value=""><div class="job-options"><button type="button" class="job-choice" data-job="Teacher" aria-pressed="false">Teacher</button><button type="button" class="job-choice" data-job="Student" aria-pressed="false">Student</button></div></fieldset>
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
@@ -1872,6 +1871,14 @@
                         <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
                     </span>
                     <small class="search-hint">At least 8 characters, letters and numbers</small>
+                </label>
+                <label class="field">
+                    <span class="input-wrap floating-field">
+                        <i class="input-icon fa-solid fa-lock" aria-hidden="true"></i>
+                        <input name="confirmPassword" type="password" autocomplete="new-password" placeholder=" " required>
+                        <span class="floating-label">Confirm password</span>
+                        <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+                    </span>
                 </label>
                 <button class="submit-button" type="submit"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Create account</button>
             </form>
@@ -1929,11 +1936,6 @@
             noteAction.hidden = true;
             window.scrollTo(0, 0);
         });
-
-        document.querySelectorAll('.job-choice').forEach((button) => button.addEventListener('click', () => {
-            document.querySelector('[data-auth-form="signup"] [name="job"]').value = button.dataset.job;
-            document.querySelectorAll('.job-choice').forEach((choice) => choice.setAttribute('aria-pressed', String(choice === button)));
-        }));
 
         function showPanel(panelName) {
             const isLogin = panelName === 'login';
@@ -2017,13 +2019,15 @@
         document.querySelector('[data-auth-form="signup"]').addEventListener('submit', async (event) => {
             event.preventDefault();
             const form = event.currentTarget;
-            if (!form.elements.namedItem('job').value) { connectionNote.textContent = 'Choose Teacher or Student for Job.'; connectionNote.classList.add('error'); return; }
+            const password = form.elements.namedItem('password').value;
+            const confirmPassword = form.elements.namedItem('confirmPassword').value;
+            if (password !== confirmPassword) { connectionNote.textContent = 'Passwords do not match.'; connectionNote.classList.add('error'); form.elements.namedItem('confirmPassword').focus(); return; }
             const profile = {
                 name: form.elements.namedItem('name').value.trim(),
-                occupation: form.elements.namedItem('job').value,
+                occupation: '',
                 email: form.elements.namedItem('email').value.trim(),
                 phone: form.elements.namedItem('phone').value.trim(),
-                password: form.elements.namedItem('password').value
+                password
             };
             try {
                 connectionNote.textContent = 'Creating your account...';
