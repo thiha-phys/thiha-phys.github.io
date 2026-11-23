@@ -12,7 +12,23 @@ async function physicsApiFetch(path, options = {}) {
     const headers = new Headers(options.headers || {});
     headers.set('Content-Type', 'application/json');
     if (token) headers.set('Authorization', `Bearer ${token}`);
-    const response = await fetch(`${window.PHYSICS_API_BASE_URL}/api/${path.replace(/^\//, '')}`, { ...options, headers });
+    const requestOptions = { ...options, headers };
+    const method = String(requestOptions.method || 'GET').toUpperCase();
+    const delays = ['GET', 'PUT', 'PATCH'].includes(method) ? [0, 700, 1600] : [0];
+    let response;
+    let lastError;
+    for (const delay of delays) {
+        if (delay) await new Promise((resolve) => setTimeout(resolve, delay));
+        try {
+            response = await fetch(`${window.PHYSICS_API_BASE_URL}/api/${path.replace(/^\//, '')}`, requestOptions);
+            break;
+        } catch (error) { lastError = error; }
+    }
+    if (!response) {
+        const error = new Error('ဆာဗာသို့ ချိတ်ဆက်မရပါ။ အင်တာနက်/VPN ကို စစ်ဆေးပြီး ထပ်ကြိုးစားပါ။');
+        error.cause = lastError;
+        throw error;
+    }
     const result = await response.json().catch(() => ({}));
     if (!response.ok || result.ok === false) {
         const error = new Error(result.message || `Request failed (${response.status}).`);

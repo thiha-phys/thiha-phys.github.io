@@ -57,7 +57,9 @@ async function loadProfiles() {
     profileGrid.innerHTML = '<div class="profiles-empty">Loading profiles…</div>';
     try {
         let profiles = await AdminApi.getProfiles();
-        if (new URLSearchParams(location.search).get('status') === 'pending') profiles = profiles.filter((profile) => profile.approvalStatus === 'pending');
+        const profileFilter = document.body.dataset.profileFilter || new URLSearchParams(location.search).get('status');
+        if (profileFilter === 'pending') profiles = profiles.filter((profile) => profile.approvalStatus === 'pending');
+        else profiles = profiles.filter((profile) => profile.approvalStatus !== 'pending');
         profileGrid.replaceChildren();
         if (!Array.isArray(profiles) || profiles.length === 0) {
             profileCount.textContent = '0';

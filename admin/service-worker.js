@@ -1,4 +1,4 @@
-const CACHE_NAME = 'uthk-admin-shell-v27';
+const CACHE_NAME = 'uthk-admin-shell-v28';
 const APP_FILES = [
     './index.html',
     './style.css',
@@ -11,6 +11,12 @@ const APP_FILES = [
     './pages/admin-nav.js',
     './pages/tools.html',
     './pages/pending-users.html',
+    './pages/profiles.html',
+    './pages/profiles.js',
+    './pages/bookstores.html',
+    './pages/bookstores.js',
+    './pages/announcements.html',
+    './pages/announcements.js',
     './pages/order-profiles.html',
     './pages/order-profiles.js',
     './pages/feedback.html',

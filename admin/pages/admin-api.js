@@ -45,6 +45,21 @@
         return normalized;
     }
 
+    async function apiFetch(url, options = {}) {
+        const method = String(options.method || 'GET').toUpperCase();
+        const retryable = ['GET', 'PUT', 'PATCH'].includes(method);
+        const delays = retryable ? [0, 700, 1600] : [0];
+        let lastError;
+        for (const delay of delays) {
+            if (delay) await new Promise((resolve) => setTimeout(resolve, delay));
+            try { return await fetch(url, options); }
+            catch (error) { lastError = error; }
+        }
+        const error = new Error('Database သို့ ချိတ်ဆက်မရပါ။ အင်တာနက်/VPN ကို စစ်ဆေးပြီး ထပ်စမ်းပါ။');
+        error.cause = lastError;
+        throw error;
+    }
+
     function openCache() {
         return new Promise((resolve, reject) => {
             const opening = indexedDB.open(DB_NAME, DB_VERSION);
@@ -96,7 +111,7 @@
     async function request(action, payload = {}) {
         const route = action === 'listOrders' ? 'admin/orders' : action === 'updateOrder' ? 'admin/orders' : action === 'createOrder' ? 'orders' : `admin/${action}`;
         const method = action === 'listOrders' ? 'GET' : action === 'updateOrder' ? 'PATCH' : 'POST';
-        const response = await fetch(`${API_URL}/api/${route}`, {
+        const response = await apiFetch(`${API_URL}/api/${route}`, {
             method,
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` },
             ...(method === 'GET' ? {} : { body: JSON.stringify(payload) })
@@ -110,7 +125,7 @@
     async function requestProfile(action, payload = {}) {
         const route = ['listProfiles', 'updateUserRole', 'updateUserApproval'].includes(action) ? 'admin/users' : 'admin/feedback';
         const method = ['updateUserRole', 'updateUserApproval'].includes(action) ? 'PATCH' : 'GET';
-        const response = await fetch(`${API_URL}/api/${route}`, {
+        const response = await apiFetch(`${API_URL}/api/${route}`, {
             method,
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` },
             ...(method === 'GET' ? {} : { body: JSON.stringify(payload) })
@@ -122,7 +137,7 @@
     }
 
     async function getMasterData() {
-        const response = await fetch(`${API_URL}/api/admin/master-data`, { cache: 'no-store', headers: { Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` } });
+        const response = await apiFetch(`${API_URL}/api/admin/master-data`, { cache: 'no-store', headers: { Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` } });
         if (!response.ok) throw new Error(`Master data request failed (${response.status}).`);
         const result = await response.json();
         const masterData = result.masterData;
@@ -185,7 +200,7 @@
             books: masterData.books,
             deliveryCities: masterData.deliveryCities
         };
-        const response = await fetch(`${API_URL}/api/admin/master-data`, { method:'PUT', headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` }, body:JSON.stringify({masterData:savedMasterData}) });
+        const response = await apiFetch(`${API_URL}/api/admin/master-data`, { method:'PUT', headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` }, body:JSON.stringify({masterData:savedMasterData}) });
         const result = await response.json();
         if (!response.ok || !result.ok) throw new Error(result.message || 'Master data could not be saved.');
 
@@ -310,28 +325,28 @@
     }
 
     async function getShops() {
-        const response=await fetch(`${API_URL}/api/admin/shops`,{headers:{Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`}});
+        const response=await apiFetch(`${API_URL}/api/admin/shops`,{headers:{Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`}});
         const result=await response.json();
         if(!response.ok||!result.ok)throw new Error(result.message||'ဆိုင်စာရင်းကို ရယူမရပါ။');
         return result.shops||[];
     }
 
     async function getBookstores() {
-        const response = await fetch(`${API_URL}/api/admin/bookstores`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` } });
+        const response = await apiFetch(`${API_URL}/api/admin/bookstores`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` } });
         const result = await response.json();
         if (!response.ok || !result.ok) throw new Error(result.message || 'Bookstores could not be loaded.');
         return result.bookstores;
     }
 
     async function saveBookstores(bookstores) {
-        const response = await fetch(`${API_URL}/api/admin/bookstores`, { method:'PUT', headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}`}, body:JSON.stringify({bookstores}) });
+        const response = await apiFetch(`${API_URL}/api/admin/bookstores`, { method:'PUT', headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}`}, body:JSON.stringify({bookstores}) });
         const result=await response.json();
         if(!response.ok || !result.ok) throw new Error(result.message || 'Bookstores could not be saved.');
         return result.bookstores;
     }
 
     async function getAnnouncements() {
-        const response=await fetch(`${API_URL}/api/admin/announcements`,{headers:{Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`}});
+        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{headers:{Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`}});
         const result=await response.json();
         if(!response.ok||!result.ok)throw new Error(result.message||'ကြေညာချက်များကို ရယူမရပါ။');
         return result.announcements||[];
@@ -342,6 +357,21 @@
         const result=await response.json();
         if(!response.ok||!result.ok)throw new Error(result.message||'ကြေညာချက်ကို သိမ်းမရပါ။');
         return result.announcement;
+    }
+
+    async function updateAnnouncement(id,title,body) {
+        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{method:'PUT',headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({id,title,body})});
+        const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.message||'ကြေညာချက်ပြင်မရပါ။');return result.announcement;
+    }
+
+    async function setAnnouncementActive(id,active) {
+        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{method:'PATCH',headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({id,active})});
+        const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.message||'ရွေးချယ်မှုကို သိမ်းမရပါ။');return result.announcement;
+    }
+
+    async function deleteAnnouncement(id) {
+        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{method:'DELETE',headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({id})});
+        const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.message||'ကြေညာချက်ဖျက်မရပါ။');return result;
     }
 
     async function getProfiles() {
@@ -435,6 +465,9 @@
         saveBookstores,
         getAnnouncements,
         saveAnnouncement,
+        updateAnnouncement,
+        setAnnouncementActive,
+        deleteAnnouncement,
         getDeliveryCities,
         getCachedOrders,
         refreshOrders,

@@ -88,7 +88,7 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Vary', 'Origin');
     res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
   }
   if (req.method === 'OPTIONS') return res.status(204).end();
   try {
@@ -161,7 +161,7 @@ export default async function handler(req, res) {
       return send(res,200,{ok:true,bookstores:rows});
     }
     if (route === '/public/announcements' && req.method === 'GET') {
-      const rows=await db`SELECT id,title,body,publish_at FROM announcements WHERE active=true AND publish_at<=now() ORDER BY publish_at DESC`;
+      const rows=await db`SELECT id,title,body,publish_at FROM announcements WHERE active=true AND publish_at<=now() ORDER BY publish_at DESC LIMIT 3`;
       return send(res,200,{ok:true,announcements:rows});
     }
 
@@ -464,17 +464,33 @@ export default async function handler(req, res) {
       return send(res,200,{ok:true,feedback:feedbackRows.map((f)=>({id:f.id,name:f.name,phone:f.phone,...(JSON.parse(f.message||'{}')),status:f.status,createdAt:f.created_at}))});
     }
     if (route === '/admin/announcements' && req.method === 'GET') {
-      const rows=await db`SELECT id,title,body,active,publish_at FROM announcements WHERE active=true ORDER BY publish_at DESC`;
+      const rows=await db`SELECT id,title,body,active,publish_at FROM announcements ORDER BY created_at DESC`;
       return send(res,200,{ok:true,announcements:rows});
     }
     if (route === '/admin/announcements' && req.method === 'POST') {
       const body=await readBody(req);
-      const rows=await db`INSERT INTO announcements(title,body,active) VALUES (${String(body.title||'').trim()},${String(body.body||'').trim()},true) RETURNING id,title,body,active,publish_at`;
+      const title=String(body.title||'').trim(), content=String(body.body||'').trim();
+      if(!title||!content)return send(res,400,{ok:false,message:'ခေါင်းစဉ်နှင့် ကြေညာချက်စာသား ဖြည့်ပါ။'});
+      const rows=await db`INSERT INTO announcements(title,body,active) VALUES (${title},${content},false) RETURNING id,title,body,active,publish_at`;
       return send(res,201,{ok:true,announcement:rows[0]});
+    }
+    if (route === '/admin/announcements' && req.method === 'PUT') {
+      const body=await readBody(req),title=String(body.title||'').trim(),content=String(body.body||'').trim();
+      if(!title||!content)return send(res,400,{ok:false,message:'ခေါင်းစဉ်နှင့် ကြေညာချက်စာသား ဖြည့်ပါ။'});
+      const rows=await db`UPDATE announcements SET title=${title},body=${content} WHERE id=${String(body.id||'')} RETURNING id,title,body,active,publish_at`;
+      if(!rows.length)return send(res,404,{ok:false,message:'ကြေညာချက်မတွေ့ပါ။'});
+      return send(res,200,{ok:true,announcement:rows[0]});
+    }
+    if (route === '/admin/announcements' && req.method === 'PATCH') {
+      const body=await readBody(req),id=String(body.id||''),active=body.active===true;
+      if(active){const rows=await db`SELECT count(*)::int AS count FROM announcements WHERE active=true AND publish_at<=now()`;if(Number(rows[0]?.count||0)>=3)return send(res,409,{ok:false,message:'Customer app တွင် တစ်ချိန်တည်း ကြေညာချက် ၃ ခုသာ ပြနိုင်ပါသည်။ အရင်တစ်ခုကို ပိတ်ပြီးမှ ထပ်ရွေးပါ။'});}
+      const rows=await db`UPDATE announcements SET active=${active},publish_at=CASE WHEN ${active} THEN now() ELSE publish_at END WHERE id=${id} RETURNING id,title,body,active,publish_at`;
+      if(!rows.length)return send(res,404,{ok:false,message:'ကြေညာချက်မတွေ့ပါ။'});
+      return send(res,200,{ok:true,announcement:rows[0]});
     }
     if (route === '/admin/announcements' && req.method === 'DELETE') {
       const body=await readBody(req);
-      const rows=await db`UPDATE announcements SET active=false WHERE id=${String(body.id||'')} RETURNING id`;
+      const rows=await db`DELETE FROM announcements WHERE id=${String(body.id||'')} RETURNING id`;
       if(!rows.length) return send(res,404,{ok:false,message:'ကြေညာချက်မတွေ့ပါ။'});
       return send(res,200,{ok:true});
     }

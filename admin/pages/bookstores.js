@@ -35,8 +35,12 @@ async function loadStores(){
     catch(error){statusElement.textContent=`ရယူမရပါ။ ${error.message}`;statusElement.classList.add('error');}
 }
 document.getElementById('add-store').addEventListener('click',()=>{
-    const index=rowsElement.children.length+1;
-    renderStores([...readStores(),{id:`new-store-${index}`,city:'',name:'',address:'',phones:[],active:true}]);
+    const stores=readStores();
+    const numericIds=stores.map(store=>String(store.id).trim()).filter(id=>/^\d+$/.test(id)).map(Number);
+    let nextId=(numericIds.length?Math.max(...numericIds):0)+1;
+    const used=new Set(stores.map(store=>String(store.id).trim()));
+    while(used.has(String(nextId)))nextId++;
+    renderStores([...stores,{id:String(nextId),city:'',name:'',address:'',phones:[],active:true}]);
     rowsElement.lastElementChild?.querySelector('[data-field="city"]')?.focus();
 });
 document.getElementById('save-stores').addEventListener('click',async event=>{
