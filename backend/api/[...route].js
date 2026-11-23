@@ -33,9 +33,27 @@ function safeUser(row) {
 async function notifyTelegram(order) {
   const token=process.env.TELEGRAM_BOT_TOKEN,chatId=process.env.TELEGRAM_CHAT_ID;
   if(!token||!chatId)return false;
-  const escape=(value)=>String(value??'').replace(/[&<>]/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]));
-  const lines=[`<b>New order ${escape(order.voucherNo)}</b>`,`Name: ${escape(order.name)}`,`Phone: ${escape(order.phone)}`,`City: ${escape(order.city)}`,`Total: ${Number(order.payableTotal||0).toLocaleString('en-US')} MMK`,`Payment: ${escape(order.paymentMethod)}`,...(order.items||[]).map((item)=>`• ${escape(item.name)} × ${item.quantity}`)];
-  try{const response=await fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chatId,text:lines.join('\n'),parse_mode:'HTML'})});return response.ok;}catch(error){console.error('Telegram order notification failed.',error);return false;}
+  const itemRows=order.items||[];
+  const quantity=itemRows.reduce((sum,item)=>sum+Number(item.quantity||0),0);
+  const orderTime=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Yangon',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(new Date(order.orderDate||Date.now())).replaceAll('/','.');
+  const lines=[
+    '📚 NEW BOOK ORDER',
+    '',
+    String(order.voucherNo||''),
+    String(order.name||''),
+    String(order.phone||''),
+    `${String(order.address||order.city||'')}${order.carInfo?`, ${String(order.carInfo)}`:''}`,
+    '',
+    ...itemRows.map(item=>`- ${String(item.name||'')} x ${Number(item.quantity||0)} = ${Number(item.amount||0)}`),
+    '',
+    `Quantity: ${quantity}`,
+    '',
+    `Total: ${Number(order.total||0)}`,
+    `Delivery Fee: ${Number(order.deliveryFees||0)}`,
+    `Payment Method: ${String(order.paymentMethod||'')}`,
+    orderTime
+  ];
+  try{const response=await fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chatId,text:lines.join('\n')}),signal:AbortSignal.timeout(8000)});if(!response.ok)console.error('Telegram order notification failed with HTTP status',response.status);return response.ok;}catch(error){console.error('Telegram order notification failed.',error);return false;}
 }
 function royalPhoneCandidates(value) {
   const text=String(value||'').replace(/[၀-၉]/g,(digit)=>String(digit.charCodeAt(0)-'၀'.charCodeAt(0)));
