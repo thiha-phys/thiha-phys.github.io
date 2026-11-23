@@ -28,7 +28,14 @@ function tokenHash(token) {
   return createHash('sha256').update(token).digest('hex');
 }
 function safeUser(row) {
-  return { id: row.id, name: row.name, occupation: row.occupation, job: row.occupation, email: row.email, phone: row.phone, role: row.role };
+  return { id: row.id, name: row.name, occupation: row.occupation, job: row.occupation, email: row.email, phone: row.phone, role: row.role, approvalStatus: row.approval_status || 'approved' };
+}
+async function notifyTelegram(order) {
+  const token=process.env.TELEGRAM_BOT_TOKEN,chatId=process.env.TELEGRAM_CHAT_ID;
+  if(!token||!chatId)return false;
+  const escape=(value)=>String(value??'').replace(/[&<>]/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[char]));
+  const lines=[`<b>New order ${escape(order.voucherNo)}</b>`,`Name: ${escape(order.name)}`,`Phone: ${escape(order.phone)}`,`City: ${escape(order.city)}`,`Total: ${Number(order.payableTotal||0).toLocaleString('en-US')} MMK`,`Payment: ${escape(order.paymentMethod)}`,...(order.items||[]).map((item)=>`• ${escape(item.name)} × ${item.quantity}`)];
+  try{const response=await fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chatId,text:lines.join('\n'),parse_mode:'HTML'})});return response.ok;}catch(error){console.error('Telegram order notification failed.',error);return false;}
 }
 function royalPhoneCandidates(value) {
   const text=String(value||'').replace(/[၀-၉]/g,(digit)=>String(digit.charCodeAt(0)-'၀'.charCodeAt(0)));
@@ -43,7 +50,7 @@ async function createSession(db, user) {
 async function getUser(req, db) {
   const token = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
   if (!token) return null;
-  const rows = await db`SELECT u.id, u.name, u.occupation, u.email, u.phone, u.role
+  const rows = await db`SELECT u.id, u.name, u.occupation, u.email, u.phone, u.role, u.approval_status
     FROM sessions s JOIN users u ON u.id=s.user_id
     WHERE s.token_hash=${tokenHash(token)} AND s.expires_at > now()`;
   return rows[0] || null;
@@ -89,9 +96,9 @@ export default async function handler(req, res) {
       if (!name || !/^0\d{10}$/.test(phone)) return send(res, 400, { ok:false, code:'MISSING_PROFILE', message:'အမည်နှင့် ၀ ဖြင့်စသော ၁၁ လုံးရှိသည့် ဖုန်းနံပါတ် ဖြည့်ပါ။' });
       const salt = randomBytes(16).toString('hex');
       const hash = Buffer.from(await scrypt(password, salt, 64)).toString('hex');
-      const inserted = await db`INSERT INTO users (name, occupation, email, phone, password_hash, password_salt)
-        VALUES (${name}, ${occupation}, ${email || null}, ${phone}, ${hash}, ${salt})
-        ON CONFLICT DO NOTHING RETURNING id, name, occupation, email, phone, role`;
+      const inserted = await db`INSERT INTO users (name, occupation, email, phone, password_hash, password_salt,approval_status)
+        VALUES (${name}, ${occupation}, ${email || null}, ${phone}, ${hash}, ${salt},'pending')
+        ON CONFLICT DO NOTHING RETURNING id, name, occupation, email, phone, role,approval_status`;
       if (!inserted.length) {
         const existing = await db`SELECT email,phone FROM users WHERE (email IS NOT NULL AND lower(email)=lower(${email || null})) OR phone=${phone} LIMIT 1`;
         return send(res, 409, { ok:false, code:existing.some((row)=>row.phone===phone)?'PHONE_EXISTS':'EMAIL_EXISTS', message:existing.some((row)=>row.phone===phone)?'ဤဖုန်းနံပါတ်ဖြင့် အကောင့်ရှိပြီးသားဖြစ်သည်။':'ဤ email ဖြင့် အကောင့်ရှိပြီးသားဖြစ်သည်။' });
@@ -104,7 +111,7 @@ export default async function handler(req, res) {
       const body = await readBody(req);
       const identifier = String(body.identifier || body.email || body.phone || '').trim();
       const phoneIdentifier = normalizePhone(identifier);
-      const rows = await db`SELECT id, name, occupation, email, phone, role, password_hash, password_salt
+      const rows = await db`SELECT id, name, occupation, email, phone, role, approval_status,password_hash, password_salt
         FROM users WHERE (email IS NOT NULL AND lower(email)=lower(${identifier})) OR (phone=${phoneIdentifier} AND ${/^\d+$/.test(phoneIdentifier)}) LIMIT 1`;
       const user = rows[0];
       const supplied = Buffer.from(await scrypt(String(body.password || ''), user?.password_salt || 'invalid-salt', 64));
@@ -141,6 +148,7 @@ export default async function handler(req, res) {
     if (route === '/orders' && req.method === 'POST') {
       const user = await getUser(req, db);
       if (!user) return send(res, 401, { ok:false, code:'AUTH_REQUIRED', message:'အကောင့်ဝင်ပြီးမှ မှာယူနိုင်ပါသည်။' });
+      if(user.role!=='admin'&&user.approval_status!=='approved') return send(res,403,{ok:false,code:user.approval_status==='rejected'?'ACCOUNT_REJECTED':'ACCOUNT_PENDING',message:'အကောင့်အသုံးပြုခွင့်အတွက် admin အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်။'});
       const body = await readBody(req);
       const order = body.order || {};
       const cityRows = await db`SELECT * FROM delivery_cities WHERE lower(english)=lower(${String(order.deliveryCity || '')}) AND active=true LIMIT 1`;
@@ -180,19 +188,22 @@ export default async function handler(req, res) {
       const total=subtotal+deliveryFee;
       if(payment==='COD' && total>=Number(settings.codMaxTotal ?? 150000)) return send(res,400,{ok:false,code:'COD_LIMIT',message:'စုစုပေါင်းပမာဏအတွက် KBZ Pay ကိုသာ ရွေးချယ်နိုင်ပါသည်။'});
       if(!String(order.address||'').trim() || !String(order.name||user.name).trim() || !String(order.phone||user.phone).trim()) return send(res,400,{ok:false,code:'MISSING_ORDER_DETAILS',message:'အမည်၊ ဖုန်းနှင့် လိပ်စာ ဖြည့်ပါ။'});
-      const orderId = `PH-${Date.now().toString(36).toUpperCase()}-${randomBytes(3).toString('hex').toUpperCase()}`;
-      const created = await db`INSERT INTO orders (voucher_no,user_id,customer_name,phone,phone2,city_id,address,delivery_service,payment_method,car_details,status)
-        VALUES (${orderId},${user.id},${String(order.name || user.name).trim()},${String(order.phone || user.phone).trim()},${String(order.phone2 || '').trim()},${city.id},${String(order.address || '').trim()},${service},${payment},${String(order.carDetails || '').trim()},'new')
-        RETURNING id, voucher_no`;
+      const created = await db`WITH next_number AS (SELECT nextval('orders_order_no_seq') AS order_no)
+        INSERT INTO orders (order_no,voucher_no,user_id,customer_name,phone,phone2,city_id,address,delivery_service,payment_method,car_details,status)
+        SELECT order_no,lpad(order_no::text,3,'0'),${user.id},${String(order.name || user.name).trim()},${String(order.phone || user.phone).trim()},${String(order.phone2 || '').trim()},${city.id},${String(order.address || '').trim()},${service},${payment},${String(order.carDetails || '').trim()},'new' FROM next_number
+        RETURNING id, voucher_no,order_no`;
       for(const item of preparedItems) await db`INSERT INTO order_items(order_id,book_id,book_name,quantity,unit_price,amount,weight_kg) VALUES (${created[0].id},${item.book.id},${item.book.name},${item.quantity},${item.unitPrice},${item.amount},${Number(item.book.weight)})`;
       await db`UPDATE orders SET subtotal=${subtotal},delivery_fee=${deliveryFee},total=${total},total_weight_kg=${kg},cash_collection=${payment==='COD'?total:0} WHERE id=${created[0].id}`;
-      return send(res, 201, { ok:true, orderId, order:{voucherNo:orderId,name:String(order.name || user.name),phone:String(order.phone || user.phone),phone2:String(order.phone2 || ''),address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,carInfo:String(order.carDetails || ''),items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))} });
+      const resultOrder={voucherNo:created[0].voucher_no,name:String(order.name || user.name),phone:String(order.phone || user.phone),phone2:String(order.phone2 || ''),city:city.label,address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,carInfo:String(order.carDetails || ''),items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))};
+      const telegramNotified=await notifyTelegram(resultOrder);
+      return send(res, 201, { ok:true, orderId:created[0].voucher_no, order:resultOrder,telegramNotified });
     }
 
     const user = await getUser(req, db);
     if (!user) return send(res, 401, {ok:false,code:'AUTH_REQUIRED',message:'အကောင့်ဝင်ရန်လိုအပ်ပါသည်။'});
-    if (route.startsWith('/admin/') && user.role !== 'admin') return send(res,403,{ok:false,code:'ADMIN_REQUIRED',message:'ဤလုပ်ဆောင်ချက်ကို admin သာ အသုံးပြုနိုင်ပါသည်။'});
     if (route === '/auth/me' && req.method === 'GET') return send(res,200,{ok:true,user:safeUser(user)});
+    if(user.role!=='admin' && user.approval_status!=='approved' && route!=='/auth/logout') return send(res,403,{ok:false,code:user.approval_status==='rejected'?'ACCOUNT_REJECTED':'ACCOUNT_PENDING',message:user.approval_status==='rejected'?'သင့်အကောင့်ကို အတည်မပြုနိုင်ပါ။':'အကောင့်အသုံးပြုခွင့်အတွက် admin အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်။'});
+    if (route.startsWith('/admin/') && user.role !== 'admin') return send(res,403,{ok:false,code:'ADMIN_REQUIRED',message:'ဤလုပ်ဆောင်ချက်ကို admin သာ အသုံးပြုနိုင်ပါသည်။'});
     if (route === '/orders' && req.method === 'GET') {
       const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.created_at
         FROM orders o JOIN delivery_cities c ON c.id=o.city_id WHERE o.user_id=${user.id} ORDER BY o.created_at DESC LIMIT 100`;
@@ -230,9 +241,9 @@ export default async function handler(req, res) {
     }
 
     if (route === '/admin/orders' && req.method === 'GET') {
-      const orders=await db`SELECT o.*,c.english AS city_english,c.label AS city_label FROM orders o JOIN delivery_cities c ON c.id=o.city_id ORDER BY o.created_at DESC LIMIT 1000`;
+      const orders=await db`SELECT o.*,c.english AS city_english,c.label AS city_label FROM orders o JOIN delivery_cities c ON c.id=o.city_id ORDER BY o.created_at DESC`;
       const items=await db`SELECT oi.order_id,oi.book_id,oi.quantity,oi.amount,b.quantity_header,b.amount_header FROM order_items oi LEFT JOIN books b ON b.id=oi.book_id ORDER BY oi.book_name`;
-      return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);return{...extra,'Voucher No':o.voucher_no,Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??(o.status==='received'?'Yes':''),'Deliver Date':extra['Deliver Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
+      return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);return{...extra,'Voucher No':o.voucher_no,Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??(o.status==='received'?'Yes':''),'Deliver Date':extra['Deliver Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),status:o.status,'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
     }
     if (route === '/admin/orders' && req.method === 'PATCH') {
       const body=await readBody(req), order=body.order || body;
@@ -317,14 +328,18 @@ export default async function handler(req, res) {
       return send(res,200,{ok:true,bookstores:rows});
     }
     if (route === '/admin/users' && req.method === 'GET') {
-      const users=await db`SELECT id,name,occupation,email,phone,role,created_at FROM users ORDER BY created_at DESC`;
+      const users=await db`SELECT id,name,occupation,email,phone,role,approval_status,created_at FROM users ORDER BY created_at DESC`;
       return send(res,200,{ok:true,profiles:users.map((u)=>({...safeUser(u),adminEligible:adminEmails.includes(normalizeEmail(u.email)),createdAt:u.created_at}))});
     }
     if (route === '/admin/users' && req.method === 'PATCH') {
-      const body=await readBody(req),targetId=String(body.userId||''),role=String(body.role||'');
-      if(!targetId||!['customer','admin'].includes(role)) return send(res,400,{ok:false,message:'အသုံးပြုသူနှင့် role ကို စစ်ဆေးပါ။'});
-      const targetRows=await db`SELECT id,email,role FROM users WHERE id=${targetId} LIMIT 1`,target=targetRows[0];
+      const body=await readBody(req),targetId=String(body.userId||''),role=String(body.role||''),approvalStatus=String(body.approvalStatus||'');
+      if(!targetId||(!['customer','admin'].includes(role)&&!['approved','rejected'].includes(approvalStatus))) return send(res,400,{ok:false,message:'အသုံးပြုသူနှင့် ပြောင်းလဲမှုကို စစ်ဆေးပါ။'});
+      const targetRows=await db`SELECT id,email,role,approval_status FROM users WHERE id=${targetId} LIMIT 1`,target=targetRows[0];
       if(!target) return send(res,404,{ok:false,message:'အသုံးပြုသူကို မတွေ့ပါ။'});
+      if(approvalStatus){
+        const updated=await db`UPDATE users SET approval_status=${approvalStatus},updated_at=now() WHERE id=${target.id} RETURNING id,name,occupation,email,phone,role,approval_status`;
+        return send(res,200,{ok:true,user:safeUser(updated[0])});
+      }
       if(role==='admin'&&!adminEmails.includes(normalizeEmail(target.email))) return send(res,403,{ok:false,message:'သတ်မှတ်ထားသော admin email စာရင်းတွင် မပါဝင်ပါ။'});
       if(role==='customer'&&target.role==='admin'){
         const admins=await db`SELECT email FROM users WHERE role='admin'`;

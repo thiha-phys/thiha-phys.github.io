@@ -96,7 +96,4 @@ async function loadFeedback(button) {
     }
 }
 
-document.getElementById('refresh-feedback').addEventListener('click', (event) =>
-    loadFeedback(event.currentTarget)
-);
 loadFeedback();

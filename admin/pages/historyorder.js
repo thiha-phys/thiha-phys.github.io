@@ -8,7 +8,7 @@ let activeMode = ['undelivered', 'unpaid'].includes(requestedMode) ? requestedMo
 function formatOrderDateEnglish(value) {
     const text = String(value || '').trim();
     const isoDate = /^(\d{4})-(\d{2})-(\d{2})/.exec(text);
-    if (isoDate) return `${isoDate[3]}/${isoDate[2]}/${isoDate[1]}`;
+    if (isoDate) return `${isoDate[3]}/${isoDate[2]}/${isoDate[1]} ${text.length > 10 ? text.slice(11,16) : ''}`.trim();
 
     const parsed = new Date(text);
     return Number.isNaN(parsed.getTime())
@@ -34,7 +34,7 @@ function formatHistoryCacheTime(updatedAt) {
             values[part.type] = part.value;
             return values;
         }, {});
-    return `Refresh · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
+    return `Loaded · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
 }
 
 function renderDetailLine(label, value) {
@@ -131,7 +131,7 @@ function renderOrders() {
     matches.forEach((order) => {
         const card = document.createElement('details');
         card.className = 'order-card';
-        const delivered = Boolean(String(order['Delivered Date'] || '').trim());
+        const delivered = Boolean(String(order['Delivered Date'] || order['Deliver Date'] || '').trim()) || order.status === 'delivered';
         const paid = Number(order['Amount Received'] || 0) >= Number(order.Total || 0);
         const paymentMethod = paymentMethodLabel(order['Payment Method']);
         card.innerHTML = `
@@ -139,7 +139,7 @@ function renderOrders() {
                 <span class="order-card-heading">
                     <strong>${escapeText(order['Voucher No'])}</strong>
                     <span class="order-card-statuses">
-                        <span class="badge ${delivered ? 'good' : 'warning'}">${delivered ? 'ပို့ပြီး' : 'မပို့ရသေး'}</span>
+                        <span class="badge ${delivered ? 'good' : 'warning'}">${delivered ? 'complete' : 'pending'}</span>
                         <span class="badge ${paid ? 'good' : 'warning'}">${paid ? 'ငွေရှင်းပြီး' : 'ငွေမရှင်းရသေး'}</span>
                         ${paymentMethod ? `<span class="badge payment-method">${escapeText(paymentMethod)}</span>` : ''}
                     </span>
@@ -189,41 +189,17 @@ async function loadOrders() {
             book.amountHeader || `${book.id} Amount`,
             book.name
         ]);
-        const cached = await AdminApi.getCachedOrders();
-        if (!cached) {
-            statusElement.textContent = 'No saved data yet. Select Refresh to load orders.';
-            return;
-        }
+        const cached = await AdminApi.refreshOrders();
         allOrders = cached.data;
         document.getElementById('history-cache-status').textContent =
             formatHistoryCacheTime(cached.updatedAt);
         renderOrders();
     } catch (error) {
         console.error('Unable to read cached order history.', error);
-        statusElement.textContent = 'Unable to read saved data. Select Refresh to try again.';
+        statusElement.textContent = 'Unable to load orders from the database.';
         statusElement.classList.add('error');
     }
 }
-
-document.getElementById('refresh-history').addEventListener('click', async (event) => {
-    const button = event.currentTarget;
-    const cacheStatus = document.getElementById('history-cache-status');
-    button.disabled = true;
-    statusElement.className = 'status-message';
-    statusElement.textContent = 'Refreshing orders…';
-    try {
-        const cached = await AdminApi.refreshOrders();
-        allOrders = cached.data;
-        cacheStatus.textContent = formatHistoryCacheTime(cached.updatedAt);
-        renderOrders();
-    } catch (error) {
-        console.error('Unable to refresh order history.', error);
-        statusElement.textContent = 'Unable to refresh orders. Check your internet connection and try again.';
-        statusElement.classList.add('error');
-    } finally {
-        button.disabled = false;
-    }
-});
 
 ['search', 'date-from', 'date-to'].forEach((id) =>
     document.getElementById(id).addEventListener('input', renderOrders)

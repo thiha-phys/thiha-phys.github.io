@@ -82,9 +82,6 @@ async function loadShopOrders(button) {
     }
 }
 
-document.getElementById('refresh-undelivered-shop-orders').addEventListener('click', (event) =>
-    loadShopOrders(event.currentTarget)
-);
 document.querySelectorAll('.store-order-modes .history-mode').forEach((button) => {
     const mode = button.dataset.mode;
     button.classList.toggle('is-active', mode === activeShopOrderMode);

@@ -25,6 +25,12 @@
     const isHomePage = window.location.pathname === '/' ||
         window.location.pathname === '/index.html';
 
+    const isPendingPage = window.location.pathname === '/page/pending.html';
+    if (isSignedIn && profile.approvalStatus && profile.approvalStatus !== 'approved' && !isPendingPage) {
+        window.location.replace('/page/pending.html');
+        return;
+    }
+
     if (isSignedIn || isLoginPage) {
         return;
     }

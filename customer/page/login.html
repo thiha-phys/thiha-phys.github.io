@@ -217,6 +217,12 @@
                 0 0 0 3px rgba(83, 120, 220, 0.1);
         }
 
+        .job-field { border: 0; padding: 0; margin: 0 0 14px; min-width: 0; }
+        .job-field legend { margin-bottom: 7px; color: #53677f; font-size: 14px; font-weight: 600; }
+        .job-options { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+        .job-choice { min-height: 46px; border: 1px solid #d9e2eb; border-radius: 12px; background: #fff; color: #52667e; font: inherit; cursor: pointer; }
+        .job-choice[aria-pressed="true"] { border-color: #45aabb; background: #edf9fa; color: #176f82; box-shadow: 0 0 0 2px #45aabb20; }
+
         .field select {
             appearance: none;
             padding-right: 16px;
@@ -1770,15 +1776,6 @@
 
         <div class="auth-view" id="auth-view" hidden>
         <button class="back-button" id="back-to-welcome" type="button"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Welcome</button>
-        <nav class="auth-tabs" role="tablist" aria-label="Account options">
-            <button class="auth-tab" id="login-tab" type="button" role="tab" aria-selected="true" aria-controls="login-panel">
-                <span>Log in</span>
-            </button>
-            <button class="auth-tab" id="signup-tab" type="button" role="tab" aria-selected="false" aria-controls="signup-panel">
-                <span>Sign up</span>
-            </button>
-        </nav>
-
         <section class="auth-form" id="login-panel" aria-labelledby="login-heading">
             <h2 id="login-heading">Welcome back</h2>
             <p class="form-intro">Use your phone number or email and password.</p>
@@ -1813,17 +1810,7 @@
                         <span class="floating-label">Full name</span>
                     </span>
                 </label>
-                <label class="field">
-                    <span class="input-wrap floating-field">
-                        <i class="input-icon fa-solid fa-briefcase" aria-hidden="true"></i>
-                        <select name="job" required>
-                            <option value="" selected disabled hidden></option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="Student">Student</option>
-                        </select>
-                        <span class="floating-label">I am a...</span>
-                    </span>
-                </label>
+                <fieldset class="field job-field"><legend>Job</legend><input type="hidden" name="job" value=""><div class="job-options"><button type="button" class="job-choice" data-job="Teacher" aria-pressed="false">Teacher</button><button type="button" class="job-choice" data-job="Student" aria-pressed="false">Student</button></div></fieldset>
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
@@ -1842,9 +1829,10 @@
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-lock" aria-hidden="true"></i>
                         <input name="password" type="password" autocomplete="new-password" placeholder=" " minlength="8" pattern="(?=.*[A-Za-z])(?=.*[0-9]).{8,}" title="Use at least 8 characters with letters and numbers." required>
-                        <span class="floating-label">Password (8+ characters, letters and numbers)</span>
+                        <span class="floating-label">Password</span>
                         <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
                     </span>
+                    <small class="search-hint">At least 8 characters, letters and numbers</small>
                 </label>
                 <button class="submit-button" type="submit"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Create account</button>
             </form>
@@ -2068,8 +2056,6 @@
     <script src="api-config.js"></script>
     <script src="profile-api.js"></script>
     <script>
-        const loginTab = document.getElementById('login-tab');
-        const signupTab = document.getElementById('signup-tab');
         const loginPanel = document.getElementById('login-panel');
         const signupPanel = document.getElementById('signup-panel');
         const welcomePanel = document.getElementById('welcome-panel');
@@ -2079,22 +2065,23 @@
         const loginIdentifier = document.querySelector('[data-auth-form="login"] [name="identifier"]');
         const signupPhone = document.querySelector('[data-auth-form="signup"] [name="phone"]');
 
+        document.querySelectorAll('.job-choice').forEach((button) => button.addEventListener('click', () => {
+            document.querySelector('[data-auth-form="signup"] [name="job"]').value = button.dataset.job;
+            document.querySelectorAll('.job-choice').forEach((choice) => choice.setAttribute('aria-pressed', String(choice === button)));
+        }));
+
         function showPanel(panelName) {
             const isLogin = panelName === 'login';
             welcomePanel.hidden = true;
             authView.hidden = false;
             loginPanel.hidden = !isLogin;
             signupPanel.hidden = isLogin;
-            loginTab.setAttribute('aria-selected', String(isLogin));
-            signupTab.setAttribute('aria-selected', String(!isLogin));
             connectionNote.textContent = '';
             connectionNote.className = 'connection-note';
             noteAction.hidden = true;
             window.scrollTo(0, 0);
         }
 
-        loginTab.addEventListener('click', () => showPanel('login'));
-        signupTab.addEventListener('click', () => showPanel('signup'));
         document.getElementById('back-to-welcome').addEventListener('click', () => {
             authView.hidden = true;
             welcomePanel.hidden = false;
@@ -2164,6 +2151,7 @@
         document.querySelector('[data-auth-form="signup"]').addEventListener('submit', async (event) => {
             event.preventDefault();
             const form = event.currentTarget;
+            if (!form.elements.namedItem('job').value) { connectionNote.textContent = 'Choose Teacher or Student for Job.'; connectionNote.classList.add('error'); return; }
             const profile = {
                 name: form.elements.namedItem('name').value.trim(),
                 occupation: form.elements.namedItem('job').value,
@@ -2177,6 +2165,7 @@
                 localStorage.setItem('physicsLearningHubSession', result.token);
                 sessionStorage.removeItem('physicsLearningHubSession');
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(result.user));
+                if (result.user.approvalStatus !== 'approved') { window.location.replace('pending.html'); return; }
                 const returnTo = new URLSearchParams(window.location.search).get('returnTo');
                 const safeReturnTo = returnTo && returnTo.startsWith('/') && !returnTo.startsWith('//') && !returnTo.startsWith('/page/login')
                     ? returnTo : '../index.html';
@@ -2199,6 +2188,7 @@
                 localStorage.setItem('physicsLearningHubSession', result.token);
                 sessionStorage.removeItem('physicsLearningHubSession');
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(result.user));
+                if (result.user.approvalStatus !== 'approved') { window.location.replace('pending.html'); return; }
                 const returnTo = new URLSearchParams(window.location.search).get('returnTo');
                 const safeReturnTo = returnTo && returnTo.startsWith('/') &&
                     !returnTo.startsWith('//') &&

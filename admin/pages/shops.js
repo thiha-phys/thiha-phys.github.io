@@ -25,7 +25,4 @@ async function loadShops(button) {
     }
 }
 
-document.getElementById('refresh-shops').addEventListener('click', (event) =>
-    loadShops(event.currentTarget)
-);
 loadShops();

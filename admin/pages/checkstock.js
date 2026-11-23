@@ -29,7 +29,7 @@ function formatStockCacheTime(updatedAt) {
             values[part.type] = part.value;
             return values;
         }, {});
-    return `Refresh · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
+    return `Updated · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
 }
 
 function formatStockDate(value) {
@@ -101,38 +101,15 @@ function renderStock(stock) {
 async function loadStock() {
     stockStatus.className = 'status-message';
     try {
-        const cached = await AdminApi.getCachedStock();
-        if (!cached) {
-            stockStatus.textContent = 'No saved stock data yet. Select Refresh to load stock.';
-            return;
-        }
+        const cached = await AdminApi.refreshStock();
         renderStock(cached.data);
         document.getElementById('stock-cache-status').textContent =
             formatStockCacheTime(cached.updatedAt);
         stockStatus.textContent = '';
     } catch (error) {
         console.error('Unable to read cached book stock.', error);
-        stockStatus.textContent = 'Unable to read saved stock data. Select Refresh to try again.';
+        stockStatus.textContent = 'Unable to load stock from the database.';
         stockStatus.classList.add('error');
-    }
-}
-
-async function refreshStock(button) {
-    button.disabled = true;
-    stockStatus.className = 'status-message';
-    stockStatus.textContent = 'Refreshing stock…';
-    try {
-        const cached = await AdminApi.refreshStock();
-        renderStock(cached.data);
-        document.getElementById('stock-cache-status').textContent =
-            formatStockCacheTime(cached.updatedAt);
-        stockStatus.textContent = 'Stock refreshed from the database.';
-    } catch (error) {
-        console.error('Unable to refresh book stock.', error);
-        stockStatus.textContent = 'Unable to refresh stock. Check your internet connection and try again.';
-        stockStatus.classList.add('error');
-    } finally {
-        button.disabled = false;
     }
 }
 
@@ -152,10 +129,8 @@ stockForm.addEventListener('submit', async (event) => {
         });
         renderStock(result.stock);
         stockForm.elements.quantity.value = '';
-        stockStatus.textContent = result.localCacheError
-            ? 'Stock was saved to the database, but the local cache could not be updated. Refresh the stock list.'
-            : 'Stock entry saved.';
-        if (!result.localCacheError) stockStatus.classList.add('success');
+        stockStatus.textContent = 'Stock entry saved.';
+        stockStatus.classList.add('success');
     } catch (error) {
         console.error('Unable to add book stock.', error);
         stockStatus.textContent = 'Unable to save the stock entry. Check the database API.';
@@ -165,5 +140,4 @@ stockForm.addEventListener('submit', async (event) => {
     }
 });
 
-document.getElementById('refresh-stock').addEventListener('click', (event) => refreshStock(event.currentTarget));
 loadStock();

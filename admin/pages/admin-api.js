@@ -108,8 +108,8 @@
     }
 
     async function requestProfile(action, payload = {}) {
-        const route = ['listProfiles', 'updateUserRole'].includes(action) ? 'admin/users' : 'admin/feedback';
-        const method = action === 'updateUserRole' ? 'PATCH' : 'GET';
+        const route = ['listProfiles', 'updateUserRole', 'updateUserApproval'].includes(action) ? 'admin/users' : 'admin/feedback';
+        const method = ['updateUserRole', 'updateUserApproval'].includes(action) ? 'PATCH' : 'GET';
         const response = await fetch(`${API_URL}/api/${route}`, {
             method,
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` },
@@ -214,7 +214,7 @@
             data: result.orders.map(normalizeOrder),
             updatedAt: new Date().toISOString()
         };
-        await writeCache('orders', snapshot);
+        try { await writeCache('orders', snapshot); } catch (error) { console.warn('Local order cache unavailable; showing database results.', error); }
         return snapshot;
     }
 
@@ -356,6 +356,10 @@
         return requestProfile('updateUserRole', { userId, role });
     }
 
+    async function updateUserApproval(userId, approvalStatus) {
+        return requestProfile('updateUserApproval', { userId, approvalStatus });
+    }
+
     async function getFeedback() {
         const result = await requestProfile('listFeedback');
         if (!Array.isArray(result.feedback)) {
@@ -441,6 +445,7 @@
         getShops,
         getProfiles,
         updateUserRole,
+        updateUserApproval,
         getFeedback,
         getShopOrders,
         getShopOrdersByStatus,

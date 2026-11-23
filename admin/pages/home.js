@@ -71,22 +71,18 @@ function formatCacheTime(updatedAt) {
             values[part.type] = part.value;
             return values;
         }, {});
-    return `Refresh · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
+    return `Updated · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
 }
 
 async function loadDashboard() {
     const update = document.getElementById('dashboard-updated');
     try {
-        const cached = await AdminApi.getCachedOrders();
-        if (!cached) {
-            update.textContent = 'Refresh to load data';
-            return;
-        }
+        const cached = await AdminApi.refreshOrders();
         renderDashboard(cached.data);
         update.textContent = formatCacheTime(cached.updatedAt);
     } catch (error) {
         console.error('Unable to read cached dashboard data.', error);
-        update.textContent = 'Unable to load cached data. Refresh to try again.';
+        update.textContent = 'Unable to load data from the database.';
         update.classList.add('error');
     }
 }
@@ -121,29 +117,6 @@ async function loadStoreOverview(button) {
         if (button) button.disabled = false;
     }
 }
-
-document.getElementById('refresh-dashboard').addEventListener('click', async (event) => {
-    const button = event.currentTarget;
-    const update = document.getElementById('dashboard-updated');
-    button.disabled = true;
-    update.classList.remove('error');
-    update.textContent = 'Refreshing…';
-    try {
-        const cached = await AdminApi.refreshOrders();
-        renderDashboard(cached.data);
-        update.textContent = formatCacheTime(cached.updatedAt);
-    } catch (error) {
-        console.error('Unable to refresh dashboard data.', error);
-        update.textContent = 'Refresh failed. Check the internet connection and try again.';
-        update.classList.add('error');
-    } finally {
-        button.disabled = false;
-    }
-});
-
-document.getElementById('refresh-store-overview').addEventListener('click', (event) =>
-    loadStoreOverview(event.currentTarget)
-);
 
 loadDashboard();
 loadStoreOverview();

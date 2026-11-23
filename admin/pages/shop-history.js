@@ -85,7 +85,4 @@ async function loadShopOrders(button) {
 }
 
 document.getElementById('shop-search').addEventListener('input', renderShopOrders);
-document.getElementById('refresh-shop-history').addEventListener('click', (event) =>
-    loadShopOrders(event.currentTarget)
-);
 loadShopOrders();

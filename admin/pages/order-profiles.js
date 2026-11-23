@@ -156,7 +156,4 @@ async function loadOrderProfiles(button) {
 }
 
 orderProfileSearch.addEventListener('input', renderOrderProfiles);
-document.getElementById('refresh-order-profiles').addEventListener('click', (event) =>
-    loadOrderProfiles(event.currentTarget)
-);
 loadOrderProfiles();

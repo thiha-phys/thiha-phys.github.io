@@ -42,7 +42,7 @@ function formatHistoryCacheTime(updatedAt) {
             values[part.type] = part.value;
             return values;
         }, {});
-    return `Refresh · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
+    return `Loaded · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
 }
 
 function dateInputValue(value) {
@@ -156,11 +156,7 @@ document.getElementById('lookup-form').addEventListener('submit', async (event) 
     document.getElementById('lookup-results').replaceChildren();
     document.getElementById('edit-panel').hidden = true;
     try {
-        const cached = await AdminApi.getCachedOrders();
-        if (!cached) {
-            status.textContent = 'No saved data yet. Select Refresh above to load orders.';
-            return;
-        }
+        const cached = await AdminApi.refreshOrders();
         orders = cached.data;
         document.getElementById('lookup-cache-status').textContent =
             formatHistoryCacheTime(cached.updatedAt);
@@ -170,38 +166,8 @@ document.getElementById('lookup-form').addEventListener('submit', async (event) 
             : 'No matching orders found.';
     } catch (error) {
         console.error('Unable to search cached orders for editing.', error);
-        status.textContent = 'Unable to read saved data. Select Refresh to try again.';
+        status.textContent = 'Unable to load orders from the database.';
         status.classList.add('error');
-    }
-});
-
-document.getElementById('refresh-orders').addEventListener('click', async (event) => {
-    const button = event.currentTarget;
-    const status = document.getElementById('lookup-status');
-    button.disabled = true;
-    status.className = 'status-message';
-    status.textContent = 'Refreshing orders…';
-    try {
-        const cached = await AdminApi.refreshOrders();
-        orders = cached.data;
-        document.getElementById('lookup-cache-status').textContent =
-            formatHistoryCacheTime(cached.updatedAt);
-        const query = document.getElementById('lookup-query').value;
-        if (query.trim()) {
-            const count = showMatches(query);
-            status.textContent = count
-                ? `${count.toLocaleString('en-US')} orders found. Select an order to edit.`
-                : 'No matching orders found.';
-        } else {
-            document.getElementById('lookup-results').replaceChildren();
-            status.textContent = 'Orders refreshed. Enter a search term to find an order.';
-        }
-    } catch (error) {
-        console.error('Unable to refresh orders for editing.', error);
-        status.textContent = 'Unable to refresh orders. Check your internet connection and try again.';
-        status.classList.add('error');
-    } finally {
-        button.disabled = false;
     }
 });
 
@@ -221,11 +187,7 @@ document.getElementById('edit-form').addEventListener('submit', async (event) =>
         selectedOrder = result.order;
         const index = orders.findIndex((order) => order['Voucher No'] === updated.voucherNo);
         if (index >= 0) orders[index] = result.order;
-        status.textContent = result.localCacheError
-            ? 'Order updated in the database, but the local cache could not be updated. Refresh the orders.'
-            : result.cacheNeedsRefresh
-            ? 'Order updated in the database. Refresh to load the complete data.'
-                : 'Order updated in the database and local cache.';
+        status.textContent = 'Order updated in the database.';
         status.classList.add('success');
     } catch (error) {
         console.error('Unable to update the order.', error);

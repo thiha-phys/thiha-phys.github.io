@@ -17,7 +17,7 @@ function formatVoucherCacheTime(updatedAt) {
             values[part.type] = part.value;
             return values;
         }, {});
-    return `Refresh · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
+    return `Loaded · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
 }
 
 function renderVoucherMatches(query) {
@@ -136,11 +136,7 @@ document.getElementById('voucher-search-form').addEventListener('submit', async 
     status.className = 'status-message';
     document.getElementById('receipt').hidden = true;
     try {
-        const cached = await AdminApi.getCachedOrders();
-        if (!cached) {
-            status.textContent = 'No saved data yet. Select Refresh to load orders.';
-            return;
-        }
+        const cached = await AdminApi.refreshOrders();
         orders = cached.data;
         document.getElementById('voucher-cache-status').textContent =
             formatVoucherCacheTime(cached.updatedAt);
@@ -150,32 +146,8 @@ document.getElementById('voucher-search-form').addEventListener('submit', async 
             : 'No matching orders found.';
     } catch (error) {
         console.error('Unable to search cached orders for a voucher.', error);
-        status.textContent = 'Unable to read saved data. Select Refresh to try again.';
+        status.textContent = 'Unable to load orders from the database.';
         status.classList.add('error');
-    }
-});
-
-document.getElementById('refresh-vouchers').addEventListener('click', async (event) => {
-    const button = event.currentTarget;
-    const status = document.getElementById('voucher-status');
-    button.disabled = true;
-    status.className = 'status-message';
-    status.textContent = 'Refreshing orders…';
-    try {
-        const cached = await AdminApi.refreshOrders();
-        orders = cached.data;
-        document.getElementById('voucher-cache-status').textContent =
-            formatVoucherCacheTime(cached.updatedAt);
-        const count = renderVoucherMatches(document.getElementById('voucher-query').value);
-        status.textContent = count
-            ? `${count.toLocaleString('en-US')} orders found. Select an order to create a voucher.`
-            : 'Enter a search term to find an order.';
-    } catch (error) {
-        console.error('Unable to refresh orders for vouchers.', error);
-        status.textContent = 'Unable to refresh orders. Check your internet connection and try again.';
-        status.classList.add('error');
-    } finally {
-        button.disabled = false;
     }
 });
 

@@ -173,21 +173,6 @@ document.getElementById('add-city').addEventListener('click', () => {
     row.querySelector('[data-field="english"]')?.focus();
 });
 
-document.getElementById('reload-master-data').addEventListener('click', async (event) => {
-    const button = event.currentTarget;
-    button.disabled = true;
-    status.className = 'status-message';
-    status.textContent = 'Master Data ရယူနေသည်…';
-    try {
-        loadForm(await AdminApi.getMasterData());
-    } catch (error) {
-        status.textContent = `Master Data ရယူမရပါ။ ${error.message}`;
-        status.classList.add('error');
-    } finally {
-        button.disabled = false;
-    }
-});
-
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;

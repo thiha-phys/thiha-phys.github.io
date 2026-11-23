@@ -18,7 +18,7 @@
         .order-top,.order-line{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
         .order-top{padding-bottom:12px;border-bottom:1px solid #edf0f5}
         .voucher{font-weight:700;color:#253c88}.muted{color:#68748a;font-size:13px}
-        .status{padding:5px 10px;border-radius:999px;background:#eef3ff;color:#3155bd;font-size:12px;white-space:nowrap}
+        .status{padding:5px 10px;border-radius:999px;background:#fff2dc;color:#9b5d00;font-size:12px;white-space:nowrap}.status.complete{background:#e5f7ee;color:#14744d}
         ul{margin:12px 0;padding-left:20px;color:#38445b}li{margin:5px 0}
         .order-line{padding-top:10px}.total{font-weight:700}
         .notice{padding:18px;border-radius:14px;background:#fff;color:#58657a}
@@ -38,12 +38,12 @@
     <script>
         const host=document.getElementById('orders');
         const money=(amount)=>`${Number(amount||0).toLocaleString('my-MM')} ကျပ်`;
-        const date=(value)=>{const d=new Date(value);return Number.isNaN(d.getTime())?'':d.toLocaleString('my-MM');};
+        const date=(value)=>{const d=new Date(value);return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('en-GB',{dateStyle:'medium',timeStyle:'short'}).format(d);};
         function render(order){
             const card=document.createElement('article');card.className='order-card';
             const top=document.createElement('div');top.className='order-top';
             const heading=document.createElement('div'),voucher=document.createElement('div'),created=document.createElement('div'),status=document.createElement('span');
-            voucher.className='voucher';voucher.textContent=order.voucherNo||'အော်ဒါ';created.className='muted';created.textContent=date(order.createdAt);status.className='status';status.textContent=order.status||'အသစ်';
+            voucher.className='voucher';voucher.textContent=order.voucherNo||'အော်ဒါ';created.className='muted';created.textContent=date(order.createdAt);const complete=order.status==='delivered';status.className=`status${complete?' complete':''}`;status.textContent=complete?'complete':'pending';
             heading.append(voucher,created);top.append(heading,status);card.append(top);
             const details=document.createElement('p');details.className='muted';details.textContent=`${order.city||''} · ${order.deliveryService||''} · ${order.paymentMethod||''}`;card.append(details);
             const list=document.createElement('ul');(order.items||[]).forEach(item=>{const li=document.createElement('li');li.textContent=`${item.name} × ${item.quantity} — ${money(item.amount)}`;list.append(li);});card.append(list);

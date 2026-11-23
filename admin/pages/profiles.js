@@ -32,7 +32,7 @@ function renderProfileCard(profile) {
             </div>
         </div>
         <div class="profile-meta">
-            <div class="profile-contact-row"><span class="profile-empty-contact">${escapeText(profile.role === 'admin' ? 'Admin' : 'Customer')}</span></div>
+            <div class="profile-contact-row"><span class="profile-empty-contact">${escapeText(profile.role === 'admin' ? 'Admin' : 'Customer')} · ${escapeText(profile.approvalStatus || 'approved')}</span></div>
             ${email ? `<div class="profile-contact-row"><a class="profile-contact" href="mailto:${escapeText(email)}">${emailIcon}<span>${escapeText(email)}</span></a></div>` : ''}
             ${phoneDigits
                 ? `<div class="profile-contact-row"><a class="profile-contact profile-phone" href="tel:${escapeText(phoneDigits)}">${phoneIcon}<span>${escapeText(profile.phone || phoneDigits)}</span></a></div>`
@@ -41,17 +41,13 @@ function renderProfileCard(profile) {
         </div>
     `;
 
-    if (profile.adminEligible) {
-        const roleButton=document.createElement('button');
-        roleButton.type='button';
-        roleButton.className='profile-role-button';
-        roleButton.textContent=profile.role==='admin'?'Remove admin access':'Make admin';
-        roleButton.addEventListener('click',async()=>{
-            roleButton.disabled=true;
-            try{await AdminApi.updateUserRole(profile.id,profile.role==='admin'?'customer':'admin');await loadProfiles();}
-            catch(error){roleButton.disabled=false;alert(error.message||'Role ကို ပြောင်းမရပါ။');}
-        });
-        article.append(roleButton);
+    if (profile.approvalStatus === 'pending') {
+        const actions=document.createElement('div');actions.className='profile-actions';
+        for(const [label,value] of [['Approve','approved'],['Reject','rejected']]){
+            const button=document.createElement('button');button.type='button';button.className=`profile-role-button ${value==='approved'?'approve':'reject'}`;button.textContent=label;
+            button.addEventListener('click',async()=>{button.disabled=true;try{await AdminApi.updateUserApproval(profile.id,value);await loadProfiles();}catch(error){button.disabled=false;alert(error.message||'Account approval could not be updated.');}});actions.append(button);
+        }
+        article.append(actions);
     }
 
     return article;
@@ -60,7 +56,8 @@ function renderProfileCard(profile) {
 async function loadProfiles() {
     profileGrid.innerHTML = '<div class="profiles-empty">Loading profiles…</div>';
     try {
-        const profiles = await AdminApi.getProfiles();
+        let profiles = await AdminApi.getProfiles();
+        if (new URLSearchParams(location.search).get('status') === 'pending') profiles = profiles.filter((profile) => profile.approvalStatus === 'pending');
         profileGrid.replaceChildren();
         if (!Array.isArray(profiles) || profiles.length === 0) {
             profileCount.textContent = '0';
@@ -75,7 +72,7 @@ async function loadProfiles() {
     } catch (error) {
         console.error('Unable to load profiles.', error);
         profileCount.textContent = '0';
-        profileGrid.innerHTML = '<div class="profiles-empty error">The profile list could not be loaded. Please refresh and try again.</div>';
+        profileGrid.innerHTML = '<div class="profiles-empty error">The profile list could not be loaded. Reopen this page to try again.</div>';
     }
 }
 

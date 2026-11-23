@@ -39,7 +39,6 @@ document.getElementById('add-store').addEventListener('click',()=>{
     renderStores([...readStores(),{id:`new-store-${index}`,city:'',name:'',address:'',phones:[],active:true}]);
     rowsElement.lastElementChild?.querySelector('[data-field="city"]')?.focus();
 });
-document.getElementById('reload-stores').addEventListener('click',loadStores);
 document.getElementById('save-stores').addEventListener('click',async event=>{
     const button=event.currentTarget;button.disabled=true;statusElement.className='status-message';statusElement.textContent='Database ထဲသိမ်းနေသည်…';
     try{renderStores(await AdminApi.saveBookstores(readStores()));statusElement.textContent='ဆိုင်စာရင်းကို database ထဲ သိမ်းပြီးပါပြီ။';statusElement.classList.add('success');}

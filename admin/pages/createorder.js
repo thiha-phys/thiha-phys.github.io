@@ -295,12 +295,8 @@ form.addEventListener('submit', async (event) => {
             field.disabled = true;
         });
         showReceipt(result.order);
-        status.textContent = result.localCacheError
-            ? 'Order saved to the database, but the local cache could not be updated.'
-            : result.cacheNeedsRefresh
-                ? 'Order saved to the database. Refresh to load the complete data.'
-                : 'Order saved. You can save, share, or print the voucher as a PDF.';
-        status.classList.add(result.localCacheError || result.cacheNeedsRefresh ? 'error' : 'success');
+        status.textContent = 'Order saved. You can save, share, or print the voucher as a PDF.';
+        status.classList.add('success');
         button.textContent = 'Order Confirmed';
     } catch (error) {
         console.error('Unable to create order.', error);
