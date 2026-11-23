@@ -31,6 +31,12 @@
     const isPublicPage = isHomePage || isPublicPreview || publicPagePaths.has(window.location.pathname);
 
     const isPendingPage = window.location.pathname === '/page/pending.html';
+    window.addEventListener('pageshow', () => {
+        const isProtectedContent = !isHomePage && !isPublicPage && !isLoginPage && !isPendingPage;
+        if (isProtectedContent && !isSignedIn) {
+            window.location.replace(loginPath);
+        }
+    });
     if (isSignedIn && profile.approvalStatus && profile.approvalStatus !== 'approved' && !isPendingPage) {
         window.location.replace('/page/pending.html');
         return;

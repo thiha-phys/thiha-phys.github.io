@@ -1,5 +1,9 @@
 (() => {
-    if (!sessionStorage.getItem('physicsLearningHubSession')) {
+    const savedAdminToken = localStorage.getItem('physicsLearningHubSession') || sessionStorage.getItem('physicsLearningHubSession');
+    if (savedAdminToken && !localStorage.getItem('physicsLearningHubSession')) {
+        try { localStorage.setItem('physicsLearningHubSession', savedAdminToken); } catch {}
+    }
+    if (!savedAdminToken) {
         window.location.replace(new URL('../login.html', document.currentScript.src).href);
         return;
     }

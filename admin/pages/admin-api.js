@@ -1,6 +1,10 @@
 (function () {
     const API_URL = 'https://uthk-physics-api.vercel.app';
-    if (!sessionStorage.getItem('physicsLearningHubSession') && !location.pathname.endsWith('/login.html')) {
+    const savedAdminToken = localStorage.getItem('physicsLearningHubSession') || sessionStorage.getItem('physicsLearningHubSession');
+    if (savedAdminToken && !localStorage.getItem('physicsLearningHubSession')) {
+        try { localStorage.setItem('physicsLearningHubSession', savedAdminToken); } catch {}
+    }
+    if (!savedAdminToken && !location.pathname.endsWith('/login.html')) {
         location.replace(new URL('../login.html', document.currentScript.src).href);
         return;
     }
@@ -113,7 +117,7 @@
         const method = action === 'listOrders' ? 'GET' : action === 'updateOrder' ? 'PATCH' : 'POST';
         const response = await apiFetch(`${API_URL}/api/${route}`, {
             method,
-            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` },
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` },
             ...(method === 'GET' ? {} : { body: JSON.stringify(payload) })
         });
         if (!response.ok) throw new Error(`Database API request failed (${response.status}).`);
@@ -127,7 +131,7 @@
         const method = ['updateUserRole', 'updateUserApproval'].includes(action) ? 'PATCH' : 'GET';
         const response = await apiFetch(`${API_URL}/api/${route}`, {
             method,
-            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` },
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` },
             ...(method === 'GET' ? {} : { body: JSON.stringify(payload) })
         });
         if (!response.ok) throw new Error(`Database API request failed (${response.status}).`);
@@ -137,7 +141,7 @@
     }
 
     async function getMasterData() {
-        const response = await apiFetch(`${API_URL}/api/admin/master-data`, { cache: 'no-store', headers: { Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` } });
+        const response = await apiFetch(`${API_URL}/api/admin/master-data`, { cache: 'no-store', headers: { Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` } });
         if (!response.ok) throw new Error(`Master data request failed (${response.status}).`);
         const result = await response.json();
         const masterData = result.masterData;
@@ -200,7 +204,7 @@
             books: masterData.books,
             deliveryCities: masterData.deliveryCities
         };
-        const response = await apiFetch(`${API_URL}/api/admin/master-data`, { method:'PUT', headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` }, body:JSON.stringify({masterData:savedMasterData}) });
+        const response = await apiFetch(`${API_URL}/api/admin/master-data`, { method:'PUT', headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` }, body:JSON.stringify({masterData:savedMasterData}) });
         const result = await response.json();
         if (!response.ok || !result.ok) throw new Error(result.message || 'Master data could not be saved.');
 
@@ -325,52 +329,52 @@
     }
 
     async function getShops() {
-        const response=await apiFetch(`${API_URL}/api/admin/shops`,{headers:{Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`}});
+        const response=await apiFetch(`${API_URL}/api/admin/shops`,{headers:{Authorization:`Bearer ${localStorage.getItem('physicsLearningHubSession')||''}`}});
         const result=await response.json();
         if(!response.ok||!result.ok)throw new Error(result.message||'ဆိုင်စာရင်းကို ရယူမရပါ။');
         return result.shops||[];
     }
 
     async function getBookstores() {
-        const response = await apiFetch(`${API_URL}/api/admin/bookstores`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` } });
+        const response = await apiFetch(`${API_URL}/api/admin/bookstores`, { headers: { Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` } });
         const result = await response.json();
         if (!response.ok || !result.ok) throw new Error(result.message || 'Bookstores could not be loaded.');
         return result.bookstores;
     }
 
     async function saveBookstores(bookstores) {
-        const response = await apiFetch(`${API_URL}/api/admin/bookstores`, { method:'PUT', headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}`}, body:JSON.stringify({bookstores}) });
+        const response = await apiFetch(`${API_URL}/api/admin/bookstores`, { method:'PUT', headers:{'Content-Type':'application/json',Authorization:`Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}`}, body:JSON.stringify({bookstores}) });
         const result=await response.json();
         if(!response.ok || !result.ok) throw new Error(result.message || 'Bookstores could not be saved.');
         return result.bookstores;
     }
 
     async function getAnnouncements() {
-        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{headers:{Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`}});
+        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{headers:{Authorization:`Bearer ${localStorage.getItem('physicsLearningHubSession')||''}`}});
         const result=await response.json();
         if(!response.ok||!result.ok)throw new Error(result.message||'ကြေညာချက်များကို ရယူမရပါ။');
         return result.announcements||[];
     }
 
     async function saveAnnouncement(title,body) {
-        const response=await fetch(`${API_URL}/api/admin/announcements`,{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({title,body})});
+        const response=await fetch(`${API_URL}/api/admin/announcements`,{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${localStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({title,body})});
         const result=await response.json();
         if(!response.ok||!result.ok)throw new Error(result.message||'ကြေညာချက်ကို သိမ်းမရပါ။');
         return result.announcement;
     }
 
     async function updateAnnouncement(id,title,body) {
-        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{method:'PUT',headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({id,title,body})});
+        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{method:'PUT',headers:{'Content-Type':'application/json',Authorization:`Bearer ${localStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({id,title,body})});
         const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.message||'ကြေညာချက်ပြင်မရပါ။');return result.announcement;
     }
 
     async function setAnnouncementActive(id,active) {
-        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{method:'PATCH',headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({id,active})});
+        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{method:'PATCH',headers:{'Content-Type':'application/json',Authorization:`Bearer ${localStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({id,active})});
         const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.message||'ရွေးချယ်မှုကို သိမ်းမရပါ။');return result.announcement;
     }
 
     async function deleteAnnouncement(id) {
-        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{method:'DELETE',headers:{'Content-Type':'application/json',Authorization:`Bearer ${sessionStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({id})});
+        const response=await apiFetch(`${API_URL}/api/admin/announcements`,{method:'DELETE',headers:{'Content-Type':'application/json',Authorization:`Bearer ${localStorage.getItem('physicsLearningHubSession')||''}`},body:JSON.stringify({id})});
         const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.message||'ကြေညာချက်ဖျက်မရပါ။');return result;
     }
 
