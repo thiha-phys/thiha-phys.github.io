@@ -1,5 +1,5 @@
 // After deploying the backend Vercel project, replace this value with its URL.
-window.PHYSICS_API_BASE_URL = 'https://YOUR-BACKEND.vercel.app';
+window.PHYSICS_API_BASE_URL = 'https://uthk-physics-api.vercel.app';
 
 async function physicsApiFetch(path, options = {}) {
     const token = sessionStorage.getItem('physicsLearningHubSession');

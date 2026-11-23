@@ -1,5 +1,5 @@
 (function () {
-    const API_URL = 'https://YOUR-BACKEND.vercel.app';
+    const API_URL = 'https://uthk-physics-api.vercel.app';
     if (!sessionStorage.getItem('physicsLearningHubSession') && !location.pathname.endsWith('/login.html')) {
         location.replace(new URL('../login.html', document.currentScript.src).href);
         return;
