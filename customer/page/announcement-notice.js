@@ -8,6 +8,6 @@
         const onAnnouncementPage=location.pathname.endsWith('/announcement.html');
         if(onAnnouncementPage){try{localStorage.setItem(storageKey,JSON.stringify(ids));}catch{}badge.hidden=true;return;}
         const unseen=ids.filter(id=>!seen.includes(id)).length;
-        badge.textContent=unseen>9?'9+':'NEW';badge.hidden=unseen===0;
+        badge.textContent=unseen>9?'9+':String(unseen);badge.setAttribute('aria-label',`${unseen} new announcements`);badge.hidden=unseen===0;
     }).catch(()=>{badge.hidden=true;});
 })();

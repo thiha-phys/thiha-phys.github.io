@@ -1737,6 +1737,36 @@
         .physics-scene .atom-canvas.is-dragging {
             cursor: grabbing;
         }
+
+        body { min-height:100vh; padding:0 12px 20px; align-items:flex-start; background:#f5f7fb; color:#263246; }
+        .auth-shell { max-width:560px; padding:0; overflow:visible; border-radius:0; box-shadow:none; }
+        .auth-shell::before { display:none; }
+        .auth-content { padding:20px 18px 18px; border-radius:0; background:transparent; box-shadow:none; }
+        .brand { margin:0 auto 18px; }
+        .brand-logo { width:54px; height:54px; margin-bottom:6px; }
+        .brand h1 { margin:0; color:#1d2b42; font-size:clamp(21px,5vw,27px); }
+        .welcome-panel { text-align:left; }
+        .welcome-panel h2 { color:#1d2b42; font-size:24px; letter-spacing:-.02em; }
+        .welcome-copy { max-width:none; margin:5px 0 16px; color:#6e7c91; font-size:14px; }
+        .welcome-actions { grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
+        .welcome-actions .submit-button,.welcome-actions .create-button { min-height:46px; border-radius:14px; }
+        .welcome-actions .create-button { border:1px solid #d5dfed; background:#fff; color:#27436b; }
+        .welcome-menu { display:grid; gap:9px; margin:12px 0 18px; padding:0; list-style:none; }
+        .welcome-service { display:grid; grid-template-columns:44px minmax(0,1fr) 18px; align-items:center; gap:12px; padding:12px 13px; border:1px solid #edf0f5; border-radius:16px; background:#fff; color:#344256; text-decoration:none; box-shadow:0 4px 12px #203a5a08; }
+        .welcome-service-icon { width:42px; height:42px; display:grid; place-items:center; border-radius:50%; background:#ed2d50; color:white; font-size:17px; }
+        .welcome-service-copy strong { display:block; color:#26364c; font-size:14px; }
+        .welcome-service-copy small { display:block; margin-top:3px; color:#7d8999; font-size:11px; line-height:1.4; }
+        .welcome-all-books { color:#c52e4a; }
+        .welcome-chevron { color:#b0bac7; text-align:right; }
+        .welcome-book-list { display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; padding:5px 1px 1px; }
+        .welcome-book-row { display:flex; justify-content:space-between; gap:6px; padding:5px 0; border-bottom:1px solid #f0f2f6; font-size:10px; }
+        .welcome-book-row strong { white-space:nowrap; color:#245ac4; }
+        .welcome-grade-links { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+        .welcome-grade-links a { padding:5px 8px; border-radius:999px; background:#fff2f4; color:#c52e4a; font-size:10px; text-decoration:none; }
+        .course-footer { padding-top:4px; border-top:1px solid #e7ebf1; }
+        .course-caption,.designer-credit { color:#7f8ca0; }
+        .social-links a { border-color:#dfe6ef; background:#fff; color:#51647e; }
+        @media(max-width:380px) { .welcome-book-list { grid-template-columns:1fr; } .auth-content { padding-right:13px; padding-left:13px; } }
     </style>
     <link rel="stylesheet" href="brand.css">
 </head>
@@ -1754,24 +1784,24 @@
         </header>
 
         <section class="welcome-panel" id="welcome-panel" aria-labelledby="welcome-heading">
-            <div class="physics-scene">
-                <canvas class="atom-canvas" role="slider" tabindex="0"
-                    aria-label="Rotate the 3D atom with a pointer or arrow keys"
-                    aria-orientation="horizontal" aria-valuemin="-180" aria-valuemax="180"
-                    aria-valuenow="0" aria-valuetext="0 degrees">
-                    Interactive 3D atom model. Drag to rotate.
-                </canvas>
-                <span class="physics-equation equation-force">F = ma</span>
-                <span class="physics-equation equation-energy">E = mc²</span>
-                <span class="physics-equation equation-wave">v = fλ</span>
-                <span class="physics-equation equation-momentum">p = mv</span>
-            </div>
-            <h2 id="welcome-heading">Make sense of physics.</h2>
-            <p class="welcome-copy">Explore lessons, practice questions, and quizzes in one place.</p>
+            <h2 id="welcome-heading">Physics Learning Hub</h2>
+            <p class="welcome-copy">စာအုပ်များ၊ သင်ခန်းစာနမူနာများနှင့် ဝန်ဆောင်မှုများကို ရွေးချယ်ပါ။</p>
             <div class="welcome-actions">
                 <button class="submit-button" type="button" data-show-panel="login">Log in</button>
                 <button class="create-button" type="button" data-show-panel="signup">Create account</button>
             </div>
+            <nav class="welcome-menu" aria-label="ဝန်ဆောင်မှုများ">
+                <article class="welcome-service welcome-books">
+                    <span class="welcome-service-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span>
+                    <span class="welcome-service-copy"><strong>ရရှိနိုင်သည့် စာအုပ်များ</strong><small>စာအုပ်အမည်နှင့် ဈေးနှုန်းများ · <a href="books.html" class="welcome-all-books">အားလုံးကြည့်ရန်</a></small><span id="welcome-book-list" class="welcome-book-list" aria-live="polite"><small>စာအုပ်စာရင်းကို ရယူနေပါသည်…</small></span></span>
+                    <span class="welcome-chevron" aria-hidden="true">›</span>
+                </article>
+                <a class="welcome-service" href="order.html"><span class="welcome-service-icon"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>စာအုပ်မှာယူမည်</strong><small>အကောင့်မရှိဘဲလည်း မှာယူနိုင်ပါသည်</small></span><span class="welcome-chevron" aria-hidden="true">›</span></a>
+                <a class="welcome-service" href="bookstores.html"><span class="welcome-service-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>စာအုပ်ဆိုင်များ</strong><small>မြို့အလိုက် ဆိုင်စာရင်းနှင့် လိပ်စာများ</small></span><span class="welcome-chevron" aria-hidden="true">›</span></a>
+                <section class="welcome-service"><span class="welcome-service-icon"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>Definitions · Chapter 1</strong><span class="welcome-grade-links"><a href="G10def1.html">Grade 10</a><a href="G11def1.html">Grade 11</a><a href="G12def1.html">Grade 12</a></span></span><span class="welcome-chevron" aria-hidden="true">›</span></section>
+                <section class="welcome-service"><span class="welcome-service-icon"><i class="fa-solid fa-calculator" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>တွက်ချက်မှုများ · Chapter 1</strong><span class="welcome-grade-links"><a href="G10cal1.html">Grade 10</a><a href="G11cal1.html">Grade 11</a><a href="G12calCh1.html">Grade 12</a></span></span><span class="welcome-chevron" aria-hidden="true">›</span></section>
+                <section class="welcome-service"><span class="welcome-service-icon"><i class="fa-solid fa-list-check" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>Objective များ · Chapter 1</strong><span class="welcome-grade-links"><a href="G10objCh1.html">Grade 10</a><a href="G11objCh1.html">Grade 11</a><a href="G12objCh1.html">Grade 12</a></span></span><span class="welcome-chevron" aria-hidden="true">›</span></section>
+            </nav>
         </section>
 
         <div class="auth-view" id="auth-view" hidden>
@@ -1857,203 +1887,20 @@
       </div>
     </main>
 
-    <script>
-        (() => {
-            const canvas = document.querySelector('.atom-canvas');
-            const context = canvas && canvas.getContext('2d');
-            if (!canvas || !context) return;
-
-            const orbitColors = ['55, 171, 193', '138, 118, 219', '226, 168, 73'];
-            const orbits = [
-                { tilt: 0.12, angle: 0, radius: 0.84 },
-                { tilt: 0.92, angle: 1.05, radius: 1 },
-                { tilt: -0.92, angle: 2.1, radius: 1.16 }
-            ];
-            const nucleons = Array.from({ length: 28 }, (_, index) => {
-                const y = 1 - 2 * (index + 0.5) / 28;
-                const radius = Math.sqrt(1 - y * y);
-                const angle = index * Math.PI * (3 - Math.sqrt(5));
-                return {
-                    x: Math.cos(angle) * radius * 0.2,
-                    y: y * 0.2,
-                    z: Math.sin(angle) * radius * 0.2,
-                    color: index % 2 ? '#258da7' : '#ed4b52'
-                };
-            });
-            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-            let yaw = 0;
-            let pitch = 0.85;
-            let dragStart = null;
-            let width = 0;
-            let height = 0;
-            let animationFrame = 0;
-
-            function rotatePoint(point) {
-                const cosYaw = Math.cos(yaw);
-                const sinYaw = Math.sin(yaw);
-                const cosPitch = Math.cos(pitch);
-                const sinPitch = Math.sin(pitch);
-                const x = point.x * cosYaw + point.z * sinYaw;
-                const z = -point.x * sinYaw + point.z * cosYaw;
-                return {
-                    x,
-                    y: point.y * cosPitch - z * sinPitch,
-                    z: point.y * sinPitch + z * cosPitch
-                };
-            }
-
-            function render(timestamp) {
-                if (!width || !height) return;
-                context.clearRect(0, 0, width, height);
-                const centerX = width / 2;
-                const centerY = height / 2;
-                const radius = Math.min(width * 0.34, height * 0.36, 74);
-                const project = (point) => {
-                    const rotated = rotatePoint(point);
-                    const perspective = 1 / (1 - rotated.z * 0.32);
-                    return {
-                        x: centerX + rotated.x * radius * perspective,
-                        y: centerY + rotated.y * radius * perspective,
-                        z: rotated.z
-                    };
-                };
-
-                orbits.forEach((orbit, orbitIndex) => {
-                    let previous = null;
-                    for (let step = 0; step <= 120; step += 1) {
-                        const angle = step / 120 * Math.PI * 2;
-                        const localY = Math.sin(angle) * Math.cos(orbit.tilt);
-                        const localZ = Math.sin(angle) * Math.sin(orbit.tilt);
-                        const point = project({
-                            x: (Math.cos(angle) * Math.cos(orbit.angle) - localY * Math.sin(orbit.angle)) * orbit.radius,
-                            y: (Math.cos(angle) * Math.sin(orbit.angle) + localY * Math.cos(orbit.angle)) * orbit.radius,
-                            z: localZ * orbit.radius
-                        });
-                        if (previous) {
-                            const alpha = 0.18 + Math.max(0, (previous.z + point.z) / 2) * 0.38;
-                            context.beginPath();
-                            context.moveTo(previous.x, previous.y);
-                            context.lineTo(point.x, point.y);
-                            context.strokeStyle = `rgba(${orbitColors[orbitIndex]}, ${alpha})`;
-                            context.lineWidth = 1.5;
-                            context.stroke();
-                        }
-                        previous = point;
-                    }
-                });
-
-                const sortedNucleons = nucleons
-                    .map((nucleon) => ({ ...project(nucleon), color: nucleon.color }))
-                    .sort((a, b) => a.z - b.z);
-                sortedNucleons.forEach((nucleon) => {
-                    const size = 4.8 * (1 + nucleon.z * 0.12);
-                    const gradient = context.createRadialGradient(
-                        nucleon.x - size * 0.3, nucleon.y - size * 0.35, size * 0.08,
-                        nucleon.x, nucleon.y, size
-                    );
-                    gradient.addColorStop(0, '#ffffff');
-                    gradient.addColorStop(0.18, nucleon.color);
-                    gradient.addColorStop(1, nucleon.color === '#ed4b52' ? '#9d202d' : '#12526b');
-                    context.beginPath();
-                    context.arc(nucleon.x, nucleon.y, size, 0, Math.PI * 2);
-                    context.fillStyle = gradient;
-                    context.fill();
-                });
-
-                const elapsed = reducedMotion.matches ? 0 : timestamp / 1000;
-                orbits.forEach((orbit, index) => {
-                    const angle = elapsed * (1.1 + index * 0.16) + index * 2.1;
-                    const localY = Math.sin(angle) * Math.cos(orbit.tilt);
-                    const localZ = Math.sin(angle) * Math.sin(orbit.tilt);
-                    const electron = project({
-                        x: (Math.cos(angle) * Math.cos(orbit.angle) - localY * Math.sin(orbit.angle)) * orbit.radius,
-                        y: (Math.cos(angle) * Math.sin(orbit.angle) + localY * Math.cos(orbit.angle)) * orbit.radius,
-                        z: localZ * orbit.radius
-                    });
-                    const size = index === 0 ? 4.5 : 3.8;
-                    context.beginPath();
-                    context.arc(electron.x, electron.y, size * 2.2, 0, Math.PI * 2);
-                    context.fillStyle = 'rgba(37, 141, 167, 0.12)';
-                    context.fill();
-                    context.beginPath();
-                    context.arc(electron.x, electron.y, size, 0, Math.PI * 2);
-                    context.fillStyle = '#178ba8';
-                    context.shadowColor = 'rgba(23, 139, 168, 0.42)';
-                    context.shadowBlur = 7;
-                    context.fill();
-                    context.shadowBlur = 0;
-                });
-
-                if (!reducedMotion.matches) {
-                    animationFrame = window.requestAnimationFrame(render);
-                }
-            }
-
-            function resizeCanvas() {
-                const bounds = canvas.getBoundingClientRect();
-                const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-                width = bounds.width;
-                height = bounds.height;
-                canvas.width = Math.round(width * pixelRatio);
-                canvas.height = Math.round(height * pixelRatio);
-                context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-                window.cancelAnimationFrame(animationFrame);
-                render(performance.now());
-            }
-
-            function setRotation() {
-                yaw = ((yaw + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
-                const degrees = Math.round(yaw * 180 / Math.PI);
-                canvas.setAttribute('aria-valuenow', String(degrees));
-                canvas.setAttribute('aria-valuetext',
-                    `${degrees} degrees horizontally, ${Math.round(pitch * 180 / Math.PI)} degrees vertically`);
-                window.cancelAnimationFrame(animationFrame);
-                render(performance.now());
-            }
-
-            canvas.addEventListener('pointerdown', (event) => {
-                if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
-                dragStart = { x: event.clientX, y: event.clientY, yaw, pitch };
-                canvas.classList.add('is-dragging');
-                canvas.setPointerCapture(event.pointerId);
-            });
-            canvas.addEventListener('pointermove', (event) => {
-                if (!dragStart) return;
-                yaw = dragStart.yaw + (event.clientX - dragStart.x) * 0.012;
-                pitch = Math.max(-1.05, Math.min(1.05,
-                    dragStart.pitch + (event.clientY - dragStart.y) * 0.009));
-                setRotation();
-            });
-            function endDrag() {
-                dragStart = null;
-                canvas.classList.remove('is-dragging');
-            }
-            canvas.addEventListener('pointerup', endDrag);
-            canvas.addEventListener('pointercancel', endDrag);
-            canvas.addEventListener('lostpointercapture', endDrag);
-            canvas.addEventListener('keydown', (event) => {
-                const step = Math.PI / 18;
-                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                    event.preventDefault();
-                    yaw += event.key === 'ArrowLeft' ? -step : step;
-                    setRotation();
-                } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-                    event.preventDefault();
-                    pitch = Math.max(-1.05, Math.min(1.05,
-                        pitch + (event.key === 'ArrowUp' ? -step : step)));
-                    setRotation();
-                } else if (event.key === 'Home') {
-                    event.preventDefault();
-                    yaw = 0;
-                    pitch = 0.85;
-                    setRotation();
-                }
-            });
-            reducedMotion.addEventListener('change', setRotation);
-            new ResizeObserver(resizeCanvas).observe(canvas);
-        })();
-    </script>
     <script src="api-config.js"></script>
+    <script>
+        physicsApiFetch('public/master-data').then(({ masterData }) => {
+            const list = document.getElementById('welcome-book-list');
+            list.replaceChildren();
+            Object.values(masterData.books || {}).filter(book => book.active !== false).forEach(book => {
+                const row = document.createElement('span'); row.className = 'welcome-book-row';
+                const name = document.createElement('span'); name.textContent = book.name;
+                const price = document.createElement('strong'); price.textContent = `${Number(book.prices?.[0] || 0).toLocaleString('en-US')} ကျပ်မှ`;
+                row.append(name, price); list.append(row);
+            });
+            if (!list.children.length) list.textContent = 'စာအုပ်စာရင်း မရရှိသေးပါ။';
+        }).catch(() => { document.getElementById('welcome-book-list').textContent = 'စာအုပ်စာရင်းကို ယခုမရနိုင်ပါ။'; });
+    </script>
     <script src="profile-api.js"></script>
     <script>
         const loginPanel = document.getElementById('login-panel');

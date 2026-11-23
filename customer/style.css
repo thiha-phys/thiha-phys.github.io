@@ -427,6 +427,7 @@ svg {
     z-index: 9999;
 }
 .nav-item {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -436,6 +437,24 @@ svg {
     gap: 4px;
     flex: 1;
     transition: color 0.2s ease, transform 0.2s ease;
+}
+.announcement-notice {
+    position: absolute;
+    top: -5px;
+    right: calc(50% - 23px);
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    display: grid;
+    place-items: center;
+    border: 2px solid #303b4b;
+    border-radius: 999px;
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 2px 8px #ef444455;
 }
 .nav-icon { 
     width: 20px !important; 

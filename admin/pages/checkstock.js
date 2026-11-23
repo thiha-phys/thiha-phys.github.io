@@ -2,12 +2,6 @@ const stockForm = document.getElementById('stock-form');
 const stockStatus = document.getElementById('stock-status');
 const stockBookSelect = document.getElementById('stock-book');
 
-AdminBooks.forEach((book) => {
-    const option = document.createElement('option');
-    option.value = book.id;
-    option.textContent = book.name;
-    stockBookSelect.append(option);
-});
 const today = new Date();
 stockForm.elements.date.value = [
     today.getFullYear(),
@@ -100,15 +94,34 @@ function renderStock(stock) {
 
 async function loadStock() {
     stockStatus.className = 'status-message';
+    stockStatus.textContent = '';
+    document.getElementById('stock-cache-status').textContent = 'Loading stock…';
     try {
+        await AdminApi.getMasterData();
+        stockBookSelect.replaceChildren();
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = 'Select a book';
+        placeholder.disabled = true;
+        placeholder.selected = true;
+        stockBookSelect.append(placeholder);
+        (window.AdminBooks || []).forEach((book) => {
+            const option = document.createElement('option');
+            option.value = book.id;
+            option.textContent = book.name;
+            stockBookSelect.append(option);
+        });
+        if (!stockBookSelect.options.length || stockBookSelect.options.length === 1) {
+            throw new Error('No active books are available in Master Data.');
+        }
         const cached = await AdminApi.refreshStock();
         renderStock(cached.data);
         document.getElementById('stock-cache-status').textContent =
             formatStockCacheTime(cached.updatedAt);
-        stockStatus.textContent = '';
     } catch (error) {
         console.error('Unable to read cached book stock.', error);
-        stockStatus.textContent = 'Unable to load stock from the database.';
+        document.getElementById('stock-cache-status').textContent = 'Could not load stock.';
+        stockStatus.textContent = `Unable to load book data or stock. ${error.message}`;
         stockStatus.classList.add('error');
     }
 }
@@ -128,6 +141,7 @@ stockForm.addEventListener('submit', async (event) => {
             quantity: Number(data.get('quantity'))
         });
         renderStock(result.stock);
+        document.getElementById('stock-cache-status').textContent = formatStockCacheTime(new Date());
         stockForm.elements.quantity.value = '';
         stockStatus.textContent = 'Stock entry saved.';
         stockStatus.classList.add('success');
