@@ -40,20 +40,6 @@
             padding: 24px 18px 112px;
         }
 
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 42px;
-            margin-bottom: 20px;
-        }
-
-        .page-header h1 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 700;
-        }
-
         .profile-summary,
         .settings-list,
         .profile-details {
@@ -249,13 +235,6 @@
             color: white;
         }
 
-        .btn-logout {
-            margin-top: 10px;
-            border: 1px solid #fecaca;
-            background: var(--account-card);
-            color: #dc2626;
-        }
-
         .profile-edit-form {
             padding: 16px;
             margin-top: 14px;
@@ -368,10 +347,6 @@
 <body>
     <main class="account-shell">
         <section class="account-view" id="account-view">
-            <header class="page-header">
-                <h1>Profile</h1>
-            </header>
-
             <section class="profile-summary" aria-label="Account">
                 <div class="avatar" id="profile-avatar" aria-hidden="true">P</div>
                 <div>
@@ -427,6 +402,10 @@
                         <span class="setting-label">Help Center</span>
                         <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
                     </a>
+                    <button class="setting-row" id="logout-button" type="button">
+                        <span class="setting-icon"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i></span>
+                        <span class="setting-label">Log out</span>
+                    </button>
                 </div>
             </section>
         </section>
@@ -494,10 +473,6 @@
                 </div>
             </form>
             <p class="profile-status" id="profile-status" role="status" aria-live="polite"></p>
-            <button class="btn-logout" id="logout-button" type="button">
-                <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
-                <span>Log out</span>
-            </button>
         </section>
 
         <nav class="bottom-nav" aria-label="Main navigation">
@@ -643,6 +618,7 @@
         document.getElementById('logout-button').addEventListener('click', () => {
             try {
                 sendProfileRequest('logout', {}).catch(() => {});
+                localStorage.removeItem('physicsLearningHubSession');
                 sessionStorage.removeItem('physicsLearningHubSession');
                 localStorage.removeItem('physicsLearningHubProfile');
                 window.location.replace('login.html');

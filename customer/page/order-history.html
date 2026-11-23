@@ -53,9 +53,9 @@
             return card;
         }
         (async()=>{
-            if(!sessionStorage.getItem('physicsLearningHubSession')){location.replace('login.html?returnTo='+encodeURIComponent('/page/order-history.html'));return;}
+            if(!localStorage.getItem('physicsLearningHubSession')&&!sessionStorage.getItem('physicsLearningHubSession')){location.replace('login.html?returnTo='+encodeURIComponent('/page/order-history.html'));return;}
             try{const result=await physicsApiFetch('orders');host.replaceChildren();if(!result.orders?.length){const empty=document.createElement('p');empty.className='notice';empty.textContent='မှာယူမှုမှတ်တမ်း မရှိသေးပါ။';host.append(empty);return;}result.orders.forEach(order=>host.append(render(order)));}
-            catch(error){const notice=document.createElement('p');notice.className='notice';notice.textContent=error.message||'မှာယူမှုမှတ်တမ်းကို ဖတ်မရပါ။';host.replaceChildren(notice);}
+            catch(error){const notice=document.createElement('p');notice.className='notice';notice.textContent=error.code==='AUTH_REQUIRED'?'အကောင့်ဝင်ထားမှု သက်တမ်းကုန်သွားပါပြီ။ ပြန်လည်ဝင်ပါ။':`မှာယူမှုမှတ်တမ်းကို ဖတ်မရပါ။ (${error.message||'ချိတ်ဆက်မှုအမှား'})`;host.replaceChildren(notice);}
         })();
     </script>
 </body>

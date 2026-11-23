@@ -2174,7 +2174,8 @@
             try {
                 connectionNote.textContent = 'Creating your account...';
                 const result = await sendProfileRequest('create', profile);
-                sessionStorage.setItem('physicsLearningHubSession', result.token);
+                localStorage.setItem('physicsLearningHubSession', result.token);
+                sessionStorage.removeItem('physicsLearningHubSession');
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(result.user));
                 const returnTo = new URLSearchParams(window.location.search).get('returnTo');
                 const safeReturnTo = returnTo && returnTo.startsWith('/') && !returnTo.startsWith('//') && !returnTo.startsWith('/page/login')
@@ -2195,7 +2196,8 @@
             try {
                 connectionNote.textContent = 'Checking account...';
                 const result = await sendProfileRequest('login', { identifier, password });
-                sessionStorage.setItem('physicsLearningHubSession', result.token);
+                localStorage.setItem('physicsLearningHubSession', result.token);
+                sessionStorage.removeItem('physicsLearningHubSession');
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(result.user));
                 const returnTo = new URLSearchParams(window.location.search).get('returnTo');
                 const safeReturnTo = returnTo && returnTo.startsWith('/') &&

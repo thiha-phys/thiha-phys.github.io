@@ -2,7 +2,13 @@
 window.PHYSICS_API_BASE_URL = 'https://uthk-physics-api.vercel.app';
 
 async function physicsApiFetch(path, options = {}) {
-    const token = sessionStorage.getItem('physicsLearningHubSession');
+    let token = localStorage.getItem('physicsLearningHubSession');
+    if (!token) {
+        token = sessionStorage.getItem('physicsLearningHubSession');
+        if (token) {
+            try { localStorage.setItem('physicsLearningHubSession', token); } catch (error) { /* Keep using the current tab session if storage is unavailable. */ }
+        }
+    }
     const headers = new Headers(options.headers || {});
     headers.set('Content-Type', 'application/json');
     if (token) headers.set('Authorization', `Bearer ${token}`);

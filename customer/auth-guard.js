@@ -10,7 +10,14 @@
         console.error('Unable to read the saved account profile.', error);
     }
 
-    const hasServerSession = Boolean(sessionStorage.getItem('physicsLearningHubSession'));
+    let serverSession = localStorage.getItem('physicsLearningHubSession');
+    if (!serverSession) {
+        serverSession = sessionStorage.getItem('physicsLearningHubSession');
+        if (serverSession) {
+            try { localStorage.setItem('physicsLearningHubSession', serverSession); } catch (error) { /* Keep the existing session available in this tab. */ }
+        }
+    }
+    const hasServerSession = Boolean(serverSession);
     const isSignedIn = hasServerSession && profile &&
         typeof profile === 'object' &&
         typeof profile.name === 'string' && profile.name.trim() &&
