@@ -1849,6 +1849,7 @@
                         <span class="floating-label">Full name</span>
                     </span>
                 </label>
+                <fieldset class="field job-field" aria-label="Choose Teacher or Student"><input type="hidden" name="job" value=""><div class="job-options"><button type="button" class="job-choice" data-job="Teacher" aria-pressed="false">Teacher</button><button type="button" class="job-choice" data-job="Student" aria-pressed="false">Student</button></div></fieldset>
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
@@ -1937,6 +1938,11 @@
             window.scrollTo(0, 0);
         });
 
+        document.querySelectorAll('.job-choice').forEach((button) => button.addEventListener('click', () => {
+            document.querySelector('[data-auth-form="signup"] [name="job"]').value = button.dataset.job;
+            document.querySelectorAll('.job-choice').forEach((choice) => choice.setAttribute('aria-pressed', String(choice === button)));
+        }));
+
         function showPanel(panelName) {
             const isLogin = panelName === 'login';
             welcomePanel.hidden = true;
@@ -2019,12 +2025,14 @@
         document.querySelector('[data-auth-form="signup"]').addEventListener('submit', async (event) => {
             event.preventDefault();
             const form = event.currentTarget;
+            const occupation = form.elements.namedItem('job').value;
             const password = form.elements.namedItem('password').value;
             const confirmPassword = form.elements.namedItem('confirmPassword').value;
+            if (!occupation) { connectionNote.textContent = 'Choose Teacher or Student.'; connectionNote.classList.add('error'); return; }
             if (password !== confirmPassword) { connectionNote.textContent = 'Passwords do not match.'; connectionNote.classList.add('error'); form.elements.namedItem('confirmPassword').focus(); return; }
             const profile = {
                 name: form.elements.namedItem('name').value.trim(),
-                occupation: '',
+                occupation,
                 email: form.elements.namedItem('email').value.trim(),
                 phone: form.elements.namedItem('phone').value.trim(),
                 password
