@@ -467,6 +467,10 @@
                     <span>Email</span>
                     <input name="email" type="email" autocomplete="email">
                 </label>
+                <label class="form-field">
+                    <span>Confirm current password to save</span>
+                    <input name="currentPassword" type="password" autocomplete="current-password" required>
+                </label>
                 <div class="form-actions">
                     <button class="btn-save" type="submit">Save</button>
                     <button class="btn-cancel" id="cancel-edit-button" type="button">Cancel</button>
@@ -658,17 +662,22 @@
                     job: updatedProfile.occupation,
                     email: updatedProfile.email,
                     phone: updatedProfile.phone,
+                    currentPassword: String(formData.get('currentPassword') || ''),
                     lookupPhone: savedProfileForUpdate.phone
                 });
             } catch (error) {
                 console.error('Unable to update the account profile.', error);
-                profileStatus.textContent = error.code === 'PHONE_NOT_FOUND'
+                editForm.elements.namedItem('currentPassword').value = '';
+                profileStatus.textContent = error.code === 'CURRENT_PASSWORD_INVALID'
+                    ? 'လက်ရှိစကားဝှက် မမှန်ပါ။ ထပ်စစ်ပြီး ရိုက်ထည့်ပါ။'
+                    : error.code === 'PHONE_NOT_FOUND'
                     ? 'No account was found for this phone number.'
                     : `Unable to update your profile. ${error.message}`;
                 return;
             }
 
             try {
+                editForm.elements.namedItem('currentPassword').value = '';
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(updatedProfile));
             } catch (error) {
                 console.error('The account was updated, but the profile could not be saved in this browser.', error);

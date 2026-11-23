@@ -43,7 +43,7 @@ async function createSession(db, user) {
 async function getUser(req, db) {
   const token = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
   if (!token) return null;
-  const rows = await db`SELECT u.id, u.name, u.occupation, u.email, u.phone, u.role, u.email_verified_at
+  const rows = await db`SELECT u.id, u.name, u.occupation, u.email, u.phone, u.role
     FROM sessions s JOIN users u ON u.id=s.user_id
     WHERE s.token_hash=${tokenHash(token)} AND s.expires_at > now()`;
   return rows[0] || null;
@@ -204,6 +204,13 @@ export default async function handler(req, res) {
     }
     if (route === '/profile' && req.method === 'PATCH') {
       const body = await readBody(req);
+      const currentPassword = String(body.currentPassword || '');
+      const credentialRows = await db`SELECT password_hash,password_salt FROM users WHERE id=${user.id} LIMIT 1`;
+      const suppliedPassword = Buffer.from(await scrypt(currentPassword, credentialRows[0]?.password_salt || 'invalid-salt', 64));
+      const savedPassword = Buffer.from(credentialRows[0]?.password_hash || '0'.repeat(128), 'hex');
+      if (!credentialRows.length || savedPassword.length !== suppliedPassword.length || !timingSafeEqual(savedPassword, suppliedPassword)) {
+        return send(res, 401, {ok:false,code:'CURRENT_PASSWORD_INVALID',message:'ပိုင်ရှင်ဖြစ်ကြောင်း စစ်ဆေးရန် လက်ရှိစကားဝှက်ကို မှန်ကန်စွာထည့်ပါ။'});
+      }
       const email=normalizeEmail(body.email);
       if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return send(res,400,{ok:false,code:'INVALID_EMAIL',message:'မှန်ကန်သော email လိပ်စာထည့်ပါ။'});
       const phone=normalizePhone(body.phone);
