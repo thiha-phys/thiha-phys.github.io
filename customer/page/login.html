@@ -1742,20 +1742,22 @@
         .auth-shell { max-width:560px; padding:0; overflow:visible; border-radius:0; box-shadow:none; }
         .auth-shell::before { display:none; }
         .auth-content { padding:20px 18px 18px; border-radius:0; background:transparent; box-shadow:none; }
-        .brand { margin:0 auto 18px; }
+        .brand { margin:0 auto 10px; }
         .brand-logo { width:54px; height:54px; margin-bottom:6px; }
         .brand h1 { margin:0; color:#1d2b42; font-size:clamp(21px,5vw,27px); }
         .welcome-panel { text-align:left; }
-        .welcome-panel h2 { color:#1d2b42; font-size:24px; letter-spacing:-.02em; }
-        .welcome-copy { max-width:none; margin:5px 0 16px; color:#6e7c91; font-size:14px; }
-        .welcome-actions { grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
+        .welcome-panel h2 { display:none; }
+        .welcome-copy { max-width:none; margin:0 0 15px; color:#6e7c91; font-size:13px; text-align:center; }
+        .welcome-actions { grid-template-columns:1fr 1fr; gap:10px; margin:10px 0 18px; }
         .welcome-actions .submit-button,.welcome-actions .create-button { min-height:46px; border-radius:14px; }
         .welcome-actions .create-button { border:1px solid #d5dfed; background:#fff; color:#27436b; }
-        .welcome-menu { display:grid; gap:9px; margin:12px 0 18px; padding:0; list-style:none; }
-        .welcome-service { display:grid; grid-template-columns:44px minmax(0,1fr) 18px; align-items:center; gap:12px; padding:12px 13px; border:1px solid #edf0f5; border-radius:16px; background:#fff; color:#344256; text-decoration:none; box-shadow:0 4px 12px #203a5a08; }
-        .welcome-service-icon { width:42px; height:42px; display:grid; place-items:center; border-radius:50%; background:#ed2d50; color:white; font-size:17px; }
-        .welcome-service-copy strong { display:block; color:#26364c; font-size:14px; }
-        .welcome-service-copy small { display:block; margin-top:3px; color:#7d8999; font-size:11px; line-height:1.4; }
+        .welcome-menu { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin:12px 0 12px; padding:0; list-style:none; }
+        .welcome-service { position:relative; display:flex; min-width:0; min-height:92px; flex-direction:column; align-items:center; justify-content:center; gap:7px; padding:10px 5px; border:1px solid #edf0f5; border-radius:16px; background:#fff; color:#344256; text-align:center; text-decoration:none; box-shadow:0 4px 12px #203a5a08; }
+        button.welcome-service { width:100%; font:inherit; cursor:pointer; }
+        .welcome-service:active { transform:translateY(1px); box-shadow:0 2px 7px #203a5a12; }
+        .welcome-service-icon { width:38px; height:38px; display:grid; place-items:center; border-radius:13px; background:#ed2d50; color:white; font-size:16px; box-shadow:0 5px 12px #ed2d5030; }
+        .welcome-service-copy strong { display:block; color:#26364c; font-size:11px; line-height:1.35; }
+        .welcome-service-copy small { display:block; margin-top:3px; color:#7d8999; font-size:10px; line-height:1.35; }
         .welcome-all-books { color:#c52e4a; }
         .welcome-chevron { color:#b0bac7; text-align:right; }
         .welcome-book-list { display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; padding:5px 1px 1px; }
@@ -1766,7 +1768,24 @@
         .course-footer { padding-top:4px; border-top:1px solid #e7ebf1; }
         .course-caption,.designer-credit { color:#7f8ca0; }
         .social-links a { border-color:#dfe6ef; background:#fff; color:#51647e; }
-        @media(max-width:380px) { .welcome-book-list { grid-template-columns:1fr; } .auth-content { padding-right:13px; padding-left:13px; } }
+        .welcome-price-panel { padding:12px 14px; border:1px solid #edf0f5; border-radius:16px; background:#fff; }
+        .welcome-price-panel summary { color:#344256; font-weight:700; font-size:12px; cursor:pointer; }
+        .welcome-price-panel .welcome-book-list { margin-top:6px; }
+        .welcome-grade-picker { display:none; margin:-2px 0 10px; padding:10px; border-radius:14px; background:#fff; box-shadow:0 5px 18px #19365e12; }
+        .welcome-grade-picker.is-open { display:flex; gap:7px; justify-content:center; }
+        .welcome-grade-picker a { padding:7px 10px; border-radius:999px; background:#fff1f4; color:#bd2947; text-decoration:none; font-size:11px; }
+        .welcome-atom { position:relative; height:152px; margin:0 auto 8px; display:grid; place-items:center; perspective:420px; }
+        .atom-core-3d { position:absolute; width:34px; height:34px; border-radius:50%; background:radial-gradient(circle at 30% 25%,#fff,#f46c5a 22%,#cb2d42 60%,#7b2037); box-shadow:0 0 0 10px #ef49651a,0 0 24px #e9415780; }
+        .atom-orbit-3d { position:absolute; width:160px; height:72px; border:2px solid #4ba9bc63; border-radius:50%; transform:rotateX(66deg) rotateZ(-24deg); }
+        .atom-orbit-3d:nth-child(2) { border-color:#9b7ce866; transform:rotateX(66deg) rotateZ(54deg); }
+        .atom-orbit-3d:nth-child(3) { border-color:#efae4d70; transform:rotateX(66deg) rotateZ(124deg); }
+        .atom-electron-3d { position:absolute; top:50%; left:50%; width:12px; height:12px; margin:-6px; border-radius:50%; background:radial-gradient(circle at 30% 25%,#fff,#24a3b7 35%,#08708e); box-shadow:0 0 0 6px #24a3b71c; transform-origin:0 0; animation:electron-drift 4s linear infinite; }
+        .atom-electron-3d:nth-of-type(5) { animation-duration:5.4s; animation-direction:reverse; }
+        .atom-electron-3d:nth-of-type(6) { animation-duration:6.1s; }
+        @keyframes electron-drift { from{transform:rotate(0) translateX(79px) rotate(0)} to{transform:rotate(360deg) translateX(79px) rotate(-360deg)} }
+        .welcome-lesson-tagline { margin:0 0 12px; color:#66758a; font-size:12px; text-align:center; }
+        .welcome-price-panel { margin-bottom:12px; }
+        @media(max-width:380px) { .welcome-book-list { grid-template-columns:1fr; } .auth-content { padding-right:13px; padding-left:13px; } .welcome-menu{gap:7px}.welcome-service{min-height:84px;padding:8px 3px}.welcome-service-copy strong{font-size:10px} }
     </style>
     <link rel="stylesheet" href="brand.css">
 </head>
@@ -1785,23 +1804,25 @@
 
         <section class="welcome-panel" id="welcome-panel" aria-labelledby="welcome-heading">
             <h2 id="welcome-heading">Physics Learning Hub</h2>
-            <p class="welcome-copy">စာအုပ်များ၊ သင်ခန်းစာနမူနာများနှင့် ဝန်ဆောင်မှုများကို ရွေးချယ်ပါ။</p>
+            <div class="welcome-atom" aria-label="Animated 3D atom illustration" role="img"><span class="atom-core-3d"></span><span class="atom-orbit-3d"></span><span class="atom-orbit-3d"></span><span class="atom-orbit-3d"></span><span class="atom-electron-3d"></span><span class="atom-electron-3d"></span><span class="atom-electron-3d"></span></div>
+            <p class="welcome-copy">Explore lessons, practice questions, and quizzes in one place.</p>
             <div class="welcome-actions">
                 <button class="submit-button" type="button" data-show-panel="login">Log in</button>
                 <button class="create-button" type="button" data-show-panel="signup">Create account</button>
             </div>
+            <details class="welcome-price-panel"><summary>ရရှိနိုင်သည့် စာအုပ်များနှင့် ဈေးနှုန်း</summary><span id="welcome-book-list" class="welcome-book-list" aria-live="polite"><small>စာအုပ်စာရင်းကို ရယူနေပါသည်…</small></span></details>
             <nav class="welcome-menu" aria-label="ဝန်ဆောင်မှုများ">
-                <article class="welcome-service welcome-books">
+                <a class="welcome-service welcome-books" href="books.html">
                     <span class="welcome-service-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span>
-                    <span class="welcome-service-copy"><strong>ရရှိနိုင်သည့် စာအုပ်များ</strong><small>စာအုပ်အမည်နှင့် ဈေးနှုန်းများ · <a href="books.html" class="welcome-all-books">အားလုံးကြည့်ရန်</a></small><span id="welcome-book-list" class="welcome-book-list" aria-live="polite"><small>စာအုပ်စာရင်းကို ရယူနေပါသည်…</small></span></span>
-                    <span class="welcome-chevron" aria-hidden="true">›</span>
-                </article>
-                <a class="welcome-service" href="order.html"><span class="welcome-service-icon"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>စာအုပ်မှာယူမည်</strong><small>အကောင့်မရှိဘဲလည်း မှာယူနိုင်ပါသည်</small></span><span class="welcome-chevron" aria-hidden="true">›</span></a>
-                <a class="welcome-service" href="bookstores.html"><span class="welcome-service-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>စာအုပ်ဆိုင်များ</strong><small>မြို့အလိုက် ဆိုင်စာရင်းနှင့် လိပ်စာများ</small></span><span class="welcome-chevron" aria-hidden="true">›</span></a>
-                <section class="welcome-service"><span class="welcome-service-icon"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>Definitions · Chapter 1</strong><span class="welcome-grade-links"><a href="G10def1.html">Grade 10</a><a href="G11def1.html">Grade 11</a><a href="G12def1.html">Grade 12</a></span></span><span class="welcome-chevron" aria-hidden="true">›</span></section>
-                <section class="welcome-service"><span class="welcome-service-icon"><i class="fa-solid fa-calculator" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>တွက်ချက်မှုများ · Chapter 1</strong><span class="welcome-grade-links"><a href="G10cal1.html">Grade 10</a><a href="G11cal1.html">Grade 11</a><a href="G12calCh1.html">Grade 12</a></span></span><span class="welcome-chevron" aria-hidden="true">›</span></section>
-                <section class="welcome-service"><span class="welcome-service-icon"><i class="fa-solid fa-list-check" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>Objective များ · Chapter 1</strong><span class="welcome-grade-links"><a href="G10objCh1.html">Grade 10</a><a href="G11objCh1.html">Grade 11</a><a href="G12objCh1.html">Grade 12</a></span></span><span class="welcome-chevron" aria-hidden="true">›</span></section>
+                    <span class="welcome-service-copy"><strong>စာအုပ်များ</strong><small>စာရင်းနှင့် ဈေးနှုန်း</small></span>
+                </a>
+                <a class="welcome-service" href="order.html"><span class="welcome-service-icon"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>မှာယူမည်</strong></span></a>
+                <a class="welcome-service" href="bookstores.html"><span class="welcome-service-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>စာအုပ်ဆိုင်များ</strong></span></a>
+                <button class="welcome-service preview-choice" type="button" data-preview-type="definitions"><span class="welcome-service-icon"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>Definitions</strong></span></button>
+                <button class="welcome-service preview-choice" type="button" data-preview-type="calculations"><span class="welcome-service-icon"><i class="fa-solid fa-calculator" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>Calculations</strong></span></button>
+                <button class="welcome-service preview-choice" type="button" data-preview-type="objectives"><span class="welcome-service-icon"><i class="fa-solid fa-list-check" aria-hidden="true"></i></span><span class="welcome-service-copy"><strong>Objectives</strong></span></button>
             </nav>
+            <div class="welcome-grade-picker" id="welcome-grade-picker" aria-label="Choose a grade"><a href="#" data-grade="10">Grade 10</a><a href="#" data-grade="11">Grade 11</a><a href="#" data-grade="12">Grade 12</a></div>
         </section>
 
         <div class="auth-view" id="auth-view" hidden>
@@ -1911,6 +1932,27 @@
         const noteAction = document.getElementById('note-action');
         const loginIdentifier = document.querySelector('[data-auth-form="login"] [name="identifier"]');
         const signupPhone = document.querySelector('[data-auth-form="signup"] [name="phone"]');
+        const gradePicker = document.getElementById('welcome-grade-picker');
+        let selectedPreviewType = '';
+
+        window.history.replaceState({ ...(window.history.state || {}), physicsWelcome: true }, '', window.location.href);
+
+        document.querySelectorAll('[data-preview-type]').forEach((button) => button.addEventListener('click', () => {
+            selectedPreviewType = button.dataset.previewType;
+            gradePicker.classList.add('is-open');
+            gradePicker.querySelectorAll('[data-grade]').forEach((link) => {
+                link.href = `../preview/index.html?type=${encodeURIComponent(selectedPreviewType)}&grade=${encodeURIComponent(link.dataset.grade)}`;
+            });
+        }));
+
+        window.addEventListener('popstate', () => {
+            if (!welcomePanel.hidden) return;
+            authView.hidden = true;
+            welcomePanel.hidden = false;
+            connectionNote.textContent = '';
+            noteAction.hidden = true;
+            window.scrollTo(0, 0);
+        });
 
         document.querySelectorAll('.job-choice').forEach((button) => button.addEventListener('click', () => {
             document.querySelector('[data-auth-form="signup"] [name="job"]').value = button.dataset.job;
@@ -1926,6 +1968,7 @@
             connectionNote.textContent = '';
             connectionNote.className = 'connection-note';
             noteAction.hidden = true;
+            window.history.pushState({ physicsWelcome: false, authPanel: panelName }, '', window.location.href);
             window.scrollTo(0, 0);
         }
 

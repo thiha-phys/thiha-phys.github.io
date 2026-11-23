@@ -25,12 +25,10 @@
     const isHomePage = window.location.pathname === '/' ||
         window.location.pathname === '/index.html';
     const publicPagePaths = new Set([
-        '/page/books.html', '/page/bookstores.html', '/page/order.html',
-        '/page/G10def1.html', '/page/G11def1.html', '/page/G12def1.html',
-        '/page/G10cal1.html', '/page/G11cal1.html', '/page/G12calCh1.html',
-        '/page/G10objCh1.html', '/page/G11objCh1.html', '/page/G12objCh1.html'
+        '/page/books.html', '/page/bookstores.html', '/page/order.html'
     ]);
-    const isPublicPage = isHomePage || publicPagePaths.has(window.location.pathname);
+    const isPublicPreview = window.location.pathname.startsWith('/preview/');
+    const isPublicPage = isHomePage || isPublicPreview || publicPagePaths.has(window.location.pathname);
 
     const isPendingPage = window.location.pathname === '/page/pending.html';
     if (isSignedIn && profile.approvalStatus && profile.approvalStatus !== 'approved' && !isPendingPage) {
@@ -43,7 +41,7 @@
     }
 
     if (isHomePage) {
-        document.documentElement.classList.add('guest-mode');
+        window.location.replace(loginPath);
         return;
     }
     if (isPublicPage) return;

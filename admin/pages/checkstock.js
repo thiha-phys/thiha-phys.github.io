@@ -74,8 +74,9 @@ function renderStock(stock) {
         });
         const entries = document.createElement('div');
         entries.className = 'stock-entries';
-        if (book.entries.length) {
-            book.entries.slice().reverse().forEach((entry) => {
+        const bookEntries = Array.isArray(book.entries) ? book.entries : [];
+        if (bookEntries.length) {
+            bookEntries.slice().reverse().forEach((entry) => {
                 const line = document.createElement('p');
                 const date = document.createElement('span');
                 date.textContent = formatStockDate(entry.date);
@@ -96,6 +97,8 @@ async function loadStock() {
     stockStatus.className = 'status-message';
     stockStatus.textContent = '';
     document.getElementById('stock-cache-status').textContent = 'Loading stock…';
+    stockBookSelect.replaceChildren(new Option('Loading books…', ''));
+    stockBookSelect.disabled = true;
     try {
         await AdminApi.getMasterData();
         stockBookSelect.replaceChildren();
@@ -107,20 +110,36 @@ async function loadStock() {
         stockBookSelect.append(placeholder);
         (window.AdminBooks || []).forEach((book) => {
             const option = document.createElement('option');
-            option.value = book.id;
+            option.value = String(book.id || '');
             option.textContent = book.name;
             stockBookSelect.append(option);
         });
         if (!stockBookSelect.options.length || stockBookSelect.options.length === 1) {
             throw new Error('No active books are available in Master Data.');
         }
-        const cached = await AdminApi.refreshStock();
-        renderStock(cached.data);
+        stockBookSelect.disabled = false;
+        let cached = null;
+        try { cached = await AdminApi.getCachedStock(); } catch (cacheError) { console.warn('Saved stock is unavailable.', cacheError); }
+        if (cached && Array.isArray(cached.data)) {
+            renderStock(cached.data);
+            document.getElementById('stock-cache-status').textContent = 'Refreshing saved stock…';
+        }
+        const latest = await AdminApi.refreshStock();
+        renderStock(latest.data);
         document.getElementById('stock-cache-status').textContent =
-            formatStockCacheTime(cached.updatedAt);
+            formatStockCacheTime(latest.updatedAt);
     } catch (error) {
         console.error('Unable to read cached book stock.', error);
-        document.getElementById('stock-cache-status').textContent = 'Could not load stock.';
+        const cached = await AdminApi.getCachedStock().catch(() => null);
+        if (cached && Array.isArray(cached.data)) {
+            renderStock(cached.data);
+            document.getElementById('stock-cache-status').textContent = 'Showing saved stock; latest data could not be loaded.';
+        } else {
+            document.getElementById('stock-cache-status').textContent = 'Could not load stock.';
+        }
+        if (stockBookSelect.options.length <= 1) {
+            stockBookSelect.replaceChildren(new Option('Books could not be loaded', ''));
+        }
         stockStatus.textContent = `Unable to load book data or stock. ${error.message}`;
         stockStatus.classList.add('error');
     }

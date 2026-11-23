@@ -456,6 +456,7 @@ svg {
     line-height: 1;
     box-shadow: 0 2px 8px #ef444455;
 }
+.announcement-notice[hidden] { display: none; }
 .nav-icon { 
     width: 20px !important; 
     height: 20px !important; 

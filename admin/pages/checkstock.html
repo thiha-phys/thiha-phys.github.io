@@ -11,7 +11,7 @@
     <section class="panel">
         <h2>Add New Stock</h2>
         <form id="stock-form" class="form-grid">
-            <label class="field">Book<select name="bookId" id="stock-book" required></select></label>
+            <label class="field">Book<select name="bookId" id="stock-book" required disabled><option value="">Loading books…</option></select></label>
             <label class="field">Stock Date<input name="date" type="date" required></label>
             <label class="field">Quantity<input name="quantity" type="number" min="1" step="1" inputmode="numeric" required></label>
             <div class="field"><span>&nbsp;</span><button id="add-stock" class="primary-button" type="submit"><i class="fa-solid fa-plus"></i> Add Stock</button></div>
