@@ -11,6 +11,25 @@
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html.guest-mode .hero-card,html.guest-mode .main-content,html.guest-mode .bottom-nav{display:none!important}
+        .guest-welcome{display:none;max-width:760px;margin:0 auto;padding:18px 16px 36px;color:#17233c}
+        html.guest-mode .guest-welcome{display:block}
+        .guest-hero{position:relative;overflow:hidden;display:flex;align-items:center;gap:16px;min-height:170px;padding:24px;border-radius:28px;background:linear-gradient(130deg,#14213d,#284e91 72%,#3e82e8);color:white;box-shadow:0 16px 34px #254b8d30}
+        .guest-hero:after{content:"";position:absolute;width:210px;height:210px;border:1px solid #ffffff26;border-radius:50%;right:-70px;top:-100px;box-shadow:0 0 0 25px #ffffff0d,0 0 0 52px #ffffff0a}
+        .guest-hero img{width:70px;height:70px;object-fit:contain;filter:drop-shadow(0 6px 8px #0004)}
+        .guest-hero h1{font-size:1.55rem;margin:0 0 7px}.guest-hero p{margin:0;color:#e3edff}
+        .guest-actions{display:flex;gap:10px;margin:-19px 18px 24px;position:relative;z-index:1}
+        .guest-actions a{flex:1;text-align:center;text-decoration:none;padding:12px 10px;border-radius:14px;font-weight:700;box-shadow:0 6px 18px #17233c20}
+        .guest-actions .guest-order{background:#ef315a;color:white}.guest-actions .guest-login{background:white;color:#245ac4;border:1px solid #e4eaf4}
+        .guest-section{margin:22px 0}.guest-section-title{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:1.08rem}.guest-section-title i{color:#2866d8}
+        .guest-card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e8edf5;border-radius:18px;padding:16px;box-shadow:0 9px 24px #19365e0b}
+        .guest-book-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px}.guest-book-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #edf0f5;font-size:.93rem}.guest-book-row:last-child{border-bottom:0}
+        .guest-book-row strong{white-space:nowrap;color:#245ac4}.guest-shortcut{display:flex;align-items:center;gap:13px}.guest-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:14px;background:#edf4ff;color:#2866d8;font-size:1.1rem}.guest-shortcut small{display:block;color:#718096;margin-top:4px}.guest-arrow{margin-left:auto;color:#93a3b8;font-size:1.4rem}
+        .guest-sample-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}.guest-sample-links a{background:#f2f6fd;color:#315b9e;text-decoration:none;border-radius:999px;padding:8px 11px;font-size:.86rem}
+        .guest-mini-grid{display:grid;grid-template-columns:1fr;gap:10px}.guest-load-status{color:#718096;font-size:.9rem}
+        @media(min-width:620px){.guest-mini-grid{grid-template-columns:1fr 1fr}.guest-section:first-of-type{grid-column:1/-1}}
+    </style>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./service-worker.js', { updateViaCache: 'none' })
@@ -19,6 +38,32 @@
     </script>
 </head>
 <body class="has-inline-brand">
+
+    <main class="guest-welcome">
+        <header class="guest-hero">
+            <img src="logo.png" alt="Physics Learning Hub app icon">
+            <div><h1>Physics Learning Hub</h1><p>စာအုပ်များ၊ သင်ခန်းစာနမူနာများနှင့် မှာယူမှုများ</p></div>
+        </header>
+        <nav class="guest-actions" aria-label="အကောင့်နှင့် မှာယူမှု">
+            <a class="guest-order" href="page/order.html"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> စာအုပ်မှာယူမည်</a>
+            <a class="guest-login" href="page/login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> ဝင်မည် / အကောင့်ဖွင့်မည်</a>
+        </nav>
+        <section class="guest-section">
+            <h2 class="guest-section-title"><i class="fa-solid fa-book-open" aria-hidden="true"></i> ရရှိနိုင်သည့် စာအုပ်များနှင့် ဈေးနှုန်း</h2>
+            <div class="guest-card"><div id="guest-book-list" class="guest-book-list"><span class="guest-load-status">စာအုပ်စာရင်းကို ဖော်ပြနေပါသည်…</span></div><a href="page/books.html" class="guest-sample-links">စာအုပ်အားလုံး ကြည့်ရန် ›</a></div>
+        </section>
+        <section class="guest-section">
+            <h2 class="guest-section-title"><i class="fa-solid fa-compass" aria-hidden="true"></i> လေ့လာရန်နှင့် ဝန်ဆောင်မှုများ</h2>
+            <div class="guest-mini-grid">
+                <a class="guest-card guest-shortcut" href="page/books.html"><span class="guest-icon"><i class="fa-solid fa-book" aria-hidden="true"></i></span><span><strong>ရရှိနိုင်သည့် စာအုပ်များ</strong><small>စာအုပ်အမည်နှင့် ဈေးနှုန်းများ</small></span><span class="guest-arrow">›</span></a>
+                <a class="guest-card guest-shortcut" href="page/order.html"><span class="guest-icon"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></span><span><strong>စာအုပ်မှာယူမည်</strong><small>အကောင့်မရှိလည်း မှာယူနိုင်ပါသည်</small></span><span class="guest-arrow">›</span></a>
+                <a class="guest-card guest-shortcut" href="page/bookstores.html"><span class="guest-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></span><span><strong>စာအုပ်ဆိုင်များ</strong><small>မြို့အလိုက် ဝယ်ယူနိုင်သည့်ဆိုင်များ</small></span><span class="guest-arrow">›</span></a>
+                <article class="guest-card"><div class="guest-shortcut"><span class="guest-icon"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i></span><span><strong>Definition နမူနာ</strong><small>Chapter 1 · Grade 10, 11, 12</small></span></div><div class="guest-sample-links"><a href="page/G10def1.html">Grade 10</a><a href="page/G11def1.html">Grade 11</a><a href="page/G12def1.html">Grade 12</a></div></article>
+                <article class="guest-card"><div class="guest-shortcut"><span class="guest-icon"><i class="fa-solid fa-calculator" aria-hidden="true"></i></span><span><strong>တွက်ချက်မှု နမူနာ</strong><small>Chapter 1 · Grade 10, 11, 12</small></span></div><div class="guest-sample-links"><a href="page/G10cal1.html">Grade 10</a><a href="page/G11cal1.html">Grade 11</a><a href="page/G12calCh1.html">Grade 12</a></div></article>
+                <article class="guest-card"><div class="guest-shortcut"><span class="guest-icon"><i class="fa-solid fa-list-check" aria-hidden="true"></i></span><span><strong>Objective နမူနာ</strong><small>Chapter 1 · Grade 10, 11, 12</small></span></div><div class="guest-sample-links"><a href="page/G10objCh1.html">Grade 10</a><a href="page/G11objCh1.html">Grade 11</a><a href="page/G12objCh1.html">Grade 12</a></div></article>
+            </div>
+        </section>
+    </main>
 
     <!-- Header Section -->
     <header class="hero-card">
@@ -418,5 +463,22 @@
     </script>
     <script src="page/api-config.js"></script>
     <script src="page/announcement-notice.js"></script>
+    <script>
+        if (document.documentElement.classList.contains('guest-mode')) {
+            physicsApiFetch('public/master-data').then(({ masterData }) => {
+                const list = document.getElementById('guest-book-list');
+                list.replaceChildren();
+                Object.values(masterData.books || {}).filter(book => book.active !== false).forEach(book => {
+                    const row = document.createElement('div');
+                    row.className = 'guest-book-row';
+                    const name = document.createElement('span'); name.textContent = book.name;
+                    const price = document.createElement('strong');
+                    price.textContent = `${Number(book.prices?.[0] || 0).toLocaleString('en-US')} ကျပ် မှ`;
+                    row.append(name, price); list.append(row);
+                });
+                if (!list.children.length) list.textContent = 'စာအုပ်စာရင်း မရရှိသေးပါ။';
+            }).catch(() => { document.getElementById('guest-book-list').textContent = 'စာအုပ်စာရင်းကို ယခုမရနိုင်ပါ။'; });
+        }
+    </script>
 </body>
 </html>

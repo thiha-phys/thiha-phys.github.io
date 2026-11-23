@@ -167,8 +167,8 @@ export default async function handler(req, res) {
 
     if (route === '/orders' && req.method === 'POST') {
       const user = await getUser(req, db);
-      if (!user) return send(res, 401, { ok:false, code:'AUTH_REQUIRED', message:'အကောင့်ဝင်ပြီးမှ မှာယူနိုင်ပါသည်။' });
-      if(user.role!=='admin'&&user.approval_status!=='approved') return send(res,403,{ok:false,code:user.approval_status==='rejected'?'ACCOUNT_REJECTED':'ACCOUNT_PENDING',message:'အကောင့်အသုံးပြုခွင့်အတွက် admin အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်။'});
+      if (!user && req.headers.authorization) return send(res, 401, {ok:false,code:'SESSION_INVALID',message:'အကောင့်ဝင်ချိန်ကုန်ဆုံးသွားပါပြီ။ ပြန်လည်ဝင်ပြီး မှာယူပါ။'});
+      if(user && user.role!=='admin'&&user.approval_status!=='approved') return send(res,403,{ok:false,code:user.approval_status==='rejected'?'ACCOUNT_REJECTED':'ACCOUNT_PENDING',message:'အကောင့်အသုံးပြုခွင့်အတွက် admin အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်။'});
       const body = await readBody(req);
       const order = body.order || {};
       const cityRows = await db`SELECT * FROM delivery_cities WHERE lower(english)=lower(${String(order.deliveryCity || '')}) AND active=true LIMIT 1`;
@@ -207,14 +207,15 @@ export default async function handler(req, res) {
       const deliveryFee=service==='Royal'?Math.ceil(baseFee/500-0.000000001)*500:0;
       const total=subtotal+deliveryFee;
       if(payment==='COD' && total>=Number(settings.codMaxTotal ?? 150000)) return send(res,400,{ok:false,code:'COD_LIMIT',message:'စုစုပေါင်းပမာဏအတွက် KBZ Pay ကိုသာ ရွေးချယ်နိုင်ပါသည်။'});
-      if(!String(order.address||'').trim() || !String(order.name||user.name).trim() || !String(order.phone||user.phone).trim()) return send(res,400,{ok:false,code:'MISSING_ORDER_DETAILS',message:'အမည်၊ ဖုန်းနှင့် လိပ်စာ ဖြည့်ပါ။'});
+      const customerName=String(order.name||user?.name||'').trim(), customerPhone=String(order.phone||user?.phone||'').trim();
+      if(!String(order.address||'').trim() || !customerName || !customerPhone) return send(res,400,{ok:false,code:'MISSING_ORDER_DETAILS',message:'အမည်၊ ဖုန်းနှင့် လိပ်စာ ဖြည့်ပါ။'});
       const created = await db`WITH next_number AS (SELECT nextval('orders_order_no_seq') AS order_no)
         INSERT INTO orders (order_no,voucher_no,user_id,customer_name,phone,phone2,city_id,address,delivery_service,payment_method,car_details,status)
-        SELECT order_no,lpad(order_no::text,3,'0'),${user.id},${String(order.name || user.name).trim()},${String(order.phone || user.phone).trim()},${String(order.phone2 || '').trim()},${city.id},${String(order.address || '').trim()},${service},${payment},${String(order.carDetails || '').trim()},'new' FROM next_number
+        SELECT order_no,lpad(order_no::text,3,'0'),${user?.id || null},${customerName},${customerPhone},${String(order.phone2 || '').trim()},${city.id},${String(order.address || '').trim()},${service},${payment},${String(order.carDetails || '').trim()},'new' FROM next_number
         RETURNING id, voucher_no,order_no`;
       for(const item of preparedItems) await db`INSERT INTO order_items(order_id,book_id,book_name,quantity,unit_price,amount,weight_kg) VALUES (${created[0].id},${item.book.id},${item.book.name},${item.quantity},${item.unitPrice},${item.amount},${Number(item.book.weight)})`;
       await db`UPDATE orders SET subtotal=${subtotal},delivery_fee=${deliveryFee},total=${total},total_weight_kg=${kg},cash_collection=${payment==='COD'?total:0} WHERE id=${created[0].id}`;
-      const resultOrder={voucherNo:created[0].voucher_no,name:String(order.name || user.name),phone:String(order.phone || user.phone),phone2:String(order.phone2 || ''),city:city.label,address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,carInfo:String(order.carDetails || ''),items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))};
+      const resultOrder={voucherNo:created[0].voucher_no,name:customerName,phone:customerPhone,phone2:String(order.phone2 || ''),city:city.label,address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,carInfo:String(order.carDetails || ''),items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))};
       const telegramNotified=await notifyTelegram(resultOrder);
       return send(res, 201, { ok:true, orderId:created[0].voucher_no, order:resultOrder,telegramNotified });
     }

@@ -24,6 +24,13 @@
         typeof profile.phone === 'string' && profile.phone.trim();
     const isHomePage = window.location.pathname === '/' ||
         window.location.pathname === '/index.html';
+    const publicPagePaths = new Set([
+        '/page/books.html', '/page/bookstores.html', '/page/order.html',
+        '/page/G10def1.html', '/page/G11def1.html', '/page/G12def1.html',
+        '/page/G10cal1.html', '/page/G11cal1.html', '/page/G12calCh1.html',
+        '/page/G10objCh1.html', '/page/G11objCh1.html', '/page/G12objCh1.html'
+    ]);
+    const isPublicPage = isHomePage || publicPagePaths.has(window.location.pathname);
 
     const isPendingPage = window.location.pathname === '/page/pending.html';
     if (isSignedIn && profile.approvalStatus && profile.approvalStatus !== 'approved' && !isPendingPage) {
@@ -35,10 +42,14 @@
         return;
     }
 
+    if (isHomePage) {
+        document.documentElement.classList.add('guest-mode');
+        return;
+    }
+    if (isPublicPage) return;
+
     const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
     const loginUrl = new URL(loginPath, window.location.origin);
-    if (!isHomePage) {
-        loginUrl.searchParams.set('returnTo', returnTo);
-    }
+    loginUrl.searchParams.set('returnTo', returnTo);
     window.location.replace(loginUrl.toString());
 })();
