@@ -29,7 +29,7 @@ Admin and customer have separate app screens but use the same secure account tab
 UPDATE users SET role='admin' WHERE lower(email)=lower('thihakyawphys73@gmail.com');
 ```
 
-The API checks both the database role and `ADMIN_EMAILS`. After the first admin is active, the Admin app's **Tools → App Users / Admin access** screen can grant or remove admin access for accounts whose email is in `ADMIN_EMAILS`. That person must create an account first. Admin role is never assigned during public signup. Do not add an unverified self-service Admin signup: the current project has no email/SMS verification, so someone could claim an allowlisted address.
+The API checks both the database role and the allowlist. The two owner-approved emails (`thihakyawphys73@gmail.com` and `thihakyaw1sth66@gmail.com`) are included in the API as a base allowlist; `ADMIN_EMAILS` can add more. After the first admin is active, the Admin app's **Tools → App Users / Admin access** screen can grant or remove admin access for accounts whose email is allowlisted. That person must create an account first. Admin role is never assigned during public signup. Do not add an unverified self-service Admin signup: the current project has no email/SMS verification, so someone could claim an allowlisted address.
 
 Customers can register with a phone number and password; email is optional. They can sign in using either phone or email. Their order history is filtered by the authenticated account ID, so customers cannot look up someone else's orders by supplying an email. Password change and recovery are postponed until the flow is implemented and checked. Recovery will require a verified email or SMS one-time-code service.
 

@@ -19,6 +19,11 @@ function normalizeEmail(value) {
 function normalizePhone(value) {
   return String(value || '').replace(/[၀-၉]/g, (digit) => String(digit.charCodeAt(0) - '၀'.charCodeAt(0))).replace(/\D/g, '');
 }
+const adminEmails = [...new Set([
+  'thihakyawphys73@gmail.com',
+  'thihakyaw1sth66@gmail.com',
+  ...(process.env.ADMIN_EMAILS || '').split(',').map(normalizeEmail).filter(Boolean)
+])];
 function tokenHash(token) {
   return createHash('sha256').update(token).digest('hex');
 }
@@ -186,8 +191,7 @@ export default async function handler(req, res) {
 
     const user = await getUser(req, db);
     if (!user) return send(res, 401, {ok:false,code:'AUTH_REQUIRED',message:'အကောင့်ဝင်ရန်လိုအပ်ပါသည်။'});
-    const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(normalizeEmail).filter(Boolean);
-    if (route.startsWith('/admin/') && (user.role !== 'admin' || !adminEmails.includes(user.email))) return send(res,403,{ok:false,code:'ADMIN_REQUIRED',message:'ဤလုပ်ဆောင်ချက်ကို admin သာ အသုံးပြုနိုင်ပါသည်။'});
+    if (route.startsWith('/admin/') && (user.role !== 'admin' || !adminEmails.includes(normalizeEmail(user.email)))) return send(res,403,{ok:false,code:'ADMIN_REQUIRED',message:'ဤလုပ်ဆောင်ချက်ကို admin သာ အသုံးပြုနိုင်ပါသည်။'});
     if (route === '/auth/me' && req.method === 'GET') return send(res,200,{ok:true,user:safeUser(user)});
     if (route === '/orders' && req.method === 'GET') {
       const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.created_at
