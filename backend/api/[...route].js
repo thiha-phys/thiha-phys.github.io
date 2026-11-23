@@ -58,8 +58,15 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   try {
     const db = sql();
-    const routeParts = Array.isArray(req.query.route) ? req.query.route : [req.query.route || ''];
-    const route = '/' + routeParts.map((part)=>String(part)).filter(Boolean).join('/').replace(/^\/+|\/+$/g, '');
+    const queryRoute = req.query.route;
+    const routeParts = Array.isArray(queryRoute)
+      ? queryRoute
+      : queryRoute
+        ? String(queryRoute).split('/')
+        : String(req.url || '').split('?')[0].split('/');
+    const routeSegments = routeParts.map((part)=>String(part)).filter(Boolean);
+    if (routeSegments[0] === 'api') routeSegments.shift();
+    const route = '/' + routeSegments.join('/');
     if (route === '/health' && req.method === 'GET') return send(res, 200, { ok: true });
 
     if (route === '/auth/signup' && req.method === 'POST') {
