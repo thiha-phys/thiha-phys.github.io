@@ -63,7 +63,7 @@ function renderShopOrders() {
 async function loadShopOrders(button) {
     if (button) button.disabled = true;
     shopHistoryStatus.className = 'status-message';
-    shopHistoryStatus.textContent = 'Google Sheet မှ အမှာစာများရယူနေသည်…';
+    shopHistoryStatus.textContent = 'Database မှ အမှာစာများရယူနေသည်…';
     try {
         const shops = await AdminApi.getShops();
         historyShop = shops.find((shop) => shop.id === shopHistoryId);
@@ -77,7 +77,7 @@ async function loadShopOrders(button) {
         shopHistoryStatus.textContent = `${shopOrders.length.toLocaleString('my-MM')} ခု ရယူပြီးပါပြီ`;
     } catch (error) {
         console.error('Unable to load shop order history.', error);
-        shopHistoryStatus.textContent = error.message || 'Google Sheet မှ အမှာစာများရယူမရပါ။';
+        shopHistoryStatus.textContent = error.message || 'Database မှ အမှာစာများရယူမရပါ။';
         shopHistoryStatus.classList.add('error');
     } finally {
         if (button) button.disabled = false;

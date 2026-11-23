@@ -1,4 +1,4 @@
-const PROFILE_API_URL = 'https://script.google.com/macros/s/AKfycbzIdbnosK3NE_RItCHF-JFD-Olz4CJ0tBqrANyU4ORfHRZYxVgvAkQhMTNeAH3ZQRvz7A/exec';
+// Profile requests use the shared Vercel API instead of the Sheets service.
 
 function normalizePhoneNumber(value) {
     return String(value ?? '')
@@ -13,21 +13,13 @@ function formatPhoneNumber(value) {
 }
 
 async function sendProfileRequest(action, profile) {
-    const response = await fetch(PROFILE_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify({ action, profile })
-    });
-    if (!response.ok) {
-        throw new Error(`Account service request failed (${response.status}).`);
-    }
-    const result = await response.json();
-    if (!result.ok) {
-        const error = new Error(result.message || result.error || 'The account service rejected the request.');
-        error.code = result.error || 'ACCOUNT_REQUEST_FAILED';
-        throw error;
-    }
-    return result;
+    if (action === 'lookup') return physicsApiFetch('auth/me', { method: 'GET' });
+    if (action === 'create') return physicsApiFetch('auth/signup', { method: 'POST', body: JSON.stringify(profile) });
+    if (action === 'login') return physicsApiFetch('auth/login', { method: 'POST', body: JSON.stringify(profile) });
+    if (action === 'logout') return physicsApiFetch('auth/logout', { method: 'POST', body: '{}' });
+    if (action === 'update') return physicsApiFetch('profile', { method: 'PATCH', body: JSON.stringify(profile) });
+    if (action === 'submitFeedback') return physicsApiFetch('feedback', { method: 'POST', body: JSON.stringify(profile) });
+    throw new Error('This profile action has not been migrated to the database API yet.');
 }
 
 async function findProfileByPhone(phone) {

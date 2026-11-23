@@ -18,6 +18,14 @@ function inputCell(row, field, value, type = 'text') {
     row.append(cell);
 }
 
+function addRemoveButton(row) {
+    const cell=document.createElement('td');
+    const button=document.createElement('button');
+    button.type='button'; button.className='secondary-button'; button.textContent='ဖယ်ရှား';
+    button.addEventListener('click',()=>row.remove());
+    cell.append(button); row.append(cell);
+}
+
 function renderBooks(books) {
     booksRows.replaceChildren();
     Object.entries(books || {}).forEach(([id, book]) => {
@@ -38,6 +46,7 @@ function renderBooks(books) {
         inputCell(row, 'prices', (book.prices || []).join(', '));
         inputCell(row, 'quantityHeader', book.quantityHeader || `${id} Qty`);
         inputCell(row, 'amountHeader', book.amountHeader || `${id} Amount`);
+        addRemoveButton(row);
         booksRows.append(row);
     });
 }
@@ -47,11 +56,14 @@ function renderCities(cities) {
     Object.entries(cities || {}).forEach(([id, city]) => {
         const row = document.createElement('tr');
         row.dataset.id = id;
+        const activeCell=document.createElement('td'),active=document.createElement('input');
+        active.type='checkbox';active.dataset.field='active';active.checked=city.active!==false;active.setAttribute('aria-label',`${city.english} ကို customer မှာ ပြရန်`);activeCell.append(active);row.append(activeCell);
         inputCell(row, 'id', city.id || id);
         inputCell(row, 'english', city.english);
         inputCell(row, 'myanmar', city.myanmar);
         inputCell(row, 'upTo2Kg', city.upTo2Kg, 'number');
         inputCell(row, 'nextKg', city.nextKg, 'number');
+        addRemoveButton(row);
         citiesRows.append(row);
     });
 }
@@ -107,7 +119,8 @@ function collectMasterData() {
             myanmar: values.myanmar,
             label: `${values.english} (${values.myanmar})`,
             upTo2Kg: Number(values.upTo2Kg),
-            nextKg: Number(values.nextKg)
+            nextKg: Number(values.nextKg),
+            active: values.active
         };
     });
     return {
@@ -139,6 +152,7 @@ document.getElementById('add-book').addEventListener('click', () => {
     inputCell(row, 'prices', (originalMasterData?.settings.priceThresholds || []).map(() => 0).join(', '));
     inputCell(row, 'quantityHeader', `${id} Qty`);
     inputCell(row, 'amountHeader', `${id} Amount`);
+    addRemoveButton(row);
     booksRows.append(row);
     row.querySelector('[data-field="name"]')?.focus();
 });
@@ -147,11 +161,14 @@ document.getElementById('add-city').addEventListener('click', () => {
     const id = `new-city-${citiesRows.children.length + 1}`;
     const row = document.createElement('tr');
     row.dataset.id = id;
+    const activeCell=document.createElement('td'),active=document.createElement('input');
+    active.type='checkbox';active.dataset.field='active';active.checked=true;activeCell.append(active);row.append(activeCell);
     inputCell(row, 'id', id);
     inputCell(row, 'english', '');
     inputCell(row, 'myanmar', '');
     inputCell(row, 'upTo2Kg', 0, 'number');
     inputCell(row, 'nextKg', 0, 'number');
+    addRemoveButton(row);
     citiesRows.append(row);
     row.querySelector('[data-field="english"]')?.focus();
 });
@@ -177,11 +194,11 @@ form.addEventListener('submit', async (event) => {
     const button = document.getElementById('save-master-data');
     button.disabled = true;
     status.className = 'status-message';
-    status.textContent = 'Master Data စစ်ဆေးပြီး JSON ဖိုင်ထုတ်နေသည်…';
+    status.textContent = 'Master Data စစ်ဆေးပြီး database ထဲ သိမ်းနေသည်…';
     try {
         const saved = await AdminApi.saveMasterData(collectMasterData());
         loadForm(saved);
-        status.textContent = 'JSON ဖိုင်ကို download လုပ်ပြီးပါပြီ။ Customer app တွင် ပြောင်းလဲမှုသက်ရောက်ရန် ဖိုင်ကို repository ထဲ အစားထိုးတင်ပြီး hosting သို့ publish လုပ်ပါ။';
+        status.textContent = 'Master Data ကို database ထဲ သိမ်းပြီးပါပြီ။';
         status.classList.add('success');
     } catch (error) {
         status.textContent = `Master Data သိမ်းမရပါ။ ${error.message}`;

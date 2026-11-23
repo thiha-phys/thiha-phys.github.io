@@ -1,34 +1,18 @@
-# App Integration
+# App Integration Status
 
-Cloudflare Pages projects use separate output directories:
+The deployed Customer and Admin websites are separate Vercel projects rooted at `customer/` and `admin/`. The shared API is a third Vercel project rooted at `backend/`; both browser apps call it using their API URL configuration.
 
-- Customer: `customer/`
-- Admin: `admin/`
+## Moved to the Neon API
 
-## Order API
+- Customer email/password account creation and sign in
+- Customer book list, prices, weights, delivery-city fees, and bookstore directory reads
+- Customer book-order submission
+- Admin book and city management (`Master Data`): create, edit, enable/disable
+- Admin customer bookstore directory management: create, edit, enable/disable
+- Admin order list/status updates, account/feedback reads, and announcement publishing
 
-`Code.gs` is deployed at:
+## Still being migrated
 
-`https://script.google.com/macros/s/AKfycbzwBTUNW-g4swMZszKX4eN1iLlM-8iVogUsb00FVnEQzqNLE0UG_5kCCv2etmsg9Jff/exec`
+Royal shipment and statement imports, full order editing, and importing historical order rows use or are being moved to the database API. Validate Royal imports against the actual export files before production use. `Code.gs` is retained as a temporary reference for historical order migration; the app runtime does not call it. The old static `customer/data/master-data.json` has been removed from the Customer runtime; `backend/seeds/001_initial_data.sql` is the one-time starting import.
 
-The customer order flow and the Admin order tools use this API for order creation, order list/update actions, and Royal shipment/statement imports. Order price and delivery fees are validated server-side against the published master data. The legacy `getMasterData` action remains read-only for older clients; it fetches the static JSON and caches it briefly. `saveMasterData` is disabled.
-
-The Admin store overview and book-store-orders page use the `getShopOverview` and `listShopOrdersByStatus` actions. Deploy `Code.gs` to the Apps Script Web App when publishing these Admin changes.
-
-## Static Master Data
-
-`customer/data/master-data.json` is the single source of truth for book prices, delivery cities, and order settings. The customer app loads it as a static asset and includes it in its offline cache. The Admin reads the public file, validates edits, and downloads a replacement `master-data.json`; no Cloudflare Access, payment card, backend function, or browser-side GitHub credential is required.
-
-To publish an edit, replace `customer/data/master-data.json` in the repository with the downloaded file and push/commit the change (or upload it through the repository website). The static hosting deployment then serves the updated public data. The customer app may need to refresh its page or service-worker cache before it sees the new snapshot.
-
-The customer JSON is public by design and is not a place for secrets. Its cache headers permit short-lived CDN/browser caching; the Service Worker retains a usable copy for offline use. A future Android/iOS app can bundle this same schema as its offline snapshot and refresh it from the public JSON URL when the version/ETag changes. Order/account transactions remain on their existing APIs in this phase; only repeated master-data reads/writes are moved off the Google Sheet API.
-
-## Account API
-
-`sms.gs` is deployed at:
-
-`https://script.google.com/macros/s/AKfycbzwBTUNW-g4swMZszKX4eN1iLlM-8iVogUsb00FVnEQzqNLE0UG_5kCCv2etmsg9Jff/exec`
-
-The app uses `create`, `update`, `lookup`, and `submitFeedback` actions.
-
-Both Apps Script Web Apps must be deployed for their transaction features. Master data is no longer edited through Apps Script or Google Sheets.
+Database credentials belong only in the API project's Vercel environment variables. Browser projects must contain only the public API domain, never `DATABASE_URL`.

@@ -1,4 +1,8 @@
 (() => {
+    if (!sessionStorage.getItem('physicsLearningHubSession')) {
+        window.location.replace(new URL('../login.html', document.currentScript.src).href);
+        return;
+    }
     const currentPath = window.location.pathname;
     const pageName = currentPath.split('/').pop();
     const isHome = pageName === '' || pageName === 'index.html';

@@ -126,7 +126,7 @@ async function refreshStock(button) {
         renderStock(cached.data);
         document.getElementById('stock-cache-status').textContent =
             formatStockCacheTime(cached.updatedAt);
-        stockStatus.textContent = 'Stock refreshed from Google Sheets.';
+        stockStatus.textContent = 'Stock refreshed from the database.';
     } catch (error) {
         console.error('Unable to refresh book stock.', error);
         stockStatus.textContent = 'Unable to refresh stock. Check your internet connection and try again.';
@@ -153,12 +153,12 @@ stockForm.addEventListener('submit', async (event) => {
         renderStock(result.stock);
         stockForm.elements.quantity.value = '';
         stockStatus.textContent = result.localCacheError
-            ? 'Stock was saved to Google Sheets, but the local cache could not be updated. Refresh the stock list.'
+            ? 'Stock was saved to the database, but the local cache could not be updated. Refresh the stock list.'
             : 'Stock entry saved.';
         if (!result.localCacheError) stockStatus.classList.add('success');
     } catch (error) {
         console.error('Unable to add book stock.', error);
-        stockStatus.textContent = 'Unable to save the stock entry. Check the Google Sheets API.';
+        stockStatus.textContent = 'Unable to save the stock entry. Check the database API.';
         stockStatus.classList.add('error');
     } finally {
         button.disabled = false;

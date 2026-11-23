@@ -222,14 +222,14 @@ document.getElementById('edit-form').addEventListener('submit', async (event) =>
         const index = orders.findIndex((order) => order['Voucher No'] === updated.voucherNo);
         if (index >= 0) orders[index] = result.order;
         status.textContent = result.localCacheError
-            ? 'Order updated in Google Sheets, but the local cache could not be updated. Refresh the orders.'
+            ? 'Order updated in the database, but the local cache could not be updated. Refresh the orders.'
             : result.cacheNeedsRefresh
-                ? 'Order updated in Google Sheets. Refresh to load the complete data.'
-                : 'Order updated in Google Sheets and the local data.';
+            ? 'Order updated in the database. Refresh to load the complete data.'
+                : 'Order updated in the database and local cache.';
         status.classList.add('success');
     } catch (error) {
         console.error('Unable to update the order.', error);
-        status.textContent = 'Unable to save changes. Check the Google Sheets API.';
+        status.textContent = 'Unable to save changes. Check the database API.';
         status.classList.add('error');
     } finally {
         button.disabled = false;

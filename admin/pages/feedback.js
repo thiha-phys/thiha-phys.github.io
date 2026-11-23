@@ -90,7 +90,7 @@ async function loadFeedback(button) {
         console.error('Unable to load customer feedback.', error);
         feedbackAdminStatus.textContent = 'အကြံပြုစာစာရင်းကို ရယူမရပါ။ ပြန်လည်စမ်းကြည့်ပါ။';
         feedbackAdminStatus.classList.add('error');
-        feedbackList.innerHTML = '<div class="empty-state error">Feedback could not be loaded. Check the Apps Script deployment and try again.</div>';
+        feedbackList.innerHTML = '<div class="empty-state error">Feedback could not be loaded. Check the database connection and try again.</div>';
     } finally {
         if (button) button.disabled = false;
     }

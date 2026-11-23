@@ -527,6 +527,7 @@
         <button class="dialog-close" type="button" data-close-dialog>Close</button>
     </dialog>
 
+    <script src="api-config.js"></script>
     <script src="profile-api.js"></script>
     <script>
         const accountView = document.getElementById('account-view');
@@ -636,6 +637,8 @@
 
         document.getElementById('logout-button').addEventListener('click', () => {
             try {
+                sendProfileRequest('logout', {}).catch(() => {});
+                sessionStorage.removeItem('physicsLearningHubSession');
                 localStorage.removeItem('physicsLearningHubProfile');
                 window.location.replace('login.html');
             } catch (error) {

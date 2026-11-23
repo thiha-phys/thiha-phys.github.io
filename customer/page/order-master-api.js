@@ -1,28 +1,11 @@
-const ORDER_API_URL = 'https://script.google.com/macros/s/AKfycbzwBTUNW-g4swMZszKX4eN1iLlM-8iVogUsb00FVnEQzqNLE0UG_5kCCv2etmsg9Jff/exec';
-const MASTER_DATA_URL = new URL('../data/master-data.json', document.currentScript.src);
-
 async function callOrderApi(action, payload = {}) {
-    const response = await fetch(ORDER_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify({ action, ...payload })
-    });
-    if (!response.ok) {
-        throw new Error(`Order service request failed (${response.status}).`);
-    }
-    const result = await response.json();
-    if (!result.ok) {
-        throw new Error(result.message || result.error || 'The order service rejected the request.');
-    }
-    return result;
+    if (action === 'createOrder') return physicsApiFetch('orders', { method: 'POST', body: JSON.stringify(payload) });
+    throw new Error('This order action has not been migrated yet.');
 }
 
 async function loadOrderMasterData() {
-    const response = await fetch(MASTER_DATA_URL);
-    if (!response.ok) {
-        throw new Error(`Master data request failed (${response.status}).`);
-    }
-    const masterData = await response.json();
+    const response = await physicsApiFetch('public/master-data', { method: 'GET' });
+    const masterData = response.masterData;
     if (!masterData || !masterData.books || !masterData.deliveryCities || !masterData.settings) {
         throw new Error('Order master data is missing or incomplete.');
     }

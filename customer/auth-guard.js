@@ -10,7 +10,8 @@
         console.error('Unable to read the saved account profile.', error);
     }
 
-    const isSignedIn = profile &&
+    const hasServerSession = Boolean(sessionStorage.getItem('physicsLearningHubSession'));
+    const isSignedIn = hasServerSession && profile &&
         typeof profile === 'object' &&
         typeof profile.name === 'string' && profile.name.trim() &&
         typeof profile.phone === 'string' && profile.phone.trim();

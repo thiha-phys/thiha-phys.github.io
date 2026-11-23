@@ -235,7 +235,7 @@ shopOrderForm.addEventListener('submit', async (event) => {
         }
     } catch (error) {
         console.error('Unable to save the shop order.', error);
-        status.textContent = error.message || 'အမှာစာကို သိမ်းဆည်းမရပါ။ Google Sheet API ကို စစ်ဆေးပါ။';
+        status.textContent = error.message || 'အမှာစာကို သိမ်းဆည်းမရပါ။ Database API ကို စစ်ဆေးပါ။';
         status.classList.add('error');
     } finally {
         button.disabled = saved;

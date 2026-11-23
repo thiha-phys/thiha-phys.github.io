@@ -18,7 +18,7 @@ async function loadShops(button) {
         shopStatus.textContent = `${shops.length.toLocaleString('en-US')} stores`;
     } catch (error) {
         console.error('Unable to load the shop list.', error);
-        shopStatus.textContent = 'Unable to load stores from Google Sheets. Check your internet connection and try again.';
+        shopStatus.textContent = 'Unable to load stores from the database. Check your internet connection and try again.';
         shopStatus.classList.add('error');
     } finally {
         if (button) button.disabled = false;

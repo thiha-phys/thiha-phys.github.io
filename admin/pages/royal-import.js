@@ -254,9 +254,9 @@
             .slice(0, 8)
             .map((item) => item.waybillNo);
         return [
-            `Sheet row ${updated} ခု update လုပ်ပြီး`,
+            `Database row ${updated} ခု update လုပ်ပြီး`,
             unmatched ? `မကိုက်ညီ ${unmatched} ခု${unmatchedWaybills.length ? `: ${unmatchedWaybills.join(', ')}` : ''}` : '',
-            duplicates ? `Sheet ထဲတွင် duplicate ${duplicates} ခု${duplicateWaybills.length ? `: ${duplicateWaybills.join(', ')}` : ''}` : ''
+            duplicates ? `တင်သွင်းဖိုင်ထဲတွင် duplicate ${duplicates} ခု${duplicateWaybills.length ? `: ${duplicateWaybills.join(', ')}` : ''}` : ''
         ].filter(Boolean).join(' · ');
     }
 
@@ -273,7 +273,7 @@
             return;
         }
         button.disabled = true;
-        setStatus(status, 'Google Sheet သို့ import လုပ်နေသည်…', false);
+        setStatus(status, 'Database သို့ import လုပ်နေသည်…', false);
         try {
             const result = await importMethod(entries);
             await window.AdminApi.refreshOrders();

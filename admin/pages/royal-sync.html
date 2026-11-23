@@ -10,7 +10,7 @@
     <header class="page-top"><a class="back-button" href="tools.html" aria-label="Back to Workspace"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">Royal Export Import</h1><p class="page-subtitle">Royal Shipment နှင့် Statement Excel ဖိုင်များမှ Book Orders ကို update လုပ်ပါ။</p></div></header>
     <section class="panel">
         <h2>Royal Shipment Export</h2>
-        <p class="search-hint">Royal မှ Shipment ကို Excel (.xlsx) အဖြစ် export လုပ်ပြီး ရွေးပါ။ Royal Voucher မရှိသေးသော order များကို Receiver ဖုန်းနံပါတ်ဖြင့် match လုပ်မည်။ State ကို Delivery Notes ထဲသို့ထည့်ပါမည်။ Export ထဲက blank cell များကြောင့် Sheet ရှိအဟောင်းတန်ဖိုးကို မဖျက်ပါ။</p>
+        <p class="search-hint">Royal မှ Shipment ကို Excel (.xlsx) အဖြစ် export လုပ်ပြီး ရွေးပါ။ Royal Voucher မရှိသေးသော order များကို Receiver ဖုန်းနံပါတ်ဖြင့် match လုပ်မည်။ State ကို Delivery Notes ထဲသို့ထည့်ပါမည်။ Export ထဲက blank cell များကြောင့် database ရှိအဟောင်းတန်ဖိုးကို မဖျက်ပါ။</p>
         <div class="field">
             <label for="shipment-export">Shipment Excel ဖိုင်</label>
             <input id="shipment-export" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
@@ -30,7 +30,7 @@
     </section>
     <section class="panel">
         <h2>Royal Member</h2>
-        <p class="search-hint">Excel ဖိုင်ကို browser ထဲတွင်ဖတ်ပြီး ဖိုင်မူရင်းကို upload မလုပ်ပါ။ Import လုပ်သော mapped row များကိုသာ သင့် Google Apps Script Web App မှတစ်ဆင့် Sheet သို့ပို့ပါမည်။ အသုံးမပြုမီ <code>Code.gs</code> ကို Apps Script ထဲတင်ပြီး Web App ကို <strong>New version</strong> ဖြင့် deploy လုပ်ပါ။ ယခင် Chrome extension ကို Chrome ၏ <code>chrome://extensions</code> မှ uninstall လုပ်ပါ။</p>
+        <p class="search-hint">Excel ဖိုင်ကို သင့် browser ထဲတွင်ဖတ်ပြီး မူရင်းဖိုင်ကို upload မလုပ်ပါ။ ကိုက်ညီသော Shipment နှင့် Statement row များကို backend API မှတစ်ဆင့် database ထဲသို့ သိမ်းပါမည်။</p>
         <div class="button-row">
             <a class="primary-button" href="https://member.royalx.biz/shipment" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Royal Shipments ဖွင့်ရန်</a>
         </div>
