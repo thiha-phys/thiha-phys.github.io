@@ -16,6 +16,9 @@ function send(res, status, data) {
 function normalizeEmail(value) {
   return String(value || '').trim().toLowerCase();
 }
+function normalizePhone(value) {
+  return String(value || '').replace(/[၀-၉]/g, (digit) => String(digit.charCodeAt(0) - '၀'.charCodeAt(0))).replace(/\D/g, '');
+}
 function tokenHash(token) {
   return createHash('sha256').update(token).digest('hex');
 }
@@ -74,26 +77,30 @@ export default async function handler(req, res) {
       const email = normalizeEmail(body.email);
       const password = String(body.password || '');
       const name = String(body.name || '').trim();
-      const phone = String(body.phone || '').trim();
+      const phone = normalizePhone(body.phone);
       const occupation = String(body.occupation || body.job || '').trim();
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return send(res, 400, { ok:false, code:'INVALID_EMAIL', message:'မှန်ကန်သော email လိပ်စာထည့်ပါ။' });
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return send(res, 400, { ok:false, code:'INVALID_EMAIL', message:'မှန်ကန်သော email လိပ်စာထည့်ပါ။' });
       if (!/(?=.*[A-Za-z])(?=.*\d).{8,}/.test(password)) return send(res, 400, { ok:false, code:'WEAK_PASSWORD', message:'စကားဝှက်တွင် အင်္ဂလိပ်စာလုံးနှင့် ဂဏန်းပါပြီး အနည်းဆုံး ၈ လုံးရှိရပါမည်။' });
-      if (!name || !phone) return send(res, 400, { ok:false, code:'MISSING_PROFILE', message:'အမည်နှင့် ဖုန်းနံပါတ် ဖြည့်ပါ။' });
+      if (!name || !/^0\d{10}$/.test(phone)) return send(res, 400, { ok:false, code:'MISSING_PROFILE', message:'အမည်နှင့် ၀ ဖြင့်စသော ၁၁ လုံးရှိသည့် ဖုန်းနံပါတ် ဖြည့်ပါ။' });
       const salt = randomBytes(16).toString('hex');
       const hash = Buffer.from(await scrypt(password, salt, 64)).toString('hex');
       const inserted = await db`INSERT INTO users (name, occupation, email, phone, password_hash, password_salt)
-        VALUES (${name}, ${occupation}, ${email}, ${phone}, ${hash}, ${salt})
+        VALUES (${name}, ${occupation}, ${email || null}, ${phone}, ${hash}, ${salt})
         ON CONFLICT DO NOTHING RETURNING id, name, occupation, email, phone, role`;
-      if (!inserted.length) return send(res, 409, { ok:false, code:'EMAIL_EXISTS', message:'ဤ email ဖြင့် အကောင့်ရှိပြီးသားဖြစ်သည်။' });
+      if (!inserted.length) {
+        const existing = await db`SELECT email,phone FROM users WHERE (email IS NOT NULL AND lower(email)=lower(${email || null})) OR phone=${phone} LIMIT 1`;
+        return send(res, 409, { ok:false, code:existing.some((row)=>row.phone===phone)?'PHONE_EXISTS':'EMAIL_EXISTS', message:existing.some((row)=>row.phone===phone)?'ဤဖုန်းနံပါတ်ဖြင့် အကောင့်ရှိပြီးသားဖြစ်သည်။':'ဤ email ဖြင့် အကောင့်ရှိပြီးသားဖြစ်သည်။' });
+      }
       const token = await createSession(db, inserted[0]);
       return send(res, 201, { ok:true, user:safeUser(inserted[0]), token });
     }
 
     if (route === '/auth/login' && req.method === 'POST') {
       const body = await readBody(req);
-      const email = normalizeEmail(body.email);
+      const identifier = String(body.identifier || body.email || body.phone || '').trim();
+      const phoneIdentifier = normalizePhone(identifier);
       const rows = await db`SELECT id, name, occupation, email, phone, role, password_hash, password_salt
-        FROM users WHERE email=${email} LIMIT 1`;
+        FROM users WHERE (email IS NOT NULL AND lower(email)=lower(${identifier})) OR (phone=${phoneIdentifier} AND ${/^\d+$/.test(phoneIdentifier)}) LIMIT 1`;
       const user = rows[0];
       const supplied = Buffer.from(await scrypt(String(body.password || ''), user?.password_salt || 'invalid-salt', 64));
       const expected = Buffer.from(user?.password_hash || '0'.repeat(128), 'hex');
@@ -182,12 +189,26 @@ export default async function handler(req, res) {
     const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(normalizeEmail).filter(Boolean);
     if (route.startsWith('/admin/') && (user.role !== 'admin' || !adminEmails.includes(user.email))) return send(res,403,{ok:false,code:'ADMIN_REQUIRED',message:'ဤလုပ်ဆောင်ချက်ကို admin သာ အသုံးပြုနိုင်ပါသည်။'});
     if (route === '/auth/me' && req.method === 'GET') return send(res,200,{ok:true,user:safeUser(user)});
+    if (route === '/orders' && req.method === 'GET') {
+      const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.created_at
+        FROM orders o JOIN delivery_cities c ON c.id=o.city_id WHERE o.user_id=${user.id} ORDER BY o.created_at DESC LIMIT 100`;
+      const orders=await Promise.all(rows.map(async(order)=>{
+        const items=await db`SELECT book_id AS id,book_name AS name,quantity,unit_price AS "unitPrice",amount FROM order_items WHERE order_id=${order.id} ORDER BY id`;
+        return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,cashCollection:order.cash_collection,status:order.status,createdAt:order.created_at,items};
+      }));
+      return send(res,200,{ok:true,orders});
+    }
     if (route === '/profile' && req.method === 'PATCH') {
       const body = await readBody(req);
-      const email=normalizeEmail(body.email || user.email);
-      const duplicate=await db`SELECT id FROM users WHERE lower(email)=${email} AND id<>${user.id} LIMIT 1`;
+      const email=normalizeEmail(body.email);
+      if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return send(res,400,{ok:false,code:'INVALID_EMAIL',message:'မှန်ကန်သော email လိပ်စာထည့်ပါ။'});
+      const phone=normalizePhone(body.phone);
+      if(!/^0\d{10}$/.test(phone)) return send(res,400,{ok:false,code:'INVALID_PHONE',message:'၀ ဖြင့်စသော ၁၁ လုံးရှိသည့် ဖုန်းနံပါတ် ဖြည့်ပါ။'});
+      const duplicate=await db`SELECT id FROM users WHERE email IS NOT NULL AND lower(email)=lower(${email || null}) AND id<>${user.id} LIMIT 1`;
       if(duplicate.length) return send(res,409,{ok:false,code:'EMAIL_EXISTS',message:'ဤ email ကို အခြားအကောင့်တစ်ခု အသုံးပြုထားပြီးပါပြီ။'});
-      const updated = await db`UPDATE users SET name=${String(body.name || '').trim()}, occupation=${String(body.job || body.occupation || '').trim()}, email=${email}, phone=${String(body.phone || '').trim()}, updated_at=now() WHERE id=${user.id} RETURNING id,name,occupation,email,phone,role`;
+      const duplicatePhone=await db`SELECT id FROM users WHERE phone=${phone} AND id<>${user.id} LIMIT 1`;
+      if(duplicatePhone.length) return send(res,409,{ok:false,code:'PHONE_EXISTS',message:'ဤဖုန်းနံပါတ်ကို အခြားအကောင့်တစ်ခု အသုံးပြုထားပြီးပါပြီ။'});
+      const updated = await db`UPDATE users SET name=${String(body.name || '').trim()}, occupation=${String(body.job || body.occupation || '').trim()}, email=${email || null}, phone=${phone}, updated_at=now() WHERE id=${user.id} RETURNING id,name,occupation,email,phone,role`;
       return send(res,200,{ok:true,user:safeUser(updated[0])});
     }
     if (route === '/feedback' && req.method === 'POST') {
@@ -286,7 +307,21 @@ export default async function handler(req, res) {
     }
     if (route === '/admin/users' && req.method === 'GET') {
       const users=await db`SELECT id,name,occupation,email,phone,role,created_at FROM users ORDER BY created_at DESC`;
-      return send(res,200,{ok:true,profiles:users.map((u)=>({...safeUser(u),createdAt:u.created_at}))});
+      return send(res,200,{ok:true,profiles:users.map((u)=>({...safeUser(u),adminEligible:adminEmails.includes(normalizeEmail(u.email)),createdAt:u.created_at}))});
+    }
+    if (route === '/admin/users' && req.method === 'PATCH') {
+      const body=await readBody(req),targetId=String(body.userId||''),role=String(body.role||'');
+      if(!targetId||!['customer','admin'].includes(role)) return send(res,400,{ok:false,message:'အသုံးပြုသူနှင့် role ကို စစ်ဆေးပါ။'});
+      const targetRows=await db`SELECT id,email,role FROM users WHERE id=${targetId} LIMIT 1`,target=targetRows[0];
+      if(!target) return send(res,404,{ok:false,message:'အသုံးပြုသူကို မတွေ့ပါ။'});
+      if(role==='admin'&&!adminEmails.includes(normalizeEmail(target.email))) return send(res,403,{ok:false,message:'သတ်မှတ်ထားသော admin email စာရင်းတွင် မပါဝင်ပါ။'});
+      if(role==='customer'&&target.role==='admin'){
+        const admins=await db`SELECT email FROM users WHERE role='admin'`;
+        const activeAdminCount=admins.filter((row)=>adminEmails.includes(normalizeEmail(row.email))).length;
+        if(target.id===user.id||activeAdminCount<=1) return send(res,409,{ok:false,message:'နောက်ဆုံး admin ကို ကိုယ်တိုင်ဖြုတ်၍မရပါ။'});
+      }
+      const updated=await db`UPDATE users SET role=${role},updated_at=now() WHERE id=${target.id} RETURNING id,name,occupation,email,phone,role`;
+      return send(res,200,{ok:true,user:safeUser(updated[0])});
     }
     if (route === '/admin/shops' && req.method === 'GET') {
       const shops=await db`SELECT id,name,discount_rate AS "discountRate",address,phone1,phone2 FROM partner_shops WHERE active=true ORDER BY sort_order,name`;

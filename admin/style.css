@@ -119,6 +119,19 @@ button:disabled { cursor: wait; opacity: .65; }
     transform: translateY(-2px);
     box-shadow: 0 12px 24px rgba(27, 35, 49, .16);
 }
+.profile-role-button {
+    width: fit-content;
+    padding: 8px 12px;
+    border: 1px solid #b8c8ea;
+    border-radius: 9px;
+    background: #f3f7ff;
+    color: #3155a6;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.profile-role-button:disabled { opacity: .6; cursor: wait; }
 .profile-card-header {
     display: flex;
     align-items: center;

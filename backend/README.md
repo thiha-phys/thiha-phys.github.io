@@ -8,6 +8,7 @@ Customer and Admin remain separate Vercel projects. Create one additional Vercel
 2. Open **SQL Editor** and run `migrations/001_initial_schema.sql` first.
 3. Run `seeds/001_initial_data.sql` next. It installs the current 7 books, 223 shipping cities, and 29 customer-facing bookstores.
 4. Run `seeds/002_partner_shops.sql` to import the current Admin shop-order partners.
+5. Before deploying the phone-login update, run `migrations/002_phone_login_and_password.sql`. It makes email optional and enforces one account per phone number. If duplicate phone numbers are found, Neon stops with an explanatory error so those records can be reviewed first.
 5. In **Connect**, select the default database and role, turn on the pooled connection option, and copy the connection string. Keep it private.
 
 ## Vercel API environment variables
@@ -22,13 +23,15 @@ After Vercel gives the API project its domain, replace `https://YOUR-BACKEND.ver
 
 ## First admin account
 
-Register the first admin in the customer app with `thihakyawphys73@gmail.com`, confirm that account is yours, then run this one-time SQL in Neon (replace the email if needed):
+Admin and customer have separate app screens but use the same secure account table. Public signup always creates a customer role. Bootstrap the first admin by creating their account, confirming the account is yours, and running this one-time SQL in Neon:
 
 ```sql
 UPDATE users SET role='admin' WHERE lower(email)=lower('thihakyawphys73@gmail.com');
 ```
 
-The API checks both the database role and `ADMIN_EMAILS`. Set the second admin's role the same way only after that person has created their own account. Admin role is never assigned during public signup.
+The API checks both the database role and `ADMIN_EMAILS`. After the first admin is active, the Admin app's **Tools → App Users / Admin access** screen can grant or remove admin access for accounts whose email is in `ADMIN_EMAILS`. That person must create an account first. Admin role is never assigned during public signup. Do not add an unverified self-service Admin signup: the current project has no email/SMS verification, so someone could claim an allowlisted address.
+
+Customers can register with a phone number and password; email is optional. They can sign in using either phone or email. Their order history is filtered by the authenticated account ID, so customers cannot look up someone else's orders by supplying an email. Password change and recovery are postponed until the flow is implemented and checked. Recovery will require a verified email or SMS one-time-code service.
 
 ## Current migration scope
 

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="my">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7fb">
+    <title>My Orders | Physics Learning Hub</title>
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body{margin:0;background:#f4f7fb;color:#172033;font-family:Arial,sans-serif}
+        main{width:min(760px,100% - 28px);margin:28px auto 100px}
+        header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+        header a{color:#345bd6;font-size:20px} h1{font-size:22px;margin:0}
+        #orders{display:grid;gap:14px}
+        .order-card{padding:18px;border:1px solid #e1e7f0;border-radius:18px;background:#fff;box-shadow:0 8px 22px #1c2b4a0b}
+        .order-top,.order-line{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+        .order-top{padding-bottom:12px;border-bottom:1px solid #edf0f5}
+        .voucher{font-weight:700;color:#253c88}.muted{color:#68748a;font-size:13px}
+        .status{padding:5px 10px;border-radius:999px;background:#eef3ff;color:#3155bd;font-size:12px;white-space:nowrap}
+        ul{margin:12px 0;padding-left:20px;color:#38445b}li{margin:5px 0}
+        .order-line{padding-top:10px}.total{font-weight:700}
+        .notice{padding:18px;border-radius:14px;background:#fff;color:#58657a}
+    </style>
+</head>
+<body>
+    <main>
+        <header><a href="profile.html" aria-label="Profile သို့ပြန်သွားရန်"><i class="fa-solid fa-arrow-left"></i></a><h1>မှာယူမှုမှတ်တမ်း</h1></header>
+        <section id="orders" aria-live="polite"><p class="notice">မှာယူမှုများကို ဖတ်နေသည်…</p></section>
+    </main>
+    <nav class="bottom-nav" aria-label="Main navigation">
+        <a href="../index.html" class="nav-item"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+        <a href="announcement.html" class="nav-item"><i class="fa-solid fa-message" aria-hidden="true"></i><span>Announcement</span></a>
+        <a href="profile.html" class="nav-item active" aria-current="page"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+    </nav>
+    <script src="api-config.js"></script>
+    <script>
+        const host=document.getElementById('orders');
+        const money=(amount)=>`${Number(amount||0).toLocaleString('my-MM')} ကျပ်`;
+        const date=(value)=>{const d=new Date(value);return Number.isNaN(d.getTime())?'':d.toLocaleString('my-MM');};
+        function render(order){
+            const card=document.createElement('article');card.className='order-card';
+            const top=document.createElement('div');top.className='order-top';
+            const heading=document.createElement('div'),voucher=document.createElement('div'),created=document.createElement('div'),status=document.createElement('span');
+            voucher.className='voucher';voucher.textContent=order.voucherNo||'အော်ဒါ';created.className='muted';created.textContent=date(order.createdAt);status.className='status';status.textContent=order.status||'အသစ်';
+            heading.append(voucher,created);top.append(heading,status);card.append(top);
+            const details=document.createElement('p');details.className='muted';details.textContent=`${order.city||''} · ${order.deliveryService||''} · ${order.paymentMethod||''}`;card.append(details);
+            const list=document.createElement('ul');(order.items||[]).forEach(item=>{const li=document.createElement('li');li.textContent=`${item.name} × ${item.quantity} — ${money(item.amount)}`;list.append(li);});card.append(list);
+            const subtotal=document.createElement('div');subtotal.className='order-line muted';subtotal.textContent=`စာအုပ်ဖိုး ${money(order.subtotal)}`;card.append(subtotal);
+            const delivery=document.createElement('div');delivery.className='order-line muted';delivery.textContent=`ပို့ခ ${money(order.deliveryFee)}`;card.append(delivery);
+            const total=document.createElement('div');total.className='order-line total';total.textContent=`စုစုပေါင်း ${money(order.total)}`;card.append(total);
+            return card;
+        }
+        (async()=>{
+            if(!sessionStorage.getItem('physicsLearningHubSession')){location.replace('login.html?returnTo='+encodeURIComponent('/page/order-history.html'));return;}
+            try{const result=await physicsApiFetch('orders');host.replaceChildren();if(!result.orders?.length){const empty=document.createElement('p');empty.className='notice';empty.textContent='မှာယူမှုမှတ်တမ်း မရှိသေးပါ။';host.append(empty);return;}result.orders.forEach(order=>host.append(render(order)));}
+            catch(error){const notice=document.createElement('p');notice.className='notice';notice.textContent=error.message||'မှာယူမှုမှတ်တမ်းကို ဖတ်မရပါ။';host.replaceChildren(notice);}
+        })();
+    </script>
+</body>
+</html>

@@ -108,8 +108,13 @@
     }
 
     async function requestProfile(action, payload = {}) {
-        const route = action === 'listProfiles' ? 'admin/users' : 'admin/feedback';
-        const response = await fetch(`${API_URL}/api/${route}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` } });
+        const route = ['listProfiles', 'updateUserRole'].includes(action) ? 'admin/users' : 'admin/feedback';
+        const method = action === 'updateUserRole' ? 'PATCH' : 'GET';
+        const response = await fetch(`${API_URL}/api/${route}`, {
+            method,
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sessionStorage.getItem('physicsLearningHubSession') || ''}` },
+            ...(method === 'GET' ? {} : { body: JSON.stringify(payload) })
+        });
         if (!response.ok) throw new Error(`Database API request failed (${response.status}).`);
         const result = await response.json();
         if (!result.ok) throw new Error(result.message || 'Database API rejected the request.');
@@ -347,6 +352,10 @@
         return result.profiles;
     }
 
+    async function updateUserRole(userId, role) {
+        return requestProfile('updateUserRole', { userId, role });
+    }
+
     async function getFeedback() {
         const result = await requestProfile('listFeedback');
         if (!Array.isArray(result.feedback)) {
@@ -431,6 +440,7 @@
         importRoyalStatementExport,
         getShops,
         getProfiles,
+        updateUserRole,
         getFeedback,
         getShopOrders,
         getShopOrdersByStatus,

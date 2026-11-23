@@ -1781,13 +1781,13 @@
 
         <section class="auth-form" id="login-panel" aria-labelledby="login-heading">
             <h2 id="login-heading">Welcome back</h2>
-            <p class="form-intro">Use your email and password.</p>
+            <p class="form-intro">Use your phone number or email and password.</p>
             <form data-auth-form="login">
                 <label class="field">
                     <span class="input-wrap floating-field">
-                        <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
-                        <input name="email" type="email" autocomplete="email" placeholder=" " required>
-                        <span class="floating-label">Email</span>
+                        <i class="input-icon fa-solid fa-phone" aria-hidden="true"></i>
+                        <input name="identifier" type="text" autocomplete="username" placeholder=" " required>
+                        <span class="floating-label">Phone number or email</span>
                     </span>
                 </label>
                 <label class="field">
@@ -1827,8 +1827,8 @@
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
-                        <input name="email" type="email" autocomplete="email" placeholder=" " required>
-                        <span class="floating-label">Email</span>
+                        <input name="email" type="email" autocomplete="email" placeholder=" ">
+                        <span class="floating-label">Email (optional)</span>
                     </span>
                 </label>
                 <label class="field">
@@ -2076,7 +2076,7 @@
         const authView = document.getElementById('auth-view');
         const connectionNote = document.getElementById('connection-note');
         const noteAction = document.getElementById('note-action');
-        const loginEmail = document.querySelector('[data-auth-form="login"] [name="email"]');
+        const loginIdentifier = document.querySelector('[data-auth-form="login"] [name="identifier"]');
         const signupPhone = document.querySelector('[data-auth-form="signup"] [name="phone"]');
 
         function showPanel(panelName) {
@@ -2106,12 +2106,16 @@
             button.addEventListener('click', () => showPanel(button.dataset.showPanel));
         });
         noteAction.addEventListener('click', () => {
-            document.querySelector('[data-auth-form="signup"] [name="email"]').value = loginEmail.value;
+            if (loginIdentifier.value.includes('@')) {
+                document.querySelector('[data-auth-form="signup"] [name="email"]').value = loginIdentifier.value;
+            } else {
+                signupPhone.value = loginIdentifier.value;
+            }
             showPanel('signup');
         });
 
-        function showLoginWithMessage(email, message, type = 'success') {
-            loginEmail.value = email;
+        function showLoginWithMessage(identifier, message, type = 'success') {
+            loginIdentifier.value = identifier;
             showPanel('login');
             connectionNote.textContent = message;
             connectionNote.classList.add(type);
@@ -2186,11 +2190,11 @@
         document.querySelector('[data-auth-form="login"]').addEventListener('submit', async (event) => {
             event.preventDefault();
             const form = event.currentTarget;
-            const email = form.elements.namedItem('email').value.trim();
+            const identifier = form.elements.namedItem('identifier').value.trim();
             const password = form.elements.namedItem('password').value;
             try {
                 connectionNote.textContent = 'Checking account...';
-                const result = await sendProfileRequest('login', { email, password });
+                const result = await sendProfileRequest('login', { identifier, password });
                 sessionStorage.setItem('physicsLearningHubSession', result.token);
                 localStorage.setItem('physicsLearningHubProfile', JSON.stringify(result.user));
                 const returnTo = new URLSearchParams(window.location.search).get('returnTo');

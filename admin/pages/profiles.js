@@ -32,6 +32,7 @@ function renderProfileCard(profile) {
             </div>
         </div>
         <div class="profile-meta">
+            <div class="profile-contact-row"><span class="profile-empty-contact">${escapeText(profile.role === 'admin' ? 'Admin' : 'Customer')}</span></div>
             ${email ? `<div class="profile-contact-row"><a class="profile-contact" href="mailto:${escapeText(email)}">${emailIcon}<span>${escapeText(email)}</span></a></div>` : ''}
             ${phoneDigits
                 ? `<div class="profile-contact-row"><a class="profile-contact profile-phone" href="tel:${escapeText(phoneDigits)}">${phoneIcon}<span>${escapeText(profile.phone || phoneDigits)}</span></a></div>`
@@ -39,6 +40,19 @@ function renderProfileCard(profile) {
             ${!email && !phoneDigits ? '<div class="profile-contact-row"><span class="profile-empty-contact">No contact details</span></div>' : ''}
         </div>
     `;
+
+    if (profile.adminEligible) {
+        const roleButton=document.createElement('button');
+        roleButton.type='button';
+        roleButton.className='profile-role-button';
+        roleButton.textContent=profile.role==='admin'?'Remove admin access':'Make admin';
+        roleButton.addEventListener('click',async()=>{
+            roleButton.disabled=true;
+            try{await AdminApi.updateUserRole(profile.id,profile.role==='admin'?'customer':'admin');await loadProfiles();}
+            catch(error){roleButton.disabled=false;alert(error.message||'Role ကို ပြောင်းမရပါ။');}
+        });
+        article.append(roleButton);
+    }
 
     return article;
 }
