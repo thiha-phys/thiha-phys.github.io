@@ -35,7 +35,9 @@ async function notifyTelegram(order) {
   if(!token||!chatId)return false;
   const itemRows=order.items||[];
   const quantity=itemRows.reduce((sum,item)=>sum+Number(item.quantity||0),0);
-  const orderTime=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Yangon',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(new Date(order.orderDate||Date.now())).replaceAll('/','.');
+  const timeParts=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Yangon',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date(order.orderDate||Date.now()));
+  const timePart=(type)=>timeParts.find(part=>part.type===type)?.value||'';
+  const orderTime=`${timePart('day')}.${timePart('month')}.${timePart('year')} ${timePart('hour')}:${timePart('minute')}:${timePart('second')}`;
   const lines=[
     '📚 NEW BOOK ORDER',
     '',
