@@ -1990,6 +1990,8 @@
         }
         if (query.get('mode') === 'signup') {
             showPanel('signup');
+        } else if (query.get('mode') === 'login') {
+            showPanel('login');
         } else if (query.has('returnTo')) {
             showPanel('login');
         }
