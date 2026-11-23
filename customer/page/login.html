@@ -1755,37 +1755,26 @@
         .welcome-service { position:relative; display:flex; min-width:0; min-height:92px; flex-direction:column; align-items:center; justify-content:center; gap:7px; padding:10px 5px; border:1px solid #edf0f5; border-radius:16px; background:#fff; color:#344256; text-align:center; text-decoration:none; box-shadow:0 4px 12px #203a5a08; }
         button.welcome-service { width:100%; font:inherit; cursor:pointer; }
         .welcome-service:active { transform:translateY(1px); box-shadow:0 2px 7px #203a5a12; }
-        .welcome-service-icon { width:38px; height:38px; display:grid; place-items:center; border-radius:13px; background:#ed2d50; color:white; font-size:16px; box-shadow:0 5px 12px #ed2d5030; }
+        .welcome-service-icon { width:38px; height:32px; display:grid; place-items:center; color:#ed2d50; font-size:22px; }
         .welcome-service-copy strong { display:block; color:#26364c; font-size:11px; line-height:1.35; }
         .welcome-service-copy small { display:block; margin-top:3px; color:#7d8999; font-size:10px; line-height:1.35; }
         .welcome-all-books { color:#c52e4a; }
         .welcome-chevron { color:#b0bac7; text-align:right; }
-        .welcome-book-list { display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; padding:5px 1px 1px; }
-        .welcome-book-row { display:flex; justify-content:space-between; gap:6px; padding:5px 0; border-bottom:1px solid #f0f2f6; font-size:10px; }
-        .welcome-book-row strong { white-space:nowrap; color:#245ac4; }
-        .welcome-grade-links { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-        .welcome-grade-links a { padding:5px 8px; border-radius:999px; background:#fff2f4; color:#c52e4a; font-size:10px; text-decoration:none; }
         .course-footer { padding-top:4px; border-top:1px solid #e7ebf1; }
         .course-caption,.designer-credit { color:#7f8ca0; }
         .social-links a { border-color:#dfe6ef; background:#fff; color:#51647e; }
-        .welcome-price-panel { padding:12px 14px; border:1px solid #edf0f5; border-radius:16px; background:#fff; }
-        .welcome-price-panel summary { color:#344256; font-weight:700; font-size:12px; cursor:pointer; }
-        .welcome-price-panel .welcome-book-list { margin-top:6px; }
         .welcome-grade-picker { display:none; margin:-2px 0 10px; padding:10px; border-radius:14px; background:#fff; box-shadow:0 5px 18px #19365e12; }
         .welcome-grade-picker.is-open { display:flex; gap:7px; justify-content:center; }
         .welcome-grade-picker a { padding:7px 10px; border-radius:999px; background:#fff1f4; color:#bd2947; text-decoration:none; font-size:11px; }
-        .welcome-atom { position:relative; height:152px; margin:0 auto 8px; display:grid; place-items:center; perspective:420px; }
-        .atom-core-3d { position:absolute; width:34px; height:34px; border-radius:50%; background:radial-gradient(circle at 30% 25%,#fff,#f46c5a 22%,#cb2d42 60%,#7b2037); box-shadow:0 0 0 10px #ef49651a,0 0 24px #e9415780; }
-        .atom-orbit-3d { position:absolute; width:160px; height:72px; border:2px solid #4ba9bc63; border-radius:50%; transform:rotateX(66deg) rotateZ(-24deg); }
-        .atom-orbit-3d:nth-child(2) { border-color:#9b7ce866; transform:rotateX(66deg) rotateZ(54deg); }
-        .atom-orbit-3d:nth-child(3) { border-color:#efae4d70; transform:rotateX(66deg) rotateZ(124deg); }
-        .atom-electron-3d { position:absolute; top:50%; left:50%; width:12px; height:12px; margin:-6px; border-radius:50%; background:radial-gradient(circle at 30% 25%,#fff,#24a3b7 35%,#08708e); box-shadow:0 0 0 6px #24a3b71c; transform-origin:0 0; animation:electron-drift 4s linear infinite; }
-        .atom-electron-3d:nth-of-type(5) { animation-duration:5.4s; animation-direction:reverse; }
-        .atom-electron-3d:nth-of-type(6) { animation-duration:6.1s; }
-        @keyframes electron-drift { from{transform:rotate(0) translateX(79px) rotate(0)} to{transform:rotate(360deg) translateX(79px) rotate(-360deg)} }
+        .welcome-atom { position:relative; height:132px; margin:0 auto 8px; display:grid; place-items:center; perspective:420px; }
+        .atom-core-3d { position:absolute; width:27px; height:27px; border-radius:50%; background:radial-gradient(circle at 30% 25%,#fff,#f46c5a 22%,#cb2d42 60%,#7b2037); box-shadow:0 0 0 8px #ef49651a,0 0 20px #e9415780; }
+        .atom-electron-3d { position:absolute; top:50%; left:50%; width:7px; height:7px; margin:-3.5px; border-radius:50%; background:radial-gradient(circle at 30% 25%,#fff,#24a3b7 35%,#08708e); box-shadow:0 0 0 3px #24a3b71c,0 1px 4px #16465c55; transform-origin:center; animation:electron-ccw 4s linear infinite; }
+        .atom-electron-inner:nth-of-type(3) { animation-delay:-2s; }
+        .atom-electron-outer { animation-name:electron-outer-ccw; animation-duration:6s; }
+        @keyframes electron-ccw { from{transform:rotate(0deg) translateX(35px)} to{transform:rotate(-360deg) translateX(35px)} }
+        @keyframes electron-outer-ccw { from{transform:rotate(0deg) translateX(60px)} to{transform:rotate(-360deg) translateX(60px)} }
         .welcome-lesson-tagline { margin:0 0 12px; color:#66758a; font-size:12px; text-align:center; }
-        .welcome-price-panel { margin-bottom:12px; }
-        @media(max-width:380px) { .welcome-book-list { grid-template-columns:1fr; } .auth-content { padding-right:13px; padding-left:13px; } .welcome-menu{gap:7px}.welcome-service{min-height:84px;padding:8px 3px}.welcome-service-copy strong{font-size:10px} }
+        @media(max-width:380px) { .auth-content { padding-right:13px; padding-left:13px; } .welcome-menu{gap:7px}.welcome-service{min-height:84px;padding:8px 3px}.welcome-service-copy strong{font-size:10px} }
     </style>
     <link rel="stylesheet" href="brand.css">
 </head>
@@ -1804,13 +1793,12 @@
 
         <section class="welcome-panel" id="welcome-panel" aria-labelledby="welcome-heading">
             <h2 id="welcome-heading">Physics Learning Hub</h2>
-            <div class="welcome-atom" aria-label="Animated 3D atom illustration" role="img"><span class="atom-core-3d"></span><span class="atom-orbit-3d"></span><span class="atom-orbit-3d"></span><span class="atom-orbit-3d"></span><span class="atom-electron-3d"></span><span class="atom-electron-3d"></span><span class="atom-electron-3d"></span></div>
+            <div class="welcome-atom" aria-label="Animated atom with two inner electrons and one outer electron" role="img"><span class="atom-core-3d"></span><span class="atom-electron-3d atom-electron-inner"></span><span class="atom-electron-3d atom-electron-inner"></span><span class="atom-electron-3d atom-electron-outer"></span></div>
             <p class="welcome-copy">Explore lessons, practice questions, and quizzes in one place.</p>
             <div class="welcome-actions">
                 <button class="submit-button" type="button" data-show-panel="login">Log in</button>
                 <button class="create-button" type="button" data-show-panel="signup">Create account</button>
             </div>
-            <details class="welcome-price-panel"><summary>ရရှိနိုင်သည့် စာအုပ်များနှင့် ဈေးနှုန်း</summary><span id="welcome-book-list" class="welcome-book-list" aria-live="polite"><small>စာအုပ်စာရင်းကို ရယူနေပါသည်…</small></span></details>
             <nav class="welcome-menu" aria-label="ဝန်ဆောင်မှုများ">
                 <a class="welcome-service welcome-books" href="books.html">
                     <span class="welcome-service-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span>
@@ -1909,19 +1897,6 @@
     </main>
 
     <script src="api-config.js"></script>
-    <script>
-        physicsApiFetch('public/master-data').then(({ masterData }) => {
-            const list = document.getElementById('welcome-book-list');
-            list.replaceChildren();
-            Object.values(masterData.books || {}).filter(book => book.active !== false).forEach(book => {
-                const row = document.createElement('span'); row.className = 'welcome-book-row';
-                const name = document.createElement('span'); name.textContent = book.name;
-                const price = document.createElement('strong'); price.textContent = `${Number(book.prices?.[0] || 0).toLocaleString('en-US')} ကျပ်မှ`;
-                row.append(name, price); list.append(row);
-            });
-            if (!list.children.length) list.textContent = 'စာအုပ်စာရင်း မရရှိသေးပါ။';
-        }).catch(() => { document.getElementById('welcome-book-list').textContent = 'စာအုပ်စာရင်းကို ယခုမရနိုင်ပါ။'; });
-    </script>
     <script src="profile-api.js"></script>
     <script>
         const loginPanel = document.getElementById('login-panel');
@@ -1941,7 +1916,8 @@
             selectedPreviewType = button.dataset.previewType;
             gradePicker.classList.add('is-open');
             gradePicker.querySelectorAll('[data-grade]').forEach((link) => {
-                link.href = `../preview/index.html?type=${encodeURIComponent(selectedPreviewType)}&grade=${encodeURIComponent(link.dataset.grade)}`;
+                const prefix = { definitions: 'preDef', calculations: 'preCal', objectives: 'preObj' }[selectedPreviewType];
+                link.href = `../preview/${prefix}G${encodeURIComponent(link.dataset.grade)}.html`;
             });
         }));
 
