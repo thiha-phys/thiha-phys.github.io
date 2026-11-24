@@ -165,6 +165,36 @@
         return masterData;
     }
 
+    async function getEducationalContent(filters = {}) {
+        const params = new URLSearchParams(Object.entries(filters).filter(([, value]) => value !== '' && value != null));
+        const response = await apiFetch(`${API_URL}/api/admin/educational-content?${params}`, {
+            cache: 'no-store', headers: { Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` }
+        });
+        if (!response.ok) throw new Error(`သင်ခန်းစာအချက်အလက် ဖတ်မရပါ (${response.status})။`);
+        const result = await response.json();
+        if (!result.ok) throw new Error(result.message || 'သင်ခန်းစာအချက်အလက် ဖတ်မရပါ။');
+        return result.records || [];
+    }
+
+    async function saveEducationalContent(record) {
+        const response = await apiFetch(`${API_URL}/api/admin/educational-content`, {
+            method: record.id ? 'PUT' : 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` },
+            body: JSON.stringify({ record })
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.message || 'သင်ခန်းစာ သိမ်းမရပါ။');
+        return result.record;
+    }
+
+    async function deleteEducationalContent(id) {
+        const response = await apiFetch(`${API_URL}/api/admin/educational-content`, {
+            method: 'DELETE', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` }, body: JSON.stringify({ id })
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.message || 'သင်ခန်းစာ ဖျက်မရပါ။');
+    }
+
     async function saveMasterData(masterData) {
         const { priceThresholds, royalServiceFee, codMaxTotal } = masterData.settings || {};
         if (!Array.isArray(priceThresholds) || !priceThresholds.length ||
@@ -464,6 +494,9 @@
 
     window.AdminApi = {
         getMasterData,
+        getEducationalContent,
+        saveEducationalContent,
+        deleteEducationalContent,
         saveMasterData,
         getBookstores,
         saveBookstores,

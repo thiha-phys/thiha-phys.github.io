@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS announcements (
 CREATE TABLE IF NOT EXISTS educational_content (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   grade smallint NOT NULL CHECK (grade IN (10,11,12)),
-  category text NOT NULL CHECK (category IN ('old_questions','one_mark','calculations','short_questions','definitions')),
+  category text NOT NULL CHECK (category IN ('old_questions','one_mark','objectives','calculations','short_questions','definitions')),
   title text NOT NULL,
   chapter text NOT NULL DEFAULT '',
   content jsonb NOT NULL,

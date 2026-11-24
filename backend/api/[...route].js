@@ -30,6 +30,18 @@ function tokenHash(token) {
 function safeUser(row) {
   return { id: row.id, name: row.name, occupation: row.occupation, job: row.occupation, email: row.email, phone: row.phone, role: row.role, approvalStatus: row.approval_status || 'approved' };
 }
+function cleanEducationalContent(value) {
+  if (typeof value === 'string') {
+    return value
+      .replace(/<\s*(script|iframe|object|embed|form)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
+      .replace(/\s+on[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+      .replace(/\s+(href|src)\s*=\s*(["'])\s*javascript:[\s\S]*?\2/gi, '')
+      .replace(/javascript\s*:/gi, '');
+  }
+  if (Array.isArray(value)) return value.map(cleanEducationalContent);
+  if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, cleanEducationalContent(item)]));
+  return value;
+}
 async function notifyTelegram(order) {
   const token=process.env.TELEGRAM_BOT_TOKEN,chatId=process.env.TELEGRAM_CHAT_ID;
   if(!token||!chatId)return false;
@@ -165,6 +177,22 @@ export default async function handler(req, res) {
       return send(res,200,{ok:true,announcements:rows});
     }
 
+    if (route === '/educational-content' && req.method === 'GET') {
+      const user = await getUser(req, db);
+      if (!user) return send(res,401,{ok:false,code:'AUTH_REQUIRED',message:'အကောင့်ဝင်ရန်လိုအပ်ပါသည်။'});
+      if (user.role !== 'admin' && user.approval_status !== 'approved') return send(res,403,{ok:false,code:'ACCOUNT_PENDING',message:'အကောင့်အသုံးပြုခွင့်အတွက် admin အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်။'});
+      const grade = Number(req.query.grade || 0);
+      const category = String(req.query.category || '');
+      const chapter = String(req.query.chapter || '');
+      const chapterPrefix = String(req.query.chapterPrefix || '');
+      const chapterNumeric = req.query.chapterNumeric === 'true';
+      const rows = await db`SELECT id,grade,category,title,chapter,content,sort_order AS "sortOrder",updated_at AS "updatedAt"
+        FROM educational_content WHERE active=true AND (${grade===0} OR grade=${grade}) AND (${category==='' } OR category=${category}) AND (${chapter==='' } OR chapter=${chapter})
+          AND (${chapterPrefix==='' } OR chapter LIKE ${`${chapterPrefix}%`}) AND (${!chapterNumeric} OR chapter ~ '^[0-9]+$')
+        ORDER BY grade,category,chapter,sort_order,title`;
+      return send(res,200,{ok:true,records:rows});
+    }
+
     if (route === '/orders' && req.method === 'POST') {
       const user = await getUser(req, db);
       if (!user && req.headers.authorization) return send(res, 401, {ok:false,code:'SESSION_INVALID',message:'အကောင့်ဝင်ချိန်ကုန်ဆုံးသွားပါပြီ။ ပြန်လည်ဝင်ပြီး မှာယူပါ။'});
@@ -225,6 +253,36 @@ export default async function handler(req, res) {
     if (route === '/auth/me' && req.method === 'GET') return send(res,200,{ok:true,user:safeUser(user)});
     if(user.role!=='admin' && user.approval_status!=='approved' && route!=='/auth/logout') return send(res,403,{ok:false,code:user.approval_status==='rejected'?'ACCOUNT_REJECTED':'ACCOUNT_PENDING',message:user.approval_status==='rejected'?'သင့်အကောင့်ကို အတည်မပြုနိုင်ပါ။':'အကောင့်အသုံးပြုခွင့်အတွက် admin အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်။'});
     if (route.startsWith('/admin/') && user.role !== 'admin') return send(res,403,{ok:false,code:'ADMIN_REQUIRED',message:'ဤလုပ်ဆောင်ချက်ကို admin သာ အသုံးပြုနိုင်ပါသည်။'});
+    if (route === '/admin/educational-content' && req.method === 'GET') {
+      const grade=Number(req.query.grade||0),category=String(req.query.category||''),chapter=String(req.query.chapter||'');
+      const rows=await db`SELECT id,grade,category,title,chapter,content,sort_order AS "sortOrder",active,updated_at AS "updatedAt" FROM educational_content
+        WHERE (${grade===0} OR grade=${grade}) AND (${category==='' } OR category=${category}) AND (${chapter==='' } OR chapter=${chapter})
+        ORDER BY grade,category,chapter,sort_order,title`;
+      return send(res,200,{ok:true,records:rows});
+    }
+    if (route === '/admin/educational-content' && ['POST','PUT'].includes(req.method)) {
+      const body=await readBody(req),record=body.record||body;
+      const grade=Number(record.grade),category=String(record.category||''),chapter=String(record.chapter||'').trim(),title=String(record.title||'').trim();
+      const validCategories=['old_questions','one_mark','objectives','calculations','short_questions','definitions'];
+      if(![10,11,12].includes(grade)||!validCategories.includes(category)||!chapter||!title||record.content==null) return send(res,400,{ok:false,message:'အတန်း၊ အမျိုးအစား၊ အခန်း၊ ခေါင်းစဉ်နှင့် အကြောင်းအရာ ဖြည့်ပါ။'});
+      const content=cleanEducationalContent(record.content);
+      const sortOrder=Number.isSafeInteger(Number(record.sortOrder))?Number(record.sortOrder):0;
+      if(req.method==='POST'){
+        const rows=await db`INSERT INTO educational_content(grade,category,title,chapter,content,sort_order,active) VALUES (${grade},${category},${title},${chapter},${JSON.stringify(content)}::jsonb,${sortOrder},${record.active!==false}) RETURNING id,grade,category,title,chapter,content,sort_order AS "sortOrder",active,updated_at AS "updatedAt"`;
+        return send(res,201,{ok:true,record:rows[0]});
+      }
+      const id=String(record.id||'');
+      if(!id) return send(res,400,{ok:false,message:'ပြင်ဆင်မည့် မှတ်တမ်း ID မရှိပါ။'});
+      const rows=await db`UPDATE educational_content SET grade=${grade},category=${category},title=${title},chapter=${chapter},content=${JSON.stringify(content)}::jsonb,sort_order=${sortOrder},active=${record.active!==false},updated_at=now() WHERE id=${id} RETURNING id,grade,category,title,chapter,content,sort_order AS "sortOrder",active,updated_at AS "updatedAt"`;
+      if(!rows.length)return send(res,404,{ok:false,message:'သင်ခန်းစာမှတ်တမ်းကို မတွေ့ပါ။'});
+      return send(res,200,{ok:true,record:rows[0]});
+    }
+    if (route === '/admin/educational-content' && req.method === 'DELETE') {
+      const body=await readBody(req),id=String(body.id||'');
+      const rows=await db`DELETE FROM educational_content WHERE id=${id} RETURNING id`;
+      if(!rows.length)return send(res,404,{ok:false,message:'သင်ခန်းစာမှတ်တမ်းကို မတွေ့ပါ။'});
+      return send(res,200,{ok:true});
+    }
     if (route === '/orders' && req.method === 'GET') {
       const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.created_at
         FROM orders o JOIN delivery_cities c ON c.id=o.city_id WHERE o.user_id=${user.id} ORDER BY o.created_at DESC LIMIT 100`;

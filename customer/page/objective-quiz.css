@@ -27,6 +27,17 @@
 
 .objective-section-card {
     margin-bottom: 14px;
+    min-width: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.objective-section-card *,
+.objective-section-card *::before,
+.objective-section-card *::after {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .objective-quiz-card#objective-quiz {
@@ -103,7 +114,9 @@
 }
 
 .objective-answer-input {
+    display: block;
     width: 100%;
+    flex: 1 1 100%;
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
@@ -123,6 +136,9 @@
 .objective-check {
     justify-self: start;
 }
+
+.preview-quiz-heading { margin: 10px 0 14px; }
+.preview-quiz-heading h2 { margin: 4px 0 0; color: #172033; font-size: 22px; }
 
 .objective-option:not(:disabled):hover {
     border-color: #60a5fa;

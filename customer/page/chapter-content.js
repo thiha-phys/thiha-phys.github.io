@@ -10,6 +10,12 @@ const chapterTitles = {
         'Heat and Temperature', 'Wave and Sound', 'Light', 'Electricity', 'Magnetism',
         'Quantum and Atomic Physics'
     ],
+    G11: [
+        'Motion in a Plane', 'Rotational Dynamics', 'Pressure', 'Power and Efficiency',
+        'Heat and Thermal Phenomena', 'Vibration of Strings, Resonance and Vibration of Air Columns',
+        'Refraction of Light', 'Lenses', 'Electric Field',
+        'Electric Current and Magnetic Effect of Electric Current', 'Fundamentals of Electronics', 'Modern Physics'
+    ],
     G12: [
         'Rotational Motion', 'Forces in Circular Motion', 'Fluid Dynamics',
         'Sources of Energy and Environmental Impacts', 'Heat Transfer and Thermodynamics',

@@ -36,41 +36,54 @@
   }
 
   if (kind === 'objectives') {
-    const sectionNames = { trueFalse: 'True or False', fillBlank: 'Fill in the Blank', multipleChoice: 'Multiple Choice' };
-    (window.PREVIEW_OBJECTIVES?.sections || []).forEach((section) => {
-      const title = document.createElement('p');
-      title.className = 'preview-kicker';
-      title.textContent = sectionNames[section.type] || 'Questions';
-      content.append(title);
-      (section.questions || []).forEach((question) => {
-        const card = document.createElement('article');
-        card.className = `preview-card${section.type === 'multipleChoice' ? ' multiple-choice-question' : ''}`;
-        const heading = document.createElement('h2');
-        heading.textContent = `${question.number}. ${question.text || ''}`;
-        card.append(heading);
-        if (Array.isArray(question.options)) {
-          const options = document.createElement('ol');
-          options.className = 'question-options';
-          question.options.forEach((option, optionIndex) => {
-            const item = document.createElement('li');
-            item.textContent = section.type === 'multipleChoice'
-              ? `${String.fromCharCode(65 + optionIndex)}. ${option}`
-              : String(option);
-            options.append(item);
-          });
-          card.append(options);
-        }
-        const answer = document.createElement('details');
-        const summary = document.createElement('summary');
-        summary.textContent = 'Show answer';
-        const answerText = document.createElement('p');
-        if (section.type === 'multipleChoice') answerText.textContent = question.options?.[question.correct] ?? '';
-        else answerText.textContent = Array.isArray(question.answer) ? question.answer.join(' / ') : String(question.answer ?? '');
-        answer.append(summary, answerText);
-        card.append(answer);
-        content.append(card);
-      });
-    });
+    const quizData = window.PREVIEW_OBJECTIVES;
+    if (!Array.isArray(quizData?.sections) || !quizData.sections.length) {
+      content.textContent = 'Objective preview is unavailable.';
+      return;
+    }
+    const styles = document.createElement('link');
+    styles.rel = 'stylesheet';
+    styles.href = '../page/objective-quiz.css';
+    document.head.append(styles);
+    content.replaceChildren();
+    const heading = document.createElement('div');
+    heading.className = 'chapter-content-heading preview-quiz-heading';
+    const label = document.createElement('span');
+    label.className = 'chapter-content-label';
+    label.id = 'chapter-content-label';
+    const title = document.createElement('h2');
+    title.id = 'chapter-content-title';
+    heading.append(label, title);
+    const notice = document.createElement('p');
+    notice.className = 'objective-notice';
+    notice.id = 'objective-notice';
+    notice.hidden = true;
+    const quiz = document.createElement('section');
+    quiz.className = 'objective-quiz-card';
+    quiz.id = 'objective-quiz';
+    quiz.setAttribute('aria-live', 'polite');
+    const progress = document.createElement('p');
+    progress.className = 'objective-progress';
+    progress.id = 'objective-progress';
+    quiz.append(progress);
+    const summary = document.createElement('section');
+    summary.className = 'objective-summary';
+    summary.id = 'objective-summary';
+    summary.hidden = true;
+    summary.innerHTML = '<h3>လေ့ကျင့်မှုပြီးပါပြီ။</h3><p data-objective-score></p><button class="primary-button objective-retry" id="objective-retry" type="button">ပြန်လည်ဖြေဆိုရန်</button>';
+    content.append(heading, notice, quiz, summary);
+    document.body.dataset.grade = grade;
+    document.body.dataset.chapter = '1';
+    const chapterCount = { G10: 11, G11: 12, G12: 13 }[grade] || 1;
+    const gradeChapters = Array.from({ length: chapterCount }, () => ({ sections: [] }));
+    gradeChapters[0] = { sections: quizData.sections.map((section) => ({
+        type: section.type,
+        questions: (section.questions || []).map(({ number, ...question }) => question)
+      })) };
+    window.OBJECTIVE_QUIZ_DATA = { [grade]: gradeChapters };
+    const quizScript = document.createElement('script');
+    quizScript.src = '../page/objective-quiz.js';
+    document.body.append(quizScript);
     document.title = `Objectives · ${grade} Chapter 1 Preview`;
     return;
   }
