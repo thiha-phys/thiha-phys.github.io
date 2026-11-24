@@ -17,6 +17,17 @@
         </div>
         <div class="history-refresh-row"><span id="history-cache-status" class="muted small">Loading latest orders…</span></div>
         <div class="history-export-row"><button id="export-orders" class="secondary-button" type="button" disabled><i class="fa-solid fa-file-excel" aria-hidden="true"></i> Excel ထုတ်ရန်</button></div>
+        <section id="export-date-panel" class="export-date-panel" aria-label="Export order date range" hidden>
+            <p>ထုတ်ယူမည့် order ရက်စွဲအပိုင်းအခြားကို ရွေးပါ။</p>
+            <div class="history-tools">
+                <label class="field">စတင်ရက်စွဲ<input id="export-date-from" type="date" required></label>
+                <label class="field">နောက်ဆုံးရက်စွဲ<input id="export-date-to" type="date" required></label>
+            </div>
+            <div class="export-date-actions">
+                <button id="cancel-export" class="secondary-button" type="button">မလုပ်တော့ပါ</button>
+                <button id="download-orders" class="primary-button" type="button" disabled><i class="fa-solid fa-download" aria-hidden="true"></i> Export</button>
+            </div>
+        </section>
         <p id="mode-description" class="search-hint">Search by voucher number, name, or phone number.</p>
         <div id="search-tools" class="history-tools">
             <input id="search" class="search-input" type="search" aria-label="Search order history" placeholder="Type to search">

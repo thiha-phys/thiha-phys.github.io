@@ -124,7 +124,7 @@ function renderOrders() {
     }).sort((a, b) => String(b['Order Date'] || '').localeCompare(String(a['Order Date'] || '')));
 
     visibleOrders = matches;
-    document.getElementById('export-orders').disabled = matches.length === 0;
+    document.getElementById('export-orders').disabled = allOrders.length === 0;
     listElement.replaceChildren();
     if (!matches.length) {
         listElement.innerHTML = '<div class="empty-state">ကိုက်ညီသော အမှာစာ မတွေ့ပါ။</div>';
@@ -163,8 +163,18 @@ function renderOrders() {
 }
 
 function exportOrdersToExcel() {
-    if (!visibleOrders.length) return;
-    const columns = [...new Set(visibleOrders.flatMap((order) => Object.keys(order)))];
+    const from = document.getElementById('export-date-from').value;
+    const to = document.getElementById('export-date-to').value;
+    if (!from || !to || from > to) return;
+    const exportRows = allOrders.filter((order) => {
+        const date = String(order['Order Date'] || '').slice(0, 10);
+        return date && date >= from && date <= to;
+    });
+    if (!exportRows.length) {
+        statusElement.textContent = 'ရွေးထားသော ရက်စွဲအတွင်း order မရှိပါ။';
+        return;
+    }
+    const columns = [...new Set(exportRows.flatMap((order) => Object.keys(order)))];
     const escapeCell = (value) => {
         const text = value == null
             ? ''
@@ -174,14 +184,14 @@ function exportOrdersToExcel() {
         const safeText = /^[=+@\-]/.test(text) ? `'${text}` : text;
         return `"${safeText.replace(/"/g, '""')}"`;
     };
-    const csv = [columns, ...visibleOrders.map((order) => columns.map((column) => order[column]))]
+    const csv = [columns, ...exportRows.map((order) => columns.map((column) => order[column]))]
         .map((row) => row.map(escapeCell).join(','))
         .join('\r\n');
     const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `orders-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.download = `orders-${from}-to-${to}.csv`;
     document.body.append(link);
     link.click();
     link.remove();
@@ -220,6 +230,8 @@ async function loadOrders() {
         ]);
         const cached = await AdminApi.refreshOrders();
         allOrders = cached.data;
+        document.getElementById('export-orders').disabled = allOrders.length === 0;
+        updateExportDateRange();
         document.getElementById('history-cache-status').textContent =
             formatHistoryCacheTime(cached.updatedAt);
         renderOrders();
@@ -236,6 +248,22 @@ async function loadOrders() {
 document.querySelectorAll('.history-mode').forEach((button) =>
     button.addEventListener('click', () => setMode(button.dataset.mode))
 );
-document.getElementById('export-orders').addEventListener('click', exportOrdersToExcel);
+const exportDatePanel = document.getElementById('export-date-panel');
+const exportFrom = document.getElementById('export-date-from');
+const exportTo = document.getElementById('export-date-to');
+const downloadOrdersButton = document.getElementById('download-orders');
+
+function updateExportDateRange() {
+    downloadOrdersButton.disabled = !allOrders.length || !exportFrom.value || !exportTo.value || exportFrom.value > exportTo.value;
+}
+
+document.getElementById('export-orders').addEventListener('click', () => {
+    exportDatePanel.hidden = !exportDatePanel.hidden;
+});
+document.getElementById('cancel-export').addEventListener('click', () => {
+    exportDatePanel.hidden = true;
+});
+[exportFrom, exportTo].forEach((input) => input.addEventListener('input', updateExportDateRange));
+downloadOrdersButton.addEventListener('click', exportOrdersToExcel);
 setMode(activeMode);
 loadOrders();
