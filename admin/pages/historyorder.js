@@ -124,7 +124,6 @@ function renderOrders() {
     }).sort((a, b) => String(b['Order Date'] || '').localeCompare(String(a['Order Date'] || '')));
 
     visibleOrders = matches;
-    document.getElementById('export-orders').disabled = allOrders.length === 0;
     listElement.replaceChildren();
     if (!matches.length) {
         listElement.innerHTML = '<div class="empty-state">ကိုက်ညီသော အမှာစာ မတွေ့ပါ။</div>';
@@ -230,13 +229,16 @@ async function loadOrders() {
         ]);
         const cached = await AdminApi.refreshOrders();
         allOrders = cached.data;
-        document.getElementById('export-orders').disabled = allOrders.length === 0;
+        document.getElementById('export-data-note').textContent = allOrders.length
+            ? `${allOrders.length.toLocaleString('en-US')} orders available. Choose a date range to export.`
+            : 'Database ထဲတွင် order မရှိသေးပါ။ Order ရှိလာလျှင် ရက်စွဲရွေးပြီး export လုပ်နိုင်ပါသည်။';
         updateExportDateRange();
         document.getElementById('history-cache-status').textContent =
             formatHistoryCacheTime(cached.updatedAt);
         renderOrders();
     } catch (error) {
         console.error('Unable to read cached order history.', error);
+        document.getElementById('export-data-note').textContent = 'Order data ကို database မှ မရယူနိုင်သေးပါ။ ချိတ်ဆက်မှုအဆင်ပြေပြီး order များ load ဖြစ်မှ export လုပ်နိုင်ပါမည်။';
         statusElement.textContent = 'Unable to load orders from the database.';
         statusElement.classList.add('error');
     }

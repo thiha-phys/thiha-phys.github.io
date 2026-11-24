@@ -1867,7 +1867,6 @@
                         <span class="floating-label">Full name</span>
                     </span>
                 </label>
-                <fieldset class="field job-field" aria-label="Choose Teacher or Student"><input type="hidden" name="job" value=""><div class="job-options"><button type="button" class="job-choice" data-job="Teacher" aria-pressed="false">Teacher</button><button type="button" class="job-choice" data-job="Student" aria-pressed="false">Student</button></div></fieldset>
                 <label class="field">
                     <span class="input-wrap floating-field">
                         <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
@@ -1899,6 +1898,14 @@
                         <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
                     </span>
                 </label>
+                <fieldset class="field job-field" aria-label="Choose Teacher or Student">
+                    <legend>Choose one</legend>
+                    <input type="hidden" name="job" value="">
+                    <div class="job-options">
+                        <label class="job-choice"><input type="radio" name="job-choice" value="Teacher" required> Teacher</label>
+                        <label class="job-choice"><input type="radio" name="job-choice" value="Student" required> Student</label>
+                    </div>
+                </fieldset>
                 <button class="submit-button" type="submit"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Create account</button>
             </form>
             <p class="auth-switch">Already registered? <button type="button" data-show-panel="login">Log in</button></p>
@@ -1956,9 +1963,8 @@
             window.scrollTo(0, 0);
         });
 
-        document.querySelectorAll('.job-choice').forEach((button) => button.addEventListener('click', () => {
-            document.querySelector('[data-auth-form="signup"] [name="job"]').value = button.dataset.job;
-            document.querySelectorAll('.job-choice').forEach((choice) => choice.setAttribute('aria-pressed', String(choice === button)));
+        document.querySelectorAll('[name="job-choice"]').forEach((radio) => radio.addEventListener('change', () => {
+            document.querySelector('[data-auth-form="signup"] [name="job"]').value = radio.value;
         }));
 
         function showPanel(panelName) {

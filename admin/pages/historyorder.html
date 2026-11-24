@@ -16,9 +16,9 @@
             <button class="history-mode" type="button" data-mode="unpaid" aria-pressed="false"><i class="fa-solid fa-money-bill-wave"></i><span>ငွေမချေရသေး</span></button>
         </div>
         <div class="history-refresh-row"><span id="history-cache-status" class="muted small">Loading latest orders…</span></div>
-        <div class="history-export-row"><button id="export-orders" class="secondary-button" type="button" disabled><i class="fa-solid fa-file-excel" aria-hidden="true"></i> Excel ထုတ်ရန်</button></div>
+        <div class="history-export-row"><button id="export-orders" class="secondary-button" type="button"><i class="fa-solid fa-file-excel" aria-hidden="true"></i> Excel ထုတ်ရန်</button></div>
         <section id="export-date-panel" class="export-date-panel" aria-label="Export order date range" hidden>
-            <p>ထုတ်ယူမည့် order ရက်စွဲအပိုင်းအခြားကို ရွေးပါ။</p>
+            <p id="export-data-note" role="status">Order များရရှိလာသည်နှင့် ရက်စွဲရွေးပြီး Excel-compatible ဖိုင်အဖြစ် ထုတ်နိုင်ပါသည်။</p>
             <div class="history-tools">
                 <label class="field">စတင်ရက်စွဲ<input id="export-date-from" type="date" required></label>
                 <label class="field">နောက်ဆုံးရက်စွဲ<input id="export-date-to" type="date" required></label>

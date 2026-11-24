@@ -44,16 +44,18 @@
       content.append(title);
       (section.questions || []).forEach((question) => {
         const card = document.createElement('article');
-        card.className = 'preview-card';
+        card.className = `preview-card${section.type === 'multipleChoice' ? ' multiple-choice-question' : ''}`;
         const heading = document.createElement('h2');
         heading.textContent = `${question.number}. ${question.text || ''}`;
         card.append(heading);
         if (Array.isArray(question.options)) {
           const options = document.createElement('ol');
           options.className = 'question-options';
-          question.options.forEach((option) => {
+          question.options.forEach((option, optionIndex) => {
             const item = document.createElement('li');
-            item.textContent = String(option);
+            item.textContent = section.type === 'multipleChoice'
+              ? `${String.fromCharCode(65 + optionIndex)}. ${option}`
+              : String(option);
             options.append(item);
           });
           card.append(options);
