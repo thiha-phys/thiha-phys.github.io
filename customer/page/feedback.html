@@ -24,13 +24,16 @@
         <form id="feedback-form">
             <section class="order-section">
                 <h2>အလုပ်အကိုင်</h2>
-                <label class="form-field">
-                    <select name="job" required>
-                        <option value="">Select</option>
-                        <option value="teacher">Teacher</option>
-                        <option value="student">Student</option>
-                    </select>
-                </label>
+                <fieldset class="feedback-job-options" aria-label="အလုပ်အကိုင် ရွေးချယ်ပါ">
+                    <label class="feedback-job-option">
+                        <input type="radio" name="job" value="teacher" required>
+                        <span>Teacher</span>
+                    </label>
+                    <label class="feedback-job-option">
+                        <input type="radio" name="job" value="student" required>
+                        <span>Student</span>
+                    </label>
+                </fieldset>
             </section>
 
             <section class="order-section">

@@ -11,17 +11,36 @@
     margin-top: 0;
 }
 
-.feedback-page .form-field select {
-    display: block;
-    width: 100%;
-    margin-top: 6px;
-    padding: 11px 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 10px;
-    background: #fff;
-    color: #172033;
-    font: inherit;
+.feedback-job-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin: 6px 0 0;
+    padding: 0;
+    border: 0;
+}
+
+.feedback-job-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    color: #334155;
     font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.feedback-job-option input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #2563eb;
+}
+
+.feedback-job-option input:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 3px;
 }
 
 .feedback-book-list {
