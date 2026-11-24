@@ -6,6 +6,14 @@ let visibleOrders = [];
 const requestedMode = new URLSearchParams(window.location.search).get('mode');
 let activeMode = ['undelivered', 'unpaid'].includes(requestedMode) ? requestedMode : 'search';
 
+function orderDateIso(order) {
+    const value = order['Order Date'] || order['Ordered Date'] || order.orderDate || order.created_at || '';
+    const match = /^(\d{4}-\d{2}-\d{2})/.exec(String(value).trim());
+    if (match) return match[1];
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? '' : parsed.toISOString().slice(0, 10);
+}
+
 function formatOrderDateEnglish(value) {
     const text = String(value || '').trim();
     const isoDate = /^(\d{4})-(\d{2})-(\d{2})/.exec(text);
@@ -112,7 +120,7 @@ function renderOrders() {
     const from = document.getElementById('date-from').value;
     const to = document.getElementById('date-to').value;
     const matches = allOrders.filter((order) => {
-        const date = String(order['Order Date'] || '').slice(0, 10);
+        const date = orderDateIso(order);
         const total = Number(order.Total || 0);
         const received = Number(order['Amount Received'] || 0);
         if (activeMode === 'search') return orderMatches(order, query);
@@ -166,7 +174,7 @@ function exportOrdersToExcel() {
     const to = document.getElementById('export-date-to').value;
     if (!from || !to || from > to) return;
     const exportRows = allOrders.filter((order) => {
-        const date = String(order['Order Date'] || '').slice(0, 10);
+        const date = orderDateIso(order);
         return date && date >= from && date <= to;
     });
     if (!exportRows.length) {
@@ -256,16 +264,43 @@ const exportTo = document.getElementById('export-date-to');
 const downloadOrdersButton = document.getElementById('download-orders');
 
 function updateExportDateRange() {
-    downloadOrdersButton.disabled = !allOrders.length || !exportFrom.value || !exportTo.value || exportFrom.value > exportTo.value;
+    const rangeIsValid = Boolean(exportFrom.value && exportTo.value && exportFrom.value <= exportTo.value);
+    const matchingCount = rangeIsValid
+        ? allOrders.filter((order) => {
+            const date = orderDateIso(order);
+            return date && date >= exportFrom.value && date <= exportTo.value;
+        }).length
+        : 0;
+    downloadOrdersButton.disabled = !matchingCount;
+    const note = document.getElementById('export-data-note');
+    if (!allOrders.length) {
+        note.textContent = 'Database ထဲတွင် order မရှိသေးပါ။ Order ရှိလာလျှင် ရက်စွဲရွေးပြီး export လုပ်နိုင်ပါသည်။';
+    } else if (!rangeIsValid) {
+        note.textContent = `${allOrders.length.toLocaleString('en-US')} orders ရှိသည်။ စတင်ရက်နှင့် နောက်ဆုံးရက်ကို ရွေးပါ။`;
+    } else if (!matchingCount) {
+        note.textContent = 'ရွေးထားသော ရက်စွဲအပိုင်းအခြားတွင် order မရှိပါ။ ရက်စွဲကို ပြန်ရွေးပါ။';
+    } else {
+        note.textContent = `${matchingCount.toLocaleString('en-US')} orders ကို CSV ဖိုင်အဖြစ် ထုတ်ရန် အသင့်ဖြစ်ပါပြီ။ Excel ဖြင့် ဖွင့်နိုင်ပါသည်။`;
+    }
 }
 
 document.getElementById('export-orders').addEventListener('click', () => {
-    exportDatePanel.hidden = !exportDatePanel.hidden;
+    const opening = exportDatePanel.hidden;
+    exportDatePanel.hidden = !opening;
+    if (opening && allOrders.length && !exportFrom.value && !exportTo.value) {
+        const dates = allOrders.map(orderDateIso).filter(Boolean).sort();
+        exportFrom.value = dates[0] || '';
+        exportTo.value = dates[dates.length - 1] || '';
+    }
+    if (opening) updateExportDateRange();
 });
 document.getElementById('cancel-export').addEventListener('click', () => {
     exportDatePanel.hidden = true;
 });
-[exportFrom, exportTo].forEach((input) => input.addEventListener('input', updateExportDateRange));
+[exportFrom, exportTo].forEach((input) => {
+    input.addEventListener('input', updateExportDateRange);
+    input.addEventListener('change', updateExportDateRange);
+});
 downloadOrdersButton.addEventListener('click', exportOrdersToExcel);
 setMode(activeMode);
 loadOrders();

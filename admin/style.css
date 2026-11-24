@@ -457,6 +457,7 @@ button:disabled { cursor: wait; opacity: .65; }
 .toolbar { display: grid; grid-template-columns: minmax(210px,1fr) repeat(3,minmax(145px,auto)); gap: 10px; margin-bottom: 15px; }
 .history-modes { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 9px; margin-bottom: 18px; }
 .history-export-row { display:flex; justify-content:flex-end; margin: 4px 0 12px; }
+.history-export-row .secondary-button { border:1px solid #c8d8f2; color:#2867c7; background:#edf4ff; cursor:pointer; }
 .export-date-panel { margin:0 0 16px; padding:16px; border:1px solid var(--line); border-radius:14px; background:#f8faff; }
 .export-date-panel > p { margin:0 0 12px; color:#5f6d84; font-size:13px; }
 .export-date-actions { display:flex; justify-content:flex-end; gap:9px; margin-top:14px; }

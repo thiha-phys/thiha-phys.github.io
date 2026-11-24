@@ -134,9 +134,7 @@
             font-weight: 700;
         }
 
-        #signup-panel .field {
-            margin-bottom: 34px;
-        }
+        #signup-panel .field { margin-bottom: 10px; }
 
         .input-wrap {
             position: relative;
@@ -217,11 +215,12 @@
                 0 0 0 3px rgba(83, 120, 220, 0.1);
         }
 
-        .job-field { border: 0; padding: 0; margin: 0 0 14px; min-width: 0; }
-        .job-field legend { margin-bottom: 7px; color: #53677f; font-size: 14px; font-weight: 600; }
-        .job-options { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
-        .job-choice { min-height: 46px; border: 1px solid #d9e2eb; border-radius: 12px; background: #fff; color: #52667e; font: inherit; cursor: pointer; }
-        .job-choice[aria-pressed="true"] { border-color: #45aabb; background: #edf9fa; color: #176f82; box-shadow: 0 0 0 2px #45aabb20; }
+        .job-field { border: 0; padding: 0; margin: 10px 0 0; min-width: 0; }
+        .job-field legend { margin-bottom: 7px; color: #53677f; font-size: 13px; font-weight: 600; }
+        .job-options { display: flex; flex-wrap: wrap; gap: 18px; }
+        .job-choice { display: inline-flex; align-items: center; gap: 7px; min-height: 30px; color: #52667e; font-size: 13px; font-weight: 600; cursor: pointer; }
+        .job-choice input { width: 16px; height: 16px; margin: 0; accent-color: #16899a; }
+        .job-choice input[type="radio"] { flex: 0 0 16px; min-width: 16px; min-height: 16px; padding: 0; border: 0; border-radius: 50%; background: transparent; box-shadow: none; appearance: auto; }
 
         .field select {
             appearance: none;
@@ -619,18 +618,14 @@
         }
 
         .field {
-            margin-top: 15px;
+            margin-top: 10px;
             color: #c5d1e1;
             font-size: 12px;
         }
 
-        #signup-panel .field {
-            margin-bottom: 0;
-        }
+        #signup-panel .field { margin-bottom: 8px; }
 
-        .floating-field {
-            margin-top: 10px;
-        }
+        .floating-field { margin-top: 7px; }
 
         .floating-label {
             background: #10243d;
@@ -1402,7 +1397,7 @@
 
         .auth-view .auth-form form {
             display: grid;
-            gap: 13px;
+            gap: 6px;
         }
 
         .auth-view .field {
@@ -1411,6 +1406,14 @@
 
         .auth-view .floating-field {
             margin-top: 11px;
+        }
+
+        #signup-panel .floating-field {
+            margin-top: 3px;
+        }
+
+        #signup-panel .job-field {
+            margin-top: 3px;
         }
 
         .auth-view .submit-button {
@@ -1898,8 +1901,7 @@
                         <button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
                     </span>
                 </label>
-                <fieldset class="field job-field" aria-label="Choose Teacher or Student">
-                    <legend>Choose one</legend>
+                <fieldset class="field job-field" aria-label="Teacher or Student">
                     <input type="hidden" name="job" value="">
                     <div class="job-options">
                         <label class="job-choice"><input type="radio" name="job-choice" value="Teacher" required> Teacher</label>
