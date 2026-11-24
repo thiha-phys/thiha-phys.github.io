@@ -20,6 +20,7 @@ const royalNote = document.getElementById('royal-note');
 let deliveryCities = [];
 let lastReceipt = null;
 let orderSubmitted = false;
+let receiptRevealed = false;
 let activeCityIndex = -1;
 let orderBooks = [];
 
@@ -669,9 +670,11 @@ orderForm.addEventListener('submit', async (event) => {
             }))
         };
         orderSubmitted = true;
-        displayReceipt(lastReceipt);
+        receiptRevealed = false;
         orderSuccessDialog.showModal();
-        orderStatus.textContent = 'မှာယူမှုကို လက်ခံရရှိပါပြီ။ ဘောက်ချာကို Print / Save PDF သို့မဟုတ် ဘောက်ချာပုံ Share ကို အသုံးပြုပါ။';
+        orderStatus.textContent = 'မှာယူမှု အောင်မြင်ပါပြီ။';
+        const animationDelay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 100 : 1300;
+        window.setTimeout(revealReceipt, animationDelay);
     } catch (error) {
         console.error('Unable to submit the book order.', error);
         orderStatus.textContent = `မှာယူမှု မအောင်မြင်ပါ။ ${error.message}`;
@@ -681,13 +684,18 @@ orderForm.addEventListener('submit', async (event) => {
     }
 });
 
-document.getElementById('close-order-success').addEventListener('click', () => {
-    orderSuccessDialog.close();
-});
+function revealReceipt() {
+    if (!lastReceipt || receiptRevealed) return;
+    receiptRevealed = true;
+    if (orderSuccessDialog.open) orderSuccessDialog.close();
+    displayReceipt(lastReceipt);
+    receiptCard.focus({ preventScroll: true });
+}
 
-document.getElementById('view-order-receipt').addEventListener('click', () => {
-    orderSuccessDialog.close();
-    receiptCard.focus();
+document.getElementById('close-order-success').addEventListener('click', revealReceipt);
+orderSuccessDialog.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    revealReceipt();
 });
 
 document.getElementById('print-receipt').addEventListener('click', () => {

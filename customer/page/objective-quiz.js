@@ -98,12 +98,14 @@ if (chapterList) {
         throw new Error(`${grade} chapter ${chapterNumber} has no objective questions.`);
     }
 
-    let currentSectionIndex = 0;
-    let currentQuestionIndex = 0;
-    let score = 0;
+    const sectionStates = sections.map((section) => ({ questionIndex: 0, score: 0, complete: false }));
+    const scoreableBySection = sections.map((section) => section.questions.filter((question) =>
+        question.type === 'multipleChoice' || question.answer !== null
+    ).length);
+    let answered = 0;
 
     quiz.append(progress);
-    const sectionCards = sections.map((section, index) => {
+    const sectionCards = sections.map((section) => {
         const card = document.createElement('section');
         card.className = 'objective-quiz-card objective-section-card';
         card.setAttribute('aria-label', sectionTitles[section.type]);
@@ -114,28 +116,22 @@ if (chapterList) {
 
         const sectionNotice = document.createElement('p');
         sectionNotice.className = 'objective-section-notice';
-        sectionNotice.textContent = index === 0
-            ? ''
-            : 'အပေါ်က မေးခွန်းများကို အရင်ဖြေဆိုပါ။';
-        sectionNotice.hidden = index === 0;
+        sectionNotice.textContent = '';
+        sectionNotice.hidden = true;
 
         const questionProgress = document.createElement('p');
         questionProgress.className = 'objective-question-count';
-        questionProgress.hidden = index !== 0;
 
         const questionText = document.createElement('p');
         questionText.className = 'objective-question';
-        questionText.hidden = index !== 0;
 
         const options = document.createElement('div');
         options.className = 'objective-options';
-        options.hidden = index !== 0;
 
         const result = document.createElement('p');
         result.className = 'objective-result';
         result.setAttribute('role', 'status');
         result.setAttribute('aria-live', 'polite');
-        result.hidden = index !== 0;
 
         const nextButton = document.createElement('button');
         nextButton.className = 'primary-button objective-next';
@@ -149,45 +145,38 @@ if (chapterList) {
         };
     });
 
-    function finishAnswer(isCorrect, message, elements) {
+    function updateCombinedProgress() {
+        const score = sectionStates.reduce((total, state) => total + state.score, 0);
+        progress.textContent = `ဖြေဆိုပြီး ${answered} / ${questions.length} · စုစုပေါင်းရမှတ် ${score} / ${gradableQuestions}`;
+    }
+
+    function finishAnswer(isCorrect, message, elements, sectionIndex) {
+        const state = sectionStates[sectionIndex];
+        answered += 1;
         if (isCorrect) {
-            score += 1;
+            state.score += 1;
             elements.result.className = 'objective-result is-correct';
         } else {
             elements.result.className = 'objective-result is-incorrect';
         }
         elements.result.textContent = message;
-        progress.textContent = `မေးခွန်း ${getQuestionNumber()} / ${questions.length} · ရမှတ် ${score}`;
+        updateCombinedProgress();
+        elements.questionProgress.textContent =
+            `မေးခွန်း ${state.questionIndex + 1} / ${sections[sectionIndex].questions.length} · ရမှတ် ${state.score} / ${scoreableBySection[sectionIndex]}`;
         elements.nextButton.hidden = false;
-        elements.nextButton.textContent = isLastQuestion()
-            ? 'ရလဒ်ကြည့်ရန်'
-            : isLastQuestionInSection()
-                ? 'နောက်အမျိုးအစား'
-                : 'နောက်မေးခွန်း';
+        elements.nextButton.textContent = state.questionIndex === sections[sectionIndex].questions.length - 1
+            ? 'ဤအပိုင်းပြီးပါပြီ'
+            : 'နောက်မေးခွန်း';
     }
 
-    function getQuestionNumber() {
-        return sections.slice(0, currentSectionIndex)
-            .reduce((total, section) => total + section.questions.length, 0) +
-            currentQuestionIndex + 1;
-    }
-
-    function isLastQuestionInSection() {
-        return currentQuestionIndex === sections[currentSectionIndex].questions.length - 1;
-    }
-
-    function isLastQuestion() {
-        return currentSectionIndex === sections.length - 1 && isLastQuestionInSection();
-    }
-
-    function renderQuestion() {
-        const section = sections[currentSectionIndex];
-        const question = section.questions[currentQuestionIndex];
-        const elements = sectionCards[currentSectionIndex];
+    function renderQuestion(sectionIndex) {
+        const state = sectionStates[sectionIndex];
+        const section = sections[sectionIndex];
+        const question = section.questions[state.questionIndex];
+        const elements = sectionCards[sectionIndex];
         const { questionProgress, questionText, options, result, nextButton } = elements;
-        progress.textContent = `မေးခွန်း ${getQuestionNumber()} / ${questions.length} · ရမှတ် ${score}`;
-        questionProgress.textContent =
-            `မေးခွန်း ${currentQuestionIndex + 1} / ${section.questions.length}`;
+        updateCombinedProgress();
+        questionProgress.textContent = `မေးခွန်း ${state.questionIndex + 1} / ${section.questions.length} · ရမှတ် ${state.score} / ${scoreableBySection[sectionIndex]}`;
         questionText.textContent = question.text;
         result.textContent = '';
         result.className = 'objective-result';
@@ -219,11 +208,9 @@ if (chapterList) {
                     result.textContent = 'ဤမေးခွန်းအတွက် အဖြေစာရင်း မပါဝင်သေးပါ။';
                     result.className = 'objective-result';
                     nextButton.hidden = false;
-                    nextButton.textContent = isLastQuestion()
-                        ? 'ရလဒ်ကြည့်ရန်'
-                        : isLastQuestionInSection()
-                            ? 'နောက်အမျိုးအစား'
-                            : 'နောက်မေးခွန်း';
+                    nextButton.textContent = state.questionIndex === section.questions.length - 1
+                        ? 'ဤအပိုင်းပြီးပါပြီ'
+                        : 'နောက်မေးခွန်း';
                     return;
                 }
                 const normalize = (value) => value.toLocaleLowerCase().replace(/[\s.,;:!?'"()[\]{}]/g, '');
@@ -231,14 +218,14 @@ if (chapterList) {
                 finishAnswer(
                     isCorrect,
                     isCorrect ? 'မှန်ပါသည်။' : `မမှန်ပါ။ အဖြေမှန်မှာ ${question.answer.join(' / ')} ဖြစ်ပါသည်။`,
-                    elements
+                    elements,
+                    sectionIndex
                 );
             });
             input.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter' && !checkButton.disabled) checkButton.click();
             });
             options.append(input, checkButton);
-            input.focus();
             return;
         }
 
@@ -259,7 +246,7 @@ if (chapterList) {
                     : index === question.correct;
                 if (isCorrect) {
                     button.classList.add('is-correct');
-                    finishAnswer(true, 'မှန်ပါသည်။', elements);
+                    finishAnswer(true, 'မှန်ပါသည်။', elements, sectionIndex);
                     return;
                 }
                 button.classList.add('is-incorrect');
@@ -272,41 +259,34 @@ if (chapterList) {
                     question.type === 'trueFalse'
                         ? `မမှန်ပါ။ အဖြေမှန်မှာ ${choices[correctIndex]} ဖြစ်ပါသည်။`
                         : `မမှန်ပါ။ အဖြေမှန်မှာ ${String.fromCharCode(65 + correctIndex)} ဖြစ်ပါသည်။`,
-                    elements
+                    elements,
+                    sectionIndex
                 );
             });
             options.append(button);
         });
     }
 
-    sectionCards.forEach(({ nextButton }) => {
+    sectionCards.forEach(({ nextButton, sectionNotice, questionText }, sectionIndex) => {
         nextButton.addEventListener('click', () => {
-            if (isLastQuestion()) {
-                quiz.hidden = true;
-                summary.hidden = false;
-                summary.querySelector('[data-objective-score]').textContent =
-                    `ရမှတ် ${score} / ${gradableQuestions}`;
+            const state = sectionStates[sectionIndex];
+            if (state.questionIndex === sections[sectionIndex].questions.length - 1) {
+                state.complete = true;
+                sectionNotice.hidden = false;
+                sectionNotice.textContent = `${sectionTitles[sections[sectionIndex].type]} အပိုင်း ပြီးပါပြီ။ ရမှတ် ${state.score} / ${scoreableBySection[sectionIndex]}`;
+                nextButton.hidden = true;
+                if (sectionStates.every((item) => item.complete)) {
+                    quiz.hidden = true;
+                    summary.hidden = false;
+                    const score = sectionStates.reduce((total, item) => total + item.score, 0);
+                    summary.querySelector('[data-objective-score]').textContent =
+                        `စုစုပေါင်းရမှတ် ${score} / ${gradableQuestions}`;
+                }
                 return;
             }
-
-            if (isLastQuestionInSection()) {
-                sectionCards[currentSectionIndex].sectionNotice.hidden = false;
-                sectionCards[currentSectionIndex].sectionNotice.textContent =
-                    `${sectionTitles[sections[currentSectionIndex].type]} အပိုင်း ပြီးပါပြီ။`;
-                nextButton.hidden = true;
-                currentSectionIndex += 1;
-                const nextSection = sectionCards[currentSectionIndex];
-                nextSection.sectionNotice.hidden = true;
-                nextSection.questionProgress.hidden = false;
-                nextSection.questionText.hidden = false;
-                nextSection.options.hidden = false;
-                nextSection.result.hidden = false;
-                currentQuestionIndex = 0;
-            } else {
-                currentQuestionIndex += 1;
-            }
-            renderQuestion();
-            sectionCards[currentSectionIndex].questionText.scrollIntoView({
+            state.questionIndex += 1;
+            renderQuestion(sectionIndex);
+            questionText.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center'
             });
@@ -314,24 +294,21 @@ if (chapterList) {
     });
 
     document.getElementById('objective-retry').addEventListener('click', () => {
-        currentSectionIndex = 0;
-        currentQuestionIndex = 0;
-        score = 0;
-        sectionCards.forEach((elements, index) => {
-            elements.sectionNotice.hidden = index === 0;
-            elements.sectionNotice.textContent = index === 0
-                ? ''
-                : 'အပေါ်က အမျိုးအစားကို အရင်ဖြေဆိုပါ။';
-            elements.questionProgress.hidden = index !== 0;
-            elements.questionText.hidden = index !== 0;
-            elements.options.hidden = index !== 0;
-            elements.result.hidden = index !== 0;
+        answered = 0;
+        sectionStates.forEach((state) => {
+            state.questionIndex = 0;
+            state.score = 0;
+            state.complete = false;
+        });
+        sectionCards.forEach((elements) => {
+            elements.sectionNotice.hidden = true;
+            elements.sectionNotice.textContent = '';
             elements.nextButton.hidden = true;
         });
         summary.hidden = true;
         quiz.hidden = false;
-        renderQuestion();
+        sections.forEach((_, index) => renderQuestion(index));
     });
 
-    renderQuestion();
+    sections.forEach((_, index) => renderQuestion(index));
 }

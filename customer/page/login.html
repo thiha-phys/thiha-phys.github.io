@@ -1775,6 +1775,36 @@
         @keyframes electron-outer-ccw { from{transform:rotate(0deg) translateX(60px)} to{transform:rotate(-360deg) translateX(60px)} }
         .welcome-lesson-tagline { margin:0 0 12px; color:#66758a; font-size:12px; text-align:center; }
         @media(max-width:380px) { .auth-content { padding-right:13px; padding-left:13px; } .welcome-menu{gap:7px}.welcome-service{min-height:84px;padding:8px 3px}.welcome-service-copy strong{font-size:10px} }
+        .floating-field {
+            border-radius: 15px;
+            transition: transform 180ms ease, filter 180ms ease;
+        }
+
+        .floating-field:focus-within {
+            transform: translateY(-2px);
+            filter: drop-shadow(0 8px 14px rgba(50, 110, 220, 0.16));
+        }
+
+        .floating-field:focus-within .input-icon {
+            color: #25a9bb;
+            animation: auth-icon-pop 260ms cubic-bezier(.2,.8,.3,1.4);
+        }
+
+        .floating-field input,
+        .floating-field select {
+            transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+        }
+
+        @keyframes auth-icon-pop {
+            50% { transform: translateY(-50%) scale(1.2); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .floating-field,
+            .floating-field input,
+            .floating-field select,
+            .floating-field .input-icon { transition: none; animation: none; }
+        }
     </style>
     <link rel="stylesheet" href="brand.css">
 </head>
