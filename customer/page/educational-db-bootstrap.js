@@ -144,14 +144,12 @@
     if (category === 'definitions' || category === 'short_questions') {
       const type = category === 'short_questions' ? 'questions' : 'definitions';
       const names = groupChapterRecords(records);
-      // Definition detail pages request one chapter at a time. Keep each result
-      // in its real chapter slot because chapter-content.js indexes by chapter-1.
-      const chapters = category === 'definitions'
-        ? Array.from({ length: gradeTitles[grade]?.length || 0 }, () => [])
-        : [];
-      names.forEach(([number,items], position) => {
-        const index = category === 'definitions' ? Number(number) - 1 : position;
-        if (Number.isInteger(index) && index >= 0 && (category !== 'definitions' || index < chapters.length)) {
+      // Definition and short-question detail pages request one chapter at a time.
+      // Keep records in their real chapter slot because chapter-content.js indexes by chapter-1.
+      const chapters = Array.from({ length: gradeTitles[grade]?.length || 0 }, () => []);
+      names.forEach(([number,items]) => {
+        const index = Number(number) - 1;
+        if (Number.isInteger(index) && index >= 0 && index < chapters.length) {
           chapters[index] = items.map((record) => record.content);
         }
       });
