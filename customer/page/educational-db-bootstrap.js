@@ -144,7 +144,17 @@
     if (category === 'definitions' || category === 'short_questions') {
       const type = category === 'short_questions' ? 'questions' : 'definitions';
       const names = groupChapterRecords(records);
-      const chapters = names.map(([,items]) => items.map((record) => record.content));
+      // Definition detail pages request one chapter at a time. Keep each result
+      // in its real chapter slot because chapter-content.js indexes by chapter-1.
+      const chapters = category === 'definitions'
+        ? Array.from({ length: gradeTitles[grade]?.length || 0 }, () => [])
+        : [];
+      names.forEach(([number,items], position) => {
+        const index = category === 'definitions' ? Number(number) - 1 : position;
+        if (Number.isInteger(index) && index >= 0 && (category !== 'definitions' || index < chapters.length)) {
+          chapters[index] = items.map((record) => record.content);
+        }
+      });
       const globalName = grade === 'G10' ? (type === 'questions' ? 'G10_SHORT_QUESTIONS' : 'G10_DEFINITIONS')
         : grade === 'G11' ? (type === 'questions' ? 'G11_SHORT_QUESTIONS' : 'G11_DEFINITION_CHAPTERS')
         : (type === 'questions' ? 'G12_SHORT_QUESTIONS' : 'G12_DEFINITIONS');
