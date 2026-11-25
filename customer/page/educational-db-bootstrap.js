@@ -159,7 +159,10 @@
         : grade === 'G11' ? (type === 'questions' ? 'G11_SHORT_QUESTIONS' : 'G11_DEFINITION_CHAPTERS')
         : (type === 'questions' ? 'G12_SHORT_QUESTIONS' : 'G12_DEFINITIONS');
       window[globalName] = chapters;
-      await loadScript('/page/chapter-content.js');
+      // G11 definitions still use their legacy renderer and page markup. Load
+      // it only after the database response has populated its chapter data.
+      if (grade === 'G11' && category === 'definitions') await loadScript('/page/G11def.js');
+      else await loadScript('/page/chapter-content.js');
       return;
     }
     if (category === 'objectives') {
