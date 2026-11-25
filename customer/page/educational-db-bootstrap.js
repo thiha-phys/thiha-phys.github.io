@@ -164,14 +164,25 @@
       return;
     }
     if (category === 'objectives') {
-      const chapters = groupChapterRecords(records).map(([number,items]) => {
+      // Objective detail pages request one chapter from the API, but the quiz
+      // renderer addresses chapters by chapter number (chapterNumber - 1).
+      // Preserve that position instead of compressing a one-chapter response
+      // into index 0, which made every chapter after Chapter 1 appear empty.
+      const chapters = Array.from({ length: gradeTitles[grade]?.length || 0 }, (_, index) => ({
+        chapter: index + 1,
+        sections: []
+      }));
+      groupChapterRecords(records).forEach(([number,items]) => {
         const sections = new Map();
         items.forEach((row) => {
           const content = row.content || {}, section = content.section || 'trueFalse';
           if (!sections.has(section)) sections.set(section,[]);
           const question = { ...content }; delete question.section; sections.get(section).push(question);
         });
-        return { chapter:Number(number), sections:[...sections.entries()].map(([type,questions]) => ({type,questions})) };
+        const index = Number(number) - 1;
+        if (Number.isInteger(index) && index >= 0 && index < chapters.length) {
+          chapters[index] = { chapter: index + 1, sections:[...sections.entries()].map(([type,questions]) => ({type,questions})) };
+        }
       });
       window.OBJECTIVE_QUIZ_DATA = { [grade]: chapters };
       await loadScript('/page/objective-quiz.js'); return;
