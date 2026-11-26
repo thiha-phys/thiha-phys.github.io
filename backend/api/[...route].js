@@ -651,8 +651,8 @@ export default async function handler(req, res) {
       return send(res,200,{ok:true,results,updatedCount:results.filter((r)=>r.result==='linked').length,unmatchedCount:results.filter((r)=>r.result==='unmatched').length,duplicateCount:0});
     }
     if (route === '/admin/feedback' && req.method === 'GET') {
-      const feedbackRows=await db`SELECT id,name,phone,message,status,created_at FROM feedback ORDER BY created_at DESC`;
-      return send(res,200,{ok:true,feedback:feedbackRows.map((f)=>({id:f.id,name:f.name,phone:f.phone,...(JSON.parse(f.message||'{}')),status:f.status,createdAt:f.created_at}))});
+      const feedbackRows=await db`SELECT id,user_id,name,phone,message,status,created_at FROM feedback ORDER BY created_at DESC`;
+      return send(res,200,{ok:true,feedback:feedbackRows.map((f)=>({id:f.id,userId:f.user_id,name:f.name,phone:f.phone,...(JSON.parse(f.message||'{}')),status:f.status,createdAt:f.created_at}))});
     }
     if (route === '/admin/announcements' && req.method === 'GET') {
       const rows=await db`SELECT id,title,body,active,publish_at FROM announcements ORDER BY created_at DESC`;

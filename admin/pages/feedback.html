@@ -16,16 +16,23 @@
             <a class="back-button" href="tools.html" aria-label="Back to Workspace"><i class="fa-solid fa-arrow-left"></i></a>
             <div>
                 <h1 class="page-title">Customer Feedback</h1>
-                <p class="page-subtitle">Open a message to view the customer's ratings and suggestions.</p>
+                <p class="page-subtitle">Customer messages are grouped by account and shown in conversation order.</p>
             </div>
         </header>
 
         <div class="feedback-inbox-toolbar">
             <i class="fa-solid fa-inbox" aria-hidden="true"></i>
-            <span id="feedback-admin-status" role="status" aria-live="polite">Loading feedback…</span>
+            <span class="feedback-admin-status" id="feedback-admin-status" role="status" aria-live="polite">Loading feedback…</span>
+            <button class="feedback-refresh-button" id="feedback-refresh" type="button">
+                <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+                <span>Refresh</span>
+            </button>
         </div>
 
-        <section id="feedback-list" class="feedback-admin-list" aria-live="polite"></section>
+        <section class="feedback-admin-inbox" aria-label="Customer feedback conversations">
+            <div id="feedback-list" class="feedback-admin-list" aria-label="Customer accounts"></div>
+            <section id="feedback-conversation" class="feedback-admin-conversation" aria-label="Conversation" aria-live="polite"></section>
+        </section>
     </main>
     <script src="admin-api.js"></script>
     <script src="admin-nav.js"></script>
