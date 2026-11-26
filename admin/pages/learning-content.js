@@ -6,6 +6,7 @@ const message = document.getElementById('message');
 const editor = document.getElementById('editor');
 const contentFields = document.getElementById('content-fields');
 const titleLabel = document.getElementById('title-label');
+const editorHome = editor.parentElement;
 const chapterCounts = {
     10: { objectives: 11, calculations: 11, definitions: 11 },
     11: { objectives: 12, calculations: 12, definitions: 12 },
@@ -403,7 +404,8 @@ function rebuildChapters() {
     }
 }
 
-function showEditor(row = {}) {
+function showEditor(row = {}, slot = null) {
+    closeEditor();
     editingRow = row;
     document.getElementById('record-id').value = row.id || '';
     document.getElementById('edit-grade').value = row.grade || grade.value;
@@ -413,8 +415,19 @@ function showEditor(row = {}) {
     document.getElementById('edit-order').value = row.sortOrder ?? 0;
     document.getElementById('edit-active').value = String(row.active !== false);
     buildContentFields(row);
+    if (slot) {
+        slot.hidden = false;
+        slot.append(editor);
+    } else {
+        records.before(editor);
+    }
     editor.hidden = false;
-    editor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeEditor() {
+    editor.hidden = true;
+    editorHome.insertBefore(editor, records.nextSibling);
+    records.querySelectorAll('.record-editor-slot').forEach((slot) => { slot.hidden = true; });
 }
 
 function renderRows(rows) {
@@ -435,7 +448,9 @@ function renderRows(rows) {
         const actions = element('div', 'record-actions');
         const edit = element('button', 'edit-btn', 'Edit');
         edit.type = 'button';
-        edit.addEventListener('click', () => showEditor(row));
+        const slot = element('div', 'record-editor-slot');
+        slot.hidden = true;
+        edit.addEventListener('click', () => showEditor(row, slot));
         const remove = element('button', 'delete-btn', 'Delete');
         remove.type = 'button';
         remove.addEventListener('click', async () => {
@@ -451,11 +466,12 @@ function renderRows(rows) {
         actions.append(edit, remove);
         top.append(info, actions);
         card.append(top);
-        records.append(card);
+        records.append(card, slot);
     });
 }
 
 async function load() {
+    closeEditor();
     setMessage('Loading…');
     records.replaceChildren();
     try {
@@ -601,7 +617,7 @@ grade.addEventListener('change', () => { rebuildChapters(); load(); });
 category.addEventListener('change', () => { rebuildChapters(); load(); });
 chapter.addEventListener('change', load);
 document.getElementById('add').addEventListener('click', () => showEditor());
-document.getElementById('cancel').addEventListener('click', () => { editor.hidden = true; });
+document.getElementById('cancel').addEventListener('click', closeEditor);
 editor.addEventListener('submit', async (event) => {
     event.preventDefault();
     try {
