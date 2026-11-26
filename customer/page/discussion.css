@@ -4,7 +4,9 @@
     top: var(--discussion-viewport-top, 0px);
     right: 0;
     left: 0;
+    width: 100%;
     height: var(--discussion-viewport-height, 100dvh);
+    max-width: none;
     min-height: 0;
     margin: 0;
     overflow: hidden;
@@ -27,13 +29,13 @@
 
 .discussion-page-header {
     display: flex;
-    min-height: 58px;
+    min-height: 64px;
     flex: 0 0 auto;
     align-items: center;
-    gap: 12px;
-    padding: 4px 14px 7px;
-    border-bottom: 1px solid #f0f1f3;
-    background: #fff;
+    gap: 10px;
+    padding: 8px 14px;
+    border-bottom: 1px solid #dce8f1;
+    background: linear-gradient(135deg, #eef5ff, #edf8f7);
 }
 
 .discussion-back {
@@ -44,15 +46,35 @@
     place-items: center;
     border: 0;
     border-radius: 50%;
-    background: transparent;
+    background: rgba(255, 255, 255, .76);
     color: #2764c5;
     text-decoration: none;
 }
 
-.discussion-back { font-size: 19px; }
+.discussion-back { font-size: 17px; }
+.discussion-logo {
+    display: block;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    padding: 2px;
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 11px;
+    background: #fff;
+    object-fit: contain;
+}
 .discussion-heading { min-width: 0; flex: 1; }
 .discussion-heading h1 { margin: 0; color: #1d2735; font-size: 17px; line-height: 1.35; }
-.discussion-heading p { margin: 1px 0 0; color: #7a8491; font-size: 10px; }
+.discussion-heading p {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    margin: 2px 0 0;
+    color: #607387;
+    font-size: 10px;
+    line-height: 1.4;
+}
+.discussion-heading p i { flex: 0 0 auto; margin-top: 1px; color: #3475d2; }
 
 .discussion-main {
     display: flex;
@@ -62,19 +84,6 @@
     background: #fff;
 }
 
-.discussion-private-note {
-    display: flex;
-    min-height: 34px;
-    flex: 0 0 auto;
-    align-items: center;
-    gap: 7px;
-    margin: 0;
-    padding: 2px 16px;
-    color: #788493;
-    font-size: 10px;
-}
-
-.discussion-private-note i { color: #4281dc; }
 .discussion-error:not([hidden]) {
     flex: 0 0 auto;
     margin: 0 12px 5px;
@@ -190,8 +199,8 @@
     align-items: flex-end;
     gap: 8px;
     padding: 9px 12px 10px;
-    border-top: 1px solid #f0f1f3;
-    background: #fff;
+    border-top: 1px solid #dce8f1;
+    background: linear-gradient(135deg, #eef5ff, #edf8f7);
 }
 
 .discussion-input-wrap { display: flex; min-width: 0; flex: 1; }
@@ -200,10 +209,10 @@
     min-height: 42px;
     max-height: 120px;
     padding: 10px 15px;
-    border: 0;
+    border: 1px solid #d8e5ef;
     border-radius: 22px;
     outline: 0;
-    background: #f1f2f4;
+    background: rgba(255, 255, 255, .96);
     color: #243650;
     font: inherit;
     font-size: 13px;
