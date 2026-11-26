@@ -146,11 +146,10 @@
       const record = (await getRecords('old_questions',key))[0];
       const target = document.getElementById('oq-paper-content');
       if (!record || !target) throw new Error('မေးခွန်းလွှာကို မတွေ့ပါ။');
-      if (record.content?.html) target.replaceChildren(safeHtml(record.content.html));
-      else if (record.content?.paper) {
+      if (record.content?.paper) {
         window.G12_QUESTION_PAPERS = [record.content.paper];
         await loadScript('/page/G12oq.js');
-      }
+      } else if (record.content?.html) target.replaceChildren(safeHtml(record.content.html));
       return;
     }
     const records = await getRecords();
@@ -212,7 +211,44 @@
       }
       const list=document.querySelector('.problem-list-container'); if (!list) return;
       list.replaceChildren();
-      records.forEach((record) => { if (record.content?.html) list.append(safeHtml(record.content.html)); });
+      records.forEach((record) => {
+        const content = record.content || {};
+        if (content.html) {
+          list.append(safeHtml(content.html));
+          return;
+        }
+        if (!content.question) return;
+        const card = document.createElement('article');
+        card.className = 'problem-card';
+        const number = document.createElement('div');
+        number.className = 'problem-number';
+        const label = document.createElement('span');
+        label.textContent = record.title;
+        number.append(label);
+        const question = document.createElement('div');
+        question.className = 'problem-question';
+        const prompt = document.createElement('p');
+        prompt.textContent = content.question;
+        question.append(prompt);
+        const answer = document.createElement('div');
+        answer.className = 'problem-answer';
+        const solution = Array.isArray(content.solution) ? content.solution
+          : content.solution == null ? [] : String(content.solution).split(/\r?\n/);
+        solution.forEach((line) => {
+          const paragraph = document.createElement('p');
+          paragraph.textContent = line;
+          answer.append(paragraph);
+        });
+        const details = document.createElement('details');
+        const summary = document.createElement('summary');
+        summary.textContent = 'အဖြေကြည့်ရန်';
+        details.append(summary, answer);
+        const body = document.createElement('div');
+        body.className = 'problem-content';
+        body.append(details);
+        card.append(number, question, body);
+        list.append(card);
+      });
       await loadScript('/page/calculation-format.js');
       await typesetMath(list);
       return;
