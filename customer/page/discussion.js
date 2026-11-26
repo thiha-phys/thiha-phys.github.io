@@ -3,13 +3,29 @@ const discussionForm = document.getElementById('discussion-form');
 const discussionInput = document.getElementById('discussion-input');
 const discussionError = document.getElementById('discussion-error');
 const discussionSendButton = document.getElementById('discussion-send');
-const discussionRefreshButton = document.getElementById('discussion-refresh');
 let currentMessages = [];
 let loadingMessages = false;
 let messageLoadVersion = 0;
 let sendingMessage = false;
 let editingMessageId = null;
 let selectedMessageId = null;
+
+function syncDiscussionViewport() {
+    const viewport = window.visualViewport;
+    document.documentElement.style.setProperty(
+        '--discussion-viewport-height',
+        `${viewport?.height || window.innerHeight}px`
+    );
+    document.documentElement.style.setProperty(
+        '--discussion-viewport-top',
+        `${viewport?.offsetTop || 0}px`
+    );
+}
+
+syncDiscussionViewport();
+window.addEventListener('resize', syncDiscussionViewport);
+window.visualViewport?.addEventListener('resize', syncDiscussionViewport);
+window.visualViewport?.addEventListener('scroll', syncDiscussionViewport);
 
 function appendDiscussionText(parent, tagName, text, className) {
     const element = document.createElement(tagName);
@@ -193,7 +209,6 @@ async function loadDiscussionMessages() {
     if (loadingMessages || sendingMessage || editingMessageId) return;
     loadingMessages = true;
     const loadVersion = ++messageLoadVersion;
-    discussionRefreshButton.disabled = true;
     try {
         const result = await sendProfileRequest('listDiscussionMessages', {});
         if (!Array.isArray(result.messages)) {
@@ -209,7 +224,6 @@ async function loadDiscussionMessages() {
         showDiscussionError('Could not load messages. Check your connection and try again.');
     } finally {
         loadingMessages = false;
-        discussionRefreshButton.disabled = false;
     }
 }
 
@@ -244,7 +258,6 @@ discussionForm.addEventListener('submit', async (event) => {
     }
 });
 
-discussionRefreshButton.addEventListener('click', loadDiscussionMessages);
 loadDiscussionMessages();
 window.setInterval(() => {
     if (document.visibilityState === 'visible') loadDiscussionMessages();

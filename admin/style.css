@@ -315,6 +315,77 @@ button:disabled { cursor: wait; opacity: .65; }
     .feedback-selection-toolbar .feedback-message-action { padding-inline: 7px; }
 }
 
+body.feedback-chat-open {
+    position: fixed;
+    top: var(--feedback-viewport-top, 0px);
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: var(--feedback-viewport-height, 100dvh);
+    min-height: 0;
+    overflow: hidden;
+    background: #fff;
+}
+body.feedback-chat-open .admin-bottom-nav { display: none !important; }
+body.feedback-chat-open .feedback-admin-page {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+}
+body.feedback-chat-open .feedback-admin-page .page-top,
+body.feedback-chat-open .feedback-inbox-toolbar { display: none; }
+body.feedback-chat-open .feedback-admin-inbox {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+}
+body.feedback-chat-open .feedback-admin-list { display: none; }
+body.feedback-chat-open .feedback-admin-conversation {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    flex: 1;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+body.feedback-chat-open .feedback-conversation-header {
+    min-height: calc(68px + env(safe-area-inset-top));
+    flex: 0 0 auto;
+    padding: calc(8px + env(safe-area-inset-top)) 14px 8px;
+}
+body.feedback-chat-open .feedback-conversation-back { display: grid; }
+body.feedback-chat-open .feedback-chat-error {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 6px 14px;
+    background: #fff1f0;
+    color: #b42318;
+    font-size: 11px;
+}
+body.feedback-chat-open .feedback-chat-error[hidden] { display: none; }
+body.feedback-chat-open .feedback-message-timeline {
+    min-height: 0;
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    background: #fff;
+    background-image: none;
+    overscroll-behavior: contain;
+}
+body.feedback-chat-open .feedback-reply-composer {
+    flex: 0 0 auto;
+    padding: 9px 10px calc(9px + env(safe-area-inset-bottom));
+}
+body.feedback-chat-open .feedback-reply-composer textarea { resize: none; }
+
 .profile-contact {
     min-width: 0;
     display: inline-flex;

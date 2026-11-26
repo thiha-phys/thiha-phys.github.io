@@ -11,6 +11,34 @@ let replyDraft = '';
 let loadingInbox = false;
 let inboxReloadRequested = false;
 
+function syncFeedbackViewport() {
+    const viewport = window.visualViewport;
+    document.documentElement.style.setProperty(
+        '--feedback-viewport-height',
+        `${viewport?.height || window.innerHeight}px`
+    );
+    document.documentElement.style.setProperty(
+        '--feedback-viewport-top',
+        `${viewport?.offsetTop || 0}px`
+    );
+}
+
+function showFeedbackError(message) {
+    const chatError = feedbackConversation.querySelector('.feedback-chat-error');
+    if (chatError && activeThreadKey) {
+        chatError.textContent = message;
+        chatError.hidden = !message;
+        return;
+    }
+    feedbackAdminStatus.textContent = message;
+    feedbackAdminStatus.classList.toggle('error', Boolean(message));
+}
+
+syncFeedbackViewport();
+window.addEventListener('resize', syncFeedbackViewport);
+window.visualViewport?.addEventListener('resize', syncFeedbackViewport);
+window.visualViewport?.addEventListener('scroll', syncFeedbackViewport);
+
 function appendFeedbackText(parent, tagName, text, className) {
     const element = document.createElement(tagName);
     if (className) element.className = className;
@@ -219,8 +247,7 @@ function renderAdminEditForm(thread, message) {
         event.preventDefault();
         const body = textarea.value.trim();
         if (!body) {
-            feedbackAdminStatus.textContent = 'Enter a message before saving.';
-            feedbackAdminStatus.classList.add('error');
+            showFeedbackError('Enter a message before saving.');
             textarea.focus();
             return;
         }
@@ -231,8 +258,7 @@ function renderAdminEditForm(thread, message) {
             await loadFeedback();
         } catch (error) {
             console.error('Unable to edit the discussion message.', error);
-            feedbackAdminStatus.textContent = 'Could not save the message. Please try again.';
-            feedbackAdminStatus.classList.add('error');
+            showFeedbackError('Could not save the message. Please try again.');
             save.disabled = false;
         }
     });
@@ -391,8 +417,7 @@ function renderReplyComposer(thread) {
         event.preventDefault();
         const body = textarea.value.trim();
         if (!body || !thread.userId) {
-            feedbackAdminStatus.textContent = 'Enter a message and select a valid customer account.';
-            feedbackAdminStatus.classList.add('error');
+            showFeedbackError('Enter a message and select a valid customer account.');
             return;
         }
         send.disabled = true;
@@ -402,8 +427,7 @@ function renderReplyComposer(thread) {
             await loadFeedback();
         } catch (error) {
             console.error('Unable to send the Admin reply.', error);
-            feedbackAdminStatus.textContent = 'Could not send the reply. Please try again.';
-            feedbackAdminStatus.classList.add('error');
+            showFeedbackError('Could not send the reply. Please try again.');
             send.disabled = false;
         }
     });
@@ -411,6 +435,7 @@ function renderReplyComposer(thread) {
 }
 
 function renderConversation(thread) {
+    document.body.classList.toggle('feedback-chat-open', Boolean(thread));
     feedbackConversation.replaceChildren();
     feedbackConversation.classList.toggle('has-thread', Boolean(thread));
     if (!thread) {
@@ -454,6 +479,11 @@ function renderConversation(thread) {
     }
     header.append(contact);
 
+    const chatError = document.createElement('p');
+    chatError.className = 'feedback-chat-error';
+    chatError.setAttribute('role', 'alert');
+    chatError.hidden = true;
+
     const timeline = document.createElement('div');
     timeline.className = 'feedback-message-timeline';
     const selectionToolbar = renderSelectionToolbar(thread);
@@ -464,7 +494,7 @@ function renderConversation(thread) {
             : renderFeedbackBubble(thread, message));
     });
 
-    feedbackConversation.append(header, timeline);
+    feedbackConversation.append(header, chatError, timeline);
     if (thread.userId) {
         feedbackConversation.append(renderReplyComposer(thread));
     } else {
@@ -527,8 +557,7 @@ async function deleteConversationMessages(messages) {
         await loadFeedback();
     } catch (error) {
         console.error('Unable to delete the selected conversation messages.', error);
-        feedbackAdminStatus.textContent = 'Could not delete the selected messages. Please try again.';
-        feedbackAdminStatus.classList.add('error');
+        showFeedbackError('Could not delete the selected messages. Please try again.');
     }
 }
 
@@ -566,8 +595,7 @@ async function loadFeedback(button) {
         feedbackAdminStatus.textContent = `${feedbackThreads.length.toLocaleString('en-US')} ${feedbackThreads.length === 1 ? 'account' : 'accounts'} · ${messageCount.toLocaleString('en-US')} ${messageCount === 1 ? 'message' : 'messages'}`;
     } catch (error) {
         console.error('Unable to load customer discussions.', error);
-        feedbackAdminStatus.textContent = 'Could not load feedback and discussion messages. Try again.';
-        feedbackAdminStatus.classList.add('error');
+        showFeedbackError('Could not load feedback and discussion messages. Try again.');
         if (!feedbackThreads.length) {
             feedbackList.replaceChildren();
             appendFeedbackText(feedbackList, 'div', 'Messages could not be loaded. Check the connection and database migration.', 'feedback-inbox-empty error');

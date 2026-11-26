@@ -1,8 +1,12 @@
 .discussion-page-body {
     display: flex;
-    height: 100vh;
-    height: 100dvh;
+    position: fixed;
+    top: var(--discussion-viewport-top, 0px);
+    right: 0;
+    left: 0;
+    height: var(--discussion-viewport-height, 100dvh);
     min-height: 0;
+    margin: 0;
     overflow: hidden;
     padding: 0;
     background: #fff;
@@ -24,6 +28,7 @@
 .discussion-page-header {
     display: flex;
     min-height: 58px;
+    flex: 0 0 auto;
     align-items: center;
     gap: 12px;
     padding: 4px 14px 7px;
@@ -31,8 +36,7 @@
     background: #fff;
 }
 
-.discussion-back,
-.discussion-refresh {
+.discussion-back {
     display: grid;
     width: 42px;
     height: 42px;
@@ -49,8 +53,6 @@
 .discussion-heading { min-width: 0; flex: 1; }
 .discussion-heading h1 { margin: 0; color: #1d2735; font-size: 17px; line-height: 1.35; }
 .discussion-heading p { margin: 1px 0 0; color: #7a8491; font-size: 10px; }
-.discussion-refresh { cursor: pointer; }
-.discussion-refresh:disabled { opacity: .6; }
 
 .discussion-main {
     display: flex;
@@ -206,7 +208,7 @@
     font: inherit;
     font-size: 13px;
     line-height: 1.5;
-    resize: vertical;
+    resize: none;
 }
 
 .discussion-input-wrap textarea:focus { box-shadow: inset 0 0 0 1px #9bb9e7; }
