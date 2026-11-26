@@ -424,6 +424,31 @@
         return requestProfile('updateUserApproval', { userId, approvalStatus });
     }
 
+    async function getPasswordResetRequests() {
+        const response = await apiFetch(`${API_URL}/api/admin/password-reset-requests`, {
+            cache: 'no-store',
+            headers: { Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` }
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.message || 'Password reset requests could not be loaded.');
+        if (!Array.isArray(result.requests)) throw new Error('The password reset request list is invalid.');
+        return result.requests;
+    }
+
+    async function reviewPasswordResetRequest(requestId, action) {
+        const response = await apiFetch(`${API_URL}/api/admin/password-reset-requests`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}`
+            },
+            body: JSON.stringify({ requestId, action })
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.message || 'Password reset request could not be updated.');
+        return result;
+    }
+
     async function getFeedback() {
         const result = await requestProfile('listFeedback');
         if (!Array.isArray(result.feedback)) {
@@ -516,6 +541,8 @@
         getProfiles,
         updateUserRole,
         updateUserApproval,
+        getPasswordResetRequests,
+        reviewPasswordResetRequest,
         getFeedback,
         getShopOrders,
         getShopOrdersByStatus,

@@ -18,6 +18,7 @@ async function sendProfileRequest(action, profile) {
     if (action === 'login') return physicsApiFetch('auth/login', { method: 'POST', body: JSON.stringify(profile) });
     if (action === 'logout') return physicsApiFetch('auth/logout', { method: 'POST', body: '{}' });
     if (action === 'update') return physicsApiFetch('profile', { method: 'PATCH', body: JSON.stringify(profile) });
+    if (action === 'changePassword') return physicsApiFetch('profile/password', { method: 'PATCH', body: JSON.stringify(profile) });
     if (action === 'submitFeedback') return physicsApiFetch('feedback', { method: 'POST', body: JSON.stringify(profile) });
     throw new Error('This profile action has not been migrated to the database API yet.');
 }

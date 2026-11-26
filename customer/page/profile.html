@@ -4,7 +4,7 @@
     <script src="/auth-guard.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f4f7fb">
+    <meta name="theme-color" content="#ffffff">
     <title>Profile | Physics Learning Hub</title>
     <link rel="icon" type="image/png" href="../logo.png">
     <link rel="stylesheet" href="../style.css">
@@ -12,13 +12,14 @@
     <style>
         :root {
             color-scheme: light;
-            --account-bg: #f4f7fb;
+            --account-bg: #ffffff;
             --account-card: #ffffff;
             --account-text: #182230;
             --account-muted: #718096;
             --account-border: #edf0f4;
+            --account-card-border: #7fa9e6;
             --account-accent: #2563eb;
-            --account-shadow: 0 8px 24px rgba(31, 48, 73, 0.06);
+            --account-shadow: 0 8px 18px rgba(18, 30, 50, 0.15);
         }
 
         * {
@@ -337,6 +338,262 @@
             cursor: pointer;
         }
 
+        .account-shell {
+            width: min(100%, 720px);
+            padding: 20px 16px 124px;
+        }
+
+        .profile-page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin: 3px 2px 16px;
+        }
+
+        .profile-page-eyebrow,
+        .profile-summary-kicker {
+            margin: 0;
+            color: #74839b;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .13em;
+        }
+
+        .profile-page-header h1 {
+            margin: 2px 0 0;
+            color: #182b49;
+            font-size: 24px;
+            line-height: 1.35;
+        }
+
+        .profile-security-badge,
+        .profile-role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            flex: 0 0 auto;
+            padding: 7px 10px;
+            border: 1px solid #d6e8df;
+            border-radius: 999px;
+            background: #f0faf5;
+            color: #20734e;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .profile-summary {
+            min-height: 112px;
+            padding: 20px;
+            margin-bottom: 23px;
+            border-color: #dce8f8;
+            border-radius: 21px;
+            background: linear-gradient(120deg, #f8fbff, #eaf3ff 72%, #edf9f7);
+            box-shadow: 0 12px 28px rgba(37, 76, 130, .09);
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            flex-basis: 64px;
+            border: 3px solid rgba(255,255,255,.9);
+            border-radius: 20px;
+            background: linear-gradient(145deg, #3478e8, #30a895);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(42, 105, 177, .2);
+        }
+
+        .profile-summary-copy { min-width: 0; flex: 1; }
+        .profile-summary h2 { margin: 2px 0 1px; color: #1c3150; font-size: 20px; overflow-wrap: anywhere; }
+        .profile-role-badge { border-color: #d6e5fa; background: #edf4ff; color: #315fa8; }
+
+        .settings-section + .settings-section { margin-top: 21px; }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 3px 9px;
+            color: #52627b;
+            font-size: 11px;
+            letter-spacing: .1em;
+        }
+        .section-title::before { width: 7px; height: 7px; border-radius: 50%; background: #4a83df; content: ""; }
+        .settings-list { border-color: #e5ebf3; border-radius: 18px; box-shadow: 0 7px 20px rgba(31, 48, 73, .045); }
+        .setting-row { min-height: 63px; gap: 12px; padding: 10px 15px; }
+        .setting-icon { width: 40px; height: 40px; flex-basis: 40px; border-radius: 13px; }
+        .setting-label { font-size: 14px; }
+        .setting-value { padding: 4px 9px; border-radius: 999px; background: #f1f4f8; font-size: 10px; }
+        #manage-profile-button .setting-icon { background: #f1edff; color: #7654ca; }
+        [data-dialog="security-dialog"] .setting-icon { background: #e8f7ef; color: #20815b; }
+        [data-dialog="notification-dialog"] .setting-icon { background: #fff4e6; color: #bd7415; }
+        [data-dialog="about-dialog"] .setting-icon { background: #eaf2ff; color: #3978e8; }
+        #logout-button .setting-icon { background: #fff0f0; color: #cf4a56; }
+        #logout-button .setting-label { color: #b83b48; }
+
+        .back-button {
+            width: fit-content;
+            min-height: 42px;
+            padding: 0 13px;
+            border: 1px solid #e3eaf3;
+            border-radius: 12px;
+            background: #fff;
+            color: #51627b;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 3px 9px rgba(31, 48, 73, .04);
+        }
+
+        .profile-view-title { margin: 0 2px 14px; color: #1c3150; font-size: 22px; }
+        .profile-details { padding: 4px 17px; border-color: #e3eaf3; border-radius: 18px; box-shadow: 0 7px 20px rgba(31, 48, 73, .045); }
+        .profile-detail { min-height: 62px; }
+        .profile-detail i { color: #3978e8; }
+        .profile-action { min-height: 48px; border-radius: 13px; background: linear-gradient(100deg, #3478e8, #2865cb); box-shadow: 0 8px 17px rgba(37, 99, 235, .17); }
+        .profile-edit-form { border-color: #e3eaf3; border-radius: 17px; box-shadow: 0 7px 20px rgba(31, 48, 73, .045); }
+        .form-field input:focus { border-color: #7aa5eb; outline: 0; box-shadow: 0 0 0 3px rgba(37, 99, 235, .11); }
+
+        @media (max-width: 480px) {
+            .account-shell { padding: 16px 13px 116px; }
+            .profile-page-header h1 { font-size: 21px; }
+            .profile-security-badge { padding: 6px 8px; font-size: 9px; }
+            .profile-summary { gap: 12px; padding: 17px 14px; border-radius: 18px; }
+            .avatar { width: 56px; height: 56px; flex-basis: 56px; border-radius: 17px; }
+            .profile-summary h2 { font-size: 17px; }
+            .profile-role-badge { padding: 6px 8px; font-size: 9px; }
+            .setting-row { gap: 10px; padding-inline: 12px; }
+            .setting-icon { width: 37px; height: 37px; flex-basis: 37px; }
+        }
+
+        .account-shell { width: min(100%, 620px); padding: 20px 18px 124px; }
+        .profile-summary {
+            display: grid;
+            justify-items: center;
+            gap: 0;
+            overflow: visible;
+            padding: 16px 12px 5px;
+            margin: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+            text-align: center;
+        }
+        .avatar {
+            width: 82px;
+            height: 82px;
+            flex-basis: 82px;
+            margin-bottom: 10px;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #3679e8, #35a995);
+            box-shadow: 0 8px 20px rgba(43, 105, 176, .2);
+            font-size: 29px;
+        }
+        .profile-summary-copy { display: grid; justify-items: center; gap: 3px; }
+        .profile-summary-kicker { display: none; }
+        .profile-summary h2 { margin: 0; color: #1c2b43; font-size: 21px; }
+        .profile-role-badge {
+            display: inline-flex;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: transparent;
+            color: #758198;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .profile-edit-cta {
+            min-height: 39px;
+            padding: 0 19px;
+            margin-top: 11px;
+            border: 1px solid #e3e8f0;
+            border-radius: 999px;
+            background: #fff;
+            color: #34445c;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 3px 9px rgba(31, 48, 73, .045);
+        }
+        .profile-shortcuts {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin: 20px 0 25px;
+            padding: 10px 0;
+            border-top: 1px solid #e9edf3;
+            border-bottom: 1px solid #e9edf3;
+        }
+        .profile-shortcut {
+            display: grid;
+            min-width: 0;
+            min-height: 68px;
+            justify-items: center;
+            align-content: center;
+            gap: 6px;
+            border: 0;
+            border-right: 1px solid #e9edf3;
+            background: transparent;
+            color: #334258;
+            font: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .profile-shortcut:last-child { border-right: 0; }
+        .profile-shortcut-icon { color: #52657f; font-size: 19px; }
+        .profile-shortcut:nth-child(2) .profile-shortcut-icon { color: #3978e8; }
+        .profile-shortcut:nth-child(3) .profile-shortcut-icon { color: #278362; }
+        .profile-shortcut:hover, .profile-shortcut:focus-visible { color: #2463ca; outline-color: #79a8ed; }
+        .profile-section { margin-top: 21px; }
+        .section-title {
+            margin: 0 2px 8px;
+            color: #28374d;
+            font-size: 14px;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+        .section-title::before { display: none; }
+        .profile-contact-card {
+            overflow: hidden;
+            border: 1px solid var(--account-card-border);
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: var(--account-shadow);
+        }
+        .profile-contact-row {
+            display: grid;
+            grid-template-columns: 30px minmax(76px, .7fr) minmax(0, 1.5fr);
+            align-items: center;
+            gap: 8px;
+            min-height: 56px;
+            padding: 9px 13px;
+            border-bottom: 1px solid #edf0f5;
+        }
+        .profile-contact-row:last-child { border-bottom: 0; }
+        .profile-contact-icon { color: #6280a8; text-align: center; }
+        .profile-contact-label { color: #77849a; font-size: 11px; }
+        .profile-contact-value { min-width: 0; color: #2b3b52; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
+        .settings-section + .settings-section { margin-top: 21px; }
+        .settings-list {
+            border: 1px solid var(--account-card-border);
+            border-radius: 15px;
+            box-shadow: var(--account-shadow);
+        }
+        .profile-details {
+            border-color: var(--account-card-border);
+            box-shadow: var(--account-shadow);
+        }
+        .setting-row { min-height: 56px; padding: 8px 13px; }
+        .setting-icon { width: 36px; height: 36px; flex-basis: 36px; border-radius: 11px; }
+        #manage-profile-button .profile-shortcut-icon { color: #7654ca; }
+
+        @media (max-width: 480px) {
+            .account-shell { padding: 16px 14px 116px; }
+            .avatar { width: 76px; height: 76px; flex-basis: 76px; }
+            .profile-contact-row { grid-template-columns: 25px minmax(65px, .65fr) minmax(0, 1.5fr); gap: 6px; padding-inline: 10px; }
+            .profile-contact-value { font-size: 11px; }
+        }
+
         @media (min-width: 761px) {
             .account-shell {
                 padding-top: 36px;
@@ -349,54 +606,65 @@
         <section class="account-view" id="account-view">
             <section class="profile-summary" aria-label="Account">
                 <div class="avatar" id="profile-avatar" aria-hidden="true">P</div>
-                <div>
+                <div class="profile-summary-copy">
                     <h2 id="summary-name">Your account</h2>
-                    <p id="summary-role"></p>
+                    <p id="summary-role" class="profile-role-badge"></p>
+                </div>
+                <button class="profile-edit-cta" id="edit-profile-shortcut" type="button">
+                    <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
+                    Edit Profile
+                </button>
+            </section>
+
+            <nav class="profile-shortcuts" aria-label="Profile shortcuts">
+                <a class="profile-shortcut" href="order-history.html">
+                    <i class="profile-shortcut-icon fa-solid fa-receipt" aria-hidden="true"></i>
+                    <span>Orders</span>
+                </a>
+                <a class="profile-shortcut" href="../index.html">
+                    <i class="profile-shortcut-icon fa-solid fa-book-open" aria-hidden="true"></i>
+                    <span>Learning</span>
+                </a>
+                <button class="profile-shortcut" type="button" data-dialog="security-dialog">
+                    <i class="profile-shortcut-icon fa-solid fa-lock" aria-hidden="true"></i>
+                    <span>Password</span>
+                </button>
+                <button class="profile-shortcut" id="manage-profile-button" type="button">
+                    <i class="profile-shortcut-icon fa-solid fa-gear" aria-hidden="true"></i>
+                    <span>Settings</span>
+                </button>
+            </nav>
+
+            <section class="settings-section profile-section" aria-labelledby="contact-information-title">
+                <h2 class="section-title" id="contact-information-title">Contact information</h2>
+                <div class="profile-contact-card">
+                    <div class="profile-contact-row">
+                        <i class="profile-contact-icon fa-solid fa-phone" aria-hidden="true"></i>
+                        <span class="profile-contact-label">Phone</span>
+                        <strong class="profile-contact-value" id="summary-phone">Not added</strong>
+                    </div>
+                    <div class="profile-contact-row">
+                        <i class="profile-contact-icon fa-regular fa-envelope" aria-hidden="true"></i>
+                        <span class="profile-contact-label">Email</span>
+                        <strong class="profile-contact-value" id="summary-email">Not added</strong>
+                    </div>
                 </div>
             </section>
 
-            <section class="settings-section" aria-labelledby="account-section-title">
-                <h2 class="section-title" id="account-section-title">Account</h2>
+            <section class="settings-section profile-section" aria-labelledby="more-section-title">
+                <h2 class="section-title" id="more-section-title">More</h2>
                 <div class="settings-list">
-                    <a class="setting-row" href="order-history.html">
-                        <span class="setting-icon"><i class="fa-solid fa-receipt" aria-hidden="true"></i></span>
-                        <span class="setting-label">My Orders</span>
-                        <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
-                    </a>
-                    <button class="setting-row" id="manage-profile-button" type="button">
-                        <span class="setting-icon"><i class="fa-regular fa-user" aria-hidden="true"></i></span>
-                        <span class="setting-label">Manage Profile</span>
-                        <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
-                    </button>
-                    <button class="setting-row" type="button" data-dialog="security-dialog">
-                        <span class="setting-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></span>
-                        <span class="setting-label">Password &amp; Security</span>
-                        <span class="setting-value">မရသေးပါ</span>
-                        <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
-                    </button>
                     <button class="setting-row" type="button" data-dialog="notification-dialog">
                         <span class="setting-icon"><i class="fa-regular fa-bell" aria-hidden="true"></i></span>
                         <span class="setting-label">Notifications</span>
                         <span class="setting-value">Coming soon</span>
                         <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
                     </button>
-                </div>
-            </section>
-
-            <section class="settings-section" aria-labelledby="preferences-section-title">
-                <h2 class="section-title" id="preferences-section-title">Preferences</h2>
-                <div class="settings-list">
                     <button class="setting-row" type="button" data-dialog="about-dialog">
                         <span class="setting-icon"><i class="fa-regular fa-circle-question" aria-hidden="true"></i></span>
                         <span class="setting-label">About Us</span>
                         <i class="fa-solid fa-arrow-right setting-arrow" aria-hidden="true"></i>
                     </button>
-                </div>
-            </section>
-
-            <section class="settings-section" aria-labelledby="support-section-title">
-                <h2 class="section-title" id="support-section-title">Support</h2>
-                <div class="settings-list">
                     <a class="setting-row" href="contact.html">
                         <span class="setting-icon"><i class="fa-regular fa-circle-question" aria-hidden="true"></i></span>
                         <span class="setting-label">Help Center</span>
@@ -415,7 +683,7 @@
                 <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                 <span>Back to Profile</span>
             </button>
-            <h1 class="section-title">Manage Profile</h1>
+            <h1 class="profile-view-title">Manage Profile</h1>
             <div class="profile-details">
                 <div class="profile-detail">
                     <i class="fa-regular fa-user" aria-hidden="true"></i>
@@ -496,9 +764,27 @@
     </main>
 
     <dialog id="security-dialog">
-        <h2>Password &amp; Security</h2>
-        <p>စကားဝှက်ပြောင်းခြင်းနှင့် ပြန်လည်ရယူခြင်းကို အတည်ပြုပြီးမှ ဖွင့်ပေးပါမည်။</p>
-        <button class="dialog-close" type="button" data-close-dialog>Close</button>
+        <h2>Change Password</h2>
+        <p>လုံခြုံရေးအတွက် လက်ရှိစကားဝှက်ကို အတည်ပြုပြီး စကားဝှက်အသစ် သတ်မှတ်ပါ။</p>
+        <form id="change-password-form">
+            <label class="form-field">
+                <span>Current password</span>
+                <input name="currentPassword" type="password" autocomplete="current-password" required>
+            </label>
+            <label class="form-field">
+                <span>New password</span>
+                <input name="newPassword" type="password" autocomplete="new-password" minlength="8" pattern="(?=.*[A-Za-z])(?=.*[0-9]).{8,}" title="Use at least 8 characters with letters and numbers." required>
+            </label>
+            <label class="form-field">
+                <span>Confirm new password</span>
+                <input name="confirmPassword" type="password" autocomplete="new-password" minlength="8" required>
+            </label>
+            <p class="profile-status" id="password-change-status" role="status" aria-live="polite"></p>
+            <div class="form-actions">
+                <button class="btn-save" type="submit">Change Password</button>
+                <button class="btn-cancel" type="button" data-close-dialog>Close</button>
+            </div>
+        </form>
     </dialog>
     <dialog id="notification-dialog">
         <h2>Notifications</h2>
@@ -519,6 +805,8 @@
         const editButton = document.getElementById('edit-profile-button');
         const editForm = document.getElementById('profile-edit-form');
         const profileStatus = document.getElementById('profile-status');
+        const changePasswordForm = document.getElementById('change-password-form');
+        const passwordChangeStatus = document.getElementById('password-change-status');
         const profileValues = Object.fromEntries(
             [...document.querySelectorAll('[data-profile-value]')].map((element) => [
                 element.dataset.profileValue,
@@ -579,6 +867,10 @@
                 role === 'teacher' ? 'Teacher' : role === 'student' ? 'Student' : '';
             const name = typeof profile.name === 'string' ? profile.name.trim() : '';
             document.getElementById('profile-avatar').textContent = name ? name.charAt(0).toUpperCase() : 'P';
+            document.getElementById('summary-phone').textContent =
+                typeof profile.phone === 'string' && profile.phone.trim() ? profile.phone.trim() : 'Not added';
+            document.getElementById('summary-email').textContent =
+                typeof profile.email === 'string' && profile.email.trim() ? profile.email.trim() : 'Not added';
         }
 
         try {
@@ -595,6 +887,10 @@
         }
 
         document.getElementById('manage-profile-button').addEventListener('click', showProfileView);
+        document.getElementById('edit-profile-shortcut').addEventListener('click', () => {
+            showProfileView();
+            openEditForm();
+        });
         document.getElementById('profile-back-button').addEventListener('click', showAccountView);
         document.querySelectorAll('[data-dialog]').forEach((button) => {
             button.addEventListener('click', () => {
@@ -609,6 +905,10 @@
                 if (event.target === dialog) dialog.close();
             });
         });
+        document.getElementById('security-dialog').addEventListener('close', () => {
+            changePasswordForm.reset();
+            passwordChangeStatus.textContent = '';
+        });
 
         editButton.addEventListener('click', () => {
             if (editForm.hidden) {
@@ -618,6 +918,35 @@
             }
         });
         document.getElementById('cancel-edit-button').addEventListener('click', closeEditForm);
+
+        changePasswordForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(changePasswordForm);
+            const newPassword = String(formData.get('newPassword') || '');
+            if (newPassword !== String(formData.get('confirmPassword') || '')) {
+                passwordChangeStatus.textContent = 'စကားဝှက်အသစ်နှစ်ခု မတူညီပါ။';
+                changePasswordForm.elements.namedItem('confirmPassword').focus();
+                return;
+            }
+            const submitButton = changePasswordForm.querySelector('[type="submit"]');
+            submitButton.disabled = true;
+            passwordChangeStatus.textContent = 'စကားဝှက်ပြောင်းလဲနေပါသည်…';
+            try {
+                await sendProfileRequest('changePassword', {
+                    currentPassword: String(formData.get('currentPassword') || ''),
+                    newPassword
+                });
+                changePasswordForm.reset();
+                passwordChangeStatus.textContent = 'စကားဝှက်ပြောင်းလဲပြီးပါပြီ။ အခြားစက်များမှ အကောင့်ထွက်လိုက်ပါပြီ။';
+            } catch (error) {
+                console.error('Unable to change the account password.', error);
+                passwordChangeStatus.textContent = error.code === 'CURRENT_PASSWORD_INVALID'
+                    ? 'လက်ရှိစကားဝှက် မမှန်ပါ။'
+                    : error.message || 'စကားဝှက်ပြောင်းလဲ၍မရပါ။ ထပ်ကြိုးစားပါ။';
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
 
         document.getElementById('logout-button').addEventListener('click', () => {
             try {

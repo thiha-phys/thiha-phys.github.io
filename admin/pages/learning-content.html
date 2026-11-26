@@ -4,14 +4,24 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4f7fb"><link rel="manifest" href="../manifest.webmanifest">
   <link rel="icon" type="image/png" href="../logo.png"><link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <title>Learning Content | UTHK Admin</title>
   <style>
     .content-page{max-width:980px;margin:auto;padding:20px 16px 110px}.content-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}.content-head h1{margin:0}.filters,.editor{display:grid;gap:12px}.filters{grid-template-columns:repeat(3,minmax(0,1fr));padding:16px;background:#fff;border:1px solid #e1e8f2;border-radius:18px}.filters label,.editor label{display:grid;gap:6px;font-weight:650;color:#52627b}.filters select,.editor input,.editor textarea,.editor select{width:100%;min-width:0;border:1px solid #ccd8e7;border-radius:12px;background:#fff;color:#1d2a40;padding:11px 12px;font:inherit}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:16px 0}.records{display:grid;gap:10px}.record{padding:14px;background:#fff;border:1px solid #e1e8f2;border-radius:16px}.record-top{display:flex;justify-content:space-between;gap:12px}.record h3{margin:0;font-size:16px}.record p{margin:5px 0 0;color:#75849b}.record-actions{display:flex;gap:8px;align-items:center}.record-actions button,.toolbar button,.form-actions button,.field-actions button,.question-group button{border:0;border-radius:10px;padding:9px 12px;font:inherit;font-weight:700;cursor:pointer}.edit-btn{background:#eaf1ff;color:#2459a8}.delete-btn{background:#fff0f0;color:#a83240}.primary{background:#2766d8;color:white}.secondary{background:#edf1f6;color:#43536a}.editor{margin-top:18px;padding:16px;background:#fff;border:1px solid #dce5f0;border-radius:18px}.editor[hidden]{display:none}.editor textarea{min-height:110px;resize:vertical}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.notice{color:#63738c;min-height:22px}.form-actions,.field-actions{display:flex;justify-content:flex-end;gap:9px}.content-fields{display:grid;gap:12px}.field-note{margin:0;color:#63738c;font-size:13px}.checkbox-field{display:flex!important;align-items:center;gap:8px!important}.editor .checkbox-field input{width:auto;padding:0}.question-groups{display:grid;gap:12px}.question-group{padding:12px;border:1px solid #dce5f0;border-radius:14px;background:#f8faff}.question-group h4{margin:0 0 10px}.question-row{display:grid;grid-template-columns:130px minmax(0,1fr) 130px auto;align-items:start;gap:8px;margin:8px 0}.question-row input,.question-row textarea{min-height:42px}.question-row textarea{min-height:72px}.line-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin:8px 0}.record-editor-slot .editor{margin:0 0 8px}.empty{padding:28px;text-align:center;color:#72819a;background:#fff;border-radius:16px}@media(max-width:600px){.filters{grid-template-columns:1fr}.record-top{display:block}.record-actions{margin-top:12px}.form-grid,.question-row{grid-template-columns:1fr}.question-row button{justify-self:end}}
+    .content-page{max-width:980px;padding-bottom:125px}
+    .content-head{margin-bottom:24px}
+    .content-heading{min-width:0}
+    .content-heading .page-subtitle{max-width:660px}
+    @media(max-width:600px){.content-page{padding-top:13px;padding-bottom:125px}.content-head{gap:10px}}
   </style>
 </head>
 <body>
-<main class="content-page">
-  <header class="content-head"><a class="back-btn" href="tools.html" aria-label="Back to workspace">←</a><div><h1 class="page-title">Learning Content</h1><p>Manage Grade 10, 11 and 12 study materials stored in the database.</p></div></header>
+<main class="page-shell content-page">
+  <header class="page-top content-head">
+    <a class="back-button" href="tools.html" aria-label="Back to Workspace"><i class="fa-solid fa-arrow-left"></i></a>
+    <div class="tools-heading-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H20v17H7.5A3.5 3.5 0 0 0 4 22zM4 5.5v13A3.5 3.5 0 0 1 7.5 15H20M8 6h8M8 10h8"/></svg></div>
+    <div class="content-heading"><h1 class="page-title">Learning Content</h1><p class="page-subtitle">Manage Grade 10, 11 and 12 study materials stored in the database.</p></div>
+  </header>
   <section class="filters" aria-label="Filter learning content">
     <label>Grade<select id="grade"><option value="10">Grade 10</option><option value="11">Grade 11</option><option value="12">Grade 12</option></select></label>
     <label>Type<select id="category"><option value="objectives">Objectives</option><option value="calculations">Calculations</option><option value="definitions">Definitions</option><option value="short_questions">Short Questions</option><option value="old_questions">Old Questions</option><option value="one_mark">One Mark</option></select></label>

@@ -20,7 +20,7 @@ physicsApiFetch('public/announcements', { method: 'GET' }).then((result) => {
         icon.append(iconElement);
         const label = document.createElement('span');
         label.className = 'announcement-card-label';
-        label.textContent = `ANNOUNCEMENT ${String(index + 1).padStart(2, '0')}`;
+        label.textContent = `UPDATE ${String(index + 1).padStart(2, '0')}`;
         head.append(icon, label);
 
         const title = document.createElement('h2');

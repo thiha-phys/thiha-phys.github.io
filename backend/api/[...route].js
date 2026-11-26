@@ -153,6 +153,67 @@ export default async function handler(req, res) {
       return send(res, 200, { ok:true, user:safeUser(user), token });
     }
 
+    if (route === '/auth/password-reset-requests' && req.method === 'POST') {
+      const body = await readBody(req);
+      const phone = normalizePhone(body.phone);
+      if (/^0\d{10}$/.test(phone)) {
+        const users = await db`SELECT id FROM users WHERE phone=${phone} AND approval_status='approved' LIMIT 1`;
+        if (users.length) {
+          await db`UPDATE password_reset_requests SET status='expired',token_hash=NULL
+            WHERE user_id=${users[0].id} AND status='approved' AND token_expires_at<=now()`;
+          await db`INSERT INTO password_reset_requests(user_id)
+            VALUES (${users[0].id}) ON CONFLICT DO NOTHING`;
+        }
+      }
+      return send(res, 200, {
+        ok: true,
+        message: 'တောင်းဆိုချက်ရှိပါက Admin မှ စစ်ဆေးပြီး မှတ်ပုံတင်ထားသော ဖုန်းနံပါတ်သို့ ဆက်သွယ်ပေးပါမည်။'
+      });
+    }
+
+    if (route === '/auth/password-reset' && req.method === 'POST') {
+      const body = await readBody(req);
+      const phone = normalizePhone(body.phone);
+      const code = String(body.code || '').trim().toUpperCase().replace(/\s/g, '');
+      const password = String(body.password || '');
+      if (!/^0\d{10}$/.test(phone) || !/^[A-F0-9]{16}$/.test(code)) {
+        return send(res, 400, {ok:false,code:'RESET_CODE_INVALID',message:'Code သို့မဟုတ် ဖုန်းနံပါတ် မမှန်ပါ၊ သက်တမ်းကုန်သွားပါပြီ။'});
+      }
+      if (!/(?=.*[A-Za-z])(?=.*\d).{8,}/.test(password)) {
+        return send(res, 400, {ok:false,code:'WEAK_PASSWORD',message:'စကားဝှက်တွင် အင်္ဂလိပ်စာလုံးနှင့် ဂဏန်းပါပြီး အနည်းဆုံး ၈ လုံးရှိရပါမည်။'});
+      }
+      const users = await db`SELECT id FROM users WHERE phone=${phone} AND approval_status='approved' LIMIT 1`;
+      if (!users.length) return send(res, 400, {ok:false,code:'RESET_CODE_INVALID',message:'Code သို့မဟုတ် ဖုန်းနံပါတ် မမှန်ပါ၊ သက်တမ်းကုန်သွားပါပြီ။'});
+
+      const salt = randomBytes(16).toString('hex');
+      const passwordHash = Buffer.from(await scrypt(password, salt, 64)).toString('hex');
+      const completed = await db`WITH matched AS (
+          UPDATE password_reset_requests
+          SET status='completed',token_hash=NULL,token_expires_at=NULL,completed_at=now()
+          WHERE user_id=${users[0].id} AND status='approved' AND token_expires_at>now()
+            AND failed_attempts<5 AND token_hash=${tokenHash(code)}
+          RETURNING user_id
+        ), updated AS (
+          UPDATE users SET password_hash=${passwordHash},password_salt=${salt},updated_at=now()
+          FROM matched WHERE users.id=matched.user_id
+          RETURNING users.id
+        ), revoked_sessions AS (
+          DELETE FROM sessions USING updated WHERE sessions.user_id=updated.id
+          RETURNING sessions.id
+        )
+        SELECT id FROM updated`;
+      if (!completed.length) {
+        await db`UPDATE password_reset_requests
+          SET failed_attempts=failed_attempts+1,
+              status=CASE WHEN failed_attempts+1>=5 THEN 'expired' ELSE status END,
+              token_hash=CASE WHEN failed_attempts+1>=5 THEN NULL ELSE token_hash END,
+              token_expires_at=CASE WHEN failed_attempts+1>=5 THEN NULL ELSE token_expires_at END
+          WHERE user_id=${users[0].id} AND status='approved' AND token_expires_at>now() AND failed_attempts<5`;
+        return send(res, 400, {ok:false,code:'RESET_CODE_INVALID',message:'Code သို့မဟုတ် ဖုန်းနံပါတ် မမှန်ပါ၊ သက်တမ်းကုန်သွားပါပြီ။'});
+      }
+      return send(res, 200, {ok:true,message:'စကားဝှက်အသစ် သတ်မှတ်ပြီးပါပြီ။ ပြန်လည်ဝင်ရောက်ပါ။'});
+    }
+
     if (route === '/auth/logout' && req.method === 'POST') {
       const token = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
       if (token) await db`DELETE FROM sessions WHERE token_hash=${tokenHash(token)}`;
@@ -292,6 +353,38 @@ export default async function handler(req, res) {
       }));
       return send(res,200,{ok:true,orders});
     }
+    if (route === '/profile/password' && req.method === 'PATCH') {
+      const body = await readBody(req);
+      const currentPassword = String(body.currentPassword || '');
+      const newPassword = String(body.newPassword || '');
+      if (!/(?=.*[A-Za-z])(?=.*\d).{8,}/.test(newPassword)) {
+        return send(res,400,{ok:false,code:'WEAK_PASSWORD',message:'စကားဝှက်တွင် အင်္ဂလိပ်စာလုံးနှင့် ဂဏန်းပါပြီး အနည်းဆုံး ၈ လုံးရှိရပါမည်။'});
+      }
+      const credentials = await db`SELECT password_hash,password_salt FROM users WHERE id=${user.id} LIMIT 1`;
+      const supplied = Buffer.from(await scrypt(currentPassword, credentials[0]?.password_salt || 'invalid-salt', 64));
+      const saved = Buffer.from(credentials[0]?.password_hash || '0'.repeat(128), 'hex');
+      if (!credentials.length || saved.length !== supplied.length || !timingSafeEqual(saved, supplied)) {
+        return send(res,401,{ok:false,code:'CURRENT_PASSWORD_INVALID',message:'လက်ရှိစကားဝှက် မမှန်ပါ။'});
+      }
+      const salt = randomBytes(16).toString('hex');
+      const passwordHash = Buffer.from(await scrypt(newPassword, salt, 64)).toString('hex');
+      const currentToken = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
+      const updated = await db`WITH changed AS (
+          UPDATE users SET password_hash=${passwordHash},password_salt=${salt},updated_at=now()
+          WHERE id=${user.id} RETURNING id
+        ), revoked_sessions AS (
+          DELETE FROM sessions USING changed
+          WHERE sessions.user_id=changed.id AND sessions.token_hash<>${tokenHash(currentToken)}
+          RETURNING sessions.id
+        ), cancelled_resets AS (
+          UPDATE password_reset_requests SET status='cancelled',token_hash=NULL,token_expires_at=NULL
+          WHERE user_id IN (SELECT id FROM changed) AND status IN ('pending','approved')
+          RETURNING id
+        )
+        SELECT id FROM changed`;
+      if (!updated.length) return send(res,500,{ok:false,message:'စကားဝှက်ကို ပြောင်းလဲ၍မရပါ။'});
+      return send(res,200,{ok:true,message:'စကားဝှက်ပြောင်းလဲပြီးပါပြီ။ အခြားစက်များမှ အကောင့်ထွက်လိုက်ပါပြီ။'});
+    }
     if (route === '/profile' && req.method === 'PATCH') {
       const body = await readBody(req);
       const currentPassword = String(body.currentPassword || '');
@@ -409,6 +502,40 @@ export default async function handler(req, res) {
     if (route === '/admin/users' && req.method === 'GET') {
       const users=await db`SELECT id,name,occupation,email,phone,role,approval_status,created_at FROM users ORDER BY created_at DESC`;
       return send(res,200,{ok:true,profiles:users.map((u)=>({...safeUser(u),adminEligible:adminEmails.includes(normalizeEmail(u.email)),createdAt:u.created_at}))});
+    }
+    if (route === '/admin/password-reset-requests' && req.method === 'GET') {
+      const requests = await db`SELECT r.id,r.status,r.requested_at AS "requestedAt",r.token_expires_at AS "expiresAt",
+          u.name,u.phone,u.email
+        FROM password_reset_requests r JOIN users u ON u.id=r.user_id
+        WHERE r.status IN ('pending','approved')
+        ORDER BY r.requested_at DESC LIMIT 100`;
+      return send(res,200,{ok:true,requests});
+    }
+    if (route === '/admin/password-reset-requests' && req.method === 'PATCH') {
+      const body = await readBody(req);
+      const requestId = String(body.requestId || '');
+      const action = String(body.action || '');
+      if (!requestId || !['issue','reject'].includes(action)) {
+        return send(res,400,{ok:false,message:'Reset request နှင့် လုပ်ဆောင်ချက်ကို စစ်ဆေးပါ။'});
+      }
+      if (action === 'reject') {
+        const rejected = await db`UPDATE password_reset_requests
+          SET status='rejected',token_hash=NULL,token_expires_at=NULL,reviewed_at=now(),reviewed_by=${user.id}
+          WHERE id=${requestId} AND status IN ('pending','approved') RETURNING id`;
+        if (!rejected.length) return send(res,404,{ok:false,message:'အသုံးပြုနေသော reset request ကို မတွေ့ပါ။'});
+        return send(res,200,{ok:true});
+      }
+      const existing = await db`SELECT id FROM password_reset_requests
+        WHERE id=${requestId} AND status IN ('pending','approved') LIMIT 1`;
+      if (!existing.length) return send(res,404,{ok:false,message:'အသုံးပြုနေသော reset request ကို မတွေ့ပါ။'});
+      const resetCode = randomBytes(8).toString('hex').toUpperCase();
+      const issued = await db`UPDATE password_reset_requests
+        SET status='approved',token_hash=${tokenHash(resetCode)},token_expires_at=now()+interval '15 minutes',
+          failed_attempts=0,reviewed_at=now(),reviewed_by=${user.id}
+        WHERE id=${requestId} AND status IN ('pending','approved')
+        RETURNING token_expires_at AS "expiresAt"`;
+      if (!issued.length) return send(res,409,{ok:false,message:'Reset request ကို ပြောင်းလဲ၍မရပါ။ ပြန်လည်စစ်ဆေးပါ။'});
+      return send(res,200,{ok:true,resetCode,expiresAt:issued[0].expiresAt});
     }
     if (route === '/admin/users' && req.method === 'PATCH') {
       const body=await readBody(req),targetId=String(body.userId||''),role=String(body.role||''),approvalStatus=String(body.approvalStatus||'');
