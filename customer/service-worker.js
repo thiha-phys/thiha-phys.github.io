@@ -1,4 +1,4 @@
-const CACHE_NAME = 'physics-learning-hub-v38';
+const CACHE_NAME = 'physics-learning-hub-v39';
 const APP_SHELL = [
     './',
     './index.html',
@@ -16,6 +16,7 @@ const APP_SHELL = [
     './page/contact.html',
     './page/account.html',
     './page/profile.html',
+    './page/edit-profile.html',
     './page/order-history.html',
     './page/profile-api.js',
     './page/api-config.js',

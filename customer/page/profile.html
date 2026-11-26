@@ -154,8 +154,7 @@
             cursor: pointer;
         }
 
-        .account-view[hidden],
-        .profile-edit-form[hidden] {
+        .account-view[hidden] {
             display: none;
         }
 
@@ -171,14 +170,6 @@
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
-        }
-
-        .profile-edit-form {
-            padding: 16px;
-            margin-top: 14px;
-            border: 1px solid var(--account-border);
-            border-radius: 16px;
-            background: var(--account-card);
         }
 
         .form-field {
@@ -366,51 +357,6 @@
         #logout-button .setting-icon { background: #fff0f0; color: #cf4a56; }
         #logout-button .setting-label { color: #b83b48; }
 
-        .profile-edit-form {
-            padding: 18px;
-            margin: 0 0 20px;
-            border: 1px solid #6f9fe6;
-            border-radius: 17px;
-            background: #fff;
-            box-shadow: 0 12px 28px rgba(18, 30, 50, .18);
-        }
-        .profile-edit-title {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            margin: 0 0 15px;
-            color: #243650;
-            font-size: 16px;
-        }
-        .profile-edit-title i { color: #3978e8; }
-        .profile-edit-field {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            min-height: 57px;
-            padding: 8px 11px;
-            margin-bottom: 10px;
-            border: 1px solid #e5ebf3;
-            border-radius: 12px;
-            background: #fff;
-            color: #3978e8;
-        }
-        .profile-edit-field > i { width: 19px; flex: 0 0 19px; text-align: center; }
-        .profile-edit-field:focus-within { border-color: #6f9fe6; box-shadow: 0 0 0 3px rgba(57, 120, 232, .1); }
-        .profile-edit-control { display: grid; min-width: 0; flex: 1; gap: 3px; }
-        .profile-edit-control > span { color: #77849a; font-size: 10px; font-weight: 700; }
-        .profile-edit-control input {
-            width: 100%;
-            min-height: 24px;
-            padding: 1px 0;
-            border: 0;
-            outline: 0;
-            background: transparent;
-            color: #243650;
-            font: inherit;
-            font-size: 13px;
-        }
-        .profile-edit-control input:focus { box-shadow: none; }
         .form-field input:focus { border-color: #7aa5eb; outline: 0; box-shadow: 0 0 0 3px rgba(37, 99, 235, .11); }
 
         @media (max-width: 480px) {
@@ -464,6 +410,10 @@
             font-weight: 500;
         }
         .profile-edit-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
             min-height: 39px;
             padding: 0 19px;
             margin-top: 11px;
@@ -474,6 +424,8 @@
             font: inherit;
             font-size: 12px;
             font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
             box-shadow: 0 3px 9px rgba(31, 48, 73, .045);
         }
         .profile-shortcuts {
@@ -567,40 +519,11 @@
                     <h2 id="summary-name">Your account</h2>
                     <p id="summary-role" class="profile-role-badge"></p>
                 </div>
-                <button class="profile-edit-cta" id="edit-profile-button" type="button" aria-expanded="false" aria-controls="profile-edit-form">
+                <a class="profile-edit-cta" href="edit-profile.html">
                     <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
                     Edit Profile
-                </button>
+                </a>
             </section>
-
-            <form class="profile-edit-form" id="profile-edit-form" hidden>
-                <h2 class="profile-edit-title"><i class="fa-solid fa-user-pen" aria-hidden="true"></i> Edit Profile</h2>
-                <label class="profile-edit-field">
-                    <i class="fa-regular fa-user" aria-hidden="true"></i>
-                    <span class="profile-edit-control"><span>Name</span><input name="name" type="text" autocomplete="name" required></span>
-                </label>
-                <label class="profile-edit-field">
-                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
-                    <span class="profile-edit-control"><span>Occupation</span><input name="occupation" type="text" required></span>
-                </label>
-                <label class="profile-edit-field">
-                    <i class="fa-solid fa-phone" aria-hidden="true"></i>
-                    <span class="profile-edit-control"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" required></span>
-                </label>
-                <label class="profile-edit-field">
-                    <i class="fa-regular fa-envelope" aria-hidden="true"></i>
-                    <span class="profile-edit-control"><span>Email</span><input name="email" type="email" autocomplete="email"></span>
-                </label>
-                <label class="profile-edit-field">
-                    <i class="fa-solid fa-lock" aria-hidden="true"></i>
-                    <span class="profile-edit-control"><span>Confirm current password</span><input name="currentPassword" type="password" autocomplete="current-password" required></span>
-                </label>
-                <div class="form-actions">
-                    <button class="btn-save" type="submit">Save</button>
-                    <button class="btn-cancel" id="cancel-edit-button" type="button">Cancel</button>
-                </div>
-                <p class="profile-status" id="profile-status" role="status" aria-live="polite"></p>
-            </form>
 
             <nav class="profile-shortcuts" aria-label="Profile shortcuts">
                 <a class="profile-shortcut" href="order-history.html">
@@ -662,6 +585,7 @@
                     </button>
                 </div>
             </section>
+            <p class="profile-status" id="profile-status" role="status" aria-live="polite"></p>
         </section>
 
         <nav class="bottom-nav" aria-label="Main navigation">
@@ -717,42 +641,9 @@
     <script src="api-config.js"></script>
     <script src="profile-api.js"></script>
     <script>
-        const editButton = document.getElementById('edit-profile-button');
-        const editForm = document.getElementById('profile-edit-form');
         const profileStatus = document.getElementById('profile-status');
         const changePasswordForm = document.getElementById('change-password-form');
         const passwordChangeStatus = document.getElementById('password-change-status');
-        const editableFields = ['name', 'occupation', 'phone', 'email'];
-        let savedProfileForUpdate = null;
-
-        function openEditForm() {
-            for (const field of editableFields) {
-                const value = savedProfileForUpdate?.[field] ?? (field === 'occupation' ? savedProfileForUpdate?.job : '');
-                editForm.elements.namedItem(field).value = typeof value === 'string' ? value.trim() : '';
-            }
-            profileStatus.textContent = '';
-            editForm.hidden = false;
-            editButton.setAttribute('aria-expanded', 'true');
-            editForm.elements.namedItem('name').focus();
-        }
-
-        function closeEditForm() {
-            editForm.reset();
-            editForm.hidden = true;
-            editButton.setAttribute('aria-expanded', 'false');
-            profileStatus.textContent = '';
-        }
-
-        function formatPhoneNumber(value) {
-            const digits = normalizePhoneNumber(value);
-            return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8, 11)}`;
-        }
-
-        function normalizePhoneNumber(value) {
-            return value.replace(/[၀-၉]/g, (digit) =>
-                String(digit.charCodeAt(0) - '၀'.charCodeAt(0))
-            ).replace(/\D/g, '');
-        }
 
         function renderProfile(profile) {
             document.getElementById('summary-name').textContent =
@@ -773,7 +664,6 @@
         try {
             const profile = JSON.parse(localStorage.getItem('physicsLearningHubProfile') || 'null');
             if (profile && typeof profile === 'object') {
-                savedProfileForUpdate = profile;
                 renderProfile(profile);
             } else {
                 document.getElementById('summary-name').textContent = 'Your account';
@@ -800,15 +690,6 @@
             changePasswordForm.reset();
             passwordChangeStatus.textContent = '';
         });
-
-        editButton.addEventListener('click', () => {
-            if (editForm.hidden) {
-                openEditForm();
-            } else {
-                closeEditForm();
-            }
-        });
-        document.getElementById('cancel-edit-button').addEventListener('click', closeEditForm);
 
         changePasswordForm.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -852,64 +733,6 @@
             }
         });
 
-        editForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const formData = new FormData(editForm);
-            const phone = String(formData.get('phone') || '').trim();
-            const normalizedPhone = normalizePhoneNumber(phone);
-            if (!/^0\d{10}$/.test(normalizedPhone)) {
-                profileStatus.textContent = 'Enter an 11-digit phone number starting with 0.';
-                return;
-            }
-
-            if (!savedProfileForUpdate || typeof savedProfileForUpdate.phone !== 'string') {
-                profileStatus.textContent = 'The saved account phone number is required to update your profile.';
-                return;
-            }
-
-            const updatedProfile = Object.fromEntries(
-                editableFields.map((field) => [
-                    field,
-                    field === 'phone'
-                        ? formatPhoneNumber(normalizedPhone)
-                        : String(formData.get(field) || '').trim()
-                ])
-            );
-
-            try {
-                await sendProfileRequest('update', {
-                    name: updatedProfile.name,
-                    job: updatedProfile.occupation,
-                    email: updatedProfile.email,
-                    phone: updatedProfile.phone,
-                    currentPassword: String(formData.get('currentPassword') || ''),
-                    lookupPhone: savedProfileForUpdate.phone
-                });
-            } catch (error) {
-                console.error('Unable to update the account profile.', error);
-                editForm.elements.namedItem('currentPassword').value = '';
-                profileStatus.textContent = error.code === 'CURRENT_PASSWORD_INVALID'
-                    ? 'လက်ရှိစကားဝှက် မမှန်ပါ။ ထပ်စစ်ပြီး ရိုက်ထည့်ပါ။'
-                    : error.code === 'PHONE_NOT_FOUND'
-                    ? 'No account was found for this phone number.'
-                    : `Unable to update your profile. ${error.message}`;
-                return;
-            }
-
-            try {
-                editForm.elements.namedItem('currentPassword').value = '';
-                localStorage.setItem('physicsLearningHubProfile', JSON.stringify(updatedProfile));
-            } catch (error) {
-                console.error('The account was updated, but the profile could not be saved in this browser.', error);
-                profileStatus.textContent = 'Your profile was updated, but could not be saved in this browser.';
-                return;
-            }
-
-            savedProfileForUpdate = updatedProfile;
-            renderProfile(updatedProfile);
-            profileStatus.textContent = '';
-            closeEditForm();
-        });
     </script>
 </body>
 </html>

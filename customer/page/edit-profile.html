@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/auth-guard.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <title>Edit Profile | Physics Learning Hub</title>
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            color-scheme: light;
+            --edit-border: #6f9fe6;
+            --edit-shadow: 0 12px 28px rgba(18, 30, 50, .18);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: #fff;
+            color: #243650;
+            font-family: 'Pyidaungsu', Arial, sans-serif;
+        }
+
+        .edit-profile-shell {
+            width: min(100%, 620px);
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 22px 18px 125px;
+        }
+
+        .edit-profile-back {
+            display: inline-flex;
+            min-height: 42px;
+            align-items: center;
+            gap: 8px;
+            padding: 0 13px;
+            border: 1px solid #dfe7f2;
+            border-radius: 12px;
+            background: #fff;
+            color: #52647e;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .edit-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin: 22px 2px 16px;
+        }
+
+        .edit-profile-header-icon {
+            display: grid;
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            place-items: center;
+            border-radius: 15px;
+            background: #edf4ff;
+            color: #3978e8;
+            font-size: 19px;
+        }
+
+        .edit-profile-header h1 { margin: 0; color: #1c2b43; font-size: 21px; }
+        .edit-profile-header p { margin: 3px 0 0; color: #7a879a; font-size: 12px; }
+
+        .edit-profile-form {
+            padding: 18px;
+            border: 1px solid var(--edit-border);
+            border-radius: 17px;
+            background: #fff;
+            box-shadow: var(--edit-shadow);
+        }
+
+        .edit-profile-field {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-height: 58px;
+            padding: 8px 11px;
+            margin-bottom: 10px;
+            border: 1px solid #e5ebf3;
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .edit-profile-field:focus-within {
+            border-color: var(--edit-border);
+            box-shadow: 0 0 0 3px rgba(57, 120, 232, .1);
+        }
+
+        .edit-profile-field > i { width: 19px; flex: 0 0 19px; color: #3978e8; text-align: center; }
+        .edit-profile-control { display: grid; min-width: 0; flex: 1; gap: 3px; }
+        .edit-profile-control > span { color: #77849a; font-size: 10px; font-weight: 700; }
+        .edit-profile-control input {
+            width: 100%;
+            min-height: 25px;
+            padding: 1px 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: #243650;
+            font: inherit;
+            font-size: 13px;
+        }
+
+        .edit-profile-control input:focus { box-shadow: none; }
+        .edit-profile-actions { display: flex; gap: 10px; margin-top: 16px; }
+        .edit-profile-actions button,
+        .edit-profile-actions a {
+            display: inline-flex;
+            min-height: 43px;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 10px;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .edit-profile-save { background: #2867cf; color: #fff; }
+        .edit-profile-save:disabled { opacity: .65; cursor: wait; }
+        .edit-profile-cancel { background: #eef2f7; color: #34445c; }
+        .edit-profile-status { min-height: 20px; margin: 12px 2px 0; color: #b42318; font-size: 12px; }
+        .edit-profile-status.success { color: #20734e; }
+
+        @media (max-width: 480px) {
+            .edit-profile-shell { padding: 16px 14px 116px; }
+            .edit-profile-form { padding: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="edit-profile-shell">
+        <a class="edit-profile-back" href="profile.html">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            <span>Back to Profile</span>
+        </a>
+        <header class="edit-profile-header">
+            <span class="edit-profile-header-icon"><i class="fa-solid fa-user-pen" aria-hidden="true"></i></span>
+            <div>
+                <h1>Edit Profile</h1>
+                <p>Update your account information.</p>
+            </div>
+        </header>
+
+        <form class="edit-profile-form" id="edit-profile-form">
+            <label class="edit-profile-field">
+                <i class="fa-regular fa-user" aria-hidden="true"></i>
+                <span class="edit-profile-control"><span>Name</span><input name="name" type="text" autocomplete="name" required></span>
+            </label>
+            <label class="edit-profile-field">
+                <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                <span class="edit-profile-control"><span>Occupation</span><input name="occupation" type="text" required></span>
+            </label>
+            <label class="edit-profile-field">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                <span class="edit-profile-control"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" required></span>
+            </label>
+            <label class="edit-profile-field">
+                <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+                <span class="edit-profile-control"><span>Email</span><input name="email" type="email" autocomplete="email"></span>
+            </label>
+            <label class="edit-profile-field">
+                <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                <span class="edit-profile-control"><span>Confirm current password</span><input name="currentPassword" type="password" autocomplete="current-password" required></span>
+            </label>
+            <p class="edit-profile-status" id="edit-profile-status" role="status" aria-live="polite"></p>
+            <div class="edit-profile-actions">
+                <button class="edit-profile-save" type="submit">Save Changes</button>
+                <a class="edit-profile-cancel" href="profile.html">Cancel</a>
+            </div>
+        </form>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+        <a href="../index.html" class="nav-item">
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+            <span>Home</span>
+        </a>
+        <a href="announcement.html" class="nav-item">
+            <i class="fa-solid fa-message" aria-hidden="true"></i>
+            <span>Announcement</span>
+        </a>
+        <a href="profile.html" class="nav-item active" aria-current="page">
+            <i class="fa-solid fa-user" aria-hidden="true"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <script src="api-config.js"></script>
+    <script src="profile-api.js"></script>
+    <script>
+        const form = document.getElementById('edit-profile-form');
+        const status = document.getElementById('edit-profile-status');
+        const saveButton = form.querySelector('[type="submit"]');
+        let savedProfile = null;
+
+        try {
+            savedProfile = JSON.parse(localStorage.getItem('physicsLearningHubProfile') || 'null');
+            if (!savedProfile || typeof savedProfile !== 'object' || typeof savedProfile.phone !== 'string') {
+                throw new Error('The saved profile is missing or incomplete.');
+            }
+            form.elements.namedItem('name').value = String(savedProfile.name || '');
+            form.elements.namedItem('occupation').value = String(savedProfile.occupation || savedProfile.job || '');
+            form.elements.namedItem('phone').value = String(savedProfile.phone || '');
+            form.elements.namedItem('email').value = String(savedProfile.email || '');
+            form.elements.namedItem('name').focus();
+        } catch (error) {
+            console.error('Unable to load the saved profile for editing.', error);
+            status.textContent = 'Unable to load your saved profile. Please go back and sign in again.';
+            saveButton.disabled = true;
+        }
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            status.classList.remove('success');
+            status.textContent = '';
+            const formData = new FormData(form);
+            const phone = normalizePhoneNumber(formData.get('phone'));
+            if (!/^0\d{10}$/.test(phone)) {
+                status.textContent = 'Enter an 11-digit phone number starting with 0.';
+                form.elements.namedItem('phone').focus();
+                return;
+            }
+
+            const updatedProfile = {
+                ...savedProfile,
+                name: String(formData.get('name') || '').trim(),
+                occupation: String(formData.get('occupation') || '').trim(),
+                email: String(formData.get('email') || '').trim(),
+                phone: formatPhoneNumber(phone)
+            };
+            updatedProfile.job = updatedProfile.occupation;
+            saveButton.disabled = true;
+            status.textContent = 'Saving your profile…';
+            try {
+                await sendProfileRequest('update', {
+                    name: updatedProfile.name,
+                    job: updatedProfile.occupation,
+                    email: updatedProfile.email,
+                    phone: updatedProfile.phone,
+                    currentPassword: String(formData.get('currentPassword') || ''),
+                    lookupPhone: savedProfile.phone
+                });
+                try {
+                    localStorage.setItem('physicsLearningHubProfile', JSON.stringify(updatedProfile));
+                } catch (error) {
+                    console.error('Profile updated on the server, but could not be saved in this browser.', error);
+                    status.textContent = 'Profile updated, but this browser could not save the latest details. Please sign in again.';
+                    return;
+                }
+                savedProfile = updatedProfile;
+                form.elements.namedItem('currentPassword').value = '';
+                status.classList.add('success');
+                status.textContent = 'Profile updated successfully. You can return to your profile.';
+            } catch (error) {
+                console.error('Unable to update the account profile.', error);
+                form.elements.namedItem('currentPassword').value = '';
+                status.textContent = error.code === 'CURRENT_PASSWORD_INVALID'
+                    ? 'လက်ရှိစကားဝှက် မမှန်ပါ။ ထပ်စစ်ပြီး ရိုက်ထည့်ပါ။'
+                    : error.code === 'PHONE_NOT_FOUND'
+                    ? 'No account was found for this phone number.'
+                    : `Unable to update your profile. ${error.message}`;
+            } finally {
+                saveButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
