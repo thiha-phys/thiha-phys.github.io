@@ -10,7 +10,8 @@ Customer and Admin remain separate Vercel projects. Create one additional Vercel
 4. Run `seeds/002_partner_shops.sql` to import the current Admin shop-order partners.
 5. Before deploying the phone-login update, run `migrations/002_phone_login_and_password.sql`. It makes email optional and enforces one account per phone number. If duplicate phone numbers are found, Neon stops with an explanatory error so those records can be reviewed first.
 6. Before deploying password change and recovery, run `migrations/006_password_reset_requests.sql` in Neon SQL Editor after the existing migrations. It creates the separate password-reset review queue.
-7. In **Connect**, select the default database and role, turn on the pooled connection option, and copy the connection string. Keep it private.
+7. After the migration succeeds, deploy the **API Vercel project** (Root Directory = `backend`) as well as the Customer/Admin projects. Confirm `GET /api/health` reports `passwordChange` and `passwordReset` as enabled before testing those screens.
+8. In **Connect**, select the default database and role, turn on the pooled connection option, and copy the connection string. Keep it private.
 
 ## Vercel API environment variables
 

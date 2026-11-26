@@ -42,8 +42,7 @@
         }
 
         .profile-summary,
-        .settings-list,
-        .profile-details {
+        .settings-list {
             overflow: hidden;
             border: 1px solid var(--account-border);
             border-radius: 18px;
@@ -156,66 +155,10 @@
         }
 
         .account-view[hidden],
-        .profile-view[hidden],
         .profile-edit-form[hidden] {
             display: none;
         }
 
-        .back-button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 0 0 16px;
-            padding: 0;
-            border: 0;
-            background: transparent;
-            color: var(--account-accent);
-            font: inherit;
-            cursor: pointer;
-        }
-
-        .profile-details {
-            padding: 4px 16px;
-            margin-bottom: 15px;
-        }
-
-        .profile-detail {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--account-border);
-        }
-
-        .profile-detail:last-child {
-            border-bottom: 0;
-        }
-
-        .profile-detail i {
-            width: 20px;
-            color: var(--account-accent);
-            text-align: center;
-        }
-
-        .profile-detail-copy {
-            min-width: 0;
-        }
-
-        .profile-detail-label {
-            display: block;
-            margin-bottom: 3px;
-            color: var(--account-muted);
-            font-size: 11px;
-        }
-
-        .profile-detail-value {
-            display: block;
-            overflow-wrap: anywhere;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .profile-action,
         .btn-logout {
             display: flex;
             width: 100%;
@@ -228,12 +171,6 @@
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
-        }
-
-        .profile-action {
-            border: 0;
-            background: #2563eb;
-            color: white;
         }
 
         .profile-edit-form {
@@ -423,32 +360,57 @@
         .setting-icon { width: 40px; height: 40px; flex-basis: 40px; border-radius: 13px; }
         .setting-label { font-size: 14px; }
         .setting-value { padding: 4px 9px; border-radius: 999px; background: #f1f4f8; font-size: 10px; }
-        #manage-profile-button .setting-icon { background: #f1edff; color: #7654ca; }
         [data-dialog="security-dialog"] .setting-icon { background: #e8f7ef; color: #20815b; }
         [data-dialog="notification-dialog"] .setting-icon { background: #fff4e6; color: #bd7415; }
         [data-dialog="about-dialog"] .setting-icon { background: #eaf2ff; color: #3978e8; }
         #logout-button .setting-icon { background: #fff0f0; color: #cf4a56; }
         #logout-button .setting-label { color: #b83b48; }
 
-        .back-button {
-            width: fit-content;
-            min-height: 42px;
-            padding: 0 13px;
-            border: 1px solid #e3eaf3;
+        .profile-edit-form {
+            padding: 18px;
+            margin: 0 0 20px;
+            border: 1px solid #6f9fe6;
+            border-radius: 17px;
+            background: #fff;
+            box-shadow: 0 12px 28px rgba(18, 30, 50, .18);
+        }
+        .profile-edit-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 0 0 15px;
+            color: #243650;
+            font-size: 16px;
+        }
+        .profile-edit-title i { color: #3978e8; }
+        .profile-edit-field {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-height: 57px;
+            padding: 8px 11px;
+            margin-bottom: 10px;
+            border: 1px solid #e5ebf3;
             border-radius: 12px;
             background: #fff;
-            color: #51627b;
-            font-size: 13px;
-            font-weight: 700;
-            box-shadow: 0 3px 9px rgba(31, 48, 73, .04);
+            color: #3978e8;
         }
-
-        .profile-view-title { margin: 0 2px 14px; color: #1c3150; font-size: 22px; }
-        .profile-details { padding: 4px 17px; border-color: #e3eaf3; border-radius: 18px; box-shadow: 0 7px 20px rgba(31, 48, 73, .045); }
-        .profile-detail { min-height: 62px; }
-        .profile-detail i { color: #3978e8; }
-        .profile-action { min-height: 48px; border-radius: 13px; background: linear-gradient(100deg, #3478e8, #2865cb); box-shadow: 0 8px 17px rgba(37, 99, 235, .17); }
-        .profile-edit-form { border-color: #e3eaf3; border-radius: 17px; box-shadow: 0 7px 20px rgba(31, 48, 73, .045); }
+        .profile-edit-field > i { width: 19px; flex: 0 0 19px; text-align: center; }
+        .profile-edit-field:focus-within { border-color: #6f9fe6; box-shadow: 0 0 0 3px rgba(57, 120, 232, .1); }
+        .profile-edit-control { display: grid; min-width: 0; flex: 1; gap: 3px; }
+        .profile-edit-control > span { color: #77849a; font-size: 10px; font-weight: 700; }
+        .profile-edit-control input {
+            width: 100%;
+            min-height: 24px;
+            padding: 1px 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: #243650;
+            font: inherit;
+            font-size: 13px;
+        }
+        .profile-edit-control input:focus { box-shadow: none; }
         .form-field input:focus { border-color: #7aa5eb; outline: 0; box-shadow: 0 0 0 3px rgba(37, 99, 235, .11); }
 
         @media (max-width: 480px) {
@@ -579,13 +541,8 @@
             border-radius: 15px;
             box-shadow: var(--account-shadow);
         }
-        .profile-details {
-            border-color: var(--account-card-border);
-            box-shadow: var(--account-shadow);
-        }
         .setting-row { min-height: 56px; padding: 8px 13px; }
         .setting-icon { width: 36px; height: 36px; flex-basis: 36px; border-radius: 11px; }
-        #manage-profile-button .profile-shortcut-icon { color: #7654ca; }
 
         @media (max-width: 480px) {
             .account-shell { padding: 16px 14px 116px; }
@@ -610,11 +567,40 @@
                     <h2 id="summary-name">Your account</h2>
                     <p id="summary-role" class="profile-role-badge"></p>
                 </div>
-                <button class="profile-edit-cta" id="edit-profile-shortcut" type="button">
+                <button class="profile-edit-cta" id="edit-profile-button" type="button" aria-expanded="false" aria-controls="profile-edit-form">
                     <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
                     Edit Profile
                 </button>
             </section>
+
+            <form class="profile-edit-form" id="profile-edit-form" hidden>
+                <h2 class="profile-edit-title"><i class="fa-solid fa-user-pen" aria-hidden="true"></i> Edit Profile</h2>
+                <label class="profile-edit-field">
+                    <i class="fa-regular fa-user" aria-hidden="true"></i>
+                    <span class="profile-edit-control"><span>Name</span><input name="name" type="text" autocomplete="name" required></span>
+                </label>
+                <label class="profile-edit-field">
+                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                    <span class="profile-edit-control"><span>Occupation</span><input name="occupation" type="text" required></span>
+                </label>
+                <label class="profile-edit-field">
+                    <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                    <span class="profile-edit-control"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" required></span>
+                </label>
+                <label class="profile-edit-field">
+                    <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+                    <span class="profile-edit-control"><span>Email</span><input name="email" type="email" autocomplete="email"></span>
+                </label>
+                <label class="profile-edit-field">
+                    <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                    <span class="profile-edit-control"><span>Confirm current password</span><input name="currentPassword" type="password" autocomplete="current-password" required></span>
+                </label>
+                <div class="form-actions">
+                    <button class="btn-save" type="submit">Save</button>
+                    <button class="btn-cancel" id="cancel-edit-button" type="button">Cancel</button>
+                </div>
+                <p class="profile-status" id="profile-status" role="status" aria-live="polite"></p>
+            </form>
 
             <nav class="profile-shortcuts" aria-label="Profile shortcuts">
                 <a class="profile-shortcut" href="order-history.html">
@@ -629,10 +615,10 @@
                     <i class="profile-shortcut-icon fa-solid fa-lock" aria-hidden="true"></i>
                     <span>Password</span>
                 </button>
-                <button class="profile-shortcut" id="manage-profile-button" type="button">
+                <a class="profile-shortcut" href="#settings-section">
                     <i class="profile-shortcut-icon fa-solid fa-gear" aria-hidden="true"></i>
                     <span>Settings</span>
-                </button>
+                </a>
             </nav>
 
             <section class="settings-section profile-section" aria-labelledby="contact-information-title">
@@ -651,8 +637,8 @@
                 </div>
             </section>
 
-            <section class="settings-section profile-section" aria-labelledby="more-section-title">
-                <h2 class="section-title" id="more-section-title">More</h2>
+            <section class="settings-section profile-section" id="settings-section" aria-labelledby="settings-section-title">
+                <h2 class="section-title" id="settings-section-title">Settings &amp; support</h2>
                 <div class="settings-list">
                     <button class="setting-row" type="button" data-dialog="notification-dialog">
                         <span class="setting-icon"><i class="fa-regular fa-bell" aria-hidden="true"></i></span>
@@ -676,75 +662,6 @@
                     </button>
                 </div>
             </section>
-        </section>
-
-        <section class="profile-view" id="profile-view" hidden>
-            <button class="back-button" id="profile-back-button" type="button">
-                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
-                <span>Back to Profile</span>
-            </button>
-            <h1 class="profile-view-title">Manage Profile</h1>
-            <div class="profile-details">
-                <div class="profile-detail">
-                    <i class="fa-regular fa-user" aria-hidden="true"></i>
-                    <div class="profile-detail-copy">
-                        <span class="profile-detail-label">Name</span>
-                        <span class="profile-detail-value" data-profile-value="name"></span>
-                    </div>
-                </div>
-                <div class="profile-detail">
-                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
-                    <div class="profile-detail-copy">
-                        <span class="profile-detail-label">Occupation</span>
-                        <span class="profile-detail-value" data-profile-value="occupation"></span>
-                    </div>
-                </div>
-                <div class="profile-detail">
-                    <i class="fa-solid fa-phone" aria-hidden="true"></i>
-                    <div class="profile-detail-copy">
-                        <span class="profile-detail-label">Phone</span>
-                        <span class="profile-detail-value" data-profile-value="phone"></span>
-                    </div>
-                </div>
-                <div class="profile-detail">
-                    <i class="fa-regular fa-envelope" aria-hidden="true"></i>
-                    <div class="profile-detail-copy">
-                        <span class="profile-detail-label">Email</span>
-                        <span class="profile-detail-value" data-profile-value="email"></span>
-                    </div>
-                </div>
-            </div>
-            <button class="profile-action" id="edit-profile-button" type="button" aria-expanded="false" aria-controls="profile-edit-form">
-                <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
-                <span>Edit Profile</span>
-            </button>
-            <form class="profile-edit-form" id="profile-edit-form" hidden>
-                <label class="form-field">
-                    <span>Name</span>
-                    <input name="name" type="text" autocomplete="name" required>
-                </label>
-                <label class="form-field">
-                    <span>Occupation</span>
-                    <input name="occupation" type="text" required>
-                </label>
-                <label class="form-field">
-                    <span>Phone</span>
-                    <input name="phone" type="tel" autocomplete="tel" required>
-                </label>
-                <label class="form-field">
-                    <span>Email</span>
-                    <input name="email" type="email" autocomplete="email">
-                </label>
-                <label class="form-field">
-                    <span>Confirm current password to save</span>
-                    <input name="currentPassword" type="password" autocomplete="current-password" required>
-                </label>
-                <div class="form-actions">
-                    <button class="btn-save" type="submit">Save</button>
-                    <button class="btn-cancel" id="cancel-edit-button" type="button">Cancel</button>
-                </div>
-            </form>
-            <p class="profile-status" id="profile-status" role="status" aria-live="polite"></p>
         </section>
 
         <nav class="bottom-nav" aria-label="Main navigation">
@@ -800,37 +717,20 @@
     <script src="api-config.js"></script>
     <script src="profile-api.js"></script>
     <script>
-        const accountView = document.getElementById('account-view');
-        const profileView = document.getElementById('profile-view');
         const editButton = document.getElementById('edit-profile-button');
         const editForm = document.getElementById('profile-edit-form');
         const profileStatus = document.getElementById('profile-status');
         const changePasswordForm = document.getElementById('change-password-form');
         const passwordChangeStatus = document.getElementById('password-change-status');
-        const profileValues = Object.fromEntries(
-            [...document.querySelectorAll('[data-profile-value]')].map((element) => [
-                element.dataset.profileValue,
-                element
-            ])
-        );
+        const editableFields = ['name', 'occupation', 'phone', 'email'];
         let savedProfileForUpdate = null;
 
-        function showProfileView() {
-            accountView.hidden = true;
-            profileView.hidden = false;
-            document.getElementById('profile-back-button').focus();
-        }
-
-        function showAccountView() {
-            profileView.hidden = true;
-            accountView.hidden = false;
-            document.getElementById('manage-profile-button').focus();
-        }
-
         function openEditForm() {
-            for (const [field, element] of Object.entries(profileValues)) {
-                editForm.elements.namedItem(field).value = element.textContent.trim();
+            for (const field of editableFields) {
+                const value = savedProfileForUpdate?.[field] ?? (field === 'occupation' ? savedProfileForUpdate?.job : '');
+                editForm.elements.namedItem(field).value = typeof value === 'string' ? value.trim() : '';
             }
+            profileStatus.textContent = '';
             editForm.hidden = false;
             editButton.setAttribute('aria-expanded', 'true');
             editForm.elements.namedItem('name').focus();
@@ -840,6 +740,7 @@
             editForm.reset();
             editForm.hidden = true;
             editButton.setAttribute('aria-expanded', 'false');
+            profileStatus.textContent = '';
         }
 
         function formatPhoneNumber(value) {
@@ -854,10 +755,6 @@
         }
 
         function renderProfile(profile) {
-            for (const [field, element] of Object.entries(profileValues)) {
-                const value = profile[field];
-                element.textContent = typeof value === 'string' ? value.trim() : '';
-            }
             document.getElementById('summary-name').textContent =
                 typeof profile.name === 'string' && profile.name.trim() ? profile.name.trim() : 'Your account';
             const role = typeof profile.occupation === 'string'
@@ -886,12 +783,6 @@
             profileStatus.textContent = 'Unable to read your saved profile.';
         }
 
-        document.getElementById('manage-profile-button').addEventListener('click', showProfileView);
-        document.getElementById('edit-profile-shortcut').addEventListener('click', () => {
-            showProfileView();
-            openEditForm();
-        });
-        document.getElementById('profile-back-button').addEventListener('click', showAccountView);
         document.querySelectorAll('[data-dialog]').forEach((button) => {
             button.addEventListener('click', () => {
                 document.getElementById(button.dataset.dialog).showModal();
@@ -977,7 +868,7 @@
             }
 
             const updatedProfile = Object.fromEntries(
-                Object.keys(profileValues).map((field) => [
+                editableFields.map((field) => [
                     field,
                     field === 'phone'
                         ? formatPhoneNumber(normalizedPhone)

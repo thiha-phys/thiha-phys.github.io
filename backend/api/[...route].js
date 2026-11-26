@@ -114,7 +114,12 @@ export default async function handler(req, res) {
     const routeSegments = routeParts.map((part)=>String(part)).filter(Boolean);
     if (routeSegments[0] === 'api') routeSegments.shift();
     const route = '/' + routeSegments.join('/');
-    if (route === '/health' && req.method === 'GET') return send(res, 200, { ok: true });
+    if (route === '/health' && req.method === 'GET') {
+      return send(res, 200, {
+        ok: true,
+        features: { passwordChange: true, passwordReset: true }
+      });
+    }
 
     if (route === '/auth/signup' && req.method === 'POST') {
       const body = await readBody(req);

@@ -16,15 +16,14 @@
             <a class="back-button" href="tools.html" aria-label="Back to Workspace"><i class="fa-solid fa-arrow-left"></i></a>
             <div>
                 <h1 class="page-title">Customer Feedback</h1>
-                <p class="page-subtitle">Customer book ratings and recommendations.</p>
+                <p class="page-subtitle">Open a message to view the customer's ratings and suggestions.</p>
             </div>
         </header>
 
-        <section class="panel">
-            <div class="history-refresh-row">
-                <span id="feedback-admin-status" class="muted small" role="status" aria-live="polite">Loading feedback…</span>
-            </div>
-        </section>
+        <div class="feedback-inbox-toolbar">
+            <i class="fa-solid fa-inbox" aria-hidden="true"></i>
+            <span id="feedback-admin-status" role="status" aria-live="polite">Loading feedback…</span>
+        </div>
 
         <section id="feedback-list" class="feedback-admin-list" aria-live="polite"></section>
     </main>
