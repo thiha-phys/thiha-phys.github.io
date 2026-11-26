@@ -136,7 +136,12 @@ export default async function handler(req, res) {
     if (route === '/health' && req.method === 'GET') {
       return send(res, 200, {
         ok: true,
-        features: { passwordChange: true, passwordReset: true, discussionMessaging: true }
+        features: {
+          passwordChange: true,
+          passwordReset: true,
+          discussionMessaging: true,
+          conversationMessageDeletion: true
+        }
       });
     }
 
