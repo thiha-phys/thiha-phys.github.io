@@ -26,6 +26,19 @@
   const loadScript = (src) => new Promise((resolve, reject) => {
     const script = document.createElement('script'); script.src = src; script.onload = resolve; script.onerror = reject; document.body.append(script);
   });
+  const typesetMath = async (element) => {
+    const deadline = Date.now() + 10000;
+    while (typeof window.MathJax?.typesetPromise !== 'function' && Date.now() < deadline) {
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    if (typeof window.MathJax?.typesetPromise !== 'function') return;
+    try {
+      if (window.MathJax.startup?.promise) await window.MathJax.startup.promise;
+      await window.MathJax.typesetPromise([element]);
+    } catch (error) {
+      console.warn('Could not typeset calculation equations.', error);
+    }
+  };
   const getRecords = async (selectedCategory = category, selectedChapter = chapter, filters = {}) => {
     const query = new URLSearchParams();
     if (grade) query.set('grade', grade.slice(1));
@@ -200,7 +213,9 @@
       const list=document.querySelector('.problem-list-container'); if (!list) return;
       list.replaceChildren();
       records.forEach((record) => { if (record.content?.html) list.append(safeHtml(record.content.html)); });
-      await loadScript('/page/calculation-format.js'); return;
+      await loadScript('/page/calculation-format.js');
+      await typesetMath(list);
+      return;
     }
   };
   run().catch((error) => { console.error('Educational content could not be loaded from the database.',error); showError(error.message); });
