@@ -220,6 +220,7 @@
 
 .discussion-input-wrap { display: flex; min-width: 0; flex: 1; }
 .discussion-input-wrap textarea {
+    box-sizing: border-box;
     min-width: 0;
     width: 100%;
     min-height: 42px;
@@ -242,13 +243,13 @@
 }
 .discussion-send {
     display: grid;
-    width: 42px;
-    height: 42px;
-    flex: 0 0 42px;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
     place-items: center;
     border: 0;
-    border-radius: 50%;
-    background: #3475d2;
+    border-radius: 13px;
+    background: #2867cf;
     color: #fff;
     cursor: pointer;
 }
