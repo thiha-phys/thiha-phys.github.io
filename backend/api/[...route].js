@@ -407,8 +407,9 @@ export default async function handler(req, res) {
         return send(res,400,{ok:false,code:'INVALID_MESSAGE',message:'စာသားသည် ဗလာမဖြစ်ရ၊ စာလုံးရေ ၄,၀၀၀ ထက် မကျော်ရပါ။'});
       }
       const rows = await db`UPDATE discussion_messages SET body=${message},edited_at=now()
-        WHERE id=${messageId} RETURNING id,user_id,sender_role,body,created_at,edited_at`;
-      if (!rows.length) return send(res,404,{ok:false,code:'MESSAGE_NOT_FOUND',message:'စာကို မတွေ့ပါ။'});
+        WHERE id=${messageId} AND sender_role='admin'
+        RETURNING id,user_id,sender_role,body,created_at,edited_at`;
+      if (!rows.length) return send(res,404,{ok:false,code:'MESSAGE_NOT_EDITABLE',message:'Only Admin messages can be edited.'});
       return send(res,200,{ok:true,message:mapDiscussionMessage(rows[0])});
     }
     if (route === '/admin/discussion/messages' && req.method === 'DELETE') {
@@ -421,6 +422,35 @@ export default async function handler(req, res) {
       const results = await db.transaction(deleteQueries);
       const deletedIds = results.flat().map((row)=>String(row.id));
       return send(res,200,{ok:true,deletedIds});
+    }
+    if (route === '/admin/conversation-messages' && req.method === 'DELETE') {
+      const body = await readBody(req);
+      const requested = Array.isArray(body.messages) ? body.messages : [];
+      if (!requested.length || requested.length > 100) {
+        return send(res,400,{ok:false,code:'INVALID_MESSAGES',message:'Select between 1 and 100 messages to delete.'});
+      }
+      const messages = requested.map((item) => ({
+        type: item && typeof item.type === 'string' ? item.type : '',
+        id: item && typeof item.id === 'string' ? item.id.trim() : ''
+      }));
+      if (messages.some((item) =>
+        !['discussion', 'feedback'].includes(item.type) || !UUID_PATTERN.test(item.id)
+      )) {
+        return send(res,400,{ok:false,code:'INVALID_MESSAGES',message:'The selected messages are invalid.'});
+      }
+      const uniqueMessages = [...new Map(
+        messages.map((item) => [`${item.type}:${item.id}`, item])
+      ).values()];
+      const deleteQueries = uniqueMessages.map((item) =>
+        item.type === 'discussion'
+          ? db`DELETE FROM discussion_messages WHERE id=${item.id} RETURNING id`
+          : db`DELETE FROM feedback WHERE id=${item.id} RETURNING id`
+      );
+      const results = await db.transaction(deleteQueries);
+      const deletedMessages = results.flatMap((rows, index) =>
+        rows.map((row) => ({ type: uniqueMessages[index].type, id: String(row.id) }))
+      );
+      return send(res,200,{ok:true,deletedMessages});
     }
     if (route === '/admin/educational-content' && req.method === 'GET') {
       const grade=Number(req.query.grade||0),category=String(req.query.category||''),chapter=String(req.query.chapter||'');

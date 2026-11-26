@@ -489,12 +489,23 @@
         return discussionRequest('PATCH', `/${encodeURIComponent(messageId)}`, { body });
     }
 
-    async function deleteDiscussionMessages(ids) {
-        const result = await discussionRequest('DELETE', '', { ids });
-        if (!Array.isArray(result.deletedIds)) {
-            throw new Error('The deleted discussion message list returned by the database is invalid.');
+    async function deleteConversationMessages(messages) {
+        const response = await apiFetch(`${API_URL}/api/admin/conversation-messages`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}`
+            },
+            body: JSON.stringify({ messages })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) {
+            throw new Error(result.message || `Conversation delete failed (${response.status}).`);
         }
-        return result.deletedIds;
+        if (!Array.isArray(result.deletedMessages)) {
+            throw new Error('The deleted conversation message list is invalid.');
+        }
+        return result.deletedMessages;
     }
 
     async function getShopOrders(shopId) {
@@ -587,7 +598,7 @@
         getDiscussionMessages,
         sendDiscussionReply,
         editDiscussionMessage,
-        deleteDiscussionMessages,
+        deleteConversationMessages,
         getShopOrders,
         getShopOrdersByStatus,
         getShopOverview,

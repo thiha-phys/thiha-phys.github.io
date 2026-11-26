@@ -29,9 +29,21 @@ function parseFeedbackDate(value) {
 function formatFeedbackDate(value) {
     const raw = String(value || '');
     const date = parseFeedbackDate(raw);
-    return date
-        ? new Intl.DateTimeFormat('my-MM', { dateStyle: 'medium', timeStyle: 'short' }).format(date)
-        : raw;
+    if (!date) return raw;
+    const parts = new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    }).formatToParts(date);
+    const part = (type) => parts.find((item) => item.type === type)?.value || '';
+    return `${part('day')} ${part('month')} ${part('year')} ${part('hour')}:${part('minute')} ${part('dayPeriod').toUpperCase()}`;
+}
+
+function messageSelectionKey(message) {
+    return `${message.type}:${message.id}`;
 }
 
 function feedbackRole(value) {
@@ -177,7 +189,7 @@ function renderFeedbackContent(feedback) {
     if (feedback.otherSuggestion) {
         const other = document.createElement('section');
         other.className = 'feedback-message-other';
-        appendFeedbackText(other, 'h3', 'အခြားအကြံပြုချက်');
+        appendFeedbackText(other, 'h3', 'Other suggestion');
         appendFeedbackText(other, 'p', String(feedback.otherSuggestion));
         content.append(other);
     }
@@ -207,7 +219,7 @@ function renderAdminEditForm(thread, message) {
         event.preventDefault();
         const body = textarea.value.trim();
         if (!body) {
-            feedbackAdminStatus.textContent = 'စာသားကို ဗလာမထားပါနှင့်။';
+            feedbackAdminStatus.textContent = 'Enter a message before saving.';
             feedbackAdminStatus.classList.add('error');
             textarea.focus();
             return;
@@ -217,10 +229,9 @@ function renderAdminEditForm(thread, message) {
             await AdminApi.editDiscussionMessage(message.id, body);
             editingMessageId = null;
             await loadFeedback();
-            feedbackAdminStatus.textContent = 'Message updated.';
         } catch (error) {
             console.error('Unable to edit the discussion message.', error);
-            feedbackAdminStatus.textContent = `Message could not be updated. ${error.message}`;
+            feedbackAdminStatus.textContent = 'Could not save the message. Please try again.';
             feedbackAdminStatus.classList.add('error');
             save.disabled = false;
         }
@@ -228,12 +239,13 @@ function renderAdminEditForm(thread, message) {
     return form;
 }
 
-function toggleSelectedMessage(messageId) {
-    if (selectedMessageIds.has(messageId)) selectedMessageIds.delete(messageId);
-    else selectedMessageIds.add(messageId);
+function toggleSelectedMessage(message) {
+    const key = messageSelectionKey(message);
+    if (selectedMessageIds.has(key)) selectedMessageIds.delete(key);
+    else selectedMessageIds.add(key);
 }
 
-function addMessageSelectionHandlers(bubble, thread, messageId) {
+function addMessageSelectionHandlers(bubble, thread, message) {
     let pressTimer = null;
     let longPressTriggered = false;
     const clearTimer = () => {
@@ -245,7 +257,7 @@ function addMessageSelectionHandlers(bubble, thread, messageId) {
         longPressTriggered = false;
         pressTimer = window.setTimeout(() => {
             longPressTriggered = true;
-            toggleSelectedMessage(messageId);
+            toggleSelectedMessage(message);
             renderConversation(thread);
         }, 550);
     });
@@ -261,7 +273,7 @@ function addMessageSelectionHandlers(bubble, thread, messageId) {
             return;
         }
         if (selectedMessageIds.size) {
-            toggleSelectedMessage(messageId);
+            toggleSelectedMessage(message);
             renderConversation(thread);
         }
     });
@@ -272,11 +284,13 @@ function renderDiscussionBubble(thread, message) {
     row.className = `feedback-chat-row ${message.senderRole === 'admin' ? 'is-admin' : 'is-customer'}`;
     const bubble = document.createElement('article');
     bubble.className = 'feedback-chat-bubble';
-    bubble.classList.toggle('is-selected', selectedMessageIds.has(message.id));
-    bubble.setAttribute('aria-selected', String(selectedMessageIds.has(message.id)));
-    addMessageSelectionHandlers(bubble, thread, message.id);
+    const selectionKey = messageSelectionKey(message);
+    const selected = selectedMessageIds.has(selectionKey);
+    bubble.classList.toggle('is-selected', selected);
+    bubble.setAttribute('aria-selected', String(selected));
+    addMessageSelectionHandlers(bubble, thread, message);
 
-    if (editingMessageId === message.id) {
+    if (editingMessageId === message.id && message.senderRole === 'admin') {
         bubble.append(renderAdminEditForm(thread, message));
     } else {
         appendFeedbackText(
@@ -289,47 +303,60 @@ function renderDiscussionBubble(thread, message) {
         const footer = document.createElement('div');
         footer.className = 'feedback-chat-footer';
         if (message.editedAt) appendFeedbackText(footer, 'span', 'edited');
-        appendFeedbackText(footer, 'time', formatFeedbackDate(message.createdAt));
+        const time = appendFeedbackText(footer, 'time', formatFeedbackDate(message.createdAt));
+        const date = parseFeedbackDate(message.createdAt);
+        if (date) time.dateTime = date.toISOString();
         bubble.append(footer);
-
-        const actions = document.createElement('div');
-        actions.className = 'feedback-message-actions';
-        actions.hidden = selectedMessageIds.size > 0;
-        const edit = appendFeedbackText(actions, 'button', 'Edit', 'feedback-message-action');
-        edit.type = 'button';
-        edit.addEventListener('click', () => {
-            editingMessageId = message.id;
-            renderConversation(thread);
-        });
-        const remove = appendFeedbackText(actions, 'button', 'Delete', 'feedback-message-action danger');
-        remove.type = 'button';
-        remove.addEventListener('click', () => deleteDiscussionMessages([message.id]));
-        bubble.append(actions);
     }
     row.append(bubble);
     return row;
 }
 
-function renderFeedbackBubble(message) {
+function renderFeedbackBubble(thread, message) {
     const row = document.createElement('div');
     row.className = 'feedback-chat-row is-customer';
     const bubble = document.createElement('article');
     bubble.className = 'feedback-chat-bubble feedback-survey-bubble';
+    const selectionKey = messageSelectionKey(message);
+    const selected = selectedMessageIds.has(selectionKey);
+    bubble.classList.toggle('is-selected', selected);
+    bubble.setAttribute('aria-selected', String(selected));
+    addMessageSelectionHandlers(bubble, thread, message);
     appendFeedbackText(bubble, 'span', 'Customer feedback', 'feedback-chat-sender');
     bubble.append(renderFeedbackContent(message.data));
-    appendFeedbackText(bubble, 'time', formatFeedbackDate(message.createdAt), 'feedback-chat-footer');
+    const time = appendFeedbackText(bubble, 'time', formatFeedbackDate(message.createdAt), 'feedback-chat-footer');
+    const date = parseFeedbackDate(message.createdAt);
+    if (date) time.dateTime = date.toISOString();
     row.append(bubble);
     return row;
 }
 
 function renderSelectionToolbar(thread) {
     if (!selectedMessageIds.size) return null;
+    const selectedMessages = thread.messages.filter((message) =>
+        selectedMessageIds.has(messageSelectionKey(message))
+    );
+    if (!selectedMessages.length) return null;
+
     const toolbar = document.createElement('div');
     toolbar.className = 'feedback-selection-toolbar';
-    appendFeedbackText(toolbar, 'span', `${selectedMessageIds.size} selected`);
+    appendFeedbackText(toolbar, 'span', `${selectedMessages.length} selected`);
+
+    if (selectedMessages.length === 1 &&
+        selectedMessages[0].type === 'discussion' &&
+        selectedMessages[0].senderRole === 'admin') {
+        const edit = appendFeedbackText(toolbar, 'button', 'Edit', 'feedback-message-action');
+        edit.type = 'button';
+        edit.addEventListener('click', () => {
+            editingMessageId = selectedMessages[0].id;
+            selectedMessageIds.clear();
+            renderConversation(thread);
+        });
+    }
+
     const remove = appendFeedbackText(toolbar, 'button', 'Delete selected', 'feedback-message-action danger');
     remove.type = 'button';
-    remove.addEventListener('click', () => deleteDiscussionMessages([...selectedMessageIds]));
+    remove.addEventListener('click', () => deleteConversationMessages(selectedMessages));
     const cancel = appendFeedbackText(toolbar, 'button', 'Cancel', 'feedback-message-action secondary');
     cancel.type = 'button';
     cancel.addEventListener('click', () => {
@@ -364,7 +391,7 @@ function renderReplyComposer(thread) {
         event.preventDefault();
         const body = textarea.value.trim();
         if (!body || !thread.userId) {
-            feedbackAdminStatus.textContent = 'စာသား သို့မဟုတ် customer account မမှန်ပါ။';
+            feedbackAdminStatus.textContent = 'Enter a message and select a valid customer account.';
             feedbackAdminStatus.classList.add('error');
             return;
         }
@@ -375,7 +402,7 @@ function renderReplyComposer(thread) {
             await loadFeedback();
         } catch (error) {
             console.error('Unable to send the Admin reply.', error);
-            feedbackAdminStatus.textContent = `Reply could not be sent. ${error.message}`;
+            feedbackAdminStatus.textContent = 'Could not send the reply. Please try again.';
             feedbackAdminStatus.classList.add('error');
             send.disabled = false;
         }
@@ -434,7 +461,7 @@ function renderConversation(thread) {
     thread.messages.forEach((message) => {
         timeline.append(message.type === 'discussion'
             ? renderDiscussionBubble(thread, message)
-            : renderFeedbackBubble(message));
+            : renderFeedbackBubble(thread, message));
     });
 
     feedbackConversation.append(header, timeline);
@@ -454,7 +481,7 @@ function renderConversation(thread) {
 function renderFeedbackList() {
     feedbackList.replaceChildren();
     if (!feedbackThreads.length) {
-        appendFeedbackText(feedbackList, 'div', 'အကြံပြုစာ မရှိသေးပါ။', 'feedback-inbox-empty');
+        appendFeedbackText(feedbackList, 'div', 'No feedback or discussion messages yet.', 'feedback-inbox-empty');
         return;
     }
     feedbackThreads.forEach((thread) => feedbackList.append(renderFeedbackThread(thread)));
@@ -482,21 +509,25 @@ function closeFeedbackThread() {
     renderConversation(null);
 }
 
-async function deleteDiscussionMessages(ids) {
-    const uniqueIds = [...new Set(ids)];
-    if (!uniqueIds.length) return;
-    const confirmed = window.confirm(`ဖျက်ရန်ရွေးထားသော စာ ${uniqueIds.length} ခုကို database မှ အပြီးဖျက်မည်။ ပြန်ယူ၍မရပါ။ ဆက်လုပ်မလား။`);
+async function deleteConversationMessages(messages) {
+    const uniqueMessages = [...new Map(messages.map((message) => [
+        messageSelectionKey(message),
+        { type: message.type, id: message.id }
+    ])).values()];
+    if (!uniqueMessages.length) return;
+    const confirmed = window.confirm(
+        `Permanently delete ${uniqueMessages.length} selected message${uniqueMessages.length === 1 ? '' : 's'}? This cannot be undone.`
+    );
     if (!confirmed) return;
 
     try {
-        const deletedIds = await AdminApi.deleteDiscussionMessages(uniqueIds);
+        await AdminApi.deleteConversationMessages(uniqueMessages);
         selectedMessageIds.clear();
         editingMessageId = null;
         await loadFeedback();
-        feedbackAdminStatus.textContent = `${deletedIds.length} message${deletedIds.length === 1 ? '' : 's'} permanently deleted.`;
     } catch (error) {
-        console.error('Unable to delete the selected discussion messages.', error);
-        feedbackAdminStatus.textContent = `Messages could not be deleted. ${error.message}`;
+        console.error('Unable to delete the selected conversation messages.', error);
+        feedbackAdminStatus.textContent = 'Could not delete the selected messages. Please try again.';
         feedbackAdminStatus.classList.add('error');
     }
 }
@@ -526,8 +557,8 @@ async function loadFeedback(button) {
             editingMessageId = null;
             feedbackInbox.classList.remove('has-active-thread');
         } else {
-            const activeIds = new Set(activeThread.messages.filter((message) => message.type === 'discussion').map((message) => message.id));
-            selectedMessageIds = new Set([...selectedMessageIds].filter((id) => activeIds.has(id)));
+            const activeKeys = new Set(activeThread.messages.map(messageSelectionKey));
+            selectedMessageIds = new Set([...selectedMessageIds].filter((key) => activeKeys.has(key)));
         }
         renderFeedbackList();
         renderConversation(feedbackThreads.find((thread) => thread.key === activeThreadKey) || null);
@@ -535,7 +566,7 @@ async function loadFeedback(button) {
         feedbackAdminStatus.textContent = `${feedbackThreads.length.toLocaleString('en-US')} ${feedbackThreads.length === 1 ? 'account' : 'accounts'} · ${messageCount.toLocaleString('en-US')} ${messageCount === 1 ? 'message' : 'messages'}`;
     } catch (error) {
         console.error('Unable to load customer discussions.', error);
-        feedbackAdminStatus.textContent = 'အကြံပြုစာနှင့် ဆွေးနွေးမှုများကို ရယူမရပါ။ ပြန်လည်စမ်းကြည့်ပါ။';
+        feedbackAdminStatus.textContent = 'Could not load feedback and discussion messages. Try again.';
         feedbackAdminStatus.classList.add('error');
         if (!feedbackThreads.length) {
             feedbackList.replaceChildren();
