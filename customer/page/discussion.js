@@ -3,6 +3,7 @@ const discussionForm = document.getElementById('discussion-form');
 const discussionInput = document.getElementById('discussion-input');
 const discussionError = document.getElementById('discussion-error');
 const discussionSendButton = document.getElementById('discussion-send');
+const discussionRefreshButton = document.getElementById('discussion-refresh');
 let currentMessages = [];
 let loadingMessages = false;
 let messageLoadVersion = 0;
@@ -209,6 +210,8 @@ async function loadDiscussionMessages() {
     if (loadingMessages || sendingMessage || editingMessageId) return;
     loadingMessages = true;
     const loadVersion = ++messageLoadVersion;
+    discussionRefreshButton.disabled = true;
+    discussionRefreshButton.classList.add('is-loading');
     try {
         const result = await sendProfileRequest('listDiscussionMessages', {});
         if (!Array.isArray(result.messages)) {
@@ -224,6 +227,8 @@ async function loadDiscussionMessages() {
         showDiscussionError('Could not load messages. Check your connection and try again.');
     } finally {
         loadingMessages = false;
+        discussionRefreshButton.disabled = false;
+        discussionRefreshButton.classList.remove('is-loading');
     }
 }
 
@@ -258,7 +263,5 @@ discussionForm.addEventListener('submit', async (event) => {
     }
 });
 
+discussionRefreshButton.addEventListener('click', loadDiscussionMessages);
 loadDiscussionMessages();
-window.setInterval(() => {
-    if (document.visibilityState === 'visible') loadDiscussionMessages();
-}, 30000);
