@@ -10,8 +10,9 @@ Customer and Admin remain separate Vercel projects. Create one additional Vercel
 4. Run `seeds/002_partner_shops.sql` to import the current Admin shop-order partners.
 5. Before deploying the phone-login update, run `migrations/002_phone_login_and_password.sql`. It makes email optional and enforces one account per phone number. If duplicate phone numbers are found, Neon stops with an explanatory error so those records can be reviewed first.
 6. Before deploying password change and recovery, run `migrations/006_password_reset_requests.sql` in Neon SQL Editor after the existing migrations. It creates the separate password-reset review queue.
-7. After the migration succeeds, deploy the **API Vercel project** (Root Directory = `backend`) as well as the Customer/Admin projects. Confirm `GET /api/health` reports `passwordChange` and `passwordReset` as enabled before testing those screens.
-8. In **Connect**, select the default database and role, turn on the pooled connection option, and copy the connection string. Keep it private.
+7. Before deploying account discussions, run `migrations/007_discussion_messages.sql` in Neon SQL Editor. It creates an indexed, text-only message table; Admin deletion permanently removes selected message rows.
+8. After the migrations succeed, deploy the **API Vercel project** (Root Directory = `backend`) as well as the Customer/Admin projects. Confirm `GET /api/health` reports `discussionMessaging`, `passwordChange`, and `passwordReset` as enabled before testing those screens.
+9. In **Connect**, select the default database and role, turn on the pooled connection option, and copy the connection string. Keep it private.
 
 ## Vercel API environment variables
 
@@ -39,4 +40,4 @@ Migration `006_password_reset_requests.sql` creates a separate request table and
 
 ## Current migration scope
 
-The database stores customer accounts/sessions, books, settings, delivery cities, customer bookstore directory, customer orders/order items, Admin shop orders/partners, book stock, feedback, and announcements. The Admin UI manages books/prices/weights, delivery cities/fees, the bookstore directory, shop orders, stock, Royal shipment/statement imports, and announcements. Royal Excel parsing has been connected to the database API, but still needs validation against the owner's actual Royal exports before production use. Historical order import and Grade 10–12 content migration remain outstanding. The `Code.gs` file is retained temporarily as a reference for those legacy workflows; it is not called by the new app runtime.
+The database stores customer accounts/sessions, books, settings, delivery cities, customer bookstore directory, customer orders/order items, Admin shop orders/partners, book stock, feedback, private customer/Admin discussion messages, and announcements. Discussion messages are text-only and capped at 4,000 characters; Admin deletion removes message rows from the table. The Admin UI manages books/prices/weights, delivery cities/fees, the bookstore directory, shop orders, stock, Royal shipment/statement imports, and announcements. Royal Excel parsing has been connected to the database API, but still needs validation against the owner's actual Royal exports before production use. Historical order import and Grade 10–12 content migration remain outstanding. The `Code.gs` file is retained temporarily as a reference for those legacy workflows; it is not called by the new app runtime.

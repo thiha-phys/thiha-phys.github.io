@@ -3,6 +3,8 @@ import { randomBytes, scrypt as scryptCallback, timingSafeEqual, createHash } fr
 import { promisify } from 'node:util';
 
 const scrypt = promisify(scryptCallback);
+const MAX_DISCUSSION_MESSAGE_LENGTH = 4000;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const sql = () => {
   if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not configured.');
   return neon(process.env.DATABASE_URL);
@@ -93,6 +95,23 @@ async function readBody(req) {
   for await (const chunk of req) chunks.push(chunk);
   return JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}');
 }
+function discussionMessageText(value) {
+  return typeof value === 'string' ? value.trim() : '';
+}
+function validDiscussionMessageText(value) {
+  const length = Array.from(value).length;
+  return length > 0 && length <= MAX_DISCUSSION_MESSAGE_LENGTH;
+}
+function mapDiscussionMessage(row) {
+  return {
+    id: String(row.id),
+    userId: String(row.user_id),
+    senderRole: String(row.sender_role),
+    body: String(row.body),
+    createdAt: row.created_at,
+    editedAt: row.edited_at
+  };
+}
 
 export default async function handler(req, res) {
   const origin = req.headers.origin;
@@ -117,7 +136,7 @@ export default async function handler(req, res) {
     if (route === '/health' && req.method === 'GET') {
       return send(res, 200, {
         ok: true,
-        features: { passwordChange: true, passwordReset: true }
+        features: { passwordChange: true, passwordReset: true, discussionMessaging: true }
       });
     }
 
@@ -319,6 +338,90 @@ export default async function handler(req, res) {
     if (route === '/auth/me' && req.method === 'GET') return send(res,200,{ok:true,user:safeUser(user)});
     if(user.role!=='admin' && user.approval_status!=='approved' && route!=='/auth/logout') return send(res,403,{ok:false,code:user.approval_status==='rejected'?'ACCOUNT_REJECTED':'ACCOUNT_PENDING',message:user.approval_status==='rejected'?'သင့်အကောင့်ကို အတည်မပြုနိုင်ပါ။':'အကောင့်အသုံးပြုခွင့်အတွက် admin အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်။'});
     if (route.startsWith('/admin/') && user.role !== 'admin') return send(res,403,{ok:false,code:'ADMIN_REQUIRED',message:'ဤလုပ်ဆောင်ချက်ကို admin သာ အသုံးပြုနိုင်ပါသည်။'});
+    if (route === '/discussion/messages' && req.method === 'GET') {
+      const rows = await db`SELECT id,user_id,sender_role,body,created_at,edited_at
+        FROM discussion_messages WHERE user_id=${user.id} ORDER BY created_at,id`;
+      return send(res,200,{ok:true,messages:rows.map(mapDiscussionMessage)});
+    }
+    if (route === '/discussion/messages' && req.method === 'POST') {
+      const body = await readBody(req);
+      const message = discussionMessageText(body.body);
+      if (!validDiscussionMessageText(message)) {
+        return send(res,400,{ok:false,code:'INVALID_MESSAGE',message:'စာသားသည် ဗလာမဖြစ်ရ၊ စာလုံးရေ ၄,၀၀၀ ထက် မကျော်ရပါ။'});
+      }
+      const rows = await db`INSERT INTO discussion_messages(user_id,sender_id,sender_role,body)
+        VALUES (${user.id},${user.id},'customer',${message})
+        RETURNING id,user_id,sender_role,body,created_at,edited_at`;
+      return send(res,201,{ok:true,message:mapDiscussionMessage(rows[0])});
+    }
+    const customerMessageMatch = route.match(/^\/discussion\/messages\/([^/]+)$/);
+    if (customerMessageMatch && req.method === 'PATCH') {
+      const messageId = customerMessageMatch[1];
+      if (!UUID_PATTERN.test(messageId)) return send(res,404,{ok:false,code:'MESSAGE_NOT_FOUND',message:'စာကို မတွေ့ပါ။'});
+      const body = await readBody(req);
+      const message = discussionMessageText(body.body);
+      if (!validDiscussionMessageText(message)) {
+        return send(res,400,{ok:false,code:'INVALID_MESSAGE',message:'စာသားသည် ဗလာမဖြစ်ရ၊ စာလုံးရေ ၄,၀၀၀ ထက် မကျော်ရပါ။'});
+      }
+      const rows = await db`UPDATE discussion_messages SET body=${message},edited_at=now()
+        WHERE id=${messageId} AND user_id=${user.id} AND sender_id=${user.id} AND sender_role='customer'
+        RETURNING id,user_id,sender_role,body,created_at,edited_at`;
+      if (!rows.length) return send(res,404,{ok:false,code:'MESSAGE_NOT_FOUND',message:'ပြင်ဆင်နိုင်သော ကိုယ်ပိုင်စာကို မတွေ့ပါ။'});
+      return send(res,200,{ok:true,message:mapDiscussionMessage(rows[0])});
+    }
+    if (route === '/admin/discussion/messages' && req.method === 'GET') {
+      const rows = await db`SELECT m.id,m.user_id,m.sender_role,m.body,m.created_at,m.edited_at,
+          u.name,u.phone,u.occupation
+        FROM discussion_messages m JOIN users u ON u.id=m.user_id
+        ORDER BY m.created_at,m.id`;
+      return send(res,200,{ok:true,messages:rows.map((row)=>({
+        ...mapDiscussionMessage(row),
+        name:row.name,
+        phone:row.phone,
+        job:row.occupation
+      }))});
+    }
+    if (route === '/admin/discussion/messages' && req.method === 'POST') {
+      const body = await readBody(req);
+      const userId = String(body.userId || '').trim();
+      const message = discussionMessageText(body.body);
+      if (!UUID_PATTERN.test(userId)) return send(res,400,{ok:false,code:'INVALID_ACCOUNT',message:'အသုံးပြုသူအကောင့် မမှန်ပါ။'});
+      if (!validDiscussionMessageText(message)) {
+        return send(res,400,{ok:false,code:'INVALID_MESSAGE',message:'စာသားသည် ဗလာမဖြစ်ရ၊ စာလုံးရေ ၄,၀၀၀ ထက် မကျော်ရပါ။'});
+      }
+      const recipient = await db`SELECT id FROM users
+        WHERE id=${userId} AND role<>'admin' AND approval_status='approved' LIMIT 1`;
+      if (!recipient.length) return send(res,404,{ok:false,code:'ACCOUNT_NOT_FOUND',message:'အသုံးပြုသူအကောင့်ကို မတွေ့ပါ။'});
+      const rows = await db`INSERT INTO discussion_messages(user_id,sender_id,sender_role,body)
+        VALUES (${recipient[0].id},${user.id},'admin',${message})
+        RETURNING id,user_id,sender_role,body,created_at,edited_at`;
+      return send(res,201,{ok:true,message:mapDiscussionMessage(rows[0])});
+    }
+    const adminMessageMatch = route.match(/^\/admin\/discussion\/messages\/([^/]+)$/);
+    if (adminMessageMatch && req.method === 'PATCH') {
+      const messageId = adminMessageMatch[1];
+      if (!UUID_PATTERN.test(messageId)) return send(res,404,{ok:false,code:'MESSAGE_NOT_FOUND',message:'စာကို မတွေ့ပါ။'});
+      const body = await readBody(req);
+      const message = discussionMessageText(body.body);
+      if (!validDiscussionMessageText(message)) {
+        return send(res,400,{ok:false,code:'INVALID_MESSAGE',message:'စာသားသည် ဗလာမဖြစ်ရ၊ စာလုံးရေ ၄,၀၀၀ ထက် မကျော်ရပါ။'});
+      }
+      const rows = await db`UPDATE discussion_messages SET body=${message},edited_at=now()
+        WHERE id=${messageId} RETURNING id,user_id,sender_role,body,created_at,edited_at`;
+      if (!rows.length) return send(res,404,{ok:false,code:'MESSAGE_NOT_FOUND',message:'စာကို မတွေ့ပါ။'});
+      return send(res,200,{ok:true,message:mapDiscussionMessage(rows[0])});
+    }
+    if (route === '/admin/discussion/messages' && req.method === 'DELETE') {
+      const body = await readBody(req);
+      const ids = Array.isArray(body.ids) ? [...new Set(body.ids.map((id)=>String(id).trim()))] : [];
+      if (!ids.length || ids.length > 100 || ids.some((id)=>!UUID_PATTERN.test(id))) {
+        return send(res,400,{ok:false,code:'INVALID_MESSAGE_IDS',message:'ဖျက်မည့်စာများကို မှန်ကန်စွာ ရွေးချယ်ပါ။'});
+      }
+      const deleteQueries = ids.map((id)=>db`DELETE FROM discussion_messages WHERE id=${id} RETURNING id`);
+      const results = await db.transaction(deleteQueries);
+      const deletedIds = results.flat().map((row)=>String(row.id));
+      return send(res,200,{ok:true,deletedIds});
+    }
     if (route === '/admin/educational-content' && req.method === 'GET') {
       const grade=Number(req.query.grade||0),category=String(req.query.category||''),chapter=String(req.query.chapter||'');
       const rows=await db`SELECT id,grade,category,title,chapter,content,sort_order AS "sortOrder",active,updated_at AS "updatedAt" FROM educational_content

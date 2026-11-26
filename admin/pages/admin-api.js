@@ -457,6 +457,46 @@
         return result.feedback;
     }
 
+    async function discussionRequest(method, path = '', payload) {
+        const response = await apiFetch(`${API_URL}/api/admin/discussion/messages${path}`, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}`
+            },
+            ...(payload === undefined ? {} : { body: JSON.stringify(payload) })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) {
+            throw new Error(result.message || `Discussion request failed (${response.status}).`);
+        }
+        return result;
+    }
+
+    async function getDiscussionMessages() {
+        const result = await discussionRequest('GET');
+        if (!Array.isArray(result.messages)) {
+            throw new Error('The discussion messages returned by the database are invalid.');
+        }
+        return result.messages;
+    }
+
+    async function sendDiscussionReply(userId, body) {
+        return discussionRequest('POST', '', { userId, body });
+    }
+
+    async function editDiscussionMessage(messageId, body) {
+        return discussionRequest('PATCH', `/${encodeURIComponent(messageId)}`, { body });
+    }
+
+    async function deleteDiscussionMessages(ids) {
+        const result = await discussionRequest('DELETE', '', { ids });
+        if (!Array.isArray(result.deletedIds)) {
+            throw new Error('The deleted discussion message list returned by the database is invalid.');
+        }
+        return result.deletedIds;
+    }
+
     async function getShopOrders(shopId) {
         const result = await request('listShopOrders', { shopId });
         if (!Array.isArray(result.orders)) {
@@ -544,6 +584,10 @@
         getPasswordResetRequests,
         reviewPasswordResetRequest,
         getFeedback,
+        getDiscussionMessages,
+        sendDiscussionReply,
+        editDiscussionMessage,
+        deleteDiscussionMessages,
         getShopOrders,
         getShopOrdersByStatus,
         getShopOverview,
