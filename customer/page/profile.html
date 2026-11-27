@@ -429,19 +429,18 @@
         .avatar-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
         .avatar-option {
             display: grid;
-            justify-items: center;
-            gap: 5px;
-            padding: 9px 5px;
+            place-items: center;
+            aspect-ratio: 1;
+            padding: 7px;
             border: 2px solid #e8edf4;
             border-radius: 15px;
             background: #fff;
-            color: #52627b;
-            font: inherit;
-            font-size: 10px;
             cursor: pointer;
         }
+        .avatar-option:hover { border-color: #9ab9eb; transform: translateY(-1px); }
+        .avatar-option:focus-visible { outline: 3px solid #9fc2ff; outline-offset: 2px; }
         .avatar-option[aria-pressed="true"] { border-color: #3978e8; background: #f2f7ff; color: #245fb8; }
-        .avatar-option img { width: 60px; height: 60px; border-radius: 50%; }
+        .avatar-option img { display: block; width: 100%; aspect-ratio: 1; border-radius: 50%; }
         .avatar-dialog-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 16px; }
         .avatar-dialog-actions button,
         .avatar-upload {
@@ -463,6 +462,8 @@
             cursor: pointer;
         }
         .avatar-upload { border-color: #2867cf; background: #2867cf; color: #fff; }
+        .avatar-dialog-actions button:hover,
+        .avatar-upload:hover { filter: brightness(.97); }
         .avatar-upload input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
         .avatar-upload:focus-within { outline: 3px solid #9fc2ff; outline-offset: 2px; }
         .avatar-status { min-height: 18px; margin: 12px 0 0 !important; color: #b42318 !important; }
@@ -572,7 +573,6 @@
             .account-shell { padding: 16px 14px 116px; }
             .avatar { width: 76px; height: 76px; flex-basis: 76px; }
             .avatar-control { width: 76px; height: 76px; }
-            .avatar-option img { width: 54px; height: 54px; }
             .avatar-dialog { padding: 18px; }
             .profile-contact-row { grid-template-columns: 25px minmax(65px, .65fr) minmax(0, 1.5fr); gap: 6px; padding-inline: 10px; }
             .profile-contact-value { font-size: 11px; }
@@ -619,7 +619,7 @@
                     <span>Password</span>
                 </button>
                 <a class="profile-shortcut" href="discussion.html">
-                    <i class="profile-shortcut-icon fa-solid fa-comment-sms" aria-hidden="true"></i>
+                    <i class="profile-shortcut-icon fa-regular fa-comment-dots" aria-hidden="true"></i>
                     <span>Discussion</span>
                 </a>
             </nav>
@@ -724,10 +724,10 @@
         <div class="avatar-dialog-actions">
             <label class="avatar-upload">
                 <i class="fa-regular fa-image" aria-hidden="true"></i>
-                <span>Choose from gallery</span>
+                <span>Gallery</span>
                 <input id="avatar-file" type="file" accept="image/png,image/jpeg,image/webp">
             </label>
-            <button id="reset-avatar" type="button">Use name/default</button>
+            <button id="reset-avatar" type="button">Default</button>
             <button type="button" data-close-dialog>Close</button>
         </div>
         <p class="avatar-status" id="avatar-status" role="status" aria-live="polite"></p>
@@ -744,26 +744,37 @@
         const avatarStatus = document.getElementById('avatar-status');
         const avatarStorageKey = 'physicsLearningHubAvatar';
         const avatarPresets = [
-            { id: 'boy-1', label: 'Student 1', gender: 'male', skin: '#f1c7a6', hair: '#26354a', shirt: '#5286d8', background: '#e5f1ff', style: 'short' },
-            { id: 'boy-2', label: 'Student 2', gender: 'male', skin: '#dca77e', hair: '#26354a', shirt: '#35a795', background: '#e5f7f2', style: 'swept' },
-            { id: 'boy-3', label: 'Student 3', gender: 'male', skin: '#efc19a', hair: '#493b34', shirt: '#d58a45', background: '#fff2df', style: 'curly' },
-            { id: 'girl-1', label: 'Student 4', gender: 'female', skin: '#f1c7a6', hair: '#493b34', shirt: '#8b77c9', background: '#f0edff', style: 'bob' },
-            { id: 'girl-2', label: 'Student 5', gender: 'female', skin: '#dca77e', hair: '#26354a', shirt: '#d8798e', background: '#fff0f3', style: 'long' },
-            { id: 'girl-3', label: 'Student 6', gender: 'female', skin: '#efc19a', hair: '#493b34', shirt: '#3e9a83', background: '#e7f7f1', style: 'ponytail' }
+            { id: 'boy-1', ariaLabel: 'Choose student avatar with glasses', skin: '#e7b895', hair: '#293348', shirt: '#496b9d', background: '#dcecff', style: 'short', glasses: true },
+            { id: 'boy-2', ariaLabel: 'Choose student avatar with side-swept hair', skin: '#ca9472', hair: '#292b35', shirt: '#368d84', background: '#d9f1e9', style: 'swept', glasses: false },
+            { id: 'boy-3', ariaLabel: 'Choose student avatar with curly hair', skin: '#f0c49c', hair: '#493830', shirt: '#bd7547', background: '#ffead2', style: 'curly', glasses: false },
+            { id: 'girl-1', ariaLabel: 'Choose student avatar with a bob haircut', skin: '#e7b895', hair: '#493830', shirt: '#8170b3', background: '#e9e2ff', style: 'bob', glasses: true },
+            { id: 'girl-2', ariaLabel: 'Choose student avatar with long hair', skin: '#ca9472', hair: '#292b35', shirt: '#c76d7f', background: '#ffe2e8', style: 'long', glasses: false },
+            { id: 'girl-3', ariaLabel: 'Choose student avatar with a ponytail', skin: '#f0c49c', hair: '#493830', shirt: '#378477', background: '#d8f1e9', style: 'ponytail', glasses: true }
         ];
         let currentProfile = null;
         let avatarPreference = null;
 
         function createAvatarSource(avatar) {
-            const hairstyles = {
-                short: '<path d="M25 47c-2-22 8-34 25-34 17 0 27 12 25 34l-8-8-3-12c-8 7-20 10-34 10l-1 10z"/>',
-                swept: '<path d="M24 46c-2-22 9-33 27-33 16 0 26 10 25 28-8-5-13-12-15-19-9 10-20 14-35 15z"/>',
-                curly: '<path d="M24 48c-4-7-3-18 2-25l5 3c3-10 11-14 19-14 9 0 16 5 19 14l5-3c5 9 5 18 2 25l-8-8-2-11c-8 6-20 9-36 9z"/><circle cx="31" cy="21" r="6"/><circle cx="43" cy="16" r="6"/><circle cx="56" cy="16" r="6"/><circle cx="68" cy="22" r="6"/>',
-                bob: '<path d="M22 51c-3-25 8-39 28-39 20 0 31 14 28 39l-8 14-7-10-2-22c-7 6-18 9-33 9l-1 13-7 10z"/>',
-                long: '<path d="M21 57c-4-29 7-45 29-45s33 16 29 45l-8 16-8-9V41c-7 6-19 9-33 9v14l-8 9z"/>',
-                ponytail: '<path d="M71 30c12 2 15 13 9 23l-9-2z"/><path d="M22 51c-3-25 8-39 28-39 18 0 29 12 28 33-8-4-13-12-15-21-7 8-18 12-34 13l-1 14-7 10z"/>'
+            const backHair = {
+                short: '',
+                swept: '',
+                curly: '',
+                bob: '<path d="M26 48c-3-23 7-36 24-36s27 13 24 36v22l-9 8-3-29H38l-3 29-9-8z"/>',
+                long: '<path d="M24 47c-2-24 8-35 26-35s28 11 26 35v40l-10 7-5-45H39l-5 45-10-7z"/>',
+                ponytail: '<path d="M72 30c14 0 17 17 8 25l-8-4z"/>'
             };
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="${avatar.background}"/><path d="M13 100c2-20 15-31 37-31s35 11 37 31" fill="${avatar.shirt}"/><path d="M42 66h16v16H42z" fill="${avatar.skin}"/><path d="M32 100l18-20 18 20" fill="#fff" opacity=".92"/><path d="M28 52c-8-3-9 10 1 12m42-12c8-3 9 10-1 12" fill="${avatar.skin}"/><path d="M29 42c0-17 8-27 21-27s21 10 21 27v12c0 16-9 25-21 25S29 70 29 54z" fill="${avatar.skin}"/><g fill="${avatar.hair}">${hairstyles[avatar.style]}</g><path d="M39 52h4m14 0h4" stroke="#394455" stroke-width="3" stroke-linecap="round"/><path d="M44 65q6 5 12 0" fill="none" stroke="#9e5e55" stroke-width="2.5" stroke-linecap="round"/></svg>`;
+            const frontHair = {
+                short: '<path d="M27 48c-3-20 6-34 23-34 17 0 26 12 24 31l-8-8-3-11c-8 7-19 10-34 10z"/>',
+                swept: '<path d="M26 45c-2-20 8-31 24-31 15 0 25 10 25 28-8-4-13-10-16-18-8 9-19 13-33 14z"/>',
+                curly: '<path d="M26 47c-5-8-3-19 3-25l5 4c2-10 9-15 17-15s15 5 17 15l5-4c6 8 7 17 2 25l-8-8-2-10c-9 7-20 10-36 10z"/><circle cx="32" cy="22" r="6"/><circle cx="44" cy="16" r="7"/><circle cx="57" cy="17" r="7"/><circle cx="68" cy="24" r="6"/>',
+                bob: '<path d="M25 47c-3-23 7-35 25-35s28 12 25 35l-8 16-6-10-2-19c-7 6-18 9-33 9l-1 20-8 4z"/>',
+                long: '<path d="M24 45c-2-22 8-33 26-33s28 11 26 33l-8 17-6-13V39c-8 7-19 10-34 10v17l-8-4z"/>',
+                ponytail: '<path d="M25 47c-3-23 7-35 25-35s28 12 25 35l-8 10-6-17V32c-8 7-19 10-34 10l-1 18-8-7z"/>'
+            };
+            const glasses = avatar.glasses
+                ? '<g fill="none" stroke="#344052" stroke-width="2.4"><rect x="32" y="46" width="14" height="11" rx="4"/><rect x="54" y="46" width="14" height="11" rx="4"/><path d="M46 50h8"/></g>'
+                : '';
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="${avatar.background}"/></linearGradient><linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".28"/><stop offset=".55" stop-color="${avatar.skin}"/><stop offset="1" stop-color="${avatar.skin}"/></linearGradient><linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#586174"/><stop offset=".45" stop-color="${avatar.hair}"/><stop offset="1" stop-color="#171e2b"/></linearGradient><linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".24"/><stop offset="1" stop-color="${avatar.shirt}"/></linearGradient><clipPath id="clip"><circle cx="50" cy="50" r="50"/></clipPath></defs><g clip-path="url(#clip)"><rect width="100" height="100" fill="url(#bg)"/><circle cx="15" cy="24" r="3" fill="#fff" opacity=".85"/><circle cx="84" cy="34" r="2" fill="#fff" opacity=".8"/><path d="M7 103c2-23 16-34 43-34s41 11 43 34" fill="url(#shirt)"/><path d="M41 72h18v13H41z" fill="url(#skin)"/><path d="M39 80l11 9 11-9 11 23H28z" fill="#f8f9fc"/><path d="M28 50c-8-4-9 10 1 13m42-13c8-4 9 10-1 13" fill="url(#skin)"/><g fill="url(#hair)">${backHair[avatar.style]}</g><ellipse cx="50" cy="49" rx="21" ry="27" fill="url(#skin)"/><path d="M30 46c1-8 4-13 9-16 7 5 17 5 29 1 2 4 3 9 3 15v10c0 16-9 26-21 26S29 72 29 56z" fill="url(#skin)"/><g fill="url(#hair)">${frontHair[avatar.style]}</g><path d="M37 47l7-1m12 0 7 1" stroke="#553d37" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="41" cy="53" rx="2.6" ry="3.3" fill="#253247"/><ellipse cx="59" cy="53" rx="2.6" ry="3.3" fill="#253247"/><circle cx="42" cy="52" r=".9" fill="#fff"/><circle cx="60" cy="52" r=".9" fill="#fff"/>${glasses}<path d="M48 57q-2 5 2 5" fill="none" stroke="#b77c63" stroke-width="1.5" stroke-linecap="round"/><path d="M44 67q6 5 12 0" fill="none" stroke="#a65458" stroke-width="2" stroke-linecap="round"/><ellipse cx="35" cy="62" rx="4" ry="2" fill="#e58e83" opacity=".24"/><ellipse cx="65" cy="62" rx="4" ry="2" fill="#e58e83" opacity=".24"/><path d="M36 81l14 10 14-10" fill="none" stroke="${avatar.shirt}" stroke-width="2.4"/><path d="M50 90v10" stroke="#fff" stroke-opacity=".65" stroke-width="1.3"/></g></svg>`;
             return `data:image/svg+xml,${encodeURIComponent(svg)}`;
         }
 
@@ -827,13 +838,12 @@
             option.className = 'avatar-option';
             option.type = 'button';
             option.dataset.avatarId = avatar.id;
+            option.setAttribute('aria-label', avatar.ariaLabel);
             option.setAttribute('aria-pressed', 'false');
             const image = document.createElement('img');
             image.src = avatarSources.get(avatar.id);
             image.alt = '';
-            const label = document.createElement('span');
-            label.textContent = avatar.label;
-            option.append(image, label);
+            option.append(image);
             option.addEventListener('click', () => setAvatarPreference({ type: 'preset', id: avatar.id }));
             document.getElementById('avatar-grid').append(option);
         });
