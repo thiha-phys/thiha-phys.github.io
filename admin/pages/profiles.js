@@ -63,6 +63,29 @@ function renderProfileCard(profile) {
         article.append(actions);
     }
 
+    if (typeof profile.id === 'string') {
+        const actions = document.createElement('div');
+        actions.className = 'profile-actions profile-delete-actions';
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'profile-role-button delete';
+        deleteButton.textContent = 'Delete account';
+        deleteButton.setAttribute('aria-label', `Delete ${name}'s account`);
+        deleteButton.addEventListener('click', async () => {
+            if (!window.confirm(`Permanently delete ${name}'s account? This cannot be undone.`)) return;
+            deleteButton.disabled = true;
+            try {
+                await AdminApi.deleteUser(profile.id);
+                await loadProfiles();
+            } catch (error) {
+                deleteButton.disabled = false;
+                alert(error.message || 'Account could not be deleted.');
+            }
+        });
+        actions.append(deleteButton);
+        article.append(actions);
+    }
+
     return article;
 }
 

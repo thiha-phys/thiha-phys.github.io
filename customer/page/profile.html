@@ -227,6 +227,24 @@
             font-size: 12px;
         }
 
+        .danger-zone-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px;
+            border: 1px solid #f1c7c7;
+            border-radius: 15px;
+            background: #fff8f8;
+        }
+
+        .danger-zone-card p {
+            margin: 0;
+            color: #738198;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
         .danger-zone-button,
         .btn-delete {
             min-height: 42px;
@@ -372,6 +390,8 @@
         [data-dialog="about-dialog"] .setting-icon { background: #eaf2ff; color: #3978e8; }
         #logout-button .setting-icon { background: #fff0f0; color: #cf4a56; }
         #logout-button .setting-label { color: #b83b48; }
+        #danger-zone-title { color: #a52e3b; }
+        #danger-zone-title::before { background: #d64550; }
 
         .form-field input:focus { border-color: #7aa5eb; outline: 0; box-shadow: 0 0 0 3px rgba(37, 99, 235, .11); }
 
@@ -575,16 +595,12 @@
         }
         .section-title::before { display: none; }
         .profile-contact-card {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            align-items: stretch;
             overflow: hidden;
             border: 1px solid var(--account-card-border);
             border-radius: 15px;
             background: #fff;
             box-shadow: var(--account-shadow);
         }
-        .profile-contact-details { min-width: 0; }
         .profile-contact-row {
             display: grid;
             grid-template-columns: 30px minmax(76px, .7fr) minmax(0, 1.5fr);
@@ -598,17 +614,6 @@
         .profile-contact-icon { color: #6280a8; text-align: center; }
         .profile-contact-label { color: #77849a; font-size: 11px; }
         .profile-contact-value { min-width: 0; color: #2b3b52; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
-        .profile-contact-danger {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            padding: 10px 14px;
-            border-left: 1px solid #edf0f5;
-        }
-        .profile-contact-danger span { color: #a52e3b; font-size: 10px; font-weight: 700; }
-        .profile-contact-danger .danger-zone-button { min-height: 38px; padding-inline: 12px; font-size: 12px; }
         .settings-section + .settings-section { margin-top: 21px; }
         .settings-list {
             border: 1px solid var(--account-card-border);
@@ -625,8 +630,7 @@
             .avatar-dialog { padding: 18px; }
             .profile-contact-row { grid-template-columns: 25px minmax(65px, .65fr) minmax(0, 1.5fr); gap: 6px; padding-inline: 10px; }
             .profile-contact-value { font-size: 11px; }
-            .profile-contact-danger { padding-inline: 8px; }
-            .danger-zone-button { padding-inline: 9px; font-size: 11px; }
+            .danger-zone-card { align-items: stretch; flex-direction: column; }
         }
 
         @media (min-width: 761px) {
@@ -678,21 +682,15 @@
             <section class="settings-section profile-section" aria-labelledby="contact-information-title">
                 <h2 class="section-title" id="contact-information-title">Contact information</h2>
                 <div class="profile-contact-card">
-                    <div class="profile-contact-details">
-                        <div class="profile-contact-row">
-                            <i class="profile-contact-icon fa-solid fa-phone" aria-hidden="true"></i>
-                            <span class="profile-contact-label">Phone</span>
-                            <strong class="profile-contact-value" id="summary-phone">Not added</strong>
-                        </div>
-                        <div class="profile-contact-row">
-                            <i class="profile-contact-icon fa-regular fa-envelope" aria-hidden="true"></i>
-                            <span class="profile-contact-label">Email</span>
-                            <strong class="profile-contact-value" id="summary-email">Not added</strong>
-                        </div>
+                    <div class="profile-contact-row">
+                        <i class="profile-contact-icon fa-solid fa-phone" aria-hidden="true"></i>
+                        <span class="profile-contact-label">Phone</span>
+                        <strong class="profile-contact-value" id="summary-phone">Not added</strong>
                     </div>
-                    <div class="profile-contact-danger">
-                        <span>Danger zone</span>
-                        <button class="danger-zone-button" type="button" data-dialog="delete-account-dialog">Delete account</button>
+                    <div class="profile-contact-row">
+                        <i class="profile-contact-icon fa-regular fa-envelope" aria-hidden="true"></i>
+                        <span class="profile-contact-label">Email</span>
+                        <strong class="profile-contact-value" id="summary-email">Not added</strong>
                     </div>
                 </div>
             </section>
@@ -720,6 +718,13 @@
                         <span class="setting-icon"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i></span>
                         <span class="setting-label">Log out</span>
                     </button>
+                </div>
+            </section>
+            <section class="settings-section profile-section" aria-labelledby="danger-zone-title">
+                <h2 class="section-title" id="danger-zone-title">Danger zone</h2>
+                <div class="danger-zone-card">
+                    <p>Permanently delete your account and sign you out of all devices. This cannot be undone.</p>
+                    <button class="danger-zone-button" type="button" data-dialog="delete-account-dialog">Delete account</button>
                 </div>
             </section>
             <p class="profile-status" id="profile-status" role="status" aria-live="polite"></p>
