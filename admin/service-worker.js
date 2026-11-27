@@ -1,6 +1,6 @@
-// Bump the shell cache whenever auth/navigation scripts change. The previous
-// cache-first strategy could keep an older admin-api.js and cause login loops.
-const CACHE_NAME = 'uthk-admin-shell-v45';
+// Bump the shell cache whenever a cached app file changes. Cache-first fetches
+// can otherwise keep older scripts after deployment.
+const CACHE_NAME = 'uthk-admin-shell-v46';
 const APP_FILES = [
     './index.html',
     './style.css',
