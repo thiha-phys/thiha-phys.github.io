@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body><main class="page-shell">
-    <header class="page-top"><a class="back-button" href="tools.html" aria-label="Back to Workspace"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">Edit Order</h1><p class="page-subtitle">Search by voucher number, name, or phone, then edit the existing row.</p></div></header>
-    <section class="panel">
+    <header class="page-top"><a class="back-button" href="historyorder.html" aria-label="Back to Order History"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">Edit Order</h1><p class="page-subtitle">Select an order from history, or search for it here.</p></div></header>
+    <section class="panel" id="lookup-panel">
         <h2>Find an Order</h2><form id="lookup-form" class="search-row"><input id="lookup-query" class="search-input" type="search" placeholder="Voucher number, name, or phone" required><button class="primary-button" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button></form>
         <div class="history-refresh-row"><span id="lookup-cache-status" class="muted small">Orders load from the database when searched.</span></div>
         <p id="lookup-status" class="status-message" role="status"></p><div id="lookup-results" class="result-list"></div>
     </section>
     <section id="edit-panel" class="panel" hidden>
         <h2>Edit Order Details</h2>
-        <p class="search-hint">The voucher number cannot be changed. Review the order, payment, and delivery details, then save them to the existing row.</p>
-        <form id="edit-form"><div id="edit-fields" class="edit-groups"></div>
-            <div class="button-row"><button id="save-order" class="primary-button" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button></div>
+        <p class="search-hint" id="edit-order-hint">The voucher number cannot be changed. Review the order, payment, and delivery details, then save them to the existing row.</p>
+        <form id="edit-form"><div id="edit-tabs" class="edit-tabs" role="tablist" aria-label="Order information sections"></div><div id="edit-fields" class="edit-groups"></div>
+            <div class="button-row edit-actions"><button id="save-order" class="primary-button" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button></div>
             <p id="edit-status" class="status-message" role="status"></p>
         </form>
     </section>

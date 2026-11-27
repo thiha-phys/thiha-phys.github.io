@@ -17,16 +17,12 @@ const fieldGroups = [
         title: 'Payment and Delivery Status',
         fields: [
             'Payment Method', 'Amount Received', 'KPay Account', 'Pay Date',
-            'Delivered Date', 'Delivery', 'Royal VOC No'
+            'Delivered Date', 'Delivery', 'Royal VOC No', 'Complete'
         ]
     },
     {
         title: 'Social Media Information',
         fields: ['Facebook Account Name', 'Facebook Link']
-    },
-    {
-        title: 'Delivery Completion',
-        fields: ['Complete']
     }
 ];
 let orders = [];
@@ -86,13 +82,38 @@ function showMatches(query) {
     return matches.length;
 }
 
-function openOrder(order) {
+function setActiveEditTab(index, focus = false) {
+    const tabs = [...document.querySelectorAll('#edit-tabs [role="tab"]')];
+    const panels = [...document.querySelectorAll('#edit-fields [role="tabpanel"]')];
+    tabs.forEach((tab, tabIndex) => {
+        const active = tabIndex === index;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        if (active && focus) tab.focus();
+    });
+    panels.forEach((panel, panelIndex) => { panel.hidden = panelIndex !== index; });
+}
+
+function paymentReceivedStatus() {
+    const form = document.getElementById('edit-form');
+    const total = Number(String(form.elements.namedItem('Total')?.value || '0').replaceAll(',', ''));
+    const amountReceived = Number(String(form.elements.namedItem('Amount Received')?.value || '0').replaceAll(',', ''));
+    const paid = Number.isFinite(total) && Number.isFinite(amountReceived) && amountReceived >= total;
+    const result = document.getElementById('payment-status-preview');
+    result.textContent = paid ? 'ငွေလက်ခံရရှိပြီး' : 'ငွေမရှင်းရသေး';
+    result.classList.toggle('is-paid', paid);
+    result.classList.toggle('is-unpaid', !paid);
+}
+
+function openOrder(order, { scroll = true } = {}) {
     selectedOrder = order;
     document.getElementById('lookup-status').textContent =
         `Voucher ${order['Voucher No']} selected.`;
     document.getElementById('edit-panel').hidden = false;
     const container = document.getElementById('edit-fields');
+    const tabsContainer = document.getElementById('edit-tabs');
     container.replaceChildren();
+    tabsContainer.replaceChildren();
     const voucherLabel = document.createElement('label');
     voucherLabel.className = 'edit-field';
     voucherLabel.textContent = 'Voucher No. (Cannot be changed)';
@@ -101,16 +122,38 @@ function openOrder(order) {
     voucherInput.disabled = true;
     voucherLabel.append(voucherInput);
     container.append(voucherLabel);
-    fieldGroups.forEach((group) => {
+    fieldGroups.forEach((group, groupIndex) => {
+        const tab = document.createElement('button');
+        tab.type = 'button';
+        tab.id = `edit-tab-${groupIndex}`;
+        tab.className = 'edit-tab';
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('aria-controls', `edit-panel-${groupIndex}`);
+        tab.setAttribute('aria-selected', 'false');
+        tab.tabIndex = -1;
+        tab.innerHTML = `<span class="edit-tab-number">0${groupIndex + 1}</span><span>${escapeText(group.title)}</span>`;
+        tab.addEventListener('click', () => setActiveEditTab(groupIndex));
+        tab.addEventListener('keydown', (event) => {
+            if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+            event.preventDefault();
+            const next = event.key === 'Home' ? 0 : event.key === 'End' ? fieldGroups.length - 1 :
+                (groupIndex + (event.key === 'ArrowRight' ? 1 : -1) + fieldGroups.length) % fieldGroups.length;
+            setActiveEditTab(next, true);
+        });
+        tabsContainer.append(tab);
+
         const section = document.createElement('section');
         section.className = 'edit-group';
+        section.id = `edit-panel-${groupIndex}`;
+        section.setAttribute('role', 'tabpanel');
+        section.setAttribute('aria-labelledby', tab.id);
         const heading = document.createElement('h3');
         heading.textContent = group.title;
         const grid = document.createElement('div');
-        grid.className = 'edit-grid';
+        grid.className = `edit-grid${group.title === 'Books and Amounts' ? ' edit-grid--books' : ''}`;
         group.fields.forEach((field) => {
             const label = document.createElement('label');
-            label.className = 'edit-field';
+            label.className = field === 'Complete' ? 'edit-field edit-field-checkbox' : 'edit-field';
             label.append(document.createTextNode(field));
             const input = document.createElement(field === 'Payment Method' ? 'select' : 'input');
             input.name = field;
@@ -152,10 +195,25 @@ function openOrder(order) {
             grid.append(label);
         });
         section.append(heading, grid);
+        if (group.title === 'Payment and Delivery Status') {
+            const paymentStatus = document.createElement('div');
+            paymentStatus.className = 'payment-status-preview';
+            const paymentLabel = document.createElement('span');
+            paymentLabel.textContent = 'Amount Received နှင့် Total အရ ငွေလက်ခံမှု';
+            const paymentValue = document.createElement('strong');
+            paymentValue.id = 'payment-status-preview';
+            paymentValue.setAttribute('aria-live', 'polite');
+            paymentStatus.append(paymentLabel, paymentValue);
+            section.append(paymentStatus);
+        }
         container.append(section);
     });
+    setActiveEditTab(0);
+    document.getElementById('edit-form').elements.namedItem('Total').addEventListener('input', paymentReceivedStatus);
+    document.getElementById('edit-form').elements.namedItem('Amount Received').addEventListener('input', paymentReceivedStatus);
+    paymentReceivedStatus();
     document.getElementById('edit-status').textContent = '';
-    document.getElementById('edit-panel').scrollIntoView({ behavior: 'smooth' });
+    if (scroll) document.getElementById('edit-panel').scrollIntoView({ behavior: 'smooth' });
 }
 
 document.getElementById('lookup-form').addEventListener('submit', async (event) => {
@@ -207,3 +265,25 @@ document.getElementById('edit-form').addEventListener('submit', async (event) =>
         button.disabled = false;
     }
 });
+
+const requestedVoucher = new URLSearchParams(window.location.search).get('voucher');
+if (requestedVoucher) {
+    const lookupPanel = document.getElementById('lookup-panel');
+    const lookupStatus = document.getElementById('lookup-status');
+    lookupPanel.hidden = true;
+    document.getElementById('edit-order-hint').textContent = `Voucher ${requestedVoucher} ကို ရွေးပြီးပါပြီ။ ပြင်ဆင်ပြီး Save Changes ကိုနှိပ်ပါ။`;
+    (async () => {
+        try {
+            const cached = await AdminApi.refreshOrders();
+            orders = cached.data;
+            const order = orders.find((item) => String(item['Voucher No']) === requestedVoucher);
+            if (!order) throw new Error(`Voucher ${requestedVoucher} ကို Order History ထဲမှာ မတွေ့ပါ။`);
+            openOrder(order, { scroll: false });
+        } catch (error) {
+            console.error('Unable to open the selected order.', error);
+            lookupPanel.hidden = false;
+            lookupStatus.textContent = error.message || 'ရွေးထားသော order ကို ဖွင့်မရပါ။';
+            lookupStatus.classList.add('error');
+        }
+    })();
+}

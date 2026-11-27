@@ -674,6 +674,8 @@ body.feedback-chat-open .feedback-reply-composer textarea { resize: none; }
 .order-card-expand i { transition: transform .18s ease; }
 .order-card[open] .order-card-expand i { transform: rotate(180deg); }
 .order-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; padding: 16px 18px 18px; border-top: 1px solid #e6edf8; background: linear-gradient(145deg, #f9fbff, #f2f6fd); }
+.order-edit-button { grid-column: 1 / -1; justify-self: end; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 0 16px; border-radius: 9px; color: #fff; background: #c62828; box-shadow: 0 4px 10px rgba(144, 24, 24, .18); font-size: 12px; font-weight: 800; text-decoration: none; }
+.order-edit-button:hover, .order-edit-button:focus-visible { color: #fff; background: #a91f1f; }
 .order-details-section h4 { margin: 0 0 8px; color: #2d5fae; font-size: 12px; }
 .order-detail-list { display: grid; }
 .order-detail-line { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid #e5ebf4; font-size: 11px; }
@@ -730,9 +732,19 @@ body.feedback-chat-open .feedback-reply-composer textarea { resize: none; }
 .edit-field { display: grid; gap: 5px; font-size: 11px; color: var(--muted); }
 .edit-field input, .edit-field select { min-height: 41px; width: 100%; border: 1px solid #dce3ed; border-radius: 9px; padding: 8px 10px; color: var(--ink); background: #fff; }
 .edit-field input.edit-checkbox { width: 20px; min-height: 20px; padding: 0; accent-color: #2867cf; }
+.edit-field-checkbox { grid-template-columns: 1fr auto; align-items: center; min-height: 41px; padding: 8px 10px; border: 1px solid #dce3ed; border-radius: 9px; background: #fff; }
+.edit-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin: 12px 0; }
+.edit-tab { min-width: 0; min-height: 49px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 7px; border: 1px solid #dce3ed; border-radius: 10px; color: #56647b; background: #f7f9fc; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+.edit-tab[aria-selected="true"] { border-color: #2867cf; color: #fff; background: #2867cf; box-shadow: 0 4px 11px rgba(40, 103, 207, .2); }
+.edit-tab-number { flex: 0 0 auto; opacity: .72; font-size: 9px; }
 .edit-groups { display: grid; gap: 17px; }
 .edit-group { min-width: 0; padding: 16px; border: 1px solid var(--line); border-radius: 13px; background: #fbfcfe; }
 .edit-group h3 { margin: 0 0 12px; color: #315eaa; font-size: 14px; }
+.payment-status-preview { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; padding: 12px; border: 1px solid #dce5f2; border-radius: 10px; background: #fff; color: #64728a; font-size: 11px; }
+.payment-status-preview strong { flex: 0 0 auto; padding: 5px 9px; border-radius: 999px; font-size: 10px; }
+.payment-status-preview strong.is-paid { color: #14724e; background: #e6f6ef; }
+.payment-status-preview strong.is-unpaid { color: #9a6500; background: #fff2d9; }
+.edit-actions { position: sticky; bottom: 8px; z-index: 5; margin: 12px -6px -6px; padding: 10px 6px; border-top: 1px solid #e6ebf2; background: rgba(255,255,255,.96); backdrop-filter: blur(8px); }
 .result-list { display: grid; gap: 9px; margin-top: 13px; }
 .result-choice { padding: 13px 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; text-align: left; border: 1px solid var(--line); border-radius: 11px; color: var(--ink); background: white; }
 .result-choice:hover { border-color: #9bbbf2; }
@@ -817,7 +829,12 @@ body.feedback-chat-open .feedback-reply-composer textarea { resize: none; }
     .page-title { font-size: 19px; }
     .page-subtitle { font-size: 11px; }
     .panel { padding: 16px; border-radius: 14px; }
-    .form-grid, .edit-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .edit-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; }
+    .edit-field input, .edit-field select { min-width: 0; padding: 7px; font-size: 11px; }
+    .edit-tabs { gap: 4px; }
+    .edit-tab { min-height: 50px; flex-direction: column; gap: 2px; padding: 5px 2px; font-size: 9px; line-height: 1.25; text-align: center; }
+    .edit-tab-number { font-size: 8px; }
     .field.full { grid-column: auto; }
     .toolbar { grid-template-columns: 1fr 1fr; }
     .toolbar .field:first-child { grid-column: 1 / -1; }

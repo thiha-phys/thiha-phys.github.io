@@ -168,6 +168,11 @@ function renderOrders() {
                 <span class="order-card-expand"><span>အသေးစိတ်ကြည့်ရန်</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
             </summary>
             ${renderOrderDetails(order)}`;
+        const editLink = document.createElement('a');
+        editLink.className = 'order-edit-button';
+        editLink.href = `chnagerequest.html?voucher=${encodeURIComponent(String(order['Voucher No'] || ''))}`;
+        editLink.innerHTML = '<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i><span>Edit</span>';
+        card.querySelector('.order-details').append(editLink);
         listElement.append(card);
     });
     statusElement.textContent = `${matches.length.toLocaleString('en-US')} orders shown`;
