@@ -41,6 +41,38 @@ function renderProfileCard(profile) {
         </div>
     `;
 
+    if (typeof profile.id === 'string') {
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'profile-role-button delete';
+        deleteButton.textContent = 'Delete account';
+        deleteButton.setAttribute('aria-label', `Delete ${name}'s account`);
+        deleteButton.addEventListener('click', async () => {
+            if (!window.confirm(`Permanently delete ${name}'s account? This cannot be undone.`)) return;
+            deleteButton.disabled = true;
+            try {
+                await AdminApi.deleteUser(profile.id);
+                await loadProfiles();
+            } catch (error) {
+                deleteButton.disabled = false;
+                alert(error.message || 'Account could not be deleted.');
+            }
+        });
+
+        const phoneRow = article.querySelector('.profile-phone')?.closest('.profile-contact-row');
+        const emailRow = article.querySelector('a[href^="mailto:"]')?.closest('.profile-contact-row');
+        const contactRow = phoneRow || emailRow;
+        if (contactRow) {
+            contactRow.classList.add('profile-contact-delete-row');
+            contactRow.append(deleteButton);
+        } else {
+            const deleteRow = document.createElement('div');
+            deleteRow.className = 'profile-contact-row profile-contact-delete-row';
+            deleteRow.append(deleteButton);
+            article.querySelector('.profile-meta').append(deleteRow);
+        }
+    }
+
     if (profile.role === 'customer' && profile.approvalStatus === 'approved' && typeof profile.id === 'string') {
         const messageButton = document.createElement('a');
         messageButton.className = 'profile-message-button';
@@ -60,29 +92,6 @@ function renderProfileCard(profile) {
             const button=document.createElement('button');button.type='button';button.className=`profile-role-button ${value==='approved'?'approve':'reject'}`;button.textContent=label;
             button.addEventListener('click',async()=>{button.disabled=true;try{await AdminApi.updateUserApproval(profile.id,value);await loadProfiles();}catch(error){button.disabled=false;alert(error.message||'Account approval could not be updated.');}});actions.append(button);
         }
-        article.append(actions);
-    }
-
-    if (typeof profile.id === 'string') {
-        const actions = document.createElement('div');
-        actions.className = 'profile-actions profile-delete-actions';
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.className = 'profile-role-button delete';
-        deleteButton.textContent = 'Delete account';
-        deleteButton.setAttribute('aria-label', `Delete ${name}'s account`);
-        deleteButton.addEventListener('click', async () => {
-            if (!window.confirm(`Permanently delete ${name}'s account? This cannot be undone.`)) return;
-            deleteButton.disabled = true;
-            try {
-                await AdminApi.deleteUser(profile.id);
-                await loadProfiles();
-            } catch (error) {
-                deleteButton.disabled = false;
-                alert(error.message || 'Account could not be deleted.');
-            }
-        });
-        actions.append(deleteButton);
         article.append(actions);
     }
 
