@@ -127,10 +127,10 @@
     }
 
     async function requestProfile(action, payload = {}) {
-        const route = ['listProfiles', 'updateUserRole', 'updateUserApproval', 'deleteUser'].includes(action) ? 'admin/users' : 'admin/feedback';
+        const route = ['listProfiles', 'updateUserRole', 'updateUserApproval'].includes(action) ? 'admin/users' : 'admin/feedback';
         const method = action === 'listProfiles' || action === 'listFeedback'
             ? 'GET'
-            : action === 'deleteUser' ? 'DELETE' : 'PATCH';
+            : 'PATCH';
         const response = await apiFetch(`${API_URL}/api/${route}`, {
             method,
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` },
@@ -426,10 +426,6 @@
         return requestProfile('updateUserApproval', { userId, approvalStatus });
     }
 
-    async function deleteUser(userId) {
-        return requestProfile('deleteUser', { userId });
-    }
-
     async function getPasswordResetRequests() {
         const response = await apiFetch(`${API_URL}/api/admin/password-reset-requests`, {
             cache: 'no-store',
@@ -598,7 +594,6 @@
         getProfiles,
         updateUserRole,
         updateUserApproval,
-        deleteUser,
         getPasswordResetRequests,
         reviewPasswordResetRequest,
         getFeedback,
