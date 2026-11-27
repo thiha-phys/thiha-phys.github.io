@@ -173,6 +173,7 @@ function showShopReceipt(order) {
 async function loadShopOrderForm() {
     const status = document.getElementById('shop-order-status');
     try {
+        await AdminApi.getMasterData();
         const shops = await AdminApi.getShops();
         selectedShop = shops.find((shop) => shop.id === selectedShopId);
         if (!selectedShop) throw new Error('ဆိုင်ကို ရှာမတွေ့ပါ။');
