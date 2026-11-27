@@ -495,12 +495,9 @@ export default async function handler(req, res) {
         const adminData={...(order.admin_data||{}),...(order.royal_data||{})};
         const orderedDateValue=adminData['Ordered Date']||adminData['Order Date']||order.created_at||'';
         const orderedDate=orderedDateValue instanceof Date?orderedDateValue.toISOString():String(orderedDateValue);
-        const deliveredDateValue=
-          adminData['Delivered Date']||
-          adminData['Order Confirm']||
-          adminData['Deliver Date']||
-          adminData['Confirm Date']||
-          (['delivered','received'].includes(order.status)?order.updated_at||'':'');
+        const updatedAt=order.updated_at instanceof Date?order.updated_at.toISOString():String(order.updated_at||'');
+        const deliveredDateValue=adminData['Deliver Date']||adminData['Confirm Date']||
+          (order.status==='delivered'?updatedAt.slice(0,10):'');
         const deliveredDate=deliveredDateValue instanceof Date?deliveredDateValue.toISOString():String(deliveredDateValue);
         const received=String(adminData.Received||'').toLowerCase()==='yes'||order.status==='received';
         return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,cashCollection:received?order.cash_collection:0,status:order.status,received,createdAt:orderedDate,deliveredDate,items};
