@@ -1,4 +1,4 @@
-const CACHE_NAME = 'physics-learning-hub-v53';
+const CACHE_NAME = 'physics-learning-hub-v54';
 const APP_SHELL = [
     './',
     './index.html',

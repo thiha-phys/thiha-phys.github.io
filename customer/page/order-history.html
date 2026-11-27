@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         body{margin:0;background:#f4f7fb;color:#172033;font-family:Arial,sans-serif}
-        main{width:min(760px,calc(100% - 16px));margin:18px auto 100px}
+        main{width:min(760px,calc(100% - 8px));margin:12px auto 100px}
         header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
         header a{color:#345bd6;font-size:20px} h1{font-size:22px;margin:0}
         #orders{display:grid;gap:14px}
@@ -20,10 +20,10 @@
         .order-card-heading,.order-card-meta,.order-card-totals{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
         .order-card-heading{display:grid;grid-template-columns:62px minmax(0,1fr);align-items:center;gap:8px}
         .voucher{font-weight:800;color:#253c88;font-size:21px}
-        .order-statuses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:stretch;align-items:center;gap:5px}
-        .status{padding:5px 7px;border-radius:999px;background:#fff2dc;color:#9b5d00;font-size:11px;white-space:nowrap;text-align:center}
+        .order-statuses{display:grid;grid-template-columns:88px minmax(112px,1fr) 58px;justify-content:stretch;align-items:center;gap:6px}
+        .status{padding:6px 8px;border-radius:999px;background:#fff2dc;color:#9b5d00;font-size:12px;white-space:nowrap;text-align:center}
         .status.complete{background:#e5f7ee;color:#14744d}
-        .payment-status{padding:5px 7px;border-radius:999px;background:#edf4ff;color:#316cc3;font-size:11px;font-weight:700;white-space:nowrap;text-align:center}
+        .payment-status{padding:6px 8px;border-radius:999px;background:#edf4ff;color:#316cc3;font-size:12px;font-weight:700;white-space:nowrap;text-align:center}
         .order-card-divider{height:1px;background:#edf0f5}
         .muted{color:#68748a;font-size:13px}
         .order-card-totals{color:#68748a;font-size:12px}.order-card-totals strong{color:#172033}
@@ -37,12 +37,13 @@
         .confirm-order-button:disabled{opacity:.55;cursor:wait}
         .notice{padding:18px;border-radius:14px;background:#fff;color:#58657a}
         @media(max-width:480px){
-            main{width:calc(100% - 12px);margin-top:12px}
+            main{width:calc(100% - 6px);margin-top:8px}
             .order-card-summary{padding:16px 14px 14px}
             .order-card-heading{align-items:center}
             .voucher{font-size:19px}
             .order-card-heading{grid-template-columns:50px minmax(0,1fr)}
-            .status,.payment-status{padding-inline:4px;font-size:10px}
+            .status,.payment-status{padding-inline:5px;font-size:12px}
+            .order-statuses{grid-template-columns:72px minmax(126px,1fr) 53px;gap:5px}
             .order-card-totals{font-size:11px}
             .confirm-order-button{width:calc(100% - 28px)}
         }
@@ -62,7 +63,26 @@
     <script>
         const host=document.getElementById('orders');
         const money=(amount)=>`${Number(amount||0).toLocaleString('my-MM')} ကျပ်`;
-        const date=(value)=>{const d=new Date(value);return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('en-GB',{dateStyle:'medium',timeStyle:'short'}).format(d);};
+        const date=(value)=>{
+            const text=String(value||'').trim();
+            const dayFirst=text.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})(?:[ ,T]+(\d{1,2}):(\d{2}))?/);
+            if(dayFirst){
+                const dateText=`${dayFirst[1].padStart(2,'0')}/${dayFirst[2].padStart(2,'0')}/${dayFirst[3]}`;
+                return dayFirst[4] ? `${dateText} ${dayFirst[4].padStart(2,'0')}:${dayFirst[5]}` : dateText;
+            }
+            const d=new Date(text.replace(' ','T'));
+            return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(d);
+        };
+        const dateOnly=(value)=>{
+            if(!value)return '';
+            const text=String(value).trim();
+            const iso=text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if(iso)return `${iso[3]}/${iso[2]}/${iso[1]}`;
+            const slash=text.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})/);
+            if(slash)return `${slash[1].padStart(2,'0')}/${slash[2].padStart(2,'0')}/${slash[3]}`;
+            const d=new Date(text.replace(' ','T'));
+            return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'2-digit',year:'numeric'}).format(d);
+        };
         const escape=(value)=>String(value??'').replace(/[&<>"']/g,(character)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[character]));
         function detailLine(label,value){
             return `<div class="order-detail-line"><span>${escape(label)}</span><strong>${escape(value||'—')}</strong></div>`;
@@ -71,7 +91,7 @@
             const card=document.createElement('details');
             card.className='order-card';
             const complete=['delivered','received'].includes(order.status);
-            const paymentComplete=Number(order.cashCollection||0)>0;
+            const paymentComplete=order.received===true;
             const itemDetails=(order.items||[]).map(item =>
                 detailLine(`${item.name} × ${item.quantity}`,money(item.amount))
             ).join('');
@@ -82,7 +102,7 @@
                         <span class="order-statuses">
                             <span class="status${complete?' complete':''}">${complete?'complete':'pending'}</span>
                             <span class="payment-status">${paymentComplete?'ငွေရှင်းပြီး':'ငွေမရှင်းရသေး'}</span>
-                            <span class="payment-status">${escape(order.paymentMethod||'—')}</span>
+                            <span class="payment-status">${/^k(pay|bz)/i.test(order.paymentMethod||'')?'KPay':escape(order.paymentMethod||'—')}</span>
                         </span>
                     </span>
                     <span class="order-card-divider"></span>
@@ -103,8 +123,8 @@
                         ${detailLine('မှာယူသူ',order.name)}
                         ${detailLine('ဖုန်းနံပါတ်',order.phone)}
                         ${detailLine('လိပ်စာ',`${order.city||''}${order.address?', '+order.address:''}`)}
-                        ${detailLine('Ordered Date',date(order.createdAt))}
-                        ${detailLine('Delivered Date',complete?'complete':'မပို့ရသေး')}
+                        ${detailLine('Ordered Date',dateOnly(order.createdAt))}
+                        ${detailLine('Delivered Date',complete?dateOnly(order.deliveredDate)||'complete':'မပို့ရသေး')}
                         ${detailLine('ငွေပေးချေမှု',order.paymentMethod)}
                         ${detailLine('ပို့ဆောင်ရေး',order.deliveryService)}
                         ${detailLine('စုစုပေါင်း',money(order.total))}
