@@ -496,6 +496,27 @@ export default async function handler(req, res) {
       }));
       return send(res,200,{ok:true,orders});
     }
+    if (((route === '/orders/confirm' && req.method === 'PATCH') ||
+         (/^\/orders\/[^/]+\/confirm$/.test(route) && req.method === 'PATCH'))) {
+      const body=await readBody(req);
+      const voucher=String(body.voucherNo || body['Voucher No'] ||
+        (route !== '/orders/confirm' ? decodeURIComponent(route.split('/')[2] || '') : '')).trim();
+      if(!voucher) return send(res,400,{ok:false,code:'INVALID_ORDER',message:'မှာယူမှုနံပါတ် မမှန်ပါ။'});
+      const rows=await db`SELECT id,user_id,status,admin_data FROM orders WHERE voucher_no=${voucher} AND user_id=${user.id} LIMIT 1`;
+      if(!rows.length) return send(res,404,{ok:false,code:'ORDER_NOT_FOUND',message:'မှာယူမှုမတွေ့ပါ။'});
+      if(!['delivered','received'].includes(String(rows[0].status)) && String(rows[0].status)!=='on_the_way') {
+        return send(res,409,{ok:false,code:'NOT_READY_TO_CONFIRM',message:'ပို့ဆောင်ပြီးသား အမှာစာကိုသာ လက်ခံအတည်ပြုနိုင်ပါသည်။'});
+      }
+      if(String(rows[0].status)==='received') {
+        return send(res,200,{ok:true,status:'received',message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးသားဖြစ်ပါသည်။'});
+      }
+      const confirmedDate=new Date().toISOString();
+      const adminData={...(rows[0].admin_data||{}),Received:'Yes','Confirm Date':confirmedDate};
+      await db`UPDATE orders SET status='received',admin_data=${JSON.stringify(adminData)}::jsonb,updated_at=now() WHERE id=${rows[0].id}`;
+      await db`INSERT INTO discussion_messages(user_id,sender_id,sender_role,body)
+        VALUES (${user.id},${user.id},'customer',${`အမှာစာ ${voucher} ကို လက်ခံရရှိပြီဖြစ်ကြောင်း အတည်ပြုလိုက်ပါသည်။`})`;
+      return send(res,200,{ok:true,status:'received',message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးပါပြီ။'});
+    }
     if (route === '/profile/password' && req.method === 'PATCH') {
       const body = await readBody(req);
       const currentPassword = String(body.currentPassword || '');
@@ -750,7 +771,7 @@ export default async function handler(req, res) {
       const [books,entries,delivered]=await Promise.all([
         db`SELECT id,name,quantity_header AS "quantityHeader" FROM books ORDER BY sort_order,id`,
         db`SELECT book_id,entry_date,quantity FROM book_stock_entries ORDER BY entry_date DESC`,
-        db`SELECT oi.book_id,sum(oi.quantity)::int AS quantity FROM order_items oi JOIN orders o ON o.id=oi.order_id WHERE o.status='delivered' GROUP BY oi.book_id`
+        db`SELECT oi.book_id,sum(oi.quantity)::int AS quantity FROM order_items oi JOIN orders o ON o.id=oi.order_id WHERE o.status IN ('delivered','received') GROUP BY oi.book_id`
       ]);
       const stock=books.map((book)=>{const incoming=entries.filter((e)=>e.book_id===book.id);const received=incoming.reduce((n,e)=>n+Number(e.quantity),0);const deliveredQty=Number(delivered.find((e)=>e.book_id===book.id)?.quantity||0);return{id:book.id,name:book.name,received,delivered:deliveredQty,remaining:received-deliveredQty,entries:incoming.map((e)=>({date:e.entry_date,quantity:e.quantity}))};});
       return send(res,200,{ok:true,stock});
@@ -760,7 +781,7 @@ export default async function handler(req, res) {
       if(!Number.isSafeInteger(quantity)||quantity<1||!/^\d{4}-\d{2}-\d{2}$/.test(date))return send(res,400,{ok:false,message:'ရက်စွဲနှင့် အုပ်ရေကို စစ်ဆေးပါ။'});
       const rows=await db`INSERT INTO book_stock_entries(book_id,entry_date,quantity) SELECT id,${date},${quantity} FROM books WHERE id=${bookId} RETURNING id`;
       if(!rows.length)return send(res,404,{ok:false,message:'စာအုပ်မတွေ့ပါ။'});
-      const [books,entries,delivered]=await Promise.all([db`SELECT id,name FROM books ORDER BY sort_order,id`,db`SELECT book_id,entry_date,quantity FROM book_stock_entries ORDER BY entry_date DESC`,db`SELECT oi.book_id,sum(oi.quantity)::int AS quantity FROM order_items oi JOIN orders o ON o.id=oi.order_id WHERE o.status='delivered' GROUP BY oi.book_id`]);
+      const [books,entries,delivered]=await Promise.all([db`SELECT id,name FROM books ORDER BY sort_order,id`,db`SELECT book_id,entry_date,quantity FROM book_stock_entries ORDER BY entry_date DESC`,db`SELECT oi.book_id,sum(oi.quantity)::int AS quantity FROM order_items oi JOIN orders o ON o.id=oi.order_id WHERE o.status IN ('delivered','received') GROUP BY oi.book_id`]);
       const updated=books.map((book)=>{const incoming=entries.filter((e)=>e.book_id===book.id),received=incoming.reduce((n,e)=>n+Number(e.quantity),0),deliveredQty=Number(delivered.find((e)=>e.book_id===book.id)?.quantity||0);return{id:book.id,name:book.name,received,delivered:deliveredQty,remaining:received-deliveredQty,entries:incoming.map((e)=>({date:e.entry_date,quantity:e.quantity}))};});
       return send(res,201,{ok:true,entry:{bookId,date,quantity},stock:updated});
     }

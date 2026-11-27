@@ -141,7 +141,8 @@ function renderOrders() {
     matches.forEach((order) => {
         const card = document.createElement('details');
         card.className = 'order-card';
-        const delivered = Boolean(String(order['Delivered Date'] || order['Deliver Date'] || '').trim()) || order.status === 'delivered';
+        const delivered = Boolean(String(order['Delivered Date'] || order['Deliver Date'] || '').trim()) ||
+            ['delivered', 'received'].includes(order.status);
         const paid = Number(order['Amount Received'] || 0) >= Number(order.Total || 0);
         const paymentMethod = paymentMethodLabel(order['Payment Method']);
         card.innerHTML = `
