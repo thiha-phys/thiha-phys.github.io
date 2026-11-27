@@ -73,23 +73,10 @@
         const money=(amount)=>`${Number(amount||0).toLocaleString('my-MM')} ကျပ်`;
         const date=(value)=>{
             const text=String(value||'').trim();
-            const dayFirst=text.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})(?:[ ,T]+(\d{1,2}):(\d{2}))?/);
-            if(dayFirst){
-                const dateText=`${dayFirst[1].padStart(2,'0')}/${dayFirst[2].padStart(2,'0')}/${dayFirst[3]}`;
-                return dayFirst[4] ? `${dateText} ${dayFirst[4].padStart(2,'0')}:${dayFirst[5]}` : dateText;
-            }
-            const d=new Date(text.replace(' ','T'));
-            return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(d);
-        };
-        const dateOnly=(value)=>{
-            if(!value)return '';
-            const text=String(value).trim();
-            const iso=text.match(/^(\d{4})-(\d{2})-(\d{2})/);
-            if(iso)return `${iso[3]}/${iso[2]}/${iso[1]}`;
-            const slash=text.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})/);
-            if(slash)return `${slash[1].padStart(2,'0')}/${slash[2].padStart(2,'0')}/${slash[3]}`;
-            const d=new Date(text.replace(' ','T'));
-            return Number.isNaN(d.getTime())?'':new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'2-digit',year:'numeric'}).format(d);
+            const isoDate=/^(\d{4})-(\d{2})-(\d{2})/.exec(text);
+            if(isoDate)return `${isoDate[3]}/${isoDate[2]}/${isoDate[1]} ${text.length>10?text.slice(11,16):''}`.trim();
+            const parsed=new Date(text);
+            return Number.isNaN(parsed.getTime())?text||'—':new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'2-digit',year:'numeric'}).format(parsed);
         };
         const escape=(value)=>String(value??'').replace(/[&<>"']/g,(character)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[character]));
         function detailLine(label,value){
@@ -98,7 +85,8 @@
         function render(order){
             const card=document.createElement('details');
             card.className='order-card';
-            const complete=['delivered','received'].includes(order.status);
+            const complete=Boolean(String(order.deliveredDate||'').trim())||['delivered','received'].includes(order.status);
+            const deliveredDateLabel=order.deliveredDate?date(order.deliveredDate):complete?'—':'မပို့ရသေး';
             const paymentComplete=order.received===true;
             const itemDetails=(order.items||[]).map(item =>
                 detailLine(`${item.name} × ${item.quantity}`,money(item.amount))
@@ -114,7 +102,7 @@
                         </span>
                     </span>
                     <span class="order-card-divider"></span>
-                    <span class="order-card-info">${date(order.createdAt)}</span>
+                    <span class="order-card-info">${escape(date(order.createdAt))}</span>
                     <span class="order-card-info order-customer">${escape(order.name||'')} · ${escape(order.phone||'')} · ${escape(order.address||order.city||'')}</span>
                     <span class="order-card-totals">
                         <span>စုစုပေါင်း <strong>${money(order.total)}</strong></span>
@@ -131,8 +119,8 @@
                         ${detailLine('မှာယူသူ',order.name)}
                         ${detailLine('ဖုန်းနံပါတ်',order.phone)}
                         ${detailLine('လိပ်စာ',`${order.city||''}${order.address?', '+order.address:''}`)}
-                        ${detailLine('Ordered Date',dateOnly(order.createdAt))}
-                        ${detailLine('Delivered Date',complete?dateOnly(order.deliveredDate)||'complete':'မပို့ရသေး')}
+                        ${detailLine('Ordered Date',date(order.createdAt))}
+                        ${detailLine('Delivered Date',deliveredDateLabel)}
                         ${detailLine('ငွေပေးချေမှု',order.paymentMethod)}
                         ${detailLine('ပို့ဆောင်ရေး',order.deliveryService)}
                         ${detailLine('စုစုပေါင်း',money(order.total))}

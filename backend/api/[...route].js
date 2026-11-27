@@ -493,12 +493,15 @@ export default async function handler(req, res) {
       const orders=await Promise.all(rows.map(async(order)=>{
         const items=await db`SELECT book_id AS id,book_name AS name,quantity,unit_price AS "unitPrice",amount FROM order_items WHERE order_id=${order.id} ORDER BY id`;
         const adminData={...(order.admin_data||{}),...(order.royal_data||{})};
-        const orderedDate=String(adminData['Ordered Date']||adminData['Order Date']||order.created_at||'');
-        const deliveredDate=String(
+        const orderedDateValue=adminData['Ordered Date']||adminData['Order Date']||order.created_at||'';
+        const orderedDate=orderedDateValue instanceof Date?orderedDateValue.toISOString():String(orderedDateValue);
+        const deliveredDateValue=
           adminData['Delivered Date']||
+          adminData['Order Confirm']||
           adminData['Deliver Date']||
-          (['delivered','received'].includes(order.status) ? adminData['Confirm Date']||order.updated_at||'' : '')
-        );
+          adminData['Confirm Date']||
+          (['delivered','received'].includes(order.status)?order.updated_at||'':'');
+        const deliveredDate=deliveredDateValue instanceof Date?deliveredDateValue.toISOString():String(deliveredDateValue);
         const received=String(adminData.Received||'').toLowerCase()==='yes'||order.status==='received';
         return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,cashCollection:received?order.cash_collection:0,status:order.status,received,createdAt:orderedDate,deliveredDate,items};
       }));
