@@ -496,8 +496,8 @@ export default async function handler(req, res) {
       }));
       return send(res,200,{ok:true,orders});
     }
-    if (((route === '/orders/confirm' && req.method === 'PATCH') ||
-         (/^\/orders\/[^/]+\/confirm$/.test(route) && req.method === 'PATCH'))) {
+    if (((route === '/orders/confirm' && ['PATCH','POST'].includes(req.method)) ||
+         (/^\/orders\/[^/]+\/confirm$/.test(route) && ['PATCH','POST'].includes(req.method)))) {
       const body=await readBody(req);
       const voucher=String(body.voucherNo || body['Voucher No'] ||
         (route !== '/orders/confirm' ? decodeURIComponent(route.split('/')[2] || '') : '')).trim();
