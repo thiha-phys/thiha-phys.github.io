@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        body{margin:0 auto;background:#f4f7fb;color:#172033;font-family:Arial,sans-serif}
+        body{box-sizing:border-box;width:100%;padding:0;margin:0;background:#f4f7fb;color:#172033;font-family:Arial,sans-serif}
         main{box-sizing:border-box;width:100%;max-width:760px;padding-inline:16px;margin:12px auto 100px}
         header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
         header a{color:#345bd6;font-size:20px} h1{font-size:22px;margin:0}
@@ -45,6 +45,7 @@
         .notice{padding:18px;border-radius:14px;background:#fff;color:#58657a}
         @media(max-width:560px){
             main{width:calc(100% - 26px);padding:13px 0 125px;margin-top:0}
+            #orders{padding-inline:16px}
             .order-card-summary{padding:14px 13px 12px}
             .order-card-heading{align-items:center;gap:6px}
             .order-card-heading>strong{font-size:14px}
