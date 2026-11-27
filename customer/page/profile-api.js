@@ -19,6 +19,7 @@ async function sendProfileRequest(action, profile) {
     if (action === 'logout') return physicsApiFetch('auth/logout', { method: 'POST', body: '{}' });
     if (action === 'update') return physicsApiFetch('profile', { method: 'PATCH', body: JSON.stringify(profile) });
     if (action === 'changePassword') return physicsApiFetch('profile/password', { method: 'PATCH', body: JSON.stringify(profile) });
+    if (action === 'deleteAccount') return physicsApiFetch('profile', { method: 'DELETE', body: JSON.stringify(profile) });
     if (action === 'submitFeedback') return physicsApiFetch('feedback', { method: 'POST', body: JSON.stringify(profile) });
     if (action === 'listDiscussionMessages') return physicsApiFetch('discussion/messages', { method: 'GET' });
     if (action === 'sendDiscussionMessage') return physicsApiFetch('discussion/messages', { method: 'POST', body: JSON.stringify(profile) });

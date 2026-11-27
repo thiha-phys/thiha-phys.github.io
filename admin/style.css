@@ -135,6 +135,7 @@ button:disabled { cursor: wait; opacity: .65; }
 .profile-actions { display: flex; gap: 9px; flex-wrap: wrap; }
 .profile-role-button.approve { border-color: #a7dfc1; background: #ecfbf3; color: #16724b; }
 .profile-role-button.reject { border-color: #f0c3c7; background: #fff4f4; color: #a73743; }
+.profile-role-button.delete { border-color: #e4a6aa; background: #fff0f0; color: #a52e3b; }
 .profile-card-header {
     display: flex;
     align-items: center;

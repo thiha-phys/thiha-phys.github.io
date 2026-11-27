@@ -341,8 +341,25 @@ export default async function handler(req, res) {
     const user = await getUser(req, db);
     if (!user) return send(res, 401, {ok:false,code:'AUTH_REQUIRED',message:'အကောင့်ဝင်ရန်လိုအပ်ပါသည်။'});
     if (route === '/auth/me' && req.method === 'GET') return send(res,200,{ok:true,user:safeUser(user)});
-    if(user.role!=='admin' && user.approval_status!=='approved' && route!=='/auth/logout') return send(res,403,{ok:false,code:user.approval_status==='rejected'?'ACCOUNT_REJECTED':'ACCOUNT_PENDING',message:user.approval_status==='rejected'?'သင့်အကောင့်ကို အတည်မပြုနိုင်ပါ။':'အကောင့်အသုံးပြုခွင့်အတွက် admin အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်။'});
+    if(user.role!=='admin' && user.approval_status!=='approved' && route!=='/auth/logout' && !(route==='/profile'&&req.method==='DELETE')) return send(res,403,{ok:false,code:user.approval_status==='rejected'?'ACCOUNT_REJECTED':'ACCOUNT_PENDING',message:user.approval_status==='rejected'?'သင့်အကောင့်ကို အတည်မပြုနိုင်ပါ။':'အကောင့်အသုံးပြုခွင့်အတွက် admin အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်။'});
     if (route.startsWith('/admin/') && user.role !== 'admin') return send(res,403,{ok:false,code:'ADMIN_REQUIRED',message:'ဤလုပ်ဆောင်ချက်ကို admin သာ အသုံးပြုနိုင်ပါသည်။'});
+    if (route === '/profile' && req.method === 'DELETE') {
+      const body = await readBody(req);
+      const credentials = await db`SELECT password_hash,password_salt FROM users WHERE id=${user.id} LIMIT 1`;
+      const supplied = Buffer.from(await scrypt(String(body.currentPassword || ''), credentials[0]?.password_salt || 'invalid-salt', 64));
+      const saved = Buffer.from(credentials[0]?.password_hash || '0'.repeat(128), 'hex');
+      if (!credentials.length || saved.length !== supplied.length || !timingSafeEqual(saved, supplied)) {
+        return send(res,401,{ok:false,code:'CURRENT_PASSWORD_INVALID',message:'လက်ရှိစကားဝှက် မမှန်ပါ။'});
+      }
+      if (user.role === 'admin') {
+        const admins = await db`SELECT email FROM users WHERE role='admin'`;
+        const activeAdminCount = admins.filter((row)=>adminEmails.includes(normalizeEmail(row.email))).length;
+        if (activeAdminCount <= 1) return send(res,409,{ok:false,code:'LAST_ADMIN',message:'နောက်ဆုံး admin အကောင့်ကို ဖျက်၍မရပါ။'});
+      }
+      const deleted = await db`DELETE FROM users WHERE id=${user.id} RETURNING id`;
+      if (!deleted.length) return send(res,404,{ok:false,code:'USER_NOT_FOUND',message:'အသုံးပြုသူကို မတွေ့ပါ။'});
+      return send(res,200,{ok:true});
+    }
     if (route === '/discussion/messages' && req.method === 'GET') {
       const rows = await db`SELECT id,user_id,sender_role,body,created_at,edited_at
         FROM discussion_messages WHERE user_id=${user.id} ORDER BY created_at,id`;
@@ -695,6 +712,23 @@ export default async function handler(req, res) {
     if (route === '/admin/users' && req.method === 'GET') {
       const users=await db`SELECT id,name,occupation,email,phone,role,approval_status,created_at FROM users ORDER BY created_at DESC`;
       return send(res,200,{ok:true,profiles:users.map((u)=>({...safeUser(u),adminEligible:adminEmails.includes(normalizeEmail(u.email)),createdAt:u.created_at}))});
+    }
+    if (route === '/admin/users' && req.method === 'DELETE') {
+      const body = await readBody(req);
+      const targetId = String(body.userId || '');
+      if (!UUID_PATTERN.test(targetId)) return send(res,400,{ok:false,code:'INVALID_USER',message:'အသုံးပြုသူကို စစ်ဆေးပါ။'});
+      if (targetId === user.id) return send(res,409,{ok:false,code:'SELF_DELETE_FORBIDDEN',message:'ဤနေရာမှ ကိုယ့် admin အကောင့်ကို ဖျက်၍မရပါ။'});
+      const targetRows = await db`SELECT id,email,role FROM users WHERE id=${targetId} LIMIT 1`;
+      const target = targetRows[0];
+      if (!target) return send(res,404,{ok:false,code:'USER_NOT_FOUND',message:'အသုံးပြုသူကို မတွေ့ပါ။'});
+      if (target.role === 'admin' && adminEmails.includes(normalizeEmail(target.email))) {
+        const admins = await db`SELECT email FROM users WHERE role='admin'`;
+        const activeAdminCount = admins.filter((row)=>adminEmails.includes(normalizeEmail(row.email))).length;
+        if (activeAdminCount <= 1) return send(res,409,{ok:false,code:'LAST_ADMIN',message:'နောက်ဆုံး admin အကောင့်ကို ဖျက်၍မရပါ။'});
+      }
+      const deleted = await db`DELETE FROM users WHERE id=${target.id} RETURNING id`;
+      if (!deleted.length) return send(res,404,{ok:false,code:'USER_NOT_FOUND',message:'အသုံးပြုသူကို မတွေ့ပါ။'});
+      return send(res,200,{ok:true});
     }
     if (route === '/admin/password-reset-requests' && req.method === 'GET') {
       const requests = await db`SELECT r.id,r.status,r.requested_at AS "requestedAt",r.token_expires_at AS "expiresAt",

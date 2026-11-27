@@ -127,15 +127,17 @@
     }
 
     async function requestProfile(action, payload = {}) {
-        const route = ['listProfiles', 'updateUserRole', 'updateUserApproval'].includes(action) ? 'admin/users' : 'admin/feedback';
-        const method = ['updateUserRole', 'updateUserApproval'].includes(action) ? 'PATCH' : 'GET';
+        const route = ['listProfiles', 'updateUserRole', 'updateUserApproval', 'deleteUser'].includes(action) ? 'admin/users' : 'admin/feedback';
+        const method = action === 'listProfiles' || action === 'listFeedback'
+            ? 'GET'
+            : action === 'deleteUser' ? 'DELETE' : 'PATCH';
         const response = await apiFetch(`${API_URL}/api/${route}`, {
             method,
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` },
             ...(method === 'GET' ? {} : { body: JSON.stringify(payload) })
         });
-        if (!response.ok) throw new Error(`Database API request failed (${response.status}).`);
         const result = await response.json();
+        if (!response.ok) throw new Error(result.message || `Database API request failed (${response.status}).`);
         if (!result.ok) throw new Error(result.message || 'Database API rejected the request.');
         return result;
     }
@@ -424,6 +426,10 @@
         return requestProfile('updateUserApproval', { userId, approvalStatus });
     }
 
+    async function deleteUser(userId) {
+        return requestProfile('deleteUser', { userId });
+    }
+
     async function getPasswordResetRequests() {
         const response = await apiFetch(`${API_URL}/api/admin/password-reset-requests`, {
             cache: 'no-store',
@@ -592,6 +598,7 @@
         getProfiles,
         updateUserRole,
         updateUserApproval,
+        deleteUser,
         getPasswordResetRequests,
         reviewPasswordResetRequest,
         getFeedback,
