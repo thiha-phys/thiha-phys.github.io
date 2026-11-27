@@ -127,7 +127,7 @@ function renderOrders() {
         if (activeMode === 'date') {
             return Boolean(date) && (!from || date >= from) && (!to || date <= to);
         }
-        if (activeMode === 'undelivered') return !String(order['Delivered Date'] || '').trim();
+        if (activeMode === 'undelivered') return order.status === 'pending';
         return received < total;
     }).sort((a, b) => String(b['Order Date'] || '').localeCompare(String(a['Order Date'] || '')));
 
@@ -141,8 +141,11 @@ function renderOrders() {
     matches.forEach((order) => {
         const card = document.createElement('details');
         card.className = 'order-card';
-        const delivered = Boolean(String(order['Delivered Date'] || order['Deliver Date'] || '').trim()) ||
-            ['delivered', 'received'].includes(order.status);
+        const deliveryStatus = order.Complete === 'Yes' || order.status === 'complete' || order.status === 'received'
+            ? 'complete'
+            : order.status === 'delivered'
+                ? 'delivered'
+                : 'pending';
         const paid = Number(order['Amount Received'] || 0) >= Number(order.Total || 0);
         const paymentMethod = paymentMethodLabel(order['Payment Method']);
         card.innerHTML = `
@@ -150,7 +153,7 @@ function renderOrders() {
                 <span class="order-card-heading">
                     <strong>${escapeText(order['Voucher No'])}</strong>
                     <span class="order-card-statuses">
-                        <span class="badge ${delivered ? 'good' : 'warning'}">${delivered ? 'complete' : 'pending'}</span>
+                        <span class="badge ${deliveryStatus === 'pending' ? 'warning' : 'good'}">${deliveryStatus}</span>
                         <span class="badge ${paid ? 'good' : 'warning'}">${paid ? 'ငွေရှင်းပြီး' : 'ငွေမရှင်းရသေး'}</span>
                         ${paymentMethod ? `<span class="badge payment-method">${escapeText(paymentMethod)}</span>` : ''}
                     </span>

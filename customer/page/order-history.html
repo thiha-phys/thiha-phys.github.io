@@ -85,8 +85,9 @@
         function render(order){
             const card=document.createElement('details');
             card.className='order-card';
-            const complete=Boolean(String(order.deliveredDate||'').trim())||['delivered','received'].includes(order.status);
-            const deliveredDateLabel=order.deliveredDate?date(order.deliveredDate):complete?'—':'မပို့ရသေး';
+            const deliveryStatus=order.complete||['complete','received'].includes(order.status)
+                ?'complete':['delivered','on_the_way'].includes(order.status)?'delivered':'pending';
+            const deliveredDateLabel=order.deliveredDate?date(order.deliveredDate):deliveryStatus!=='pending'?'—':'မပို့ရသေး';
             const paymentComplete=Number(order.amountReceived||0)>=Number(order.total||0);
             const itemDetails=(order.items||[]).map(item =>
                 detailLine(`${item.name} × ${item.quantity}`,money(item.amount))
@@ -96,7 +97,7 @@
                     <span class="order-card-heading">
                         <strong>${escape(order.voucherNo||'အော်ဒါ')}</strong>
                             <span class="order-card-statuses">
-                                <span class="badge ${complete?'good':'warning'}">${complete?'complete':'pending'}</span>
+                                <span class="badge ${deliveryStatus==='pending'?'warning':'good'}">${deliveryStatus}</span>
                                 <span class="badge ${paymentComplete?'good':'warning'}">${paymentComplete?'ငွေရှင်းပြီး':'ငွေမရှင်းရသေး'}</span>
                                 <span class="badge payment-method">${/^k(pay|bz)/i.test(order.paymentMethod||'')?'KPay':escape(order.paymentMethod||'—')}</span>
                         </span>
@@ -126,7 +127,7 @@
                         ${detailLine('စုစုပေါင်း',money(order.total))}
                     </section>
                 </div>`;
-            if(['delivered','on_the_way'].includes(order.status)){
+            if(deliveryStatus==='delivered'){
                 const button=document.createElement('button');
                 button.type='button';
                 button.className='confirm-order-button';
@@ -135,7 +136,8 @@
                     button.disabled=true;
                     try{
                         await physicsApiFetch('orders/confirm',{method:'PATCH',body:JSON.stringify({voucherNo:order.voucherNo})});
-                        order.status='received';
+                        order.status='complete';
+                        order.complete=true;
                         card.replaceWith(render(order));
                     }catch(error){
                         button.disabled=false;

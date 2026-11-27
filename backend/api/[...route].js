@@ -329,7 +329,7 @@ export default async function handler(req, res) {
       if(!String(order.address||'').trim() || !customerName || !customerPhone) return send(res,400,{ok:false,code:'MISSING_ORDER_DETAILS',message:'အမည်၊ ဖုန်းနှင့် လိပ်စာ ဖြည့်ပါ။'});
       const created = await db`WITH next_number AS (SELECT nextval('orders_order_no_seq') AS order_no)
         INSERT INTO orders (order_no,voucher_no,user_id,customer_name,phone,phone2,city_id,address,delivery_service,payment_method,car_details,status)
-        SELECT order_no,lpad(order_no::text,3,'0'),${user?.id || null},${customerName},${customerPhone},${String(order.phone2 || '').trim()},${city.id},${String(order.address || '').trim()},${service},${payment},${String(order.carDetails || '').trim()},'new' FROM next_number
+        SELECT order_no,lpad(order_no::text,3,'0'),${user?.id || null},${customerName},${customerPhone},${String(order.phone2 || '').trim()},${city.id},${String(order.address || '').trim()},${service},${payment},${String(order.carDetails || '').trim()},'pending' FROM next_number
         RETURNING id, voucher_no,order_no`;
       for(const item of preparedItems) await db`INSERT INTO order_items(order_id,book_id,book_name,quantity,unit_price,amount,weight_kg) VALUES (${created[0].id},${item.book.id},${item.book.name},${item.quantity},${item.unitPrice},${item.amount},${Number(item.book.weight)})`;
       await db`UPDATE orders SET subtotal=${subtotal},delivery_fee=${deliveryFee},total=${total},total_weight_kg=${kg},cash_collection=${payment==='COD'?total:0} WHERE id=${created[0].id}`;
@@ -488,7 +488,7 @@ export default async function handler(req, res) {
       return send(res,200,{ok:true});
     }
     if (route === '/orders' && req.method === 'GET') {
-      const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.created_at,o.updated_at,o.admin_data,o.royal_data
+      const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.complete,o.created_at,o.updated_at,o.admin_data,o.royal_data
         FROM orders o JOIN delivery_cities c ON c.id=o.city_id WHERE o.user_id=${user.id} ORDER BY o.created_at DESC LIMIT 100`;
       const orders=await Promise.all(rows.map(async(order)=>{
         const items=await db`SELECT book_id AS id,book_name AS name,quantity,unit_price AS "unitPrice",amount FROM order_items WHERE order_id=${order.id} ORDER BY id`;
@@ -499,10 +499,11 @@ export default async function handler(req, res) {
         const deliveredDateValue=adminData['Deliver Date']||adminData['Confirm Date']||
           (order.status==='delivered'?updatedAt.slice(0,10):'');
         const deliveredDate=deliveredDateValue instanceof Date?deliveredDateValue.toISOString():String(deliveredDateValue);
-        const received=String(adminData.Received||'').toLowerCase()==='yes'||order.status==='received';
+        const complete=order.complete===true||['complete','received'].includes(String(order.status));
+        const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(order.status))?'delivered':'pending';
         const parsedAmountReceived=Number(String(adminData.Received??'0').replaceAll(',',''));
         const amountReceived=Number.isFinite(parsedAmountReceived)&&parsedAmountReceived>=0?parsedAmountReceived:0;
-        return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,amountReceived,cashCollection:received?order.cash_collection:0,status:order.status,received,createdAt:orderedDate,deliveredDate,items};
+        return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,amountReceived,cashCollection:complete?order.cash_collection:0,status:deliveryStatus,complete,createdAt:orderedDate,deliveredDate,items};
       }));
       return send(res,200,{ok:true,orders});
     }
@@ -512,20 +513,32 @@ export default async function handler(req, res) {
       const voucher=String(body.voucherNo || body['Voucher No'] ||
         (route !== '/orders/confirm' ? decodeURIComponent(route.split('/')[2] || '') : '')).trim();
       if(!voucher) return send(res,400,{ok:false,code:'INVALID_ORDER',message:'မှာယူမှုနံပါတ် မမှန်ပါ။'});
-      const rows=await db`SELECT id,user_id,status,admin_data FROM orders WHERE voucher_no=${voucher} AND user_id=${user.id} LIMIT 1`;
+      const rows=await db`SELECT id,user_id,status,complete,admin_data FROM orders WHERE voucher_no=${voucher} AND user_id=${user.id} LIMIT 1`;
       if(!rows.length) return send(res,404,{ok:false,code:'ORDER_NOT_FOUND',message:'မှာယူမှုမတွေ့ပါ။'});
-      if(!['delivered','received'].includes(String(rows[0].status)) && String(rows[0].status)!=='on_the_way') {
+      if(rows[0].complete===true||['complete','received'].includes(String(rows[0].status))) {
+        return send(res,200,{ok:true,status:'complete',complete:true,message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးသားဖြစ်ပါသည်။'});
+      }
+      if(!['delivered','on_the_way'].includes(String(rows[0].status))) {
         return send(res,409,{ok:false,code:'NOT_READY_TO_CONFIRM',message:'ပို့ဆောင်ပြီးသား အမှာစာကိုသာ လက်ခံအတည်ပြုနိုင်ပါသည်။'});
       }
-      if(String(rows[0].status)==='received') {
-        return send(res,200,{ok:true,status:'received',message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးသားဖြစ်ပါသည်။'});
-      }
       const confirmedDate=new Date().toISOString();
-      const adminData={...(rows[0].admin_data||{}),Received:'Yes','Confirm Date':confirmedDate};
-      await db`UPDATE orders SET status='received',admin_data=${JSON.stringify(adminData)}::jsonb,updated_at=now() WHERE id=${rows[0].id}`;
-      await db`INSERT INTO discussion_messages(user_id,sender_id,sender_role,body)
-        VALUES (${user.id},${user.id},'customer',${`အမှာစာ ${voucher} ကို လက်ခံရရှိပြီဖြစ်ကြောင်း အတည်ပြုလိုက်ပါသည်။`})`;
-      return send(res,200,{ok:true,status:'received',message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးပါပြီ။'});
+      const adminData={...(rows[0].admin_data||{}),'Confirm Date':confirmedDate};
+      const confirmationText=`အမှာစာ ${voucher} ကို လက်ခံရရှိပြီဖြစ်ကြောင်း အတည်ပြုလိုက်ပါသည်။`;
+      const completed=await db`WITH changed AS (
+          UPDATE orders SET status='complete',complete=true,admin_data=${JSON.stringify(adminData)}::jsonb,updated_at=now()
+          WHERE id=${rows[0].id} AND complete=false AND status IN ('delivered','on_the_way') RETURNING id
+        ), posted AS (
+          INSERT INTO discussion_messages(user_id,sender_id,sender_role,body)
+          SELECT ${user.id},${user.id},'customer',${confirmationText} FROM changed RETURNING id
+        ) SELECT changed.id,posted.id AS message_id FROM changed CROSS JOIN posted`;
+      if(!completed.length) {
+        const current=await db`SELECT complete,status FROM orders WHERE id=${rows[0].id} LIMIT 1`;
+        if(current[0]?.complete===true||['complete','received'].includes(String(current[0]?.status))) {
+          return send(res,200,{ok:true,status:'complete',complete:true,message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးသားဖြစ်ပါသည်။'});
+        }
+        return send(res,409,{ok:false,code:'NOT_READY_TO_CONFIRM',message:'ပို့ဆောင်ပြီးသား အမှာစာကိုသာ လက်ခံအတည်ပြုနိုင်ပါသည်။'});
+      }
+      return send(res,200,{ok:true,status:'complete',complete:true,message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးပါပြီ။'});
     }
     if (route === '/profile/password' && req.method === 'PATCH') {
       const body = await readBody(req);
@@ -589,7 +602,7 @@ export default async function handler(req, res) {
     if (route === '/admin/orders' && req.method === 'GET') {
       const orders=await db`SELECT o.*,c.english AS city_english,c.label AS city_label FROM orders o JOIN delivery_cities c ON c.id=o.city_id ORDER BY o.created_at DESC`;
       const items=await db`SELECT oi.order_id,oi.book_id,oi.quantity,oi.amount,b.quantity_header,b.amount_header FROM order_items oi LEFT JOIN books b ON b.id=oi.book_id ORDER BY oi.book_name`;
-      return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);return{...extra,'Voucher No':o.voucher_no,Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??(o.status==='received'?'Yes':''),'Deliver Date':extra['Deliver Date']||extra['Confirm Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),status:o.status,'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
+      return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);const complete=o.complete===true||['complete','received'].includes(String(o.status));const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(o.status))?'delivered':'pending';return{...extra,'Voucher No':o.voucher_no,Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??'','Complete':complete?'Yes':'','Deliver Date':extra['Deliver Date']||extra['Confirm Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),status:deliveryStatus,'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
     }
     if (route === '/admin/orders' && req.method === 'PATCH') {
       const body=await readBody(req), order=body.order || body;
@@ -609,12 +622,16 @@ export default async function handler(req, res) {
       const editAliases={'Amount Received':'Received','Delivered Date':'Deliver Date','Phone':'Phone 1','Order Date':'Ordered Date','Old Questions Qty':'OQ Qty','Old Questions Amount':'OQ Amount','Grade 11 Handbook Qty':'G11 Handbook Qty','Grade 11 Handbook Amount':'G11 Handbook Amount','Grade 11 Objective Qty':'G11 Objective Qty','Grade 11 Objective Amount':'G11 Objective Amount','Grade 10 Handbook Qty':'G10 Handbook Qty','Grade 10 Handbook Amount':'G10 Handbook Amount','Royal VOC No':'Royal Voucher',Delivery:'Delivery Service','Facebook Account Name':'Facebook Name'};
       for(const [alias,canonical] of Object.entries(editAliases)) if(Object.prototype.hasOwnProperty.call(order,alias)) adminData[canonical]=order[alias];
       const delivered=String(order['Deliver Date']||order['Delivered Date']||'').trim();
+      const complete=Object.prototype.hasOwnProperty.call(order,'Complete')
+        ? order.Complete===true||['yes','true','1'].includes(String(order.Complete).trim().toLowerCase())
+        : prior.complete===true||['complete','received'].includes(String(prior.status));
       const receivedValue=Number(String(adminData.Received??'0').replaceAll(',',''));
       const subtotalValue=Number(String(adminData.Total??prior.subtotal).replaceAll(',',''));
       const feeValue=Number(String(adminData['Delivery Fees']??prior.delivery_fee).replaceAll(',',''));
       const weightValue=Number(String(adminData['Total KG']??prior.total_weight_kg).replaceAll(',',''));
       if(!Number.isSafeInteger(receivedValue)||receivedValue<0||!Number.isSafeInteger(subtotalValue)||subtotalValue<0||!Number.isSafeInteger(feeValue)||feeValue<0||!Number.isFinite(weightValue)||weightValue<0) return send(res,400,{ok:false,message:'ငွေပမာဏနှင့် အလေးချိန် အချက်အလက်ကို စစ်ဆေးပါ။'});
-      const status=String(order.status || (delivered?'delivered':receivedValue>0?'received':prior.status));
+      const status=complete?'complete':delivered?'delivered':'pending';
+      delete adminData.Complete;
       const rawAddress=String(adminData.Address??prior.address);
       const addressPrefix=`${prior.city_label}, `;
       const dbAddress=rawAddress.startsWith(addressPrefix)?rawAddress.slice(addressPrefix.length):rawAddress;
@@ -624,10 +641,10 @@ export default async function handler(req, res) {
       const books=await db`SELECT id,name,quantity_header,amount_header,weight FROM books ORDER BY sort_order,id`;
       const itemRows=[];
       for(const book of books){const quantity=Number(String(adminData[book.quantity_header]??'0').replaceAll(',',''));if(!Number.isSafeInteger(quantity)||quantity<0)return send(res,400,{ok:false,message:`${book.quantity_header} အချက်အလက် မမှန်ပါ။`});if(quantity<1)continue;const amountRaw=adminData[book.amount_header];const amount=amountRaw==null||amountRaw===''?0:Number(String(amountRaw).replaceAll(',',''));if(!Number.isSafeInteger(amount)||amount<0)return send(res,400,{ok:false,message:`${book.amount_header} အချက်အလက် မမှန်ပါ။`});itemRows.push({book,quantity,amount,unitPrice:Math.floor(amount/quantity)});}
-      const rows=await db`UPDATE orders SET customer_name=${String(adminData.Name??prior.customer_name)},phone=${String(adminData['Phone 1']??prior.phone)},phone2=${String(adminData['Phone 2']??prior.phone2)},address=${dbAddress},payment_method=${payment},delivery_service=${service},delivery_fee=${feeValue},subtotal=${subtotalValue},total=${subtotalValue+feeValue},total_weight_kg=${weightValue},cash_collection=${Number.isSafeInteger(cashValue)&&cashValue>=0?cashValue:0},status=${status},admin_note=${String(order.adminNote||prior.admin_note||'')},admin_data=${JSON.stringify(adminData)}::jsonb,updated_at=now() WHERE voucher_no=${voucher} RETURNING id,voucher_no`;
+      const rows=await db`UPDATE orders SET customer_name=${String(adminData.Name??prior.customer_name)},phone=${String(adminData['Phone 1']??prior.phone)},phone2=${String(adminData['Phone 2']??prior.phone2)},address=${dbAddress},payment_method=${payment},delivery_service=${service},delivery_fee=${feeValue},subtotal=${subtotalValue},total=${subtotalValue+feeValue},total_weight_kg=${weightValue},cash_collection=${Number.isSafeInteger(cashValue)&&cashValue>=0?cashValue:0},status=${status},complete=${complete},admin_note=${String(order.adminNote||prior.admin_note||'')},admin_data=${JSON.stringify(adminData)}::jsonb,updated_at=now() WHERE voucher_no=${voucher} RETURNING id,voucher_no`;
       await db`DELETE FROM order_items WHERE order_id=${rows[0].id}`;
       for(const item of itemRows) await db`INSERT INTO order_items(order_id,book_id,book_name,quantity,unit_price,amount,weight_kg) VALUES (${rows[0].id},${item.book.id},${item.book.name},${item.quantity},${item.unitPrice},${item.amount},${Number(item.book.weight)})`;
-      return send(res,200,{ok:true,order});
+      return send(res,200,{ok:true,order:{...order,status,Complete:complete?'Yes':''}});
     }
     if (route === '/admin/master-data' && req.method === 'PUT') {
       const {masterData}=await readBody(req);
@@ -783,7 +800,7 @@ export default async function handler(req, res) {
       const [books,entries,delivered]=await Promise.all([
         db`SELECT id,name,quantity_header AS "quantityHeader" FROM books ORDER BY sort_order,id`,
         db`SELECT book_id,entry_date,quantity FROM book_stock_entries ORDER BY entry_date DESC`,
-        db`SELECT oi.book_id,sum(oi.quantity)::int AS quantity FROM order_items oi JOIN orders o ON o.id=oi.order_id WHERE o.status IN ('delivered','received') GROUP BY oi.book_id`
+        db`SELECT oi.book_id,sum(oi.quantity)::int AS quantity FROM order_items oi JOIN orders o ON o.id=oi.order_id WHERE o.status IN ('delivered','complete') GROUP BY oi.book_id`
       ]);
       const stock=books.map((book)=>{const incoming=entries.filter((e)=>e.book_id===book.id);const received=incoming.reduce((n,e)=>n+Number(e.quantity),0);const deliveredQty=Number(delivered.find((e)=>e.book_id===book.id)?.quantity||0);return{id:book.id,name:book.name,received,delivered:deliveredQty,remaining:received-deliveredQty,entries:incoming.map((e)=>({date:e.entry_date,quantity:e.quantity}))};});
       return send(res,200,{ok:true,stock});
@@ -793,7 +810,7 @@ export default async function handler(req, res) {
       if(!Number.isSafeInteger(quantity)||quantity<1||!/^\d{4}-\d{2}-\d{2}$/.test(date))return send(res,400,{ok:false,message:'ရက်စွဲနှင့် အုပ်ရေကို စစ်ဆေးပါ။'});
       const rows=await db`INSERT INTO book_stock_entries(book_id,entry_date,quantity) SELECT id,${date},${quantity} FROM books WHERE id=${bookId} RETURNING id`;
       if(!rows.length)return send(res,404,{ok:false,message:'စာအုပ်မတွေ့ပါ။'});
-      const [books,entries,delivered]=await Promise.all([db`SELECT id,name FROM books ORDER BY sort_order,id`,db`SELECT book_id,entry_date,quantity FROM book_stock_entries ORDER BY entry_date DESC`,db`SELECT oi.book_id,sum(oi.quantity)::int AS quantity FROM order_items oi JOIN orders o ON o.id=oi.order_id WHERE o.status IN ('delivered','received') GROUP BY oi.book_id`]);
+      const [books,entries,delivered]=await Promise.all([db`SELECT id,name FROM books ORDER BY sort_order,id`,db`SELECT book_id,entry_date,quantity FROM book_stock_entries ORDER BY entry_date DESC`,db`SELECT oi.book_id,sum(oi.quantity)::int AS quantity FROM order_items oi JOIN orders o ON o.id=oi.order_id WHERE o.status IN ('delivered','complete') GROUP BY oi.book_id`]);
       const updated=books.map((book)=>{const incoming=entries.filter((e)=>e.book_id===book.id),received=incoming.reduce((n,e)=>n+Number(e.quantity),0),deliveredQty=Number(delivered.find((e)=>e.book_id===book.id)?.quantity||0);return{id:book.id,name:book.name,received,delivered:deliveredQty,remaining:received-deliveredQty,entries:incoming.map((e)=>({date:e.entry_date,quantity:e.quantity}))};});
       return send(res,201,{ok:true,entry:{bookId,date,quantity},stock:updated});
     }

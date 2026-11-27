@@ -23,6 +23,10 @@ const fieldGroups = [
     {
         title: 'Social Media Information',
         fields: ['Facebook Account Name', 'Facebook Link']
+    },
+    {
+        title: 'Delivery Completion',
+        fields: ['Complete']
     }
 ];
 let orders = [];
@@ -110,7 +114,12 @@ function openOrder(order) {
             label.append(document.createTextNode(field));
             const input = document.createElement(field === 'Payment Method' ? 'select' : 'input');
             input.name = field;
-            if (field === 'Pay Date' || field === 'Delivered Date') {
+            if (field === 'Complete') {
+                input.type = 'checkbox';
+                input.value = 'Yes';
+                input.checked = ['yes', 'true', '1'].includes(String(orderField(order, field)).trim().toLowerCase());
+                input.className = 'edit-checkbox';
+            } else if (field === 'Pay Date' || field === 'Delivered Date') {
                 input.type = 'date';
                 input.value = dateInputValue(orderField(order, field));
             } else if (field.endsWith('Qty') || field === 'Total' ||
@@ -179,6 +188,7 @@ document.getElementById('edit-form').addEventListener('submit', async (event) =>
     const button = document.getElementById('save-order');
     const updated = { voucherNo: selectedOrder['Voucher No'] };
     new FormData(event.currentTarget).forEach((value, key) => { updated[key] = String(value).trim(); });
+    updated.Complete = event.currentTarget.elements.namedItem('Complete').checked;
     status.className = 'status-message';
     status.textContent = 'Saving changes…';
     button.disabled = true;

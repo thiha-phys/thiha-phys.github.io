@@ -53,7 +53,7 @@ function renderDashboard(orders) {
     document.getElementById('stat-received').textContent = formatKyats(received);
     document.getElementById('stat-outstanding').textContent = formatKyats(outstanding);
     document.getElementById('stat-undelivered').textContent =
-        Number(orders.filter((order) => !String(order['Delivered Date'] || '').trim()).length).toLocaleString('en-US');
+        Number(orders.filter((order) => order.status === 'pending').length).toLocaleString('en-US');
     renderOrdersChart(orders);
 }
 
