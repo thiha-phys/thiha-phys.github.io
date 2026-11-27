@@ -155,54 +155,11 @@ button:disabled { cursor: wait; opacity: .65; }
     color: #2867cf;
     font-size: 17px;
     cursor: pointer;
+    text-decoration: none;
     transition: background .16s ease, transform .16s ease;
 }
 .profile-message-button:hover { background: #e1edff; transform: translateY(-1px); }
 .profile-message-button:focus-visible { outline: 3px solid #9fc2ff; outline-offset: 2px; }
-.profile-message-dialog {
-    width: min(460px, calc(100% - 28px));
-    max-height: min(90vh, 640px);
-    padding: 22px;
-    border: 1px solid #dfe7f2;
-    border-radius: 20px;
-    color: #26364f;
-    box-shadow: 0 22px 65px rgba(24, 42, 69, .25);
-}
-.profile-message-dialog::backdrop { background: rgba(25, 39, 61, .48); }
-.profile-message-form { display: grid; gap: 10px; }
-.profile-message-form h2 { margin: 0; color: #1c2b43; font-size: 20px; }
-.profile-message-recipient { margin: 0; color: #738198; font-size: 13px; }
-.profile-message-form label { margin-top: 5px; color: #52627b; font-size: 12px; font-weight: 700; }
-.profile-message-form textarea {
-    width: 100%;
-    min-height: 132px;
-    resize: vertical;
-    padding: 12px;
-    border: 1px solid #dfe7f2;
-    border-radius: 12px;
-    background: #fbfcfe;
-    color: #26364f;
-    font: inherit;
-    font-size: 14px;
-}
-.profile-message-form textarea:focus { border-color: #6f9fe6; outline: 0; box-shadow: 0 0 0 3px rgba(57, 120, 232, .11); }
-.profile-message-status { min-height: 18px; margin: 0; color: #b42318; font-size: 12px; }
-.profile-message-status.is-success { color: #20734e; }
-.profile-message-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 4px; }
-.profile-message-actions button {
-    min-height: 40px;
-    padding: 0 15px;
-    border: 1px solid #dfe7f2;
-    border-radius: 10px;
-    background: #fff;
-    color: #34445c;
-    font: inherit;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-}
-.profile-message-actions .profile-message-send { border-color: #2867cf; background: #2867cf; color: #fff; }
-.profile-message-actions button:disabled { opacity: .6; cursor: wait; }
 .profile-avatar {
     width: 46px;
     height: 46px;

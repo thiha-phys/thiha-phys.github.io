@@ -1,14 +1,5 @@
 const profileGrid = document.getElementById('profiles-grid');
 const profileCount = document.getElementById('profile-count');
-const profileMessageDialog = document.getElementById('profile-message-dialog');
-const profileMessageForm = document.getElementById('profile-message-form');
-const profileMessageInput = document.getElementById('profile-message-input');
-const profileMessageRecipient = document.getElementById('profile-message-recipient');
-const profileMessageStatus = document.getElementById('profile-message-status');
-const profileMessageSendButton = profileMessageForm?.querySelector('[type="submit"]');
-const profileMessageCancelButton = document.getElementById('profile-message-cancel');
-let activeMessageRecipient = null;
-let sendingProfileMessage = false;
 
 function initialsFromName(name) {
     const text = String(name || '').trim();
@@ -19,17 +10,6 @@ function initialsFromName(name) {
 
 function normalizePhoneForDial(phone) {
     return String(phone || '').replace(/\D/g, '');
-}
-
-function openProfileMessage(profile) {
-    if (!profileMessageDialog || !profileMessageForm) return;
-    activeMessageRecipient = profile;
-    profileMessageForm.reset();
-    profileMessageStatus.textContent = '';
-    profileMessageStatus.classList.remove('is-success');
-    profileMessageRecipient.textContent = String(profile.name || '').trim() || 'Customer';
-    profileMessageDialog.showModal();
-    profileMessageInput.focus();
 }
 
 function renderProfileCard(profile) {
@@ -62,16 +42,15 @@ function renderProfileCard(profile) {
     `;
 
     if (profile.role === 'customer' && profile.approvalStatus === 'approved' && typeof profile.id === 'string') {
-        const messageButton = document.createElement('button');
+        const messageButton = document.createElement('a');
         messageButton.className = 'profile-message-button';
-        messageButton.type = 'button';
-        messageButton.setAttribute('aria-label', `Send a message to ${name}`);
+        messageButton.href = `feedback.html?userId=${encodeURIComponent(profile.id)}`;
+        messageButton.setAttribute('aria-label', `Open ${name}'s discussion`);
         messageButton.title = `Message ${name}`;
         const messageIcon = document.createElement('i');
         messageIcon.className = 'fa-regular fa-comment-dots';
         messageIcon.setAttribute('aria-hidden', 'true');
         messageButton.append(messageIcon);
-        messageButton.addEventListener('click', () => openProfileMessage(profile));
         article.querySelector('.profile-card-header').append(messageButton);
     }
 
@@ -85,61 +64,6 @@ function renderProfileCard(profile) {
     }
 
     return article;
-}
-
-if (profileMessageForm && profileMessageDialog && profileMessageInput &&
-    profileMessageStatus && profileMessageSendButton && profileMessageCancelButton) {
-    profileMessageForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        if (sendingProfileMessage) return;
-        const body = profileMessageInput.value.trim();
-        if (!body) {
-            profileMessageStatus.textContent = 'Write a message before sending.';
-            profileMessageInput.focus();
-            return;
-        }
-        if (!activeMessageRecipient) {
-            profileMessageStatus.textContent = 'Choose a customer before sending.';
-            return;
-        }
-
-        const recipientId = activeMessageRecipient.id;
-        const recipientName = String(activeMessageRecipient.name || '').trim() || 'Customer';
-        sendingProfileMessage = true;
-        profileMessageSendButton.disabled = true;
-        profileMessageCancelButton.disabled = true;
-        profileMessageStatus.classList.remove('is-success');
-        profileMessageStatus.textContent = 'Sending message…';
-        try {
-            const result = await AdminApi.sendDiscussionReply(recipientId, body);
-            if (!result.message || result.message.userId !== recipientId ||
-                result.message.senderRole !== 'admin' || typeof result.message.id !== 'string') {
-                throw new Error('The server could not confirm the message was delivered.');
-            }
-            profileMessageInput.value = '';
-            profileMessageStatus.classList.add('is-success');
-            profileMessageStatus.textContent = `Message sent to ${recipientName}'s discussion.`;
-        } catch (error) {
-            console.error('Unable to send a direct discussion message.', error);
-            profileMessageStatus.textContent = error.message || 'Could not send the message. Please try again.';
-        } finally {
-            sendingProfileMessage = false;
-            profileMessageSendButton.disabled = false;
-            profileMessageCancelButton.disabled = false;
-            profileMessageInput.focus();
-        }
-    });
-
-    profileMessageCancelButton.addEventListener('click', () => profileMessageDialog.close());
-    profileMessageDialog.addEventListener('cancel', (event) => {
-        if (profileMessageSendButton.disabled) event.preventDefault();
-    });
-    profileMessageDialog.addEventListener('close', () => {
-        activeMessageRecipient = null;
-        profileMessageForm.reset();
-        profileMessageStatus.textContent = '';
-        profileMessageStatus.classList.remove('is-success');
-    });
 }
 
 async function loadProfiles() {

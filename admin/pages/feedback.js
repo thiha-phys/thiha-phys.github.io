@@ -3,6 +3,7 @@ const feedbackAdminStatus = document.getElementById('feedback-admin-status');
 const feedbackConversation = document.getElementById('feedback-conversation');
 const feedbackInbox = document.querySelector('.feedback-admin-inbox');
 const feedbackRefresh = document.getElementById('feedback-refresh');
+const requestedUserId = new URLSearchParams(window.location.search).get('userId')?.trim() || '';
 let feedbackThreads = [];
 let activeThreadKey = null;
 let selectedMessageIds = new Set();
@@ -182,15 +183,30 @@ function renderFeedbackThread(thread) {
     const copy = document.createElement('span');
     copy.className = 'feedback-thread-copy';
     appendFeedbackText(copy, 'strong', thread.name, 'feedback-thread-name');
-    appendFeedbackText(copy, 'span', feedbackPreview(thread.latestMessage), 'feedback-thread-preview');
-    const date = appendFeedbackText(button, 'time', formatFeedbackDate(thread.latestMessage.createdAt), 'feedback-thread-date');
-    const parsedDate = parseFeedbackDate(thread.latestMessage.createdAt);
+    appendFeedbackText(
+        copy,
+        'span',
+        thread.latestMessage ? feedbackPreview(thread.latestMessage) : 'Start a private conversation',
+        'feedback-thread-preview'
+    );
+    const date = appendFeedbackText(
+        button,
+        'time',
+        thread.latestMessage ? formatFeedbackDate(thread.latestMessage.createdAt) : '',
+        'feedback-thread-date'
+    );
+    const parsedDate = parseFeedbackDate(thread.latestMessage?.createdAt);
     if (parsedDate) date.dateTime = parsedDate.toISOString();
 
     const count = document.createElement('span');
     count.className = 'feedback-thread-count';
     count.textContent = String(thread.messages.length);
-    count.setAttribute('aria-label', `${thread.messages.length} ${thread.messages.length === 1 ? 'message' : 'messages'}`);
+    count.setAttribute(
+        'aria-label',
+        thread.messages.length
+            ? `${thread.messages.length} ${thread.messages.length === 1 ? 'message' : 'messages'}`
+            : 'No messages yet'
+    );
     button.append(createFeedbackAvatar(thread.name, 'feedback-thread-avatar'), copy, date, count);
     return button;
 }
@@ -530,6 +546,10 @@ function openFeedbackThread(threadKey) {
 }
 
 function closeFeedbackThread() {
+    if (requestedUserId) {
+        window.location.href = 'profiles.html';
+        return;
+    }
     activeThreadKey = null;
     selectedMessageIds.clear();
     editingMessageId = null;
@@ -574,11 +594,40 @@ async function loadFeedback(button) {
         appendFeedbackText(feedbackList, 'div', 'Loading messages…', 'feedback-inbox-empty');
     }
     try {
-        const [feedback, discussionMessages] = await Promise.all([
+        const [feedback, discussionMessages, profiles] = await Promise.all([
             AdminApi.getFeedback(),
-            AdminApi.getDiscussionMessages()
+            AdminApi.getDiscussionMessages(),
+            requestedUserId ? AdminApi.getProfiles() : Promise.resolve(null)
         ]);
         feedbackThreads = groupInbox(feedback, discussionMessages);
+        if (requestedUserId) {
+            const profile = profiles.find((item) =>
+                item.id === requestedUserId &&
+                item.role === 'customer' &&
+                item.approvalStatus === 'approved'
+            );
+            if (!profile) {
+                throw new Error('The selected customer account is unavailable for private messaging.');
+            }
+            let requestedThread = feedbackThreads.find((thread) => thread.userId === requestedUserId);
+            if (!requestedThread) {
+                requestedThread = {
+                    key: `account:${requestedUserId}`,
+                    userId: requestedUserId,
+                    name: String(profile.name || 'အမည်မရှိ'),
+                    phone: String(profile.phone || ''),
+                    job: String(profile.job || profile.occupation || ''),
+                    messages: []
+                };
+                feedbackThreads.unshift(requestedThread);
+            } else {
+                requestedThread.name = String(profile.name || requestedThread.name);
+                requestedThread.phone = String(profile.phone || requestedThread.phone);
+                requestedThread.job = String(profile.job || profile.occupation || requestedThread.job);
+            }
+            if (!activeThreadKey) activeThreadKey = requestedThread.key;
+            feedbackInbox.classList.add('has-active-thread');
+        }
         const activeThread = feedbackThreads.find((thread) => thread.key === activeThreadKey);
         if (!activeThread) {
             activeThreadKey = null;
@@ -595,7 +644,9 @@ async function loadFeedback(button) {
         feedbackAdminStatus.textContent = `${feedbackThreads.length.toLocaleString('en-US')} ${feedbackThreads.length === 1 ? 'account' : 'accounts'} · ${messageCount.toLocaleString('en-US')} ${messageCount === 1 ? 'message' : 'messages'}`;
     } catch (error) {
         console.error('Unable to load customer discussions.', error);
-        showFeedbackError('Could not load feedback and discussion messages. Try again.');
+        showFeedbackError(error.message === 'The selected customer account is unavailable for private messaging.'
+            ? error.message
+            : 'Could not load feedback and discussion messages. Try again.');
         if (!feedbackThreads.length) {
             feedbackList.replaceChildren();
             appendFeedbackText(feedbackList, 'div', 'Messages could not be loaded. Check the connection and database migration.', 'feedback-inbox-empty error');
