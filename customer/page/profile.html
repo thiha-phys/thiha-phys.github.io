@@ -386,18 +386,33 @@
             text-align: center;
         }
         .avatar {
-            width: 82px;
-            height: 82px;
-            flex-basis: 82px;
+            width: 96px;
+            height: 96px;
+            flex-basis: 96px;
             border: 4px solid #fff;
             border-radius: 50%;
             background: linear-gradient(145deg, #3679e8, #35a995);
             box-shadow: 0 8px 20px rgba(43, 105, 176, .2);
             font-size: 29px;
         }
-        .avatar-control { position: relative; width: 82px; height: 82px; margin-bottom: 10px; }
-        .avatar { overflow: hidden; }
-        .avatar-image { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .avatar-control { position: relative; width: 96px; height: 96px; margin-bottom: 10px; }
+        .avatar {
+            overflow: visible;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+        .avatar.is-initial {
+            display: grid;
+            place-items: center;
+            border: 3px solid #fff;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #3679e8, #35a995);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(43, 105, 176, .2);
+        }
+        .avatar-image { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
         .avatar-edit {
             position: absolute;
             right: -3px;
@@ -434,13 +449,13 @@
             padding: 7px;
             border: 2px solid #e8edf4;
             border-radius: 15px;
-            background: #fff;
+            background: linear-gradient(145deg, #fff, #f3f6fb);
             cursor: pointer;
         }
         .avatar-option:hover { border-color: #9ab9eb; transform: translateY(-1px); }
         .avatar-option:focus-visible { outline: 3px solid #9fc2ff; outline-offset: 2px; }
         .avatar-option[aria-pressed="true"] { border-color: #3978e8; background: #f2f7ff; color: #245fb8; }
-        .avatar-option img { display: block; width: 100%; aspect-ratio: 1; border-radius: 50%; }
+        .avatar-option img { display: block; width: 100%; aspect-ratio: 1; border-radius: 0; object-fit: contain; }
         .avatar-dialog-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 16px; }
         .avatar-dialog-actions button,
         .avatar-upload {
@@ -571,8 +586,8 @@
 
         @media (max-width: 480px) {
             .account-shell { padding: 16px 14px 116px; }
-            .avatar { width: 76px; height: 76px; flex-basis: 76px; }
-            .avatar-control { width: 76px; height: 76px; }
+            .avatar { width: 88px; height: 88px; flex-basis: 88px; }
+            .avatar-control { width: 88px; height: 88px; }
             .avatar-dialog { padding: 18px; }
             .profile-contact-row { grid-template-columns: 25px minmax(65px, .65fr) minmax(0, 1.5fr); gap: 6px; padding-inline: 10px; }
             .profile-contact-value { font-size: 11px; }
@@ -744,12 +759,12 @@
         const avatarStatus = document.getElementById('avatar-status');
         const avatarStorageKey = 'physicsLearningHubAvatar';
         const avatarPresets = [
-            { id: 'boy-1', ariaLabel: 'Choose student avatar with glasses', skin: '#e7b895', hair: '#293348', shirt: '#496b9d', background: '#dcecff', style: 'short', glasses: true },
-            { id: 'boy-2', ariaLabel: 'Choose student avatar with side-swept hair', skin: '#ca9472', hair: '#292b35', shirt: '#368d84', background: '#d9f1e9', style: 'swept', glasses: false },
-            { id: 'boy-3', ariaLabel: 'Choose student avatar with curly hair', skin: '#f0c49c', hair: '#493830', shirt: '#bd7547', background: '#ffead2', style: 'curly', glasses: false },
-            { id: 'girl-1', ariaLabel: 'Choose student avatar with a bob haircut', skin: '#e7b895', hair: '#493830', shirt: '#8170b3', background: '#e9e2ff', style: 'bob', glasses: true },
-            { id: 'girl-2', ariaLabel: 'Choose student avatar with long hair', skin: '#ca9472', hair: '#292b35', shirt: '#c76d7f', background: '#ffe2e8', style: 'long', glasses: false },
-            { id: 'girl-3', ariaLabel: 'Choose student avatar with a ponytail', skin: '#f0c49c', hair: '#493830', shirt: '#378477', background: '#d8f1e9', style: 'ponytail', glasses: true }
+            { id: 'boy-1', ariaLabel: 'Choose student avatar with glasses', skin: '#e7b895', hair: '#202734', shirt: '#273448', background: '#dcecff', style: 'short', glasses: true },
+            { id: 'boy-2', ariaLabel: 'Choose student avatar with side-swept hair', skin: '#ca9472', hair: '#25242b', shirt: '#28534f', background: '#d9f1e9', style: 'swept', glasses: false },
+            { id: 'boy-3', ariaLabel: 'Choose student avatar with curly hair', skin: '#f0c49c', hair: '#3b2d27', shirt: '#513c32', background: '#ffead2', style: 'curly', glasses: false },
+            { id: 'girl-1', ariaLabel: 'Choose student avatar with a bob haircut', skin: '#e7b895', hair: '#3d302a', shirt: '#403756', background: '#e9e2ff', style: 'bob', glasses: true },
+            { id: 'girl-2', ariaLabel: 'Choose student avatar with long hair', skin: '#ca9472', hair: '#25242b', shirt: '#533740', background: '#ffe2e8', style: 'long', glasses: false },
+            { id: 'girl-3', ariaLabel: 'Choose student avatar with a ponytail', skin: '#f0c49c', hair: '#3b2d27', shirt: '#285047', background: '#d8f1e9', style: 'ponytail', glasses: true }
         ];
         let currentProfile = null;
         let avatarPreference = null;
@@ -764,17 +779,61 @@
                 ponytail: '<path d="M73 27c15 0 18 19 8 29l-9-5z"/>'
             };
             const frontHair = {
-                short: '<path d="M25 48c-3-22 7-37 25-37 19 0 28 13 25 35l-9-8-4-13-10 9-8-8-13 13z"/>',
-                swept: '<path d="M24 46c-2-23 9-35 27-35 17 0 27 12 26 33-10-4-17-12-19-20-9 12-20 18-34 18z"/>',
-                curly: '<path d="M24 48c-5-10-2-23 5-29l6 5c2-12 9-18 17-18 10 0 17 7 18 18l7-4c7 10 7 20 2 29l-9-8-2-11-9 8-9-8-10 11z"/><circle cx="32" cy="23" r="7"/><circle cx="45" cy="16" r="8"/><circle cx="59" cy="17" r="8"/><circle cx="70" cy="25" r="7"/>',
+                short: '<path d="M25 48c-4-10-4-20 1-28l-3-5 10 2-1-8 12 6 6-9 6 11 10-7 1 11 9-3-3 10c4 7 3 14 2 21l-8-7-4-14-10 8-8-7-12 12z"/>',
+                swept: '<path d="M24 46c-3-20 7-34 23-35 18-1 29 11 30 31-10-4-17-12-20-21-9 13-19 19-33 20z"/>',
+                curly: '<path d="M24 48c-5-10-2-23 5-29 3-3 7-3 10 0 3-9 9-13 15-12 7 1 11 6 12 14 6-4 12-1 14 6 3 8 1 16-3 22l-9-8-2-11-9 8-9-8-10 11z"/><path d="M30 28c1-5 6-8 10-7m1-3c2-5 8-7 12-5m5 7c4-3 9-1 11 3m-38 10c2-4 6-5 9-4" fill="none" stroke="#727887" stroke-opacity=".35" stroke-width="1.5" stroke-linecap="round"/>',
                 bob: '<path d="M24 48c-3-24 7-36 26-36s29 12 26 36l-9 18-7-13-2-18c-8 7-19 11-35 10l-1 22-9 4z"/>',
                 long: '<path d="M23 47c-2-23 8-35 27-35s29 12 27 35l-9 21-7-17V39c-9 8-20 12-36 11v22l-9-7z"/>',
                 ponytail: '<path d="M24 47c-3-24 7-36 27-36s29 12 27 36l-9 14-6-22V32c-9 9-21 13-37 12l-1 20-9-8z"/>'
             };
             const glasses = avatar.glasses
-                ? '<g fill="none" stroke="#263143" stroke-width="2.7"><rect x="29" y="45" width="18" height="14" rx="6"/><rect x="53" y="45" width="18" height="14" rx="6"/><path d="M47 50h6m-24-1-5-2m47 2 5-2"/></g>'
+                ? '<g><rect x="28" y="44" width="20" height="16" rx="6" fill="#d9edfa" fill-opacity=".12" stroke="#18212d" stroke-width="3"/><rect x="52" y="44" width="20" height="16" rx="6" fill="#d9edfa" fill-opacity=".12" stroke="#18212d" stroke-width="3"/><path d="M48 50h4m-24-2-5-2m49 2 5-2" fill="none" stroke="#18212d" stroke-width="2.6" stroke-linecap="round"/><path d="M32 47h8m16 0h8" stroke="#fff" stroke-opacity=".7" stroke-width="1.2" stroke-linecap="round"/></g>'
                 : '';
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="${avatar.background}"/></linearGradient><linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe2c4"/><stop offset=".55" stop-color="${avatar.skin}"/><stop offset="1" stop-color="#c98566"/></linearGradient><linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#596172"/><stop offset=".35" stop-color="${avatar.hair}"/><stop offset="1" stop-color="#151a24"/></linearGradient><linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".25"/><stop offset=".5" stop-color="${avatar.shirt}"/><stop offset="1" stop-color="#26354a"/></linearGradient><filter id="shadow" x="-25%" y="-25%" width="150%" height="160%"><feGaussianBlur in="SourceAlpha" stdDeviation="2.2"/><feOffset dy="2"/><feComponentTransfer><feFuncA type="linear" slope=".2"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter><clipPath id="clip"><circle cx="50" cy="50" r="50"/></clipPath></defs><g clip-path="url(#clip)"><circle cx="50" cy="50" r="50" fill="url(#bg)"/><circle cx="15" cy="24" r="2.5" fill="#fff" opacity=".9"/><path d="m81 20 1.5 3.5L86 25l-3.5 1.5L81 30l-1.5-3.5L76 25l3.5-1.5z" fill="#fff" opacity=".85"/><g filter="url(#shadow)"><path d="M7 104c2-23 16-35 43-35s41 12 43 35" fill="url(#coat)" stroke="#fff" stroke-width="4" stroke-linejoin="round"/><path d="M38 78 50 89l12-11 9 26H29z" fill="#f8fafc" stroke="#e0e5eb" stroke-width="1.4"/><path d="M41 69h18v14H41z" fill="url(#skin)"/><path d="M27 48c-8-4-10 10 0 14m46-14c8-4 10 10 0 14" fill="url(#skin)" stroke="#bc8163" stroke-width="1.5"/><g fill="url(#hair)" stroke="#fff" stroke-width="3" stroke-linejoin="round">${backHair[avatar.style]}</g><path d="M29 43c0-18 8-28 21-28s21 10 21 28v13c0 16-9 26-21 26S29 72 29 56z" fill="url(#skin)" stroke="#fff" stroke-width="3"/><path d="M34 38c6 3 17 2 32-2l5 16v9c0 14-9 23-21 23S29 74 29 61V48z" fill="url(#skin)"/><g fill="url(#hair)" stroke="#fff" stroke-width="3" stroke-linejoin="round">${frontHair[avatar.style]}</g><path d="M36 44c3-2 7-3 11-2m7 0c4-1 8 0 11 2" fill="none" stroke="#49352f" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="41" cy="53" rx="4.3" ry="5.1" fill="#fff"/><ellipse cx="59" cy="53" rx="4.3" ry="5.1" fill="#fff"/><ellipse cx="42" cy="53" rx="2.8" ry="3.6" fill="#293448"/><ellipse cx="60" cy="53" rx="2.8" ry="3.6" fill="#293448"/><circle cx="43" cy="51.5" r="1.1" fill="#fff"/><circle cx="61" cy="51.5" r="1.1" fill="#fff"/>${glasses}<path d="M49 57c-1 3-2 5 1 6" fill="none" stroke="#b8795b" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="35" cy="63" rx="4.2" ry="2.3" fill="#ef8e88" opacity=".38"/><ellipse cx="65" cy="63" rx="4.2" ry="2.3" fill="#ef8e88" opacity=".38"/><path d="M43 68q7 6 14 0" fill="none" stroke="#9e4f55" stroke-width="2.2" stroke-linecap="round"/><path d="M36 80 50 90l14-10" fill="none" stroke="${avatar.shirt}" stroke-width="2.5"/><path d="M50 91v10m-3-2h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M32 89l-4 13m40-13 4 13" stroke="#fff" stroke-opacity=".25" stroke-width="2"/></g></g></svg>`;
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <defs>
+                    <linearGradient id="backdrop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="${avatar.background}"/></linearGradient>
+                    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe7ce"/><stop offset=".55" stop-color="${avatar.skin}"/><stop offset="1" stop-color="#bf8062"/></linearGradient>
+                    <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#657084"/><stop offset=".34" stop-color="${avatar.hair}"/><stop offset="1" stop-color="#151a24"/></linearGradient>
+                    <linearGradient id="jacket" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#64748b"/><stop offset=".4" stop-color="${avatar.shirt}"/><stop offset="1" stop-color="#26354a"/></linearGradient>
+                    <filter id="shadow" x="-25%" y="-25%" width="150%" height="165%"><feGaussianBlur in="SourceAlpha" stdDeviation="1.8"/><feOffset dy="2"/><feComponentTransfer><feFuncA type="linear" slope=".2"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+                <path d="M13 57C8 37 18 18 37 12c18-6 39 0 48 16 8 15 5 38-2 53-6 13-17 16-33 16S21 88 15 75z" fill="url(#backdrop)" opacity=".86"/>
+                <path d="m17 24 1.4 3.1 3.1 1.4-3.1 1.4-1.4 3.1-1.4-3.1-3.1-1.4 3.1-1.4zM83 38l1 2.2 2.2 1-2.2 1-1 2.2-1-2.2-2.2-1 2.2-1z" fill="#fff"/>
+                <g filter="url(#shadow)">
+                    <path d="M7 105c2-20 15-31 43-31s41 11 43 31v10H7z" fill="url(#jacket)" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
+                    <path d="M18 100c2-13 8-20 18-23l10 10-12 15zm64 0c-2-13-8-20-18-23L54 87l12 15z" fill="#202936" stroke="#18212d" stroke-width="1.2" stroke-linejoin="round"/>
+                    <path d="M41 67h18v16H41z" fill="url(#skin)"/>
+                    <path d="M41 78 50 89l9-11 6 27H35z" fill="#fbfcff" stroke="#e6eaf0" stroke-width="1.2"/>
+                    <path d="m44 78 6 9 6-9 4 24H40z" fill="#eef2f8"/>
+                    <path d="M27 44c-9-5-11 11 0 15m46-15c9-5 11 11 0 15" fill="url(#skin)" stroke="#b8795b" stroke-width="1"/>
+                    <g fill="url(#hair)" stroke="#1b2029" stroke-width="1.1" stroke-linejoin="round">${backHair[avatar.style]}</g>
+                    <path d="M29 42c0-18 8-28 21-28s21 10 21 28v15c0 17-9 26-21 26S29 74 29 57z" fill="url(#skin)" stroke="#b8795b" stroke-width="1"/>
+                    <path d="M32 48c2 19 9 29 18 31 11-2 18-12 18-30v-7c-11 5-23 6-36 3z" fill="url(#skin)"/>
+                    <g fill="url(#hair)" stroke="#1b2029" stroke-width="1.1" stroke-linejoin="round">${frontHair[avatar.style]}</g>
+                    <g fill="none" stroke="#aab4c4" stroke-opacity=".22" stroke-width="1.2" stroke-linecap="round">
+                        <path d="M34 28q8-11 19-12"/>
+                        <path d="M39 33q11-9 22-10"/>
+                        <path d="M28 42q1-6 4-10"/>
+                    </g>
+                    <path d="M36 45c3-2 7-3 11-2m7 0c4-1 8 0 11 2" fill="none" stroke="#49352f" stroke-width="2.5" stroke-linecap="round"/>
+                    <ellipse cx="41" cy="53" rx="4.5" ry="5.3" fill="#fff"/>
+                    <ellipse cx="59" cy="53" rx="4.5" ry="5.3" fill="#fff"/>
+                    <ellipse cx="42" cy="53" rx="2.9" ry="3.8" fill="#273447"/>
+                    <ellipse cx="60" cy="53" rx="2.9" ry="3.8" fill="#273447"/>
+                    <circle cx="43" cy="51.5" r="1.2" fill="#fff"/>
+                    <circle cx="61" cy="51.5" r="1.2" fill="#fff"/>
+                    ${glasses}
+                    <path d="M49 56c-1 3-2 6 1 8m-2-2q2 1 4 0" fill="none" stroke="#b8795b" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M48 59q2-1 4 0" fill="none" stroke="#ffe8d2" stroke-width="1" stroke-linecap="round"/>
+                    <ellipse cx="35" cy="63" rx="4.4" ry="2.5" fill="#ef8e88" opacity=".4"/>
+                    <ellipse cx="65" cy="63" rx="4.4" ry="2.5" fill="#ef8e88" opacity=".4"/>
+                    <path d="M42 67q8 8 16 0q-1 8-8 8t-8-8z" fill="#fff8f2"/>
+                    <path d="M42 67q8 8 16 0" fill="none" stroke="#9e4f55" stroke-width="2.3" stroke-linecap="round"/>
+                    <path d="M35 81 50 92l15-11" fill="none" stroke="${avatar.shirt}" stroke-width="2.7"/>
+                    <path d="M50 92v14m-3-3h6" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M31 91l-4 13m42-13 4 13" stroke="#fff" stroke-opacity=".34" stroke-width="2"/>
+                </g>
+            </svg>`;
             return `data:image/svg+xml,${encodeURIComponent(svg)}`;
         }
 
@@ -796,12 +855,14 @@
                     ? avatarSources.get(avatarPreference.id)
                     : avatarSources.get(defaultId);
             if (selectedSource) {
+                avatarElement.classList.remove('is-initial');
                 const image = document.createElement('img');
                 image.className = 'avatar-image';
                 image.src = selectedSource;
                 image.alt = '';
                 avatarElement.replaceChildren(image);
             } else {
+                avatarElement.classList.add('is-initial');
                 avatarElement.textContent = name ? name.charAt(0).toUpperCase() : 'P';
             }
             document.querySelectorAll('.avatar-option').forEach((option) => {
