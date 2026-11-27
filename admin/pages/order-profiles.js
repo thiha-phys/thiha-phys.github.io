@@ -3,6 +3,7 @@ const orderProfilesStatus = document.getElementById('order-profiles-status');
 const orderProfileCount = document.getElementById('order-profile-count');
 const orderProfileSearch = document.getElementById('order-profile-search');
 let customerProfiles = [];
+let knownProfiles = [];
 
 function phoneDigits(value) {
     return String(value || '')
@@ -117,6 +118,14 @@ function renderCustomerCard(customer) {
     latest.textContent = `နောက်ဆုံးမှာယူသည့်ရက် · ${formatCustomerOrderDate(customer.latestOrderDate)}`;
     details.append(address, phone, latest);
     article.append(header, details);
+    if (customer.userId) {
+        const message = document.createElement('a');
+        message.className = 'order-profile-message';
+        message.href = `feedback.html?userId=${encodeURIComponent(customer.userId)}`;
+        message.innerHTML = '<i class="fa-regular fa-comment-dots" aria-hidden="true"></i><span>Chat</span>';
+        message.setAttribute('aria-label', `${customer.name} နဲ့ စကားပြောရန်`);
+        article.append(message);
+    }
     return article;
 }
 
@@ -140,8 +149,20 @@ async function loadOrderProfiles(button) {
     orderProfilesStatus.textContent = 'Loading order profiles…';
     orderProfilesGrid.innerHTML = '<div class="empty-state">Loading customer orders…</div>';
     try {
-        const snapshot = await AdminApi.refreshOrders();
-        customerProfiles = groupCustomerOrders(snapshot.data);
+        const [snapshot, profiles] = await Promise.all([
+            AdminApi.refreshOrders(),
+            AdminApi.getProfiles()
+        ]);
+        knownProfiles = Array.isArray(profiles) ? profiles.filter((profile) =>
+            profile.role === 'customer' && profile.approvalStatus === 'approved'
+        ) : [];
+        customerProfiles = groupCustomerOrders(snapshot.data).map((customer) => {
+            const phoneDigits = phoneDigits(customer.phone);
+            const profile = knownProfiles.find((item) =>
+                phoneDigits(item.phone) === phoneDigits
+            );
+            return { ...customer, userId: profile?.id || '' };
+        });
         orderProfileCount.textContent = customerProfiles.length.toLocaleString('my-MM');
         renderOrderProfiles();
     } catch (error) {

@@ -458,6 +458,35 @@
         .avatar-upload:focus-within { outline: 3px solid #9fc2ff; outline-offset: 2px; }
         .avatar-status { min-height: 18px; margin: 12px 0 0 !important; color: #b42318 !important; }
         .avatar-status.success { color: #20734e !important; }
+        .avatar-presets {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin: 14px 0 0;
+        }
+        .avatar-preset {
+            display: grid;
+            justify-items: center;
+            gap: 7px;
+            min-width: 0;
+            padding: 9px;
+            border: 1px solid #dfe7f2;
+            border-radius: 12px;
+            background: #fff;
+            color: #34445c;
+            font: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .avatar-preset img {
+            width: 88px;
+            height: 88px;
+            object-fit: cover;
+            border-radius: 50%;
+            background: #edf4fb;
+        }
+        .avatar-preset:hover { border-color: #82a8df; background: #f7fbff; }
         .profile-summary-copy { display: grid; justify-items: center; gap: 3px; }
         .profile-summary-kicker { display: none; }
         .profile-summary h2 { margin: 0; color: #1c2b43; font-size: 21px; }
@@ -709,7 +738,17 @@
     </dialog>
     <dialog id="avatar-dialog" class="avatar-dialog" aria-labelledby="avatar-dialog-title">
         <h2 id="avatar-dialog-title">Profile picture</h2>
-        <p>Choose a picture from your gallery. It stays in this browser only and is not uploaded.</p>
+        <p>Choose a preset or a picture from your gallery.</p>
+        <div class="avatar-presets" aria-label="Preset profile pictures">
+            <button class="avatar-preset" type="button" data-avatar-preset="../assets/avatars/profile1.webp">
+                <img src="../assets/avatars/profile1.webp" alt="Male cartoon profile" loading="lazy">
+                <span>Profile 1</span>
+            </button>
+            <button class="avatar-preset" type="button" data-avatar-preset="../assets/avatars/profile2.webp">
+                <img src="../assets/avatars/profile2.webp" alt="Female cartoon profile" loading="lazy">
+                <span>Profile 2</span>
+            </button>
+        </div>
         <div class="avatar-dialog-actions">
             <label class="avatar-upload">
                 <i class="fa-regular fa-image" aria-hidden="true"></i>
@@ -736,7 +775,11 @@
 
         function renderAvatar(profile) {
             const name = typeof profile.name === 'string' ? profile.name.trim() : '';
-            const imageSource = avatarPreference?.type === 'image' ? avatarPreference.src : '';
+            const imageSource = avatarPreference?.type === 'image'
+                ? avatarPreference.src
+                : avatarPreference?.type === 'preset'
+                    ? avatarPreference.src
+                    : '';
             if (imageSource) {
                 avatarElement.classList.remove('is-initial');
                 const image = document.createElement('img');
@@ -778,6 +821,11 @@
             avatarDialog.showModal();
         });
         document.getElementById('reset-avatar').addEventListener('click', () => setAvatarPreference(null));
+        document.querySelectorAll('[data-avatar-preset]').forEach((button) => {
+            button.addEventListener('click', () => {
+                setAvatarPreference({ type: 'preset', src: button.dataset.avatarPreset });
+            });
+        });
         document.getElementById('avatar-file').addEventListener('change', async (event) => {
             const input = event.currentTarget;
             const file = input.files?.[0];
@@ -852,8 +900,10 @@
                         && typeof savedAvatar.src === 'string'
                         && /^data:image\/(?:jpeg|png|webp);base64,/i.test(savedAvatar.src)) {
                         avatarPreference = savedAvatar;
-                    } else if (savedAvatar?.type === 'preset') {
-                        localStorage.removeItem(avatarStorageKey);
+                    } else if (savedAvatar?.profilePhone === normalizePhoneNumber(profile.phone)
+                        && savedAvatar?.type === 'preset'
+                        && ['../assets/avatars/profile1.webp', '../assets/avatars/profile2.webp'].includes(savedAvatar.src)) {
+                        avatarPreference = savedAvatar;
                     }
                 } catch (error) {
                     console.error('Unable to load the saved profile picture from this browser.', error);

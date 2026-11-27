@@ -21,6 +21,10 @@ const fieldGroups = [
         ]
     },
     {
+        title: 'Order Status',
+        fields: ['Order Status']
+    },
+    {
         title: 'Social Media Information',
         fields: ['Facebook Account Name', 'Facebook Link']
     }
@@ -135,6 +139,22 @@ function openOrder(order) {
                     input.append(existing);
                 }
                 input.value = currentMethod || 'KBZ Pay';
+            } else if (field === 'Order Status') {
+                input = document.createElement('select');
+                input.name = 'status';
+                [
+                    ['new', 'New'],
+                    ['approved', 'Approved'],
+                    ['on_the_way', 'On the way'],
+                    ['delivered', 'Delivered'],
+                    ['received', 'Received']
+                ].forEach(([value, label]) => {
+                    const option = document.createElement('option');
+                    option.value = value;
+                    option.textContent = label;
+                    input.append(option);
+                });
+                input.value = order.status || 'new';
             } else {
                 input.value = orderField(order, field);
                 input.autocomplete = 'off';

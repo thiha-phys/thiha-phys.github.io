@@ -22,6 +22,9 @@
         ul{margin:12px 0;padding-left:20px;color:#38445b}li{margin:5px 0}
         .order-line{padding-top:10px}.total{font-weight:700}
         .notice{padding:18px;border-radius:14px;background:#fff;color:#58657a}
+        .order-confirm-button{min-height:38px;margin-top:10px;padding:0 14px;border:0;border-radius:10px;background:#d72c2c;color:#fff;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+        .order-confirm-button:disabled{opacity:.55;cursor:wait}
+        .order-confirm-status{margin:8px 0 0;color:#14744d;font-size:12px}
     </style>
 </head>
 <body>
@@ -43,13 +46,43 @@
             const card=document.createElement('article');card.className='order-card';
             const top=document.createElement('div');top.className='order-top';
             const heading=document.createElement('div'),voucher=document.createElement('div'),created=document.createElement('div'),status=document.createElement('span');
-            voucher.className='voucher';voucher.textContent=order.voucherNo||'အော်ဒါ';created.className='muted';created.textContent=date(order.createdAt);const complete=order.status==='delivered';status.className=`status${complete?' complete':''}`;status.textContent=complete?'complete':'pending';
+            voucher.className='voucher';voucher.textContent=order.voucherNo||'အော်ဒါ';created.className='muted';created.textContent=date(order.createdAt);
+            const complete=order.status==='delivered'||order.status==='received';
+            status.className=`status${complete?' complete':''}`;
+            status.textContent={
+                new:'pending',
+                approved:'approved',
+                on_the_way:'on the way',
+                delivered:'delivered',
+                received:'received'
+            }[order.status||'new']||order.status||'pending';
             heading.append(voucher,created);top.append(heading,status);card.append(top);
             const details=document.createElement('p');details.className='muted';details.textContent=`${order.city||''} · ${order.deliveryService||''} · ${order.paymentMethod||''}`;card.append(details);
             const list=document.createElement('ul');(order.items||[]).forEach(item=>{const li=document.createElement('li');li.textContent=`${item.name} × ${item.quantity} — ${money(item.amount)}`;list.append(li);});card.append(list);
             const subtotal=document.createElement('div');subtotal.className='order-line muted';subtotal.textContent=`စာအုပ်ဖိုး ${money(order.subtotal)}`;card.append(subtotal);
             const delivery=document.createElement('div');delivery.className='order-line muted';delivery.textContent=`ပို့ခ ${money(order.deliveryFee)}`;card.append(delivery);
             const total=document.createElement('div');total.className='order-line total';total.textContent=`စုစုပေါင်း ${money(order.total)}`;card.append(total);
+            if (['on_the_way','delivered'].includes(order.status)) {
+                const confirmButton=document.createElement('button');
+                confirmButton.type='button';
+                confirmButton.className='order-confirm-button';
+                confirmButton.textContent='လက်ခံရရှိပြီလို့ အတည်ပြုမည်';
+                confirmButton.addEventListener('click',async()=>{
+                    confirmButton.disabled=true;
+                    try {
+                        await physicsApiFetch(`orders/${encodeURIComponent(order.voucherNo)}/confirm`,{method:'PATCH',body:'{}'});
+                        order.status='received';
+                        card.replaceWith(render(order));
+                    } catch(error) {
+                        confirmButton.disabled=false;
+                        const statusText=document.createElement('p');
+                        statusText.className='order-confirm-status';
+                        statusText.textContent=error.message||'လက်ခံအတည်ပြု၍မရပါ။';
+                        card.append(statusText);
+                    }
+                });
+                card.append(confirmButton);
+            }
             return card;
         }
         (async()=>{

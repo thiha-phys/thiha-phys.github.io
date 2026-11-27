@@ -164,6 +164,12 @@ function renderDiscussionMessage(message) {
     const bubble = document.createElement('article');
     bubble.className = 'discussion-bubble';
     bubble.classList.toggle('is-selected', selectedMessageId === message.id);
+    const orderAlert = /^ORDER_(?:ALERT|CONFIRMED)::([^:]+)::([\s\S]+)$/.exec(message.body);
+    if (orderAlert) {
+        bubble.classList.add('is-order-alert');
+        bubble.dataset.alertType = orderAlert[1];
+        message = { ...message, body: orderAlert[2] };
+    }
 
     if (ownMessage && editingMessageId === message.id) {
         bubble.append(renderDiscussionEditForm(message));

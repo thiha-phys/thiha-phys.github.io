@@ -228,6 +228,7 @@ button:disabled { cursor: wait; opacity: .65; }
 .order-profile-details p i { width: 14px; flex: 0 0 14px; margin-top: 4px; color: #5684c7; text-align: center; }
 .order-profile-details a { color: #316cc3; font-weight: 600; }
 .order-profile-details .order-profile-last-order { color: #8a94a5; font-size: 10px; }
+.order-profile-message { display: inline-flex; width: fit-content; align-items: center; gap: 7px; min-height: 38px; padding: 0 12px; border-radius: 10px; background: #2563eb; color: #fff; font-size: 12px; font-weight: 700; text-decoration: none; }
 
 .feedback-admin-page { display: grid; gap: 18px; }
 .feedback-inbox-toolbar { display: flex; align-items: center; gap: 8px; min-height: 32px; color: #64748b; font-size: 12px; font-weight: 600; }
