@@ -488,13 +488,17 @@ export default async function handler(req, res) {
       return send(res,200,{ok:true});
     }
     if (route === '/orders' && req.method === 'GET') {
-      const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.created_at,o.admin_data,o.royal_data
+      const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.created_at,o.updated_at,o.admin_data,o.royal_data
         FROM orders o JOIN delivery_cities c ON c.id=o.city_id WHERE o.user_id=${user.id} ORDER BY o.created_at DESC LIMIT 100`;
       const orders=await Promise.all(rows.map(async(order)=>{
         const items=await db`SELECT book_id AS id,book_name AS name,quantity,unit_price AS "unitPrice",amount FROM order_items WHERE order_id=${order.id} ORDER BY id`;
         const adminData={...(order.admin_data||{}),...(order.royal_data||{})};
         const orderedDate=String(adminData['Ordered Date']||adminData['Order Date']||order.created_at||'');
-        const deliveredDate=String(adminData['Delivered Date']||adminData['Deliver Date']||adminData['Confirm Date']||'');
+        const deliveredDate=String(
+          adminData['Delivered Date']||
+          adminData['Deliver Date']||
+          (['delivered','received'].includes(order.status) ? adminData['Confirm Date']||order.updated_at||'' : '')
+        );
         const received=String(adminData.Received||'').toLowerCase()==='yes'||order.status==='received';
         return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,cashCollection:received?order.cash_collection:0,status:order.status,received,createdAt:orderedDate,deliveredDate,items};
       }));

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         body{margin:0;background:#f4f7fb;color:#172033;font-family:Arial,sans-serif}
-        main{width:min(760px,calc(100% - 8px));margin:12px auto 100px}
+        main{box-sizing:border-box;width:100%;max-width:760px;padding-inline:12px;margin:12px auto 100px}
         header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
         header a{color:#345bd6;font-size:20px} h1{font-size:22px;margin:0}
         #orders{display:grid;gap:14px}
@@ -18,9 +18,9 @@
         .order-card-summary{display:grid;gap:10px;padding:20px 20px 16px;cursor:pointer;list-style:none}
         .order-card-summary::-webkit-details-marker{display:none}
         .order-card-heading,.order-card-meta,.order-card-totals{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-        .order-card-heading{display:grid;grid-template-columns:62px minmax(0,1fr);align-items:center;gap:8px}
+        .order-card-heading{display:grid;grid-template-columns:50px minmax(0,1fr);align-items:center;gap:8px}
         .voucher{font-weight:800;color:#253c88;font-size:21px}
-        .order-statuses{display:grid;grid-template-columns:88px minmax(112px,1fr) 58px;justify-content:stretch;align-items:center;gap:6px}
+        .order-statuses{display:grid;grid-template-columns:72px minmax(126px,1fr) 53px;justify-content:stretch;align-items:center;gap:5px}
         .status{padding:6px 8px;border-radius:999px;background:#fff2dc;color:#9b5d00;font-size:12px;white-space:nowrap;text-align:center}
         .status.complete{background:#e5f7ee;color:#14744d}
         .payment-status{padding:6px 8px;border-radius:999px;background:#edf4ff;color:#316cc3;font-size:12px;font-weight:700;white-space:nowrap;text-align:center}
@@ -37,7 +37,7 @@
         .confirm-order-button:disabled{opacity:.55;cursor:wait}
         .notice{padding:18px;border-radius:14px;background:#fff;color:#58657a}
         @media(max-width:480px){
-            main{width:calc(100% - 6px);margin-top:8px}
+            main{width:100%;padding-inline:8px;margin-top:8px}
             .order-card-summary{padding:16px 14px 14px}
             .order-card-heading{align-items:center}
             .voucher{font-size:19px}
