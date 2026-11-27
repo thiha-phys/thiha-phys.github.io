@@ -23,7 +23,6 @@ async function sendProfileRequest(action, profile) {
     if (action === 'listDiscussionMessages') return physicsApiFetch('discussion/messages', { method: 'GET' });
     if (action === 'sendDiscussionMessage') return physicsApiFetch('discussion/messages', { method: 'POST', body: JSON.stringify(profile) });
     if (action === 'editDiscussionMessage') return physicsApiFetch(`discussion/messages/${encodeURIComponent(profile.messageId)}`, { method: 'PATCH', body: JSON.stringify(profile) });
-    if (action === 'confirmOrderReceived') return physicsApiFetch(`orders/${encodeURIComponent(profile.voucherNo)}/confirm`, { method: 'PATCH', body: '{}' });
     throw new Error('This profile action has not been migrated to the database API yet.');
 }
 

@@ -496,19 +496,6 @@ export default async function handler(req, res) {
       }));
       return send(res,200,{ok:true,orders});
     }
-    if (/^\/orders\/[^/]+\/confirm$/.test(route) && req.method === 'PATCH') {
-      const voucher=decodeURIComponent(route.split('/')[2] || '').trim();
-      if (!voucher) return send(res,400,{ok:false,code:'INVALID_ORDER',message:'မှာယူမှုနံပါတ် မမှန်ပါ။'});
-      const rows=await db`SELECT id,user_id,status FROM orders WHERE voucher_no=${voucher} AND user_id=${user.id} LIMIT 1`;
-      if (!rows.length) return send(res,404,{ok:false,code:'ORDER_NOT_FOUND',message:'မှာယူမှုမတွေ့ပါ။'});
-      if (!['on_the_way','delivered'].includes(String(rows[0].status))) {
-        return send(res,409,{ok:false,code:'NOT_READY_TO_CONFIRM',message:'ပစ္စည်းပို့ဆောင်နေခြင်းမပြည့်စုံသေးပါ။'});
-      }
-      await db`UPDATE orders SET status='received',updated_at=now() WHERE id=${rows[0].id}`;
-      await db`INSERT INTO discussion_messages(user_id,sender_id,sender_role,body)
-        VALUES (${user.id},${user.id},'customer',${`ORDER_CONFIRMED::received::အမှာစာ ${voucher} ကို လက်ခံရရှိပြီဖြစ်ကြောင်း အတည်ပြုလိုက်ပါသည်။`})`;
-      return send(res,200,{ok:true,status:'received',message:'လက်ခံရရှိပြီလား အတည်ပြုပြီးပါပြီ။'});
-    }
     if (route === '/profile/password' && req.method === 'PATCH') {
       const body = await readBody(req);
       const currentPassword = String(body.currentPassword || '');
@@ -571,7 +558,7 @@ export default async function handler(req, res) {
     if (route === '/admin/orders' && req.method === 'GET') {
       const orders=await db`SELECT o.*,c.english AS city_english,c.label AS city_label FROM orders o JOIN delivery_cities c ON c.id=o.city_id ORDER BY o.created_at DESC`;
       const items=await db`SELECT oi.order_id,oi.book_id,oi.quantity,oi.amount,b.quantity_header,b.amount_header FROM order_items oi LEFT JOIN books b ON b.id=oi.book_id ORDER BY oi.book_name`;
-      return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);return{...extra,'Voucher No':o.voucher_no,userId:o.user_id?String(o.user_id):'',Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??(o.status==='received'?'Yes':''),'Deliver Date':extra['Deliver Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),status:o.status,'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
+      return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);return{...extra,'Voucher No':o.voucher_no,Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??(o.status==='received'?'Yes':''),'Deliver Date':extra['Deliver Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),status:o.status,'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
     }
     if (route === '/admin/orders' && req.method === 'PATCH') {
       const body=await readBody(req), order=body.order || body;
@@ -607,17 +594,6 @@ export default async function handler(req, res) {
       const rows=await db`UPDATE orders SET customer_name=${String(adminData.Name??prior.customer_name)},phone=${String(adminData['Phone 1']??prior.phone)},phone2=${String(adminData['Phone 2']??prior.phone2)},address=${dbAddress},payment_method=${payment},delivery_service=${service},delivery_fee=${feeValue},subtotal=${subtotalValue},total=${subtotalValue+feeValue},total_weight_kg=${weightValue},cash_collection=${Number.isSafeInteger(cashValue)&&cashValue>=0?cashValue:0},status=${status},admin_note=${String(order.adminNote||prior.admin_note||'')},admin_data=${JSON.stringify(adminData)}::jsonb,updated_at=now() WHERE voucher_no=${voucher} RETURNING id,voucher_no`;
       await db`DELETE FROM order_items WHERE order_id=${rows[0].id}`;
       for(const item of itemRows) await db`INSERT INTO order_items(order_id,book_id,book_name,quantity,unit_price,amount,weight_kg) VALUES (${rows[0].id},${item.book.id},${item.book.name},${item.quantity},${item.unitPrice},${item.amount},${Number(item.book.weight)})`;
-      if (prior.user_id && prior.status !== status) {
-        const updateMessages={
-          approved:`ORDER_ALERT::approved::Voucher ${voucher} မှာယူမှုကို အတည်ပြုပြီးပါပြီ။`,
-          on_the_way:`ORDER_ALERT::on_the_way::Your order is on the way — သင့်မှာယူမှု ပို့ဆောင်နေပါပြီ။`,
-          delivered:`ORDER_ALERT::delivered::ပစ္စည်းပို့ဆောင်ပြီးပါပြီ။ လက်ခံရရှိပါက အတည်ပြုပေးပါ။`,
-          received:`ORDER_ALERT::received::သင့်အမှာစာကို လက်ခံရရှိပြီဟု အတည်ပြုပြီးပါပြီ။`
-        };
-        const updateMessage=updateMessages[status];
-        if (updateMessage) await db`INSERT INTO discussion_messages(user_id,sender_id,sender_role,body)
-          VALUES (${prior.user_id},${user.id},'admin',${updateMessage})`;
-      }
       return send(res,200,{ok:true,order});
     }
     if (route === '/admin/master-data' && req.method === 'PUT') {

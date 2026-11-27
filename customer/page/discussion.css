@@ -187,18 +187,6 @@
 }
 
 .discussion-message-row.is-customer .discussion-message-footer { color: rgba(255,255,255,.82); }
-.discussion-bubble.is-order-alert,
-.discussion-message-row.is-admin .discussion-bubble.is-order-alert {
-    min-width: min(280px, 82%);
-    border: 0;
-    border-radius: 12px;
-    background: #d72c2c;
-    color: #fff;
-    box-shadow: 0 8px 18px rgba(215, 44, 44, .18);
-}
-.discussion-bubble.is-order-alert .discussion-message-footer {
-    color: rgba(255,255,255,.82);
-}
 .discussion-message-actions { display: flex; justify-content: flex-end; margin-top: 5px; }
 .discussion-edit-button { padding: 3px 7px; border: 0; border-radius: 9px; background: rgba(255,255,255,.92); color: #285fae; font-size: 10px; font-weight: 700; cursor: pointer; }
 .discussion-edit-form { display: grid; gap: 7px; min-width: min(64vw, 320px); }
