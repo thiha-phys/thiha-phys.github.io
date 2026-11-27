@@ -87,7 +87,7 @@
             card.className='order-card';
             const complete=Boolean(String(order.deliveredDate||'').trim())||['delivered','received'].includes(order.status);
             const deliveredDateLabel=order.deliveredDate?date(order.deliveredDate):complete?'—':'မပို့ရသေး';
-            const paymentComplete=order.received===true;
+            const paymentComplete=Number(order.amountReceived||0)>=Number(order.total||0);
             const itemDetails=(order.items||[]).map(item =>
                 detailLine(`${item.name} × ${item.quantity}`,money(item.amount))
             ).join('');
@@ -106,7 +106,7 @@
                     <span class="order-card-info order-customer">${escape(order.name||'')} · ${escape(order.phone||'')} · ${escape(order.address||order.city||'')}</span>
                     <span class="order-card-totals">
                         <span>စုစုပေါင်း <strong>${money(order.total)}</strong></span>
-                        <span>ပေးချေပြီး <strong>${money(order.cashCollection)}</strong></span>
+                        <span>ပေးချေပြီး <strong>${money(order.amountReceived)}</strong></span>
                     </span>
                     <span class="order-card-expand">အသေးစိတ်ကြည့်ရန် <i class="fa-solid fa-chevron-down"></i></span>
                 </summary>

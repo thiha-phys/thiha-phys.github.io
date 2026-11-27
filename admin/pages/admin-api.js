@@ -120,8 +120,8 @@
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` },
             ...(method === 'GET' ? {} : { body: JSON.stringify(payload) })
         });
-        if (!response.ok) throw new Error(`Database API request failed (${response.status}).`);
         const result = await response.json();
+        if (!response.ok) throw new Error(result.message || `Database API request failed (${response.status}).`);
         if (!result.ok) throw new Error(result.message || 'Database API rejected the request.');
         return result;
     }

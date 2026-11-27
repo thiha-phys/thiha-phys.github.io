@@ -500,7 +500,9 @@ export default async function handler(req, res) {
           (order.status==='delivered'?updatedAt.slice(0,10):'');
         const deliveredDate=deliveredDateValue instanceof Date?deliveredDateValue.toISOString():String(deliveredDateValue);
         const received=String(adminData.Received||'').toLowerCase()==='yes'||order.status==='received';
-        return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,cashCollection:received?order.cash_collection:0,status:order.status,received,createdAt:orderedDate,deliveredDate,items};
+        const parsedAmountReceived=Number(String(adminData.Received??'0').replaceAll(',',''));
+        const amountReceived=Number.isFinite(parsedAmountReceived)&&parsedAmountReceived>=0?parsedAmountReceived:0;
+        return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,amountReceived,cashCollection:received?order.cash_collection:0,status:order.status,received,createdAt:orderedDate,deliveredDate,items};
       }));
       return send(res,200,{ok:true,orders});
     }
@@ -604,6 +606,8 @@ export default async function handler(req, res) {
         'Delivery Service':prior.delivery_service,'Delivery Fees':String(prior.delivery_fee),'Total KG':String(prior.total_weight_kg),
         'Cash Collection':String(prior.cash_collection),'Delivery Notes':prior.car_details,...itemData,...(prior.admin_data||{}),...order
       };
+      const editAliases={'Amount Received':'Received','Delivered Date':'Deliver Date','Phone':'Phone 1','Order Date':'Ordered Date','Old Questions Qty':'OQ Qty','Old Questions Amount':'OQ Amount','Grade 11 Handbook Qty':'G11 Handbook Qty','Grade 11 Handbook Amount':'G11 Handbook Amount','Grade 11 Objective Qty':'G11 Objective Qty','Grade 11 Objective Amount':'G11 Objective Amount','Grade 10 Handbook Qty':'G10 Handbook Qty','Grade 10 Handbook Amount':'G10 Handbook Amount','Royal VOC No':'Royal Voucher',Delivery:'Delivery Service','Facebook Account Name':'Facebook Name'};
+      for(const [alias,canonical] of Object.entries(editAliases)) if(Object.prototype.hasOwnProperty.call(order,alias)) adminData[canonical]=order[alias];
       const delivered=String(order['Deliver Date']||order['Delivered Date']||'').trim();
       const receivedValue=Number(String(adminData.Received??'0').replaceAll(',',''));
       const subtotalValue=Number(String(adminData.Total??prior.subtotal).replaceAll(',',''));

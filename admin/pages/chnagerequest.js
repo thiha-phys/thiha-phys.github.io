@@ -191,7 +191,7 @@ document.getElementById('edit-form').addEventListener('submit', async (event) =>
         status.classList.add('success');
     } catch (error) {
         console.error('Unable to update the order.', error);
-        status.textContent = 'Unable to save changes. Check the database API.';
+        status.textContent = error.message || 'Unable to save changes. Check the database API.';
         status.classList.add('error');
     } finally {
         button.disabled = false;
