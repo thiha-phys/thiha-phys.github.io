@@ -33,6 +33,20 @@
         <section class="profiles-grid" id="profiles-grid" aria-live="polite"></section>
     </main>
 
+    <dialog class="profile-message-dialog" id="profile-message-dialog" aria-labelledby="profile-message-title">
+        <form id="profile-message-form">
+            <h2 id="profile-message-title">Message customer</h2>
+            <p class="profile-message-recipient" id="profile-message-recipient"></p>
+            <label for="profile-message-input">Message</label>
+            <textarea id="profile-message-input" name="body" maxlength="4000" required></textarea>
+            <p class="profile-message-status" id="profile-message-status" role="status" aria-live="polite"></p>
+            <div class="profile-message-actions">
+                <button class="profile-message-cancel" type="button" id="profile-message-cancel">Cancel</button>
+                <button class="profile-message-send" type="submit">Send message</button>
+            </div>
+        </form>
+    </dialog>
+
     <script src="admin-api.js"></script>
     <script src="admin-nav.js"></script>
     <script src="profiles.js"></script>
