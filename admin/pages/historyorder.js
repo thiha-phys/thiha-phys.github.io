@@ -172,7 +172,36 @@ function renderOrders() {
         editLink.className = 'order-edit-button';
         editLink.href = `chnagerequest.html?voucher=${encodeURIComponent(String(order['Voucher No'] || ''))}`;
         editLink.innerHTML = '<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i><span>Edit</span>';
-        card.querySelector('.order-details').append(editLink);
+        const details = card.querySelector('.order-details');
+        const amountReceived = Number(String(order['Amount Received'] || '0').replaceAll(',', ''));
+        const payDate = String(order['Pay Date'] || order['pay date'] || '').trim();
+        const kpayAccount = String(order['KPay Account'] || order['Kpay acc'] || order['Kpay account'] || '').trim();
+        const orderTotal = Number(String(order.Total || '0').replaceAll(',', ''));
+        if (order.hasCustomerAccount && orderTotal > 0 && amountReceived >= orderTotal && payDate && kpayAccount) {
+            const noticeButton = document.createElement('button');
+            noticeButton.type = 'button';
+            noticeButton.className = 'payment-notice-button';
+            noticeButton.innerHTML = '<i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span>ငွေလက်ခံရရှိပါပြီ</span>';
+            const noticeStatus = document.createElement('span');
+            noticeStatus.className = 'payment-notice-status';
+            noticeStatus.setAttribute('role', 'status');
+            noticeButton.addEventListener('click', async () => {
+                noticeButton.disabled = true;
+                noticeStatus.textContent = 'Customer ထံ စာပို့နေသည်…';
+                try {
+                    const result = await AdminApi.sendOrderPaymentNotice(order['Voucher No']);
+                    noticeButton.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i><span>စာပို့ပြီးပါပြီ</span>';
+                    noticeButton.classList.add('is-sent');
+                    noticeStatus.textContent = result.alreadySent ? 'တူညီသောအကြောင်းကြားစာ ပို့ပြီးသားဖြစ်သည်။' : 'Customer Discussion ထဲသို့ ပို့ပြီးပါပြီ။';
+                } catch (error) {
+                    noticeButton.disabled = false;
+                    noticeStatus.textContent = error.message || 'Customer ထံ စာမပို့နိုင်ပါ။';
+                    noticeStatus.classList.add('is-error');
+                }
+            });
+            details.append(noticeButton, noticeStatus);
+        }
+        details.append(editLink);
         listElement.append(card);
     });
     statusElement.textContent = `${matches.length.toLocaleString('en-US')} orders shown`;

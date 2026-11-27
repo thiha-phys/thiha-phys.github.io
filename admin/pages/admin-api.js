@@ -487,6 +487,22 @@
         return result.messages;
     }
 
+    async function sendOrderPaymentNotice(voucherNo) {
+        const response = await apiFetch(`${API_URL}/api/admin/orders/payment-notice`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}`
+            },
+            body: JSON.stringify({ voucherNo })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) {
+            throw new Error(result.message || `Payment notice failed (${response.status}).`);
+        }
+        return result;
+    }
+
     async function sendDiscussionReply(userId, body) {
         return discussionRequest('POST', '', { userId, body });
     }
@@ -604,6 +620,7 @@
         getFeedback,
         getDiscussionMessages,
         sendDiscussionReply,
+        sendOrderPaymentNotice,
         editDiscussionMessage,
         deleteConversationMessages,
         getShopOrders,

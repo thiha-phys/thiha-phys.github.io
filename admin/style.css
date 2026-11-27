@@ -676,6 +676,12 @@ body.feedback-chat-open .feedback-reply-composer textarea { resize: none; }
 .order-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; padding: 16px 18px 18px; border-top: 1px solid #e6edf8; background: linear-gradient(145deg, #f9fbff, #f2f6fd); }
 .order-edit-button { grid-column: 1 / -1; justify-self: end; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 0 16px; border-radius: 9px; color: #fff; background: #c62828; box-shadow: 0 4px 10px rgba(144, 24, 24, .18); font-size: 12px; font-weight: 800; text-decoration: none; }
 .order-edit-button:hover, .order-edit-button:focus-visible { color: #fff; background: #a91f1f; }
+.payment-notice-button { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 16px; border: 0; border-radius: 9px; color: #fff; background: #16835f; box-shadow: 0 4px 10px rgba(17, 109, 77, .17); font-size: 12px; font-weight: 800; cursor: pointer; }
+.payment-notice-button:hover, .payment-notice-button:focus-visible { background: #106b4d; }
+.payment-notice-button:disabled { cursor: wait; opacity: .72; }
+.payment-notice-button.is-sent { background: #3869b4; }
+.payment-notice-status { grid-column: 1 / -1; margin-top: -12px; color: #16835f; font-size: 12px; }
+.payment-notice-status.is-error { color: #c13d4d; }
 .order-details-section h4 { margin: 0 0 8px; color: #2d5fae; font-size: 12px; }
 .order-detail-list { display: grid; }
 .order-detail-line { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid #e5ebf4; font-size: 11px; }

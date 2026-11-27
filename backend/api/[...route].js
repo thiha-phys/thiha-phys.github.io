@@ -76,6 +76,18 @@ function royalPhoneCandidates(value) {
   const matches=text.match(/(?:\+?95[\s().-]*)?0?9(?:[\s().-]*\d){7,10}/g)||[];
   return [...new Set(matches.map((match)=>{let digits=match.replace(/\D/g,'');if(digits.startsWith('95'))digits=`0${digits.slice(2)}`;else if(digits.startsWith('9'))digits=`0${digits}`;return digits;}).filter(Boolean))];
 }
+function paymentNoticeDate(value) {
+  const text=String(value||'').trim();
+  const iso=text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  const dayFirst=text.match(/^(\d{1,2})[/. -](\d{1,2})[/. -](\d{4})$/);
+  const year=iso?.[1]||dayFirst?.[3];
+  const month=iso?.[2]||dayFirst?.[2];
+  const day=iso?.[3]||dayFirst?.[1];
+  if(!year||!month||!day)return text;
+  const date=new Date(Date.UTC(Number(year),Number(month)-1,Number(day)));
+  if(date.getUTCFullYear()!==Number(year)||date.getUTCMonth()!==Number(month)-1||date.getUTCDate()!==Number(day))return text;
+  return `${String(day).padStart(2,'0')} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(month)-1]} ${year}`;
+}
 async function createSession(db, user) {
   const token = randomBytes(32).toString('base64url');
   await db`INSERT INTO sessions (user_id, token_hash, expires_at) VALUES (${user.id}, ${tokenHash(token)}, now() + interval '30 days')`;
@@ -616,10 +628,33 @@ export default async function handler(req, res) {
       return send(res,201,{ok:true});
     }
 
+    if (route === '/admin/orders/payment-notice' && req.method === 'POST') {
+      const body=await readBody(req),voucher=String(body.voucherNo||'').trim();
+      if(!voucher)return send(res,400,{ok:false,code:'VOUCHER_REQUIRED',message:'ဘောက်ချာနံပါတ်ကို စစ်ဆေးပါ။'});
+      const rows=await db`SELECT voucher_no,user_id,subtotal,total,admin_data,royal_data FROM orders WHERE voucher_no=${voucher} LIMIT 1`;
+      const order=rows[0];
+      if(!order)return send(res,404,{ok:false,code:'ORDER_NOT_FOUND',message:'အမှာစာကို မတွေ့ပါ။'});
+      if(!order.user_id)return send(res,409,{ok:false,code:'CUSTOMER_ACCOUNT_MISSING',message:'ဤအမှာစာနှင့် Customer account မချိတ်ဆက်ထားပါ။'});
+      const adminData={...(order.admin_data||{}),...(order.royal_data||{})};
+      const amountReceived=Number(String(adminData.Received??adminData['Amount Received']??'0').replaceAll(',',''));
+      const total=Number(order.subtotal??order.total??0);
+      const payDate=paymentNoticeDate(adminData['Pay Date']||adminData['pay date']||'');
+      const account=String(adminData['KPay Account']||adminData['Kpay acc']||adminData['Kpay account']||'').trim();
+      if(!Number.isFinite(amountReceived)||!Number.isFinite(total)||total<=0||amountReceived<total||!payDate||!account)return send(res,409,{ok:false,code:'PAYMENT_NOTICE_NOT_READY',message:'Amount Received ကို Total နှင့်ညီအောင် ဖြည့်ပြီး Pay Date နဲ့ KPay Account ကို ထည့်ပြီးမှ စာပို့နိုင်ပါသည်။'});
+      const message=`${order.voucher_no} အတွက် ငွေလက်ခံရရှိပါပြီ၊\nPay date - ${payDate}\nKpay acc - ${account}`;
+      const inserted=await db`INSERT INTO discussion_messages(user_id,sender_id,sender_role,body)
+        SELECT ${order.user_id},${user.id},'admin',${message}
+        WHERE NOT EXISTS (SELECT 1 FROM discussion_messages WHERE user_id=${order.user_id} AND sender_role='admin' AND body=${message})
+        RETURNING id,user_id,sender_role,body,created_at,edited_at`;
+      if(inserted.length)return send(res,201,{ok:true,alreadySent:false,message:mapDiscussionMessage(inserted[0])});
+      const existing=await db`SELECT id,user_id,sender_role,body,created_at,edited_at FROM discussion_messages
+        WHERE user_id=${order.user_id} AND sender_role='admin' AND body=${message} ORDER BY created_at LIMIT 1`;
+      return send(res,200,{ok:true,alreadySent:true,message:existing[0]?mapDiscussionMessage(existing[0]):null});
+    }
     if (route === '/admin/orders' && req.method === 'GET') {
       const orders=await db`SELECT o.*,c.english AS city_english,c.label AS city_label FROM orders o JOIN delivery_cities c ON c.id=o.city_id ORDER BY o.created_at DESC`;
       const items=await db`SELECT oi.order_id,oi.book_id,oi.quantity,oi.amount,b.quantity_header,b.amount_header FROM order_items oi LEFT JOIN books b ON b.id=oi.book_id ORDER BY oi.book_name`;
-      return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);const complete=o.complete===true||['complete','received'].includes(String(o.status));const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(o.status))?'delivered':'pending';return{...extra,'Voucher No':o.voucher_no,Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??'','Complete':complete?'Yes':'','Deliver Date':extra['Deliver Date']||extra['Confirm Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),status:deliveryStatus,'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
+      return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);const complete=o.complete===true||['complete','received'].includes(String(o.status));const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(o.status))?'delivered':'pending';return{...extra,'Voucher No':o.voucher_no,Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??'','Complete':complete?'Yes':'','Deliver Date':extra['Deliver Date']||extra['Confirm Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),status:deliveryStatus,hasCustomerAccount:Boolean(o.user_id),'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
     }
     if (route === '/admin/orders' && req.method === 'PATCH') {
       const body=await readBody(req), order=body.order || body;
