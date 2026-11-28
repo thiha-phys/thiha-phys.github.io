@@ -129,6 +129,7 @@
                         ${detailLine('Confirm Date',order.confirmDate?date(order.confirmDate):'')}
                         ${detailLine('ငွေပေးချေမှု',order.paymentMethod)}
                         ${detailLine('ပို့ဆောင်ရေး',order.deliveryService)}
+                        ${order.deliveryService==='Car'?detailLine('ကားဂိတ် / ကားအမည်',order.carInfo):''}
                         ${detailLine('ပို့ခ',money(deliveryFee))}
                         ${detailLine('စုစုပေါင်း',money(totalWithDelivery))}
                     </section>

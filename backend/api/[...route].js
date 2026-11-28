@@ -1,7 +1,7 @@
 import { neon } from '@neondatabase/serverless';
 import { randomBytes, scrypt as scryptCallback, timingSafeEqual, createHash } from 'node:crypto';
 import { promisify } from 'node:util';
-import { royalShipmentCharges } from '../lib/order-delivery.js';
+import { normalizeCarInfo, royalShipmentCharges } from '../lib/order-delivery.js';
 
 const scrypt = promisify(scryptCallback);
 const MAX_DISCUSSION_MESSAGE_LENGTH = 4000;
@@ -332,7 +332,7 @@ export default async function handler(req, res) {
       const payment=String(order.paymentMethod || '');
       if(!['Royal','Car'].includes(service) || !['COD','KBZ Pay'].includes(payment)) return send(res,400,{ok:false,code:'INVALID_DELIVERY_OR_PAYMENT',message:'ပို့ဆောင်ရေး သို့မဟုတ် ငွေပေးချေမှု ရွေးချယ်မှု မမှန်ပါ။'});
       if(service==='Car' && payment!=='KBZ Pay') return send(res,400,{ok:false,code:'CAR_REQUIRES_KBZ',message:'ကားတင်ရန်အတွက် KBZ Pay ကိုသာ ရွေးနိုင်ပါသည်။'});
-      const carInfo=service==='Car'?String(order.carDetails||'').trim():'';
+      const carInfo=service==='Car'?normalizeCarInfo(order):'';
       if(service==='Car'&&!carInfo) return send(res,400,{ok:false,code:'CAR_DETAILS_REQUIRED',message:'ကားဂိတ်နှင့် ကားအမည်ကို ဖြည့်ပါ။'});
       if(ids.some((item)=>Number(item.quantity)>10000)) return send(res,400,{ok:false,code:'QUANTITY_LIMIT',message:'စာအုပ်အရေအတွက် များလွန်းနေပါသည်။'});
       const preparedItems=[];
@@ -374,7 +374,7 @@ export default async function handler(req, res) {
         'Royal Shipment Weight':service==='Royal'?String(royalShipmentWeight):''
       };
       await db`UPDATE orders SET subtotal=${subtotal},delivery_fee=${deliveryFee},total=${total},total_weight_kg=${kg},cash_collection=${payment==='COD'?total:0},admin_data=${JSON.stringify(royalOrderData)}::jsonb WHERE id=${created[0].id}`;
-      const resultOrder={voucherNo:created[0].voucher_no,name:customerName,phone:customerPhone,phone2:String(order.phone2 || ''),city:city.label,address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,'Royal Shipment Service Charge':royalOrderData['Royal Shipment Service Charge'],'Royal Shipment COD Amount':royalOrderData['Royal Shipment COD Amount'],'Royal Shipment Weight':royalOrderData['Royal Shipment Weight'],carInfo,items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))};
+      const resultOrder={voucherNo:created[0].voucher_no,name:customerName,phone:customerPhone,phone2:String(order.phone2 || ''),city:city.label,address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,'Royal Shipment Service Charge':royalOrderData['Royal Shipment Service Charge'],'Royal Shipment COD Amount':royalOrderData['Royal Shipment COD Amount'],'Royal Shipment Weight':royalOrderData['Royal Shipment Weight'],'car inform':carInfo,carDetails:carInfo,carInfo,items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))};
       const telegramNotified=await notifyTelegram(resultOrder);
       return send(res, 201, { ok:true, orderId:created[0].voucher_no, order:resultOrder,telegramNotified });
     }
@@ -546,7 +546,7 @@ export default async function handler(req, res) {
       return send(res,200,{ok:true});
     }
     if (route === '/orders' && req.method === 'GET') {
-      const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.complete,o.created_at,o.updated_at,o.admin_data,o.royal_data
+      const rows=await db`SELECT o.id,o.voucher_no,o.customer_name,o.phone,o.city_id,c.label AS city_label,o.address,o.delivery_service,o.payment_method,o.car_details,o.subtotal,o.delivery_fee,o.total,o.total_weight_kg,o.cash_collection,o.status,o.complete,o.created_at,o.updated_at,o.admin_data,o.royal_data
         FROM orders o JOIN delivery_cities c ON c.id=o.city_id WHERE o.user_id=${user.id} ORDER BY o.created_at DESC LIMIT 100`;
       const orders=await Promise.all(rows.map(async(order)=>{
         const items=await db`SELECT book_id AS id,book_name AS name,quantity,unit_price AS "unitPrice",amount FROM order_items WHERE order_id=${order.id} ORDER BY id`;
@@ -559,7 +559,9 @@ export default async function handler(req, res) {
         const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(order.status))?'delivered':'pending';
         const amountReceived=receivedBooksOnly(adminData.Received||adminData['Amount Received'],Number(order.subtotal),Number(order.delivery_fee));
         const confirmDate=adminData['Confirm Date']?dateOnlyInYangon(adminData['Confirm Date']):'';
-        return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,amountReceived,cashCollection:complete?order.cash_collection:0,status:deliveryStatus,complete,createdAt:orderedDate,deliveredDate,confirmDate,items};
+        const carInfo=[adminData['car inform'],order.car_details,order.delivery_service==='Car'?adminData['Delivery Notes']:'']
+          .map((value)=>String(value??'').trim()).find(Boolean)||'';
+        return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,carInfo,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,amountReceived,cashCollection:complete?order.cash_collection:0,status:deliveryStatus,complete,createdAt:orderedDate,deliveredDate,confirmDate,items};
       }));
       return send(res,200,{ok:true,orders});
     }
@@ -737,6 +739,7 @@ export default async function handler(req, res) {
           'Total KG':String(order.total_weight_kg),
           'Cash Collection':String(order.cash_collection),
           'car inform':carInfo,
+          car_details:carInfo,
           carInfo,
           carDetails:carInfo,
           'Royal Shipment Service Charge':shipmentServiceCharge,

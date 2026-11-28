@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { royalShipmentCharges } from '../lib/order-delivery.js';
+import { normalizeCarInfo, royalShipmentCharges } from '../lib/order-delivery.js';
+
+test('car information accepts current and legacy field names', () => {
+  assert.equal(normalizeCarInfo({ carDetails: 'Station / Bus' }), 'Station / Bus');
+  assert.equal(normalizeCarInfo({ 'car inform': 'Saved value' }), 'Saved value');
+  assert.equal(normalizeCarInfo({ car_details: 'Database value' }), 'Database value');
+  assert.equal(normalizeCarInfo({ carStation: 'Station', carName: 'Bus' }), 'Station / Bus');
+});
 
 test('Royal service charge increases by 300 for each 5 kg package', () => {
   assert.deepEqual(royalShipmentCharges('Royal', 5, 6000, 300), {

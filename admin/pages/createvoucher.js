@@ -56,6 +56,11 @@ function displayVoucher(order) {
     ];
     if (deliveryService === 'Car') {
         infoRows.push(['Bus Gate / Bus Name', order['car inform']]);
+    } else if (deliveryService === 'Royal') {
+        infoRows.push(
+            ['Royal Shipment Service Charge', order['Royal Shipment Service Charge']],
+            ['Royal Shipment COD Amount', order['Royal Shipment COD Amount']]
+        );
     }
     infoRows.forEach(([label, value]) => addReceiptLine(info, label, String(value || '')));
     const itemList = document.getElementById('receipt-items');

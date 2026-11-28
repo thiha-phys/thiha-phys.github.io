@@ -345,6 +345,13 @@ function displayReceipt(order) {
     addReceiptRow(details, 'ဖုန်းနံပါတ် ၁', order.phone);
     if (order.phone2) addReceiptRow(details, 'ဖုန်းနံပါတ် ၂', order.phone2);
     addReceiptRow(details, 'လိပ်စာ', order.address);
+    if (order.deliveryService === 'Car') {
+        addReceiptRow(
+            details,
+            'ကားဂိတ် / ကားအမည်',
+            order.carInfo || order.carDetails || order['car inform'] || ''
+        );
+    }
 
     order.items.forEach((item) => {
         if (item.quantity > 0) {
@@ -637,7 +644,7 @@ orderForm.addEventListener('submit', async (event) => {
         deliveryCity: city.english,
         address: String(formData.get('address')).trim(),
         deliveryService,
-        carDetails: String(formData.get('carDetails')).trim(),
+        carDetails: String(formData.get('carDetails') || '').trim(),
         paymentMethod,
         items
     };

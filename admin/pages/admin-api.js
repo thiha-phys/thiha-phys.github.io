@@ -37,8 +37,18 @@
 
     function normalizeOrder(order) {
         const normalized = { ...order };
-        if (!String(normalized['car inform'] || '').trim()) {
-            normalized['car inform'] = normalized.carInfo || normalized.carDetails || '';
+        const carInfo = [
+            normalized['car inform'], normalized.carInfo, normalized.carDetails,
+            normalized.car_details, normalized.car_info
+        ].map((value) => String(value ?? '').trim()).find(Boolean) || '';
+        if (carInfo) normalized['car inform'] = carInfo;
+        if ((normalized['Delivery Service'] || normalized.Delivery) === 'Car') {
+            if (!String(normalized['Royal Shipment Service Charge'] ?? '').trim()) {
+                normalized['Royal Shipment Service Charge'] = '0';
+            }
+            if (!String(normalized['Royal Shipment COD Amount'] ?? '').trim()) {
+                normalized['Royal Shipment COD Amount'] = '0';
+            }
         }
         Object.entries(ORDER_FIELD_ALIASES).forEach(([alias, canonical]) => {
             if (!Object.prototype.hasOwnProperty.call(normalized, canonical) &&
@@ -307,7 +317,7 @@
             'Royal Shipment Service Charge': resultOrder['Royal Shipment Service Charge'] || '',
             'Royal Shipment COD Amount': resultOrder['Royal Shipment COD Amount'] || '',
             'Royal Shipment Weight': resultOrder['Royal Shipment Weight'] || '',
-            'car inform': resultOrder.carInfo || ''
+            'car inform': resultOrder.carInfo || resultOrder.carDetails || resultOrder['car inform'] || ''
         };
         const itemById = new Map(resultOrder.items.map((item) => [item.id, item]));
         AdminBooks.forEach((book) => {
