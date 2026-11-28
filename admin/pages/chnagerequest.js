@@ -17,8 +17,7 @@ const fieldGroups = [
         title: 'Payment and Delivery Status',
         fields: [
             'Payment Method', 'Amount Received', 'KPay Account', 'Pay Date',
-            'Delivered Date', 'Delivery', 'car inform', 'Royal VOC No', 'Complete',
-            'Royal Shipment Service Charge', 'Royal Shipment COD Amount', 'Royal Shipment Weight',
+            'Delivered Date', 'Delivery', 'car inform', 'Royal VOC No',
             'Royal Statement COD Charge', 'Royal Statement Paid Charge', 'Royal Statement Paid Date'
         ]
     },
@@ -74,6 +73,15 @@ function paymentReceivedStatus() {
 
 function openOrder(order, { scroll = true } = {}) {
     selectedOrder = order;
+    let codPaymentRadio = null;
+    let kbzPaymentRadio = null;
+    let carDeliveryRadio = null;
+    const syncPaymentForDelivery = () => {
+        const isCarDelivery = Boolean(carDeliveryRadio?.checked);
+        if (!codPaymentRadio) return;
+        codPaymentRadio.disabled = isCarDelivery;
+        if (isCarDelivery && codPaymentRadio.checked && kbzPaymentRadio) kbzPaymentRadio.checked = true;
+    };
     document.getElementById('edit-panel').hidden = false;
     const container = document.getElementById('edit-fields');
     const tabsContainer = document.getElementById('edit-tabs');
@@ -109,48 +117,56 @@ function openOrder(order, { scroll = true } = {}) {
         const grid = document.createElement('div');
         grid.className = `edit-grid${group.title === 'Books and Amounts' ? ' edit-grid--books' : ''}`;
         group.fields.forEach((field) => {
+            if (field === 'Payment Method' || field === 'Delivery') {
+                const radioGroup = document.createElement('div');
+                radioGroup.className = 'edit-radio-group';
+                radioGroup.setAttribute('role', 'radiogroup');
+                radioGroup.setAttribute('aria-label', field);
+                const options = field === 'Payment Method'
+                    ? [['KBZ Pay', 'KBZ Pay'], ['COD', 'COD']]
+                    : [['Royal', 'Royal'], ['Car', 'Car']];
+                const currentValue = orderField(order, field).trim().toLowerCase();
+                const selectedValue = field === 'Payment Method'
+                    ? currentValue === 'cod' ? 'COD' : 'KBZ Pay'
+                    : ['car', 'bus gate delivery'].includes(currentValue) ? 'Car' : 'Royal';
+                options.forEach(([value, text]) => {
+                    const option = document.createElement('label');
+                    option.className = 'payment-option';
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = field;
+                    radio.value = value;
+                    radio.checked = value === selectedValue;
+                    radio.required = true;
+                    if (field === 'Payment Method' && value === 'COD') codPaymentRadio = radio;
+                    if (field === 'Payment Method' && value === 'KBZ Pay') kbzPaymentRadio = radio;
+                    if (field === 'Delivery' && value === 'Car') {
+                        carDeliveryRadio = radio;
+                        radio.addEventListener('change', syncPaymentForDelivery);
+                    }
+                    option.append(radio, document.createTextNode(text));
+                    radioGroup.append(option);
+                });
+                grid.append(radioGroup);
+                if (field === 'Delivery') syncPaymentForDelivery();
+                return;
+            }
             const label = document.createElement('label');
-            label.className = field === 'Complete' ? 'edit-field edit-field-checkbox' : 'edit-field';
+            label.className = 'edit-field';
             label.append(document.createTextNode(field === 'Amount Received' ? 'Amount Received (Books only)' : field));
-            const input = document.createElement(field === 'Payment Method' ? 'select' : 'input');
+            const input = document.createElement('input');
             input.name = field;
-            if (field === 'Complete') {
-                input.type = 'checkbox';
-                input.value = 'Yes';
-                input.checked = ['yes', 'true', '1'].includes(String(orderField(order, field)).trim().toLowerCase());
-                input.className = 'edit-checkbox';
-            } else if (['Pay Date', 'Delivered Date', 'Royal Statement Paid Date'].includes(field)) {
+            if (['Pay Date', 'Delivered Date', 'Royal Statement Paid Date'].includes(field)) {
                 input.type = 'date';
                 input.value = dateInputValue(orderField(order, field));
             } else if (field.endsWith('Qty') || field === 'Total' ||
                 field === 'Amount Received' || field.endsWith('Amount') ||
-                ['Royal Shipment Service Charge', 'Royal Statement COD Charge', 'Royal Statement Paid Charge'].includes(field)) {
+                ['Royal Statement COD Charge', 'Royal Statement Paid Charge'].includes(field)) {
                 input.type = 'number';
                 input.min = '0';
                 input.step = '1';
                 input.inputMode = 'numeric';
                 input.value = orderField(order, field);
-            } else if (field === 'Royal Shipment Weight') {
-                input.type = 'number';
-                input.min = '0';
-                input.step = '0.001';
-                input.inputMode = 'decimal';
-                input.value = orderField(order, field);
-            } else if (field === 'Payment Method') {
-                ['COD', 'KBZ Pay'].forEach((method) => {
-                    const option = document.createElement('option');
-                    option.value = method;
-                    option.textContent = method === 'COD' ? 'COD (Cash on Delivery)' : method;
-                    input.append(option);
-                });
-                const currentMethod = orderField(order, field);
-                if (currentMethod && !['COD', 'KBZ Pay'].includes(currentMethod)) {
-                    const existing = document.createElement('option');
-                    existing.value = currentMethod;
-                    existing.textContent = `${currentMethod} (Current)`;
-                    input.append(existing);
-                }
-                input.value = currentMethod || 'KBZ Pay';
             } else {
                 input.value = orderField(order, field);
                 input.autocomplete = 'off';
@@ -175,6 +191,16 @@ function openOrder(order, { scroll = true } = {}) {
             paymentValue.setAttribute('aria-live', 'polite');
             paymentStatus.append(paymentLabel, paymentValue);
             section.append(paymentStatus);
+            const completeLabel = document.createElement('label');
+            completeLabel.className = 'edit-complete-checkbox';
+            const completeCheckbox = document.createElement('input');
+            completeCheckbox.type = 'checkbox';
+            completeCheckbox.name = 'Complete';
+            completeCheckbox.value = 'Yes';
+            completeCheckbox.checked = ['yes', 'true', '1'].includes(String(orderField(order, 'Complete')).trim().toLowerCase());
+            completeCheckbox.className = 'edit-checkbox';
+            completeLabel.append(completeCheckbox, document.createTextNode('Complete'));
+            section.append(completeLabel);
         }
         container.append(section);
     });

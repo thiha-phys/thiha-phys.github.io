@@ -743,6 +743,10 @@ body.feedback-chat-open .feedback-reply-composer textarea { resize: none; }
 }
 .edit-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
 .edit-field { display: grid; gap: 5px; font-size: 11px; color: var(--muted); }
+.edit-radio-group { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.edit-radio-group .payment-option { min-width: 0; cursor: pointer; }
+.edit-complete-checkbox { display: flex; align-items: center; gap: 9px; margin-top: 12px; color: #c62828; font-size: 13px; font-weight: 700; cursor: pointer; }
+.edit-complete-checkbox .edit-checkbox { width: 20px; height: 20px; margin: 0; accent-color: #c62828; }
 .edit-field input, .edit-field select { min-height: 41px; width: 100%; border: 1px solid #dce3ed; border-radius: 9px; padding: 8px 10px; color: var(--ink); background: #fff; }
 .edit-field input.edit-checkbox { width: 20px; min-height: 20px; padding: 0; accent-color: #2867cf; }
 .edit-field-checkbox { grid-template-columns: 1fr auto; align-items: center; min-height: 41px; padding: 8px 10px; border: 1px solid #dce3ed; border-radius: 9px; background: #fff; }
