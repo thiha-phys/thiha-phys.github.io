@@ -55,7 +55,7 @@ function displayVoucher(order) {
         ['Payment Method', order['Payment Method']]
     ];
     if (deliveryService === 'Car') {
-        infoRows.push(['Bus Gate / Bus Name', order['car inform'] || order['Delivery Notes']]);
+        infoRows.push(['Bus Gate / Bus Name', order['car inform']]);
     }
     infoRows.forEach(([label, value]) => addReceiptLine(info, label, String(value || '')));
     const itemList = document.getElementById('receipt-items');

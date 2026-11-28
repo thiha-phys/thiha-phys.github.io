@@ -85,10 +85,14 @@
         function render(order){
             const card=document.createElement('details');
             card.className='order-card';
+            const deliveryFee=Number(order.deliveryFee||0);
+            const bookTotal=Number(order.subtotal??order.total??0);
+            const totalWithDelivery=bookTotal+deliveryFee;
+            const receivedWithDelivery=Number(order.amountReceived||0)+deliveryFee;
             const deliveryStatus=order.complete||['complete','received'].includes(order.status)
                 ?'complete':['delivered','on_the_way'].includes(order.status)?'delivered':'pending';
             const deliveredDateLabel=order.deliveredDate?date(order.deliveredDate):deliveryStatus!=='pending'?'—':'မပို့ရသေး';
-            const paymentComplete=Number(order.amountReceived||0)>=Number(order.total||0);
+            const paymentComplete=receivedWithDelivery>=totalWithDelivery;
             const itemDetails=(order.items||[]).map(item =>
                 detailLine(`${item.name} × ${item.quantity}`,money(item.amount))
             ).join('');
@@ -106,8 +110,8 @@
                     <span class="order-card-info">${escape(date(order.createdAt))}</span>
                     <span class="order-card-info order-customer">${escape(order.name||'')} · ${escape(order.phone||'')} · ${escape(order.address||order.city||'')}</span>
                     <span class="order-card-totals">
-                        <span>စုစုပေါင်း <strong>${money(order.total)}</strong></span>
-                        <span>ပေးချေပြီး <strong>${money(order.amountReceived)}</strong></span>
+                        <span>စုစုပေါင်း <strong>${money(totalWithDelivery)}</strong></span>
+                        <span>ပေးချေပြီး <strong>${money(receivedWithDelivery)}</strong></span>
                     </span>
                     <span class="order-card-expand">အသေးစိတ်ကြည့်ရန် <i class="fa-solid fa-chevron-down"></i></span>
                 </summary>
@@ -122,9 +126,11 @@
                         ${detailLine('လိပ်စာ',`${order.city||''}${order.address?', '+order.address:''}`)}
                         ${detailLine('Ordered Date',date(order.createdAt))}
                         ${detailLine('Delivered Date',deliveredDateLabel)}
+                        ${detailLine('Confirm Date',order.confirmDate?date(order.confirmDate):'')}
                         ${detailLine('ငွေပေးချေမှု',order.paymentMethod)}
                         ${detailLine('ပို့ဆောင်ရေး',order.deliveryService)}
-                        ${detailLine('စုစုပေါင်း',money(order.total))}
+                        ${detailLine('ပို့ခ',money(deliveryFee))}
+                        ${detailLine('စုစုပေါင်း',money(totalWithDelivery))}
                     </section>
                 </div>`;
             if(deliveryStatus==='delivered'){
@@ -135,9 +141,10 @@
                 button.addEventListener('click',async()=>{
                     button.disabled=true;
                     try{
-                        await physicsApiFetch('orders/confirm',{method:'PATCH',body:JSON.stringify({voucherNo:order.voucherNo})});
+                        const result=await physicsApiFetch('orders/confirm',{method:'PATCH',body:JSON.stringify({voucherNo:order.voucherNo})});
                         order.status='complete';
                         order.complete=true;
+                        order.confirmDate=result.confirmDate||order.confirmDate;
                         card.replaceWith(render(order));
                     }catch(error){
                         button.disabled=false;

@@ -17,7 +17,9 @@ const fieldGroups = [
         title: 'Payment and Delivery Status',
         fields: [
             'Payment Method', 'Amount Received', 'KPay Account', 'Pay Date',
-            'Delivered Date', 'Delivery', 'Royal VOC No', 'Complete'
+            'Delivered Date', 'Delivery', 'car inform', 'Royal VOC No', 'Complete',
+            'Royal Shipment Service Charge', 'Royal Shipment COD Amount', 'Royal Shipment Weight',
+            'Royal Statement COD Charge', 'Royal Statement Paid Charge', 'Royal Statement Paid Date'
         ]
     },
     {
@@ -98,7 +100,9 @@ function paymentReceivedStatus() {
     const form = document.getElementById('edit-form');
     const total = Number(String(form.elements.namedItem('Total')?.value || '0').replaceAll(',', ''));
     const amountReceived = Number(String(form.elements.namedItem('Amount Received')?.value || '0').replaceAll(',', ''));
-    const paid = Number.isFinite(total) && Number.isFinite(amountReceived) && amountReceived >= total;
+    const deliveryFee = Number(String(selectedOrder?.['Delivery Fees'] || '0').replaceAll(',', ''));
+    const paid = Number.isFinite(total) && Number.isFinite(amountReceived) &&
+        Number.isFinite(deliveryFee) && total + deliveryFee <= amountReceived + deliveryFee;
     const result = document.getElementById('payment-status-preview');
     result.textContent = paid ? 'ငွေလက်ခံရရှိပြီး' : 'ငွေမရှင်းရသေး';
     result.classList.toggle('is-paid', paid);
@@ -154,7 +158,7 @@ function openOrder(order, { scroll = true } = {}) {
         group.fields.forEach((field) => {
             const label = document.createElement('label');
             label.className = field === 'Complete' ? 'edit-field edit-field-checkbox' : 'edit-field';
-            label.append(document.createTextNode(field));
+            label.append(document.createTextNode(field === 'Amount Received' ? 'Amount Received (Books only)' : field));
             const input = document.createElement(field === 'Payment Method' ? 'select' : 'input');
             input.name = field;
             if (field === 'Complete') {
@@ -162,15 +166,22 @@ function openOrder(order, { scroll = true } = {}) {
                 input.value = 'Yes';
                 input.checked = ['yes', 'true', '1'].includes(String(orderField(order, field)).trim().toLowerCase());
                 input.className = 'edit-checkbox';
-            } else if (field === 'Pay Date' || field === 'Delivered Date') {
+            } else if (['Pay Date', 'Delivered Date', 'Royal Statement Paid Date'].includes(field)) {
                 input.type = 'date';
                 input.value = dateInputValue(orderField(order, field));
             } else if (field.endsWith('Qty') || field === 'Total' ||
-                field === 'Amount Received' || field.endsWith('Amount')) {
+                field === 'Amount Received' || field.endsWith('Amount') ||
+                ['Royal Shipment Service Charge', 'Royal Statement COD Charge', 'Royal Statement Paid Charge'].includes(field)) {
                 input.type = 'number';
                 input.min = '0';
                 input.step = '1';
                 input.inputMode = 'numeric';
+                input.value = orderField(order, field);
+            } else if (field === 'Royal Shipment Weight') {
+                input.type = 'number';
+                input.min = '0';
+                input.step = '0.001';
+                input.inputMode = 'decimal';
                 input.value = orderField(order, field);
             } else if (field === 'Payment Method') {
                 ['COD', 'KBZ Pay'].forEach((method) => {
@@ -192,6 +203,12 @@ function openOrder(order, { scroll = true } = {}) {
                 input.autocomplete = 'off';
             }
             label.append(input);
+            if (field === 'Amount Received') {
+                const hint = document.createElement('small');
+                hint.className = 'field-hint';
+                hint.textContent = 'စာအုပ်ဖိုးသာ ထည့်ပါ။ ပို့ခကို ဒီနေရာမှာ မပေါင်းပါနှင့်။';
+                label.append(hint);
+            }
             grid.append(label);
         });
         section.append(heading, grid);
@@ -199,7 +216,7 @@ function openOrder(order, { scroll = true } = {}) {
             const paymentStatus = document.createElement('div');
             paymentStatus.className = 'payment-status-preview';
             const paymentLabel = document.createElement('span');
-            paymentLabel.textContent = 'Amount Received နှင့် Total အရ ငွေလက်ခံမှု';
+            paymentLabel.textContent = 'Total + Delivery Fees နှင့် Received + Delivery Fees အရ ငွေလက်ခံမှု';
             const paymentValue = document.createElement('strong');
             paymentValue.id = 'payment-status-preview';
             paymentValue.setAttribute('aria-live', 'polite');

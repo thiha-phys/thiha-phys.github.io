@@ -88,6 +88,23 @@ function paymentNoticeDate(value) {
   if(date.getUTCFullYear()!==Number(year)||date.getUTCMonth()!==Number(month)-1||date.getUTCDate()!==Number(day))return text;
   return `${String(day).padStart(2,'0')} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(month)-1]} ${year}`;
 }
+function yangonDateOnly(value=new Date()) {
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Yangon',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(value);
+  const part=(type)=>parts.find((entry)=>entry.type===type)?.value||'';
+  return `${part('year')}-${part('month')}-${part('day')}`;
+}
+function dateOnlyInYangon(value) {
+  const text=String(value||'').trim();
+  const dateOnly=text.match(/^(\d{4}-\d{2}-\d{2})$/);
+  if(dateOnly)return dateOnly[1];
+  const parsed=new Date(text);
+  return Number.isNaN(parsed.getTime())?text:yangonDateOnly(parsed);
+}
+function receivedBooksOnly(value, subtotal, deliveryFee) {
+  const received=Number(String(value??'0').replaceAll(',',''));
+  if(!Number.isSafeInteger(received)||received<0)return 0;
+  return deliveryFee>0&&received===subtotal+deliveryFee?subtotal:received;
+}
 async function createSession(db, user) {
   const token = randomBytes(32).toString('base64url');
   await db`INSERT INTO sessions (user_id, token_hash, expires_at) VALUES (${user.id}, ${tokenHash(token)}, now() + interval '30 days')`;
@@ -524,15 +541,13 @@ export default async function handler(req, res) {
         const adminData={...(order.admin_data||{}),...(order.royal_data||{})};
         const orderedDateValue=adminData['Ordered Date']||adminData['Order Date']||order.created_at||'';
         const orderedDate=orderedDateValue instanceof Date?orderedDateValue.toISOString():String(orderedDateValue);
-        const updatedAt=order.updated_at instanceof Date?order.updated_at.toISOString():String(order.updated_at||'');
-        const deliveredDateValue=adminData['Deliver Date']||adminData['Confirm Date']||
-          (order.status==='delivered'?updatedAt.slice(0,10):'');
+        const deliveredDateValue=adminData['Deliver Date']||'';
         const deliveredDate=deliveredDateValue instanceof Date?deliveredDateValue.toISOString():String(deliveredDateValue);
         const complete=order.complete===true||['complete','received'].includes(String(order.status));
         const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(order.status))?'delivered':'pending';
-        const parsedAmountReceived=Number(String(adminData.Received??'0').replaceAll(',',''));
-        const amountReceived=Number.isFinite(parsedAmountReceived)&&parsedAmountReceived>=0?parsedAmountReceived:0;
-        return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,amountReceived,cashCollection:complete?order.cash_collection:0,status:deliveryStatus,complete,createdAt:orderedDate,deliveredDate,items};
+        const amountReceived=receivedBooksOnly(adminData.Received||adminData['Amount Received'],Number(order.subtotal),Number(order.delivery_fee));
+        const confirmDate=adminData['Confirm Date']?dateOnlyInYangon(adminData['Confirm Date']):'';
+        return {voucherNo:order.voucher_no,name:order.customer_name,phone:order.phone,city:order.city_label,address:order.address,deliveryService:order.delivery_service,paymentMethod:order.payment_method,subtotal:order.subtotal,deliveryFee:order.delivery_fee,total:order.total,totalWeightKg:order.total_weight_kg,amountReceived,cashCollection:complete?order.cash_collection:0,status:deliveryStatus,complete,createdAt:orderedDate,deliveredDate,confirmDate,items};
       }));
       return send(res,200,{ok:true,orders});
     }
@@ -545,12 +560,13 @@ export default async function handler(req, res) {
       const rows=await db`SELECT id,user_id,status,complete,admin_data FROM orders WHERE voucher_no=${voucher} AND user_id=${user.id} LIMIT 1`;
       if(!rows.length) return send(res,404,{ok:false,code:'ORDER_NOT_FOUND',message:'မှာယူမှုမတွေ့ပါ။'});
       if(rows[0].complete===true||['complete','received'].includes(String(rows[0].status))) {
-        return send(res,200,{ok:true,status:'complete',complete:true,message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးသားဖြစ်ပါသည်။'});
+        const confirmDate=rows[0].admin_data?.['Confirm Date']?dateOnlyInYangon(rows[0].admin_data['Confirm Date']):'';
+        return send(res,200,{ok:true,status:'complete',complete:true,confirmDate,message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးသားဖြစ်ပါသည်။'});
       }
       if(!['delivered','on_the_way'].includes(String(rows[0].status))) {
         return send(res,409,{ok:false,code:'NOT_READY_TO_CONFIRM',message:'ပို့ဆောင်ပြီးသား အမှာစာကိုသာ လက်ခံအတည်ပြုနိုင်ပါသည်။'});
       }
-      const confirmedDate=new Date().toISOString();
+      const confirmedDate=yangonDateOnly();
       const adminData={...(rows[0].admin_data||{}),'Confirm Date':confirmedDate};
       const confirmationText=`အမှာစာ ${voucher} ကို လက်ခံရရှိပြီဖြစ်ကြောင်း အတည်ပြုလိုက်ပါသည်။`;
       const completed=await db`WITH changed AS (
@@ -561,13 +577,14 @@ export default async function handler(req, res) {
           SELECT ${user.id},${user.id},'customer',${confirmationText} FROM changed RETURNING id
         ) SELECT changed.id,posted.id AS message_id FROM changed CROSS JOIN posted`;
       if(!completed.length) {
-        const current=await db`SELECT complete,status FROM orders WHERE id=${rows[0].id} LIMIT 1`;
+        const current=await db`SELECT complete,status,admin_data FROM orders WHERE id=${rows[0].id} LIMIT 1`;
         if(current[0]?.complete===true||['complete','received'].includes(String(current[0]?.status))) {
-          return send(res,200,{ok:true,status:'complete',complete:true,message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးသားဖြစ်ပါသည်။'});
+          const confirmDate=current[0].admin_data?.['Confirm Date']?dateOnlyInYangon(current[0].admin_data['Confirm Date']):'';
+          return send(res,200,{ok:true,status:'complete',complete:true,confirmDate,message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးသားဖြစ်ပါသည်။'});
         }
         return send(res,409,{ok:false,code:'NOT_READY_TO_CONFIRM',message:'ပို့ဆောင်ပြီးသား အမှာစာကိုသာ လက်ခံအတည်ပြုနိုင်ပါသည်။'});
       }
-      return send(res,200,{ok:true,status:'complete',complete:true,message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးပါပြီ။'});
+      return send(res,200,{ok:true,status:'complete',complete:true,confirmDate:confirmedDate,message:'လက်ခံရရှိပြီလို့ အတည်ပြုပြီးပါပြီ။'});
     }
     if (route === '/profile/password' && req.method === 'PATCH') {
       const body = await readBody(req);
@@ -631,16 +648,19 @@ export default async function handler(req, res) {
     if (route === '/admin/orders/payment-notice' && req.method === 'POST') {
       const body=await readBody(req),voucher=String(body.voucherNo||'').trim();
       if(!voucher)return send(res,400,{ok:false,code:'VOUCHER_REQUIRED',message:'ဘောက်ချာနံပါတ်ကို စစ်ဆေးပါ။'});
-      const rows=await db`SELECT voucher_no,user_id,subtotal,total,admin_data,royal_data FROM orders WHERE voucher_no=${voucher} LIMIT 1`;
+      const rows=await db`SELECT voucher_no,user_id,subtotal,total,delivery_fee,admin_data,royal_data FROM orders WHERE voucher_no=${voucher} LIMIT 1`;
       const order=rows[0];
       if(!order)return send(res,404,{ok:false,code:'ORDER_NOT_FOUND',message:'အမှာစာကို မတွေ့ပါ။'});
       if(!order.user_id)return send(res,409,{ok:false,code:'CUSTOMER_ACCOUNT_MISSING',message:'ဤအမှာစာနှင့် Customer account မချိတ်ဆက်ထားပါ။'});
       const adminData={...(order.admin_data||{}),...(order.royal_data||{})};
-      const amountReceived=Number(String(adminData.Received??adminData['Amount Received']??'0').replaceAll(',',''));
+      const amountReceived=receivedBooksOnly(adminData.Received||adminData['Amount Received'],Number(order.subtotal??order.total??0),Number(order.delivery_fee??0));
       const total=Number(order.subtotal??order.total??0);
+      const deliveryFee=Number(order.delivery_fee??0);
+      const totalWithDelivery=total+deliveryFee;
+      const receivedWithDelivery=amountReceived+deliveryFee;
       const payDate=paymentNoticeDate(adminData['Pay Date']||adminData['pay date']||'');
       const account=String(adminData['KPay Account']||adminData['Kpay acc']||adminData['Kpay account']||'').trim();
-      if(!Number.isFinite(amountReceived)||!Number.isFinite(total)||total<=0||amountReceived<total||!payDate||!account)return send(res,409,{ok:false,code:'PAYMENT_NOTICE_NOT_READY',message:'Amount Received ကို Total နှင့်ညီအောင် ဖြည့်ပြီး Pay Date နဲ့ KPay Account ကို ထည့်ပြီးမှ စာပို့နိုင်ပါသည်။'});
+      if(!Number.isFinite(receivedWithDelivery)||!Number.isFinite(totalWithDelivery)||totalWithDelivery<=0||receivedWithDelivery<totalWithDelivery||!payDate||!account)return send(res,409,{ok:false,code:'PAYMENT_NOTICE_NOT_READY',message:'Amount Received ကို Total နှင့်ညီအောင် ဖြည့်ပြီး Pay Date နဲ့ KPay Account ကို ထည့်ပြီးမှ စာပို့နိုင်ပါသည်။'});
       const prefix=`${order.voucher_no} အတွက် ငွေလက်ခံရရှိပါပြီ၊`;
       const priorNotice=await db`SELECT id,user_id,sender_role,body,created_at,edited_at FROM discussion_messages
         WHERE user_id=${order.user_id} AND sender_role='admin' AND left(body,length(${prefix}))=${prefix} ORDER BY created_at LIMIT 1`;
@@ -660,7 +680,46 @@ export default async function handler(req, res) {
       const paymentNotices=await db`SELECT user_id,body FROM discussion_messages WHERE sender_role='admin' AND body LIKE '%အတွက် ငွေလက်ခံရရှိပါပြီ၊%'`;
       const paymentNoticeKeys=new Set(paymentNotices.map((message)=>`${message.user_id}:${message.body.split(' အတွက် ငွေလက်ခံရရှိပါပြီ၊')[0]}`));
       const items=await db`SELECT oi.order_id,oi.book_id,oi.quantity,oi.amount,b.quantity_header,b.amount_header FROM order_items oi LEFT JOIN books b ON b.id=oi.book_id ORDER BY oi.book_name`;
-      return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);const complete=o.complete===true||['complete','received'].includes(String(o.status));const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(o.status))?'delivered':'pending';return{...extra,'Voucher No':o.voucher_no,Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??'','Complete':complete?'Yes':'','Deliver Date':extra['Deliver Date']||extra['Confirm Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),status:deliveryStatus,hasCustomerAccount:Boolean(o.user_id),paymentNoticeSent:Boolean(o.user_id&&paymentNoticeKeys.has(`${o.user_id}:${o.voucher_no}`)),'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
+      const profileOrders=orders.map((order)=>{
+        const merged={...(order.admin_data||{}),...(order.royal_data||{})};
+        const legacyDeliveryNotes=merged['Delivery Notes'];
+        const extra={...merged};
+        delete extra['Delivery Notes'];
+        const orderItems=items.filter((item)=>item.order_id===order.id);
+        const complete=order.complete===true||['complete','received'].includes(String(order.status));
+        const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(order.status))?'delivered':'pending';
+        const carInfo=extra['car inform']||(order.delivery_service==='Car'?(legacyDeliveryNotes||order.car_details):'');
+        const received=receivedBooksOnly(extra.Received||extra['Amount Received'],Number(order.subtotal),Number(order.delivery_fee));
+        return {
+          ...extra,
+          'Voucher No':order.voucher_no,
+          Name:order.customer_name,
+          Address:extra.Address||`${order.city_label}, ${order.address}`,
+          'Phone 1':order.phone,
+          'Phone 2':order.phone2,
+          'Ordered Date':extra['Ordered Date']||order.created_at.toISOString(),
+          Total:String(order.subtotal),
+          'Payment Method':order.payment_method,
+          Received:String(received),
+          Complete:complete?'Yes':'',
+          'Confirm Date':extra['Confirm Date']?dateOnlyInYangon(extra['Confirm Date']):'',
+          'Deliver Date':extra['Deliver Date']||'',
+          status:deliveryStatus,
+          hasCustomerAccount:Boolean(order.user_id),
+          paymentNoticeSent:Boolean(order.user_id&&paymentNoticeKeys.has(`${order.user_id}:${order.voucher_no}`)),
+          'Delivery Service':order.delivery_service,
+          'Delivery Fees':String(order.delivery_fee),
+          'Total KG':String(order.total_weight_kg),
+          'Cash Collection':String(order.cash_collection),
+          'car inform':carInfo,
+          'Royal Shipment State':extra['Royal Shipment State']||(order.delivery_service!=='Car'?legacyDeliveryNotes||'':''),
+          ...Object.fromEntries(orderItems.flatMap((item)=>[
+            [item.quantity_header||`${item.book_id} Qty`,String(item.quantity)],
+            [item.amount_header||`${item.book_id} Amount`,String(item.amount)]
+          ]))
+        };
+      });
+      return send(res,200,{ok:true,orders:profileOrders});
     }
     if (route === '/admin/orders' && req.method === 'DELETE') {
       const body=await readBody(req);
@@ -683,19 +742,31 @@ export default async function handler(req, res) {
         'Phone 1':prior.phone,'Phone 2':prior.phone2,'Ordered Date':prior.created_at.toISOString(),Total:String(prior.subtotal),
         'Payment Method':prior.payment_method,Received:(prior.admin_data||{}).Received??'','Deliver Date':(prior.admin_data||{})['Deliver Date']||'',
         'Delivery Service':prior.delivery_service,'Delivery Fees':String(prior.delivery_fee),'Total KG':String(prior.total_weight_kg),
-        'Cash Collection':String(prior.cash_collection),'Delivery Notes':prior.car_details,...itemData,...(prior.admin_data||{}),...order
+        'Cash Collection':String(prior.cash_collection),'car inform':(prior.admin_data||{})['car inform']||((prior.delivery_service==='Car'?(prior.admin_data||{})['Delivery Notes']:''))||prior.car_details,...itemData,...(prior.admin_data||{}),...order
       };
       const editAliases={'Amount Received':'Received','Delivered Date':'Deliver Date','Phone':'Phone 1','Order Date':'Ordered Date','Old Questions Qty':'OQ Qty','Old Questions Amount':'OQ Amount','Grade 11 Handbook Qty':'G11 Handbook Qty','Grade 11 Handbook Amount':'G11 Handbook Amount','Grade 11 Objective Qty':'G11 Objective Qty','Grade 11 Objective Amount':'G11 Objective Amount','Grade 10 Handbook Qty':'G10 Handbook Qty','Grade 10 Handbook Amount':'G10 Handbook Amount','Royal VOC No':'Royal Voucher',Delivery:'Delivery Service','Facebook Account Name':'Facebook Name'};
       for(const [alias,canonical] of Object.entries(editAliases)) if(Object.prototype.hasOwnProperty.call(order,alias)) adminData[canonical]=order[alias];
       const delivered=String(order['Deliver Date']||order['Delivered Date']||'').trim();
+      const wasComplete=prior.complete===true||['complete','received'].includes(String(prior.status));
       const complete=Object.prototype.hasOwnProperty.call(order,'Complete')
         ? order.Complete===true||['yes','true','1'].includes(String(order.Complete).trim().toLowerCase())
-        : prior.complete===true||['complete','received'].includes(String(prior.status));
-      const receivedValue=Number(String(adminData.Received??'0').replaceAll(',',''));
+        : wasComplete;
+      const enteredReceived=Number(String(adminData.Received??'0').replaceAll(',',''));
       const subtotalValue=Number(String(adminData.Total??prior.subtotal).replaceAll(',',''));
       const feeValue=Number(String(adminData['Delivery Fees']??prior.delivery_fee).replaceAll(',',''));
       const weightValue=Number(String(adminData['Total KG']??prior.total_weight_kg).replaceAll(',',''));
-      if(!Number.isSafeInteger(receivedValue)||receivedValue<0||!Number.isSafeInteger(subtotalValue)||subtotalValue<0||!Number.isSafeInteger(feeValue)||feeValue<0||!Number.isFinite(weightValue)||weightValue<0) return send(res,400,{ok:false,message:'ငွေပမာဏနှင့် အလေးချိန် အချက်အလက်ကို စစ်ဆေးပါ။'});
+      if(!Number.isSafeInteger(enteredReceived)||enteredReceived<0||!Number.isSafeInteger(subtotalValue)||subtotalValue<0||!Number.isSafeInteger(feeValue)||feeValue<0||!Number.isFinite(weightValue)||weightValue<0) return send(res,400,{ok:false,message:'ငွေပမာဏနှင့် အလေးချိန် အချက်အလက်ကို စစ်ဆေးပါ။'});
+      if(enteredReceived>subtotalValue+feeValue)return send(res,400,{ok:false,code:'RECEIVED_AMOUNT_INVALID',message:'Received ပမာဏသည် စာအုပ်ဖိုးနှင့် ပို့ခပေါင်းထက် မကျော်ရပါ။'});
+      const receivedValue=enteredReceived===subtotalValue+feeValue&&feeValue>0?subtotalValue:enteredReceived;
+      adminData.Received=String(receivedValue);
+      const priorNotes=String(adminData['Delivery Notes']||'');
+      if(!adminData['car inform']&&prior.delivery_service==='Car')adminData['car inform']=priorNotes||prior.car_details;
+      if(priorNotes&&prior.delivery_service!=='Car'&&!adminData['Royal Shipment State'])adminData['Royal Shipment State']=priorNotes;
+      delete adminData['Delivery Notes'];
+      adminData['car inform']=String(adminData['car inform']||'');
+      if(complete&&!wasComplete)adminData['Confirm Date']=yangonDateOnly();
+      else if(!complete)delete adminData['Confirm Date'];
+      else if(adminData['Confirm Date'])adminData['Confirm Date']=dateOnlyInYangon(adminData['Confirm Date']);
       const status=complete?'complete':delivered?'delivered':'pending';
       delete adminData.Complete;
       const rawAddress=String(adminData.Address??prior.address);
@@ -707,7 +778,8 @@ export default async function handler(req, res) {
       const books=await db`SELECT id,name,quantity_header,amount_header,weight FROM books ORDER BY sort_order,id`;
       const itemRows=[];
       for(const book of books){const quantity=Number(String(adminData[book.quantity_header]??'0').replaceAll(',',''));if(!Number.isSafeInteger(quantity)||quantity<0)return send(res,400,{ok:false,message:`${book.quantity_header} အချက်အလက် မမှန်ပါ။`});if(quantity<1)continue;const amountRaw=adminData[book.amount_header];const amount=amountRaw==null||amountRaw===''?0:Number(String(amountRaw).replaceAll(',',''));if(!Number.isSafeInteger(amount)||amount<0)return send(res,400,{ok:false,message:`${book.amount_header} အချက်အလက် မမှန်ပါ။`});itemRows.push({book,quantity,amount,unitPrice:Math.floor(amount/quantity)});}
-      const rows=await db`UPDATE orders SET customer_name=${String(adminData.Name??prior.customer_name)},phone=${String(adminData['Phone 1']??prior.phone)},phone2=${String(adminData['Phone 2']??prior.phone2)},address=${dbAddress},payment_method=${payment},delivery_service=${service},delivery_fee=${feeValue},subtotal=${subtotalValue},total=${subtotalValue+feeValue},total_weight_kg=${weightValue},cash_collection=${Number.isSafeInteger(cashValue)&&cashValue>=0?cashValue:0},status=${status},complete=${complete},admin_note=${String(order.adminNote||prior.admin_note||'')},admin_data=${JSON.stringify(adminData)}::jsonb,updated_at=now() WHERE voucher_no=${voucher} RETURNING id,voucher_no`;
+      const carInfo=String(adminData['car inform']||'');
+      const rows=await db`UPDATE orders SET customer_name=${String(adminData.Name??prior.customer_name)},phone=${String(adminData['Phone 1']??prior.phone)},phone2=${String(adminData['Phone 2']??prior.phone2)},address=${dbAddress},payment_method=${payment},delivery_service=${service},car_details=${carInfo},delivery_fee=${feeValue},subtotal=${subtotalValue},total=${subtotalValue+feeValue},total_weight_kg=${weightValue},cash_collection=${Number.isSafeInteger(cashValue)&&cashValue>=0?cashValue:0},status=${status},complete=${complete},admin_note=${String(order.adminNote||prior.admin_note||'')},admin_data=${JSON.stringify(adminData)}::jsonb,updated_at=now() WHERE voucher_no=${voucher} RETURNING id,voucher_no`;
       await db`DELETE FROM order_items WHERE order_id=${rows[0].id}`;
       for(const item of itemRows) await db`INSERT INTO order_items(order_id,book_id,book_name,quantity,unit_price,amount,weight_kg) VALUES (${rows[0].id},${item.book.id},${item.book.name},${item.quantity},${item.unitPrice},${item.amount},${Number(item.book.weight)})`;
       return send(res,200,{ok:true,order:{...order,status,Complete:complete?'Yes':''}});

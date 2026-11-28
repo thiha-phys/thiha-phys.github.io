@@ -301,7 +301,7 @@
             'Delivery Fees': String(resultOrder.deliveryFees || 0),
             'Total KG': String(resultOrder.totalKg || 0),
             'Cash Collection': String(resultOrder.cashCollection || 0),
-            'Delivery Notes': resultOrder.deliveryNotes || ''
+            'car inform': resultOrder.carInfo || ''
         };
         const itemById = new Map(resultOrder.items.map((item) => [item.id, item]));
         AdminBooks.forEach((book) => {
@@ -642,7 +642,21 @@
         .replace(/[&<>"']/g, (character) => ({
             '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
         })[character]);
-    window.orderField = (order, field) => String(order[field] == null ? '' : order[field]);
+    window.orderField = (order, field) => {
+        const aliases = {
+            'Amount Received': 'Received',
+            'Delivered Date': 'Deliver Date',
+            Phone: 'Phone 1',
+            'Order Date': 'Ordered Date',
+            'Royal VOC No': 'Royal Voucher',
+            Delivery: 'Delivery Service',
+            'Facebook Account Name': 'Facebook Name'
+        };
+        const value = field === 'Amount Received'
+            ? order['Received'] || order[field]
+            : order[field] || order[aliases[field]];
+        return String(value == null ? '' : value);
+    };
     window.orderMatches = (order, query) => {
         const needle = query.trim().toLocaleLowerCase();
         const textMatches = ['Voucher No', 'Name', 'Phone'].some((field) =>

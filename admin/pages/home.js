@@ -58,12 +58,17 @@ function formatOverviewAmount(value) {
 }
 
 function renderDashboard(orders) {
-    const received = orders.reduce((sum, order) => sum + orderAmount(order['Amount Received']), 0);
-    const outstanding = orders.reduce((sum, order) =>
-        sum + Math.max(0, orderAmount(order.Total) - orderAmount(order['Amount Received'])), 0);
+    const paymentTotals = orders.reduce((totals, order) => {
+        const deliveryFee = orderAmount(order['Delivery Fees']);
+        const total = orderAmount(order.Total) + deliveryFee;
+        const received = orderAmount(order['Received'] || order['Amount Received']) + deliveryFee;
+        totals.received += received;
+        totals.outstanding += Math.max(0, total - received);
+        return totals;
+    }, { received: 0, outstanding: 0 });
     document.getElementById('stat-orders').textContent = Number(orders.length).toLocaleString('en-US');
-    document.getElementById('stat-received').textContent = formatOverviewAmount(received);
-    document.getElementById('stat-outstanding').textContent = formatOverviewAmount(outstanding);
+    document.getElementById('stat-received').textContent = formatOverviewAmount(paymentTotals.received);
+    document.getElementById('stat-outstanding').textContent = formatOverviewAmount(paymentTotals.outstanding);
     document.getElementById('stat-undelivered').textContent =
         Number(orders.filter((order) => order.status === 'pending').length).toLocaleString('en-US');
     renderOrdersChart(orders);

@@ -12,8 +12,9 @@ Customer and Admin remain separate Vercel projects. Create one additional Vercel
 6. Before deploying password change and recovery, run `migrations/006_password_reset_requests.sql` in Neon SQL Editor after the existing migrations. It creates the separate password-reset review queue.
 7. Before deploying account discussions, run `migrations/007_discussion_messages.sql` in Neon SQL Editor. It creates an indexed, text-only message table; Admin deletion permanently removes selected message rows.
 8. Before deploying the three-state delivery flow, run `migrations/008_order_completion.sql` in Neon SQL Editor after the existing migrations. It adds the independent `orders.complete` column and converts legacy delivery states to `pending`, `delivered`, and `complete`. Do not store the customer confirmation flag in the numeric `admin_data.Received` payment amount.
-9. After the migrations succeed, deploy the **API Vercel project** (Root Directory = `backend`) as well as the Customer/Admin projects. Confirm `GET /api/health` reports `discussionMessaging`, `conversationMessageDeletion`, `passwordChange`, and `passwordReset` as enabled before testing those screens.
+9. Run `migrations/009_received_amount_books_only.sql` in Neon SQL Editor to remove delivery fees from legacy `admin_data.Received` values that stored books plus delivery together.
 10. In **Connect**, select the default database and role, turn on the pooled connection option, and copy the connection string. Keep it private.
+11. After the migrations succeed, deploy the **API Vercel project** (Root Directory = `backend`) as well as the Customer/Admin projects. Confirm `GET /api/health` reports `discussionMessaging`, `conversationMessageDeletion`, `passwordChange`, and `passwordReset` as enabled before testing those screens.
 
 ## Vercel API environment variables
 

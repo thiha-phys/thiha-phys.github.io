@@ -7,10 +7,10 @@ const ORDER_EXPORT_COLUMNS = [
     'G11 Objective Qty', 'G11 Objective Amount', 'G10 Handbook Qty', 'G10 Handbook Amount',
     'Total', 'Received', 'KPay Account', 'Pay Date', 'Payment Method', 'Delivery Service',
     'Delivery Fees', 'Total KG', 'Cash Collection', 'Facebook Name', 'Facebook Link',
-    'car inform', 'Delivery Notes', 'Royal Voucher', 'Royal Shipment Service Charge',
+    'car inform', 'Royal Voucher', 'Royal Shipment Service Charge',
     'Royal Shipment COD Amount', 'Royal Shipment Weight', 'Royal Statement COD Charge',
     'Royal Statement Paid Charge', 'Royal Statement Paid Date',
-    'Complete', 'Delivery Status', 'Confirm Date'
+    'Complete', 'Delivery Status', 'Confirm Date', 'Royal Shipment State'
 ];
 let orderItems = [];
 let allOrders = [];
@@ -24,6 +24,23 @@ function orderDateIso(order) {
     if (match) return match[1];
     const parsed = new Date(value);
     return Number.isNaN(parsed.getTime()) ? '' : parsed.toISOString().slice(0, 10);
+}
+
+function orderAmount(value) {
+    const amount = Number(String(value ?? '0').replaceAll(',', ''));
+    return Number.isFinite(amount) ? amount : 0;
+}
+
+function orderDeliveryFee(order) {
+    return orderAmount(order['Delivery Fees']);
+}
+
+function orderTotalWithDelivery(order) {
+    return orderAmount(order.Total) + orderDeliveryFee(order);
+}
+
+function orderReceivedWithDelivery(order) {
+    return orderAmount(order['Received'] || order['Amount Received']) + orderDeliveryFee(order);
 }
 
 function formatOrderDateEnglish(value) {
@@ -84,8 +101,9 @@ function paymentMethodLabel(value) {
 
 function renderOrderDetails(order) {
     const deliveryService = order['Delivery Service'] || order.Delivery;
-    const carInfo = order['car inform'] ||
-        (deliveryService === 'Car' ? order['Delivery Notes'] : '');
+    const carInfo = order['car inform'];
+    const deliveryFee = orderDeliveryFee(order);
+    const deliveredDate = order['Delivered Date'] || order['Deliver Date'];
     const itemDetails = orderItems.map(([quantityField, amountField, bookName]) => {
         const quantity = Number(order[quantityField] || 0);
         if (quantity <= 0) return '';
@@ -102,10 +120,19 @@ function renderOrderDetails(order) {
             : formatKyats(order['Cash Collection'])],
         ['KPay Account', order['KPay Account']],
         ['Pay Date', order['Pay Date']],
+        ['Confirm Date', order['Confirm Date'] ? formatOrderDateEnglish(order['Confirm Date']) : ''],
+        ['ပို့ခ', formatKyats(deliveryFee)],
         ['Royal VOC No', order['Royal VOC No']],
+        ['Royal Shipment Service Charge', order['Royal Shipment Service Charge']],
+        ['Royal Shipment COD Amount', order['Royal Shipment COD Amount']],
+        ['Royal Shipment Weight', order['Royal Shipment Weight']],
+        ['Royal Statement COD Charge', order['Royal Statement COD Charge']],
+        ['Royal Statement Paid Charge', order['Royal Statement Paid Charge']],
+        ['Royal Statement Paid Date', order['Royal Statement Paid Date']],
         ...(carInfo ? [['ကားဂိတ် / ကားအမည်', carInfo]] : []),
         ['Delivery', order.Delivery],
-        ['Facebook Account Name', order['Facebook Account Name']]
+        ['Facebook Account Name', order['Facebook Account Name']],
+        ['Royal Shipment State', order['Royal Shipment State']]
     ].filter(([, value]) => value);
 
     return `<div class="order-details">
@@ -120,7 +147,7 @@ function renderOrderDetails(order) {
                 <div class="order-detail-line"><span>ဖုန်းနံပါတ်</span><strong>${renderPhoneLink(order.Phone)}</strong></div>
                 ${renderDetailLine('လိပ်စာ', order.Address)}
                 ${renderDetailLine('Ordered Date', formatOrderDateEnglish(order['Ordered Date'] || order['Order Date']))}
-                ${renderDetailLine('Delivered Date', (order['Delivered Date'] || order['Order Confirm']) ? formatOrderDateEnglish(order['Delivered Date'] || order['Order Confirm']) : 'မပို့ရသေး')}
+                ${renderDetailLine('Delivered Date', deliveredDate ? formatOrderDateEnglish(deliveredDate) : 'မပို့ရသေး')}
                 ${extraDetails.map(([label, value]) => renderDetailLine(label, value)).join('')}
             </div>
         </div>
@@ -133,8 +160,8 @@ function renderOrders() {
     const to = document.getElementById('date-to').value;
     const matches = allOrders.filter((order) => {
         const date = orderDateIso(order);
-        const total = Number(order.Total || 0);
-        const received = Number(order['Amount Received'] || 0);
+        const total = orderTotalWithDelivery(order);
+        const received = orderReceivedWithDelivery(order);
         if (activeMode === 'search') return orderMatches(order, query);
         if (activeMode === 'date') {
             return Boolean(date) && (!from || date >= from) && (!to || date <= to);
@@ -158,7 +185,7 @@ function renderOrders() {
             : order.status === 'delivered'
                 ? 'delivered'
                 : 'pending';
-        const paid = Number(order['Amount Received'] || 0) >= Number(order.Total || 0);
+        const paid = orderReceivedWithDelivery(order) >= orderTotalWithDelivery(order);
         const paymentMethod = paymentMethodLabel(order['Payment Method']);
         card.innerHTML = `
             <summary class="order-card-summary">
@@ -174,8 +201,8 @@ function renderOrders() {
                 <span class="order-card-info">${escapeText(formatOrderDateEnglish(order['Order Date']))}</span>
                 <span class="order-card-info order-customer">${escapeText(order.Name || '—')} · ${renderPhoneLink(order.Phone)} · ${escapeText(order.Address || '—')}</span>
                 <span class="order-card-totals">
-                    <span>စုစုပေါင်း <strong>${formatKyats(order.Total)}</strong></span>
-                    <span>လက်ခံရရှိ <strong>${formatKyats(order['Amount Received'])}</strong></span>
+                    <span>စုစုပေါင်း <strong>${formatKyats(orderTotalWithDelivery(order))}</strong></span>
+                    <span>လက်ခံရရှိ <strong>${formatKyats(orderReceivedWithDelivery(order))}</strong></span>
                 </span>
                 <span class="order-card-expand"><span>အသေးစိတ်ကြည့်ရန်</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
             </summary>
@@ -209,10 +236,10 @@ function renderOrders() {
             }
         });
         const details = card.querySelector('.order-details');
-        const amountReceived = Number(String(order['Amount Received'] || '0').replaceAll(',', ''));
+        const amountReceived = orderReceivedWithDelivery(order);
         const payDate = String(order['Pay Date'] || order['pay date'] || '').trim();
         const kpayAccount = String(order['KPay Account'] || order['Kpay acc'] || order['Kpay account'] || '').trim();
-        const orderTotal = Number(String(order.Total || '0').replaceAll(',', ''));
+        const orderTotal = orderTotalWithDelivery(order);
         if (order.hasCustomerAccount && !order.paymentNoticeSent && orderTotal > 0 && amountReceived >= orderTotal && payDate && kpayAccount) {
             const noticeButton = document.createElement('button');
             noticeButton.type = 'button';
