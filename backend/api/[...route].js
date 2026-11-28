@@ -350,9 +350,12 @@ export default async function handler(req, res) {
       const packages=Math.max(1,Math.ceil(kg/5-0.000000001));
       const lastPackageWeight=kg-5*(packages-1);
       const extraKg=Math.ceil(Math.max(0,lastPackageWeight-2)-0.000000001);
-      const baseFee=service==='Royal'?(packages-1)*(Number(city.up_to_2kg)+3*Number(city.next_kg))+Number(city.up_to_2kg)+extraKg*Number(city.next_kg)+serviceFee:0;
+      const royalShipmentServiceCharge=service==='Royal'?packages*serviceFee:0;
+      const baseFee=service==='Royal'?(packages-1)*(Number(city.up_to_2kg)+3*Number(city.next_kg))+Number(city.up_to_2kg)+extraKg*Number(city.next_kg)+royalShipmentServiceCharge:0;
       const deliveryFee=service==='Royal'?Math.ceil(baseFee/500-0.000000001)*500:0;
       const total=subtotal+deliveryFee;
+      const royalShipmentCodAmount=service==='Royal'?Math.max(0,deliveryFee-royalShipmentServiceCharge):0;
+      const royalShipmentWeight=service==='Royal'?kg:0;
       if(payment==='COD' && total>=Number(settings.codMaxTotal ?? 150000)) return send(res,400,{ok:false,code:'COD_LIMIT',message:'စုစုပေါင်းပမာဏအတွက် KBZ Pay ကိုသာ ရွေးချယ်နိုင်ပါသည်။'});
       const customerName=String(order.name||user?.name||'').trim(), customerPhone=String(order.phone||user?.phone||'').trim();
       if(!String(order.address||'').trim() || !customerName || !customerPhone) return send(res,400,{ok:false,code:'MISSING_ORDER_DETAILS',message:'အမည်၊ ဖုန်းနှင့် လိပ်စာ ဖြည့်ပါ။'});
@@ -361,8 +364,13 @@ export default async function handler(req, res) {
         SELECT order_no,lpad(order_no::text,3,'0'),${user?.id || null},${customerName},${customerPhone},${String(order.phone2 || '').trim()},${city.id},${String(order.address || '').trim()},${service},${payment},${String(order.carDetails || '').trim()},'pending' FROM next_number
         RETURNING id, voucher_no,order_no`;
       for(const item of preparedItems) await db`INSERT INTO order_items(order_id,book_id,book_name,quantity,unit_price,amount,weight_kg) VALUES (${created[0].id},${item.book.id},${item.book.name},${item.quantity},${item.unitPrice},${item.amount},${Number(item.book.weight)})`;
-      await db`UPDATE orders SET subtotal=${subtotal},delivery_fee=${deliveryFee},total=${total},total_weight_kg=${kg},cash_collection=${payment==='COD'?total:0} WHERE id=${created[0].id}`;
-      const resultOrder={voucherNo:created[0].voucher_no,name:customerName,phone:customerPhone,phone2:String(order.phone2 || ''),city:city.label,address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,carInfo:String(order.carDetails || ''),items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))};
+      const royalOrderData={
+        'Royal Shipment Service Charge':service==='Royal'?String(royalShipmentServiceCharge):'',
+        'Royal Shipment COD Amount':service==='Royal'?String(royalShipmentCodAmount):'',
+        'Royal Shipment Weight':service==='Royal'?String(royalShipmentWeight):''
+      };
+      await db`UPDATE orders SET subtotal=${subtotal},delivery_fee=${deliveryFee},total=${total},total_weight_kg=${kg},cash_collection=${payment==='COD'?total:0},admin_data=${JSON.stringify(royalOrderData)}::jsonb WHERE id=${created[0].id}`;
+      const resultOrder={voucherNo:created[0].voucher_no,name:customerName,phone:customerPhone,phone2:String(order.phone2 || ''),city:city.label,address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,'Royal Shipment Service Charge':royalOrderData['Royal Shipment Service Charge'],'Royal Shipment COD Amount':royalOrderData['Royal Shipment COD Amount'],'Royal Shipment Weight':royalOrderData['Royal Shipment Weight'],carInfo:String(order.carDetails || ''),items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))};
       const telegramNotified=await notifyTelegram(resultOrder);
       return send(res, 201, { ok:true, orderId:created[0].voucher_no, order:resultOrder,telegramNotified });
     }
@@ -774,6 +782,7 @@ export default async function handler(req, res) {
       const dbAddress=rawAddress.startsWith(addressPrefix)?rawAddress.slice(addressPrefix.length):rawAddress;
       const payment=String(adminData['Payment Method']||prior.payment_method);
       const service=String(adminData['Delivery Service']||prior.delivery_service);
+      if(service==='Car'&&payment!=='KBZ Pay')return send(res,400,{ok:false,code:'CAR_REQUIRES_KBZ',message:'ကားတင်ရန်အတွက် KBZ Pay ကိုသာ ရွေးနိုင်ပါသည်။'});
       const cashValue=Number(String(adminData['Cash Collection']??(payment==='COD'?subtotalValue+feeValue:0)).replaceAll(',',''));
       const books=await db`SELECT id,name,quantity_header,amount_header,weight FROM books ORDER BY sort_order,id`;
       const itemRows=[];

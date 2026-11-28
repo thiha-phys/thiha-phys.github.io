@@ -74,7 +74,7 @@ function getRoyalDeliveryFee(weight, city) {
     const lastPackageWeight = weight - 5 * (packageCount - 1);
     const extraKg = Math.ceil(Math.max(0, lastPackageWeight - 2) - 0.000000001);
     return (packageCount - 1) * fullPackageFee +
-        Number(city.upTo2Kg) + extraKg * Number(city.nextKg) + serviceFee;
+        Number(city.upTo2Kg) + extraKg * Number(city.nextKg) + packageCount * serviceFee;
 }
 
 function getFinalRoyalDeliveryFee(weight, city) {

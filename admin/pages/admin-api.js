@@ -301,6 +301,9 @@
             'Delivery Fees': String(resultOrder.deliveryFees || 0),
             'Total KG': String(resultOrder.totalKg || 0),
             'Cash Collection': String(resultOrder.cashCollection || 0),
+            'Royal Shipment Service Charge': resultOrder['Royal Shipment Service Charge'] || '',
+            'Royal Shipment COD Amount': resultOrder['Royal Shipment COD Amount'] || '',
+            'Royal Shipment Weight': resultOrder['Royal Shipment Weight'] || '',
             'car inform': resultOrder.carInfo || ''
         };
         const itemById = new Map(resultOrder.items.map((item) => [item.id, item]));
