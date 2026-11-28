@@ -176,6 +176,26 @@ function renderOrders() {
         voucherLink.className = 'order-voucher-button';
         voucherLink.href = `createvoucher.html?voucher=${encodeURIComponent(String(order['Voucher No'] || ''))}`;
         voucherLink.innerHTML = '<i class="fa-solid fa-receipt" aria-hidden="true"></i><span>VOC</span>';
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'order-delete-button';
+        deleteButton.innerHTML = '<i class="fa-solid fa-trash" aria-hidden="true"></i>';
+        deleteButton.setAttribute('aria-label', `Delete order ${order['Voucher No']}`);
+        deleteButton.title = 'Delete order';
+        deleteButton.addEventListener('click', async () => {
+            const voucher = String(order['Voucher No'] || '');
+            if (!window.confirm(`${voucher} အမှာစာကို အပြီးဖျက်မှာ သေချာပါသလား။ ဒီလုပ်ဆောင်ချက်ကို ပြန်ပြင်၍မရပါ။`)) return;
+            deleteButton.disabled = true;
+            try {
+                await AdminApi.deleteOrder(voucher);
+                const refreshed = await AdminApi.refreshOrders();
+                allOrders = refreshed.data;
+                renderOrders();
+            } catch (error) {
+                deleteButton.disabled = false;
+                window.alert(error.message || 'အမှာစာကို ဖျက်၍မရပါ။');
+            }
+        });
         const details = card.querySelector('.order-details');
         const amountReceived = Number(String(order['Amount Received'] || '0').replaceAll(',', ''));
         const payDate = String(order['Pay Date'] || order['pay date'] || '').trim();
@@ -206,7 +226,7 @@ function renderOrders() {
         }
         const actions = document.createElement('div');
         actions.className = 'order-card-actions';
-        actions.append(editLink, voucherLink);
+        actions.append(editLink, voucherLink, deleteButton);
         details.append(actions);
         listElement.append(card);
     });

@@ -113,8 +113,8 @@
     }
 
     async function request(action, payload = {}) {
-        const route = action === 'listOrders' ? 'admin/orders' : action === 'updateOrder' ? 'admin/orders' : action === 'createOrder' ? 'orders' : `admin/${action}`;
-        const method = action === 'listOrders' ? 'GET' : action === 'updateOrder' ? 'PATCH' : 'POST';
+        const route = ['listOrders', 'updateOrder', 'deleteOrder'].includes(action) ? 'admin/orders' : action === 'createOrder' ? 'orders' : `admin/${action}`;
+        const method = action === 'listOrders' ? 'GET' : action === 'updateOrder' ? 'PATCH' : action === 'deleteOrder' ? 'DELETE' : 'POST';
         const response = await apiFetch(`${API_URL}/api/${route}`, {
             method,
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('physicsLearningHubSession') || ''}` },
@@ -350,6 +350,10 @@
             result.localCacheError = true;
         }
         return result;
+    }
+
+    async function deleteOrder(voucherNo) {
+        return request('deleteOrder', { voucherNo });
     }
 
     function importRoyalShipmentExport(entries) {
@@ -608,6 +612,7 @@
         refreshOrders,
         createOrder,
         updateOrder,
+        deleteOrder,
         importRoyalShipmentExport,
         importRoyalStatementExport,
         getShops,

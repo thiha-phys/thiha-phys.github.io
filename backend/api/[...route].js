@@ -662,6 +662,14 @@ export default async function handler(req, res) {
       const items=await db`SELECT oi.order_id,oi.book_id,oi.quantity,oi.amount,b.quantity_header,b.amount_header FROM order_items oi LEFT JOIN books b ON b.id=oi.book_id ORDER BY oi.book_name`;
       return send(res,200,{ok:true,orders:orders.map((o)=>{const extra={...(o.admin_data||{}),...(o.royal_data||{})};const orderItems=items.filter((i)=>i.order_id===o.id);const complete=o.complete===true||['complete','received'].includes(String(o.status));const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(o.status))?'delivered':'pending';return{...extra,'Voucher No':o.voucher_no,Name:o.customer_name,Address:extra.Address||`${o.city_label}, ${o.address}`,'Phone 1':o.phone,'Phone 2':o.phone2,'Ordered Date':extra['Ordered Date']||o.created_at.toISOString(),Total:String(o.subtotal),'Payment Method':o.payment_method,Received:extra.Received??'','Complete':complete?'Yes':'','Deliver Date':extra['Deliver Date']||extra['Confirm Date']||(o.status==='delivered'?o.updated_at.toISOString().slice(0,10):''),status:deliveryStatus,hasCustomerAccount:Boolean(o.user_id),paymentNoticeSent:Boolean(o.user_id&&paymentNoticeKeys.has(`${o.user_id}:${o.voucher_no}`)),'Delivery Service':o.delivery_service,'Delivery Fees':String(o.delivery_fee),'Total KG':String(o.total_weight_kg),'Cash Collection':String(o.cash_collection),'Delivery Notes':extra['Delivery Notes']||o.car_details,...Object.fromEntries(orderItems.flatMap((i)=>[[i.quantity_header||`${i.book_id} Qty`,String(i.quantity)],[i.amount_header||`${i.book_id} Amount`,String(i.amount)]]))};})});
     }
+    if (route === '/admin/orders' && req.method === 'DELETE') {
+      const body=await readBody(req);
+      const voucher=String(body.voucherNo||body['Voucher No']||'').trim();
+      if(!voucher)return send(res,400,{ok:false,code:'VOUCHER_REQUIRED',message:'ဘောက်ချာနံပါတ်ကို စစ်ဆေးပါ။'});
+      const deleted=await db`DELETE FROM orders WHERE voucher_no=${voucher} RETURNING voucher_no`;
+      if(!deleted.length)return send(res,404,{ok:false,code:'ORDER_NOT_FOUND',message:'အမှာစာကို မတွေ့ပါ။'});
+      return send(res,200,{ok:true,voucherNo:deleted[0].voucher_no});
+    }
     if (route === '/admin/orders' && req.method === 'PATCH') {
       const body=await readBody(req), order=body.order || body;
       const voucher=String(order.voucherNo || order['Voucher No'] || '');
@@ -762,11 +770,7 @@ export default async function handler(req, res) {
       const targetRows = await db`SELECT id,email,role FROM users WHERE id=${targetId} LIMIT 1`;
       const target = targetRows[0];
       if (!target) return send(res,404,{ok:false,code:'USER_NOT_FOUND',message:'အသုံးပြုသူကို မတွေ့ပါ။'});
-      if (target.role === 'admin' && adminEmails.includes(normalizeEmail(target.email))) {
-        const admins = await db`SELECT email FROM users WHERE role='admin'`;
-        const activeAdminCount = admins.filter((row)=>adminEmails.includes(normalizeEmail(row.email))).length;
-        if (activeAdminCount <= 1) return send(res,409,{ok:false,code:'LAST_ADMIN',message:'နောက်ဆုံး admin အကောင့်ကို ဖျက်၍မရပါ။'});
-      }
+      if (target.role === 'admin') return send(res,409,{ok:false,code:'ADMIN_DELETE_FORBIDDEN',message:'Admin account ကို ဒီစာမျက်နှာမှ ဖျက်၍မရပါ။'});
       const deleted = await db`DELETE FROM users WHERE id=${target.id} RETURNING id`;
       if (!deleted.length) return send(res,404,{ok:false,code:'USER_NOT_FOUND',message:'အသုံးပြုသူကို မတွေ့ပါ။'});
       return send(res,200,{ok:true});

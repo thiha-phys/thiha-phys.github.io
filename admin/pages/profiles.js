@@ -41,7 +41,7 @@ function renderProfileCard(profile) {
         </div>
     `;
 
-    if (typeof profile.id === 'string') {
+    if (typeof profile.id === 'string' && profile.role !== 'admin') {
         const deleteButton = document.createElement('button');
         deleteButton.type = 'button';
         deleteButton.className = 'profile-role-button delete';

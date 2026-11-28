@@ -8,11 +8,7 @@
 </head>
 <body><main class="page-shell">
     <header class="page-top no-print"><a class="back-button" href="historyorder.html" aria-label="Back to Order History"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">Reprint Voucher</h1><p class="page-subtitle">Open or print the selected order voucher.</p></div></header>
-    <section id="voucher-search-panel" class="panel no-print">
-        <form id="voucher-search-form" class="search-row"><input id="voucher-query" class="search-input" type="search" placeholder="Voucher number, name, or phone" required><button class="primary-button" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button></form>
-        <div class="history-refresh-row"><span id="voucher-cache-status" class="muted small">Orders load from the database when searched.</span></div>
-        <p id="voucher-status" class="status-message" role="status"></p><div id="voucher-results" class="result-list"></div>
-    </section>
+    <p id="voucher-load-status" class="status-message no-print" role="status"></p>
     <section id="receipt" class="receipt" hidden>
         <div class="receipt-head"><div class="receipt-heading"><p class="eyebrow">PHYSICS LEARNING HUB</p><h2>Order Voucher</h2><strong id="receipt-voucher"></strong></div><img class="receipt-logo" src="../logo.png" alt="UTHK logo"></div>
         <div id="receipt-info" class="receipt-grid"></div>

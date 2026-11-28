@@ -3,47 +3,6 @@ const masterDataReady = AdminApi.getMasterData().catch((error) => {
     console.warn('Unable to load current book labels for vouchers.', error);
 });
 
-function formatVoucherCacheTime(updatedAt) {
-    const parts = new Intl.DateTimeFormat('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hourCycle: 'h23'
-    }).formatToParts(new Date(updatedAt))
-        .reduce((values, part) => {
-            values[part.type] = part.value;
-            return values;
-        }, {});
-    return `Loaded · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
-}
-
-function renderVoucherMatches(query) {
-    const results = document.getElementById('voucher-results');
-    results.replaceChildren();
-    const matches = orders.filter((order) => orderMatches(order, query))
-        .sort((a, b) => String(b['Ordered Date'] || b['Order Date'] || '')
-            .localeCompare(String(a['Ordered Date'] || a['Order Date'] || '')));
-    if (!matches.length) {
-        results.innerHTML = '<div class="empty-state">No matching orders found.</div>';
-        return 0;
-    }
-    matches.slice(0, 50).forEach((order) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'result-choice';
-        button.innerHTML = `<span><strong>${escapeText(order['Voucher No'])} · ${escapeText(order.Name)}</strong><br><small>${escapeText(order.Phone)} · ${escapeText(orderDate(order['Order Date']))}</small></span><span>${formatKyats(order.Total)}</span>`;
-        button.addEventListener('click', async () => {
-            await masterDataReady;
-            displayVoucher(order);
-        });
-        results.append(button);
-    });
-    return matches.length;
-}
-
 function addReceiptLine(container, label, value) {
     const line = document.createElement('div');
     line.className = 'receipt-line';
@@ -130,27 +89,6 @@ function displayVoucher(order) {
     document.getElementById('receipt').scrollIntoView({ behavior: 'smooth' });
 }
 
-document.getElementById('voucher-search-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const status = document.getElementById('voucher-status');
-    status.className = 'status-message';
-    document.getElementById('receipt').hidden = true;
-    try {
-        const cached = await AdminApi.refreshOrders();
-        orders = cached.data;
-        document.getElementById('voucher-cache-status').textContent =
-            formatVoucherCacheTime(cached.updatedAt);
-        const count = renderVoucherMatches(document.getElementById('voucher-query').value);
-        status.textContent = count
-            ? `${count.toLocaleString('en-US')} orders found. Select an order to create a voucher.`
-            : 'No matching orders found.';
-    } catch (error) {
-        console.error('Unable to search cached orders for a voucher.', error);
-        status.textContent = 'Unable to load orders from the database.';
-        status.classList.add('error');
-    }
-});
-
 document.getElementById('print-voucher').addEventListener('click', () => window.print());
 attachReceiptActions({
     receiptId: 'receipt',
@@ -160,13 +98,15 @@ attachReceiptActions({
 
 async function openRequestedVoucher() {
     const voucher = new URLSearchParams(window.location.search).get('voucher');
-    if (!voucher) return;
-    const status = document.getElementById('voucher-status');
-    status.textContent = 'Loading selected voucher…';
+    const status = document.getElementById('voucher-load-status');
+    if (!voucher) {
+        status.textContent = 'Order History မှ VOC ကို ရွေးပြီး ဖွင့်ပါ။';
+        return;
+    }
+    status.textContent = 'ရွေးထားသော ဘောက်ချာကို ဖွင့်နေသည်…';
     try {
         const cached = await AdminApi.refreshOrders();
         orders = cached.data;
-        document.getElementById('voucher-cache-status').textContent = formatVoucherCacheTime(cached.updatedAt);
         const order = orders.find((item) => String(item['Voucher No'] || '').trim() === voucher.trim());
         if (!order) {
             status.textContent = `Voucher ${voucher} was not found.`;
@@ -174,7 +114,7 @@ async function openRequestedVoucher() {
             return;
         }
         await masterDataReady;
-        document.getElementById('voucher-search-panel').hidden = true;
+        status.hidden = true;
         displayVoucher(order);
     } catch (error) {
         console.error('Unable to load the requested voucher.', error);
