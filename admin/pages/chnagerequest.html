@@ -7,12 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body><main class="page-shell">
-    <header class="page-top"><a class="back-button" href="historyorder.html" aria-label="Back to Order History"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">Edit Order</h1><p class="page-subtitle">Select an order from history, or search for it here.</p></div></header>
-    <section class="panel" id="lookup-panel">
-        <h2>Find an Order</h2><form id="lookup-form" class="search-row"><input id="lookup-query" class="search-input" type="search" placeholder="Voucher number, name, or phone" required><button class="primary-button" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button></form>
-        <div class="history-refresh-row"><span id="lookup-cache-status" class="muted small">Orders load from the database when searched.</span></div>
-        <p id="lookup-status" class="status-message" role="status"></p><div id="lookup-results" class="result-list"></div>
-    </section>
+    <header class="page-top"><a class="back-button" href="historyorder.html" aria-label="Back to Order History"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">Edit Order</h1><p class="page-subtitle">Edit the order selected from history.</p></div></header>
+    <p id="edit-entry-status" class="status-message" role="status" hidden></p>
     <section id="edit-panel" class="panel" hidden>
         <h2>Edit Order Details</h2>
         <p class="search-hint" id="edit-order-hint">Review the order, payment, and delivery details, then save changes to the existing order.</p>

@@ -27,25 +27,7 @@ const fieldGroups = [
         fields: ['Facebook Account Name', 'Facebook Link']
     }
 ];
-let orders = [];
 let selectedOrder = null;
-
-function formatHistoryCacheTime(updatedAt) {
-    const parts = new Intl.DateTimeFormat('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hourCycle: 'h23'
-    }).formatToParts(new Date(updatedAt))
-        .reduce((values, part) => {
-            values[part.type] = part.value;
-            return values;
-        }, {});
-    return `Loaded · ${parts.day} ${parts.month} ${parts.year} ${parts.hour}:${parts.minute}:${parts.second}`;
-}
 
 function dateInputValue(value) {
     const text = String(value || '').trim();
@@ -63,25 +45,6 @@ function dateInputValue(value) {
         date.getUTCDate() === Number(day)
         ? `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
         : '';
-}
-
-function showMatches(query) {
-    const matches = orders.filter((order) => orderMatches(order, query));
-    const resultList = document.getElementById('lookup-results');
-    resultList.replaceChildren();
-    if (!matches.length) {
-        resultList.innerHTML = '<div class="empty-state">No matching orders found.</div>';
-        return 0;
-    }
-    matches.slice(0, 50).forEach((order) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'result-choice';
-        button.innerHTML = `<span><strong>${escapeText(order['Voucher No'])} · ${escapeText(order.Name)}</strong><br><small>${escapeText(order.Phone)} · ${escapeText(orderDate(order['Order Date']))}</small></span><span>${formatKyats(order.Total)}</span>`;
-        button.addEventListener('click', () => openOrder(order));
-        resultList.append(button);
-    });
-    return matches.length;
 }
 
 function setActiveEditTab(index, focus = false) {
@@ -111,8 +74,6 @@ function paymentReceivedStatus() {
 
 function openOrder(order, { scroll = true } = {}) {
     selectedOrder = order;
-    document.getElementById('lookup-status').textContent =
-        `Voucher ${order['Voucher No']} selected.`;
     document.getElementById('edit-panel').hidden = false;
     const container = document.getElementById('edit-fields');
     const tabsContainer = document.getElementById('edit-tabs');
@@ -253,28 +214,6 @@ function openOrder(order, { scroll = true } = {}) {
     if (scroll) document.getElementById('edit-panel').scrollIntoView({ behavior: 'smooth' });
 }
 
-document.getElementById('lookup-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const status = document.getElementById('lookup-status');
-    status.className = 'status-message';
-    document.getElementById('lookup-results').replaceChildren();
-    document.getElementById('edit-panel').hidden = true;
-    try {
-        const cached = await AdminApi.refreshOrders();
-        orders = cached.data;
-        document.getElementById('lookup-cache-status').textContent =
-            formatHistoryCacheTime(cached.updatedAt);
-        const count = showMatches(document.getElementById('lookup-query').value);
-        status.textContent = count
-            ? `${count.toLocaleString('en-US')} orders found. Select an order to edit.`
-            : 'No matching orders found.';
-    } catch (error) {
-        console.error('Unable to search cached orders for editing.', error);
-        status.textContent = 'Unable to load orders from the database.';
-        status.classList.add('error');
-    }
-});
-
 document.getElementById('edit-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!selectedOrder) return;
@@ -290,8 +229,6 @@ document.getElementById('edit-form').addEventListener('submit', async (event) =>
     try {
         const result = await AdminApi.updateOrder(updated);
         selectedOrder = result.order;
-        const index = orders.findIndex((order) => order['Voucher No'] === updated.voucherNo);
-        if (index >= 0) orders[index] = result.order;
         status.textContent = 'Order updated in the database.';
         status.classList.add('success');
     } catch (error) {
@@ -304,23 +241,24 @@ document.getElementById('edit-form').addEventListener('submit', async (event) =>
 });
 
 const requestedVoucher = new URLSearchParams(window.location.search).get('voucher');
+const editEntryStatus = document.getElementById('edit-entry-status');
 if (requestedVoucher) {
-    const lookupPanel = document.getElementById('lookup-panel');
-    const lookupStatus = document.getElementById('lookup-status');
-    lookupPanel.hidden = true;
     document.getElementById('edit-order-hint').textContent = `Voucher ${requestedVoucher} ကို ရွေးပြီးပါပြီ။ ပြင်ဆင်ပြီး Save Changes ကိုနှိပ်ပါ။`;
     (async () => {
         try {
             const cached = await AdminApi.refreshOrders();
-            orders = cached.data;
-            const order = orders.find((item) => String(item['Voucher No']) === requestedVoucher);
+            const order = cached.data.find((item) => String(item['Voucher No']) === requestedVoucher);
             if (!order) throw new Error(`Voucher ${requestedVoucher} ကို Order History ထဲမှာ မတွေ့ပါ။`);
             openOrder(order, { scroll: false });
         } catch (error) {
             console.error('Unable to open the selected order.', error);
-            lookupPanel.hidden = false;
-            lookupStatus.textContent = error.message || 'ရွေးထားသော order ကို ဖွင့်မရပါ။';
-            lookupStatus.classList.add('error');
+            editEntryStatus.textContent = error.message || 'ရွေးထားသော order ကို ဖွင့်မရပါ။';
+            editEntryStatus.classList.add('error');
+            editEntryStatus.hidden = false;
         }
     })();
+} else {
+    editEntryStatus.textContent = 'Order History ထဲမှ သက်ဆိုင်ရာအမှာစာ၏ Edit ကိုနှိပ်ပြီး ဖွင့်ပါ။';
+    editEntryStatus.classList.add('error');
+    editEntryStatus.hidden = false;
 }
