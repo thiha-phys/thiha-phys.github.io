@@ -153,7 +153,10 @@ function openOrder(order, { scroll = true } = {}) {
             }
             const label = document.createElement('label');
             label.className = 'edit-field';
-            label.append(document.createTextNode(field === 'Amount Received' ? 'Amount Received (Books only)' : field));
+            const fieldLabel = document.createElement('span');
+            fieldLabel.className = 'edit-field-label';
+            fieldLabel.textContent = field === 'Amount Received' ? 'Received (Books only)' : field;
+            label.append(fieldLabel);
             const input = document.createElement('input');
             input.name = field;
             if (['Pay Date', 'Delivered Date', 'Royal Statement Paid Date'].includes(field)) {
@@ -172,12 +175,6 @@ function openOrder(order, { scroll = true } = {}) {
                 input.autocomplete = 'off';
             }
             label.append(input);
-            if (field === 'Amount Received') {
-                const hint = document.createElement('small');
-                hint.className = 'field-hint';
-                hint.textContent = 'စာအုပ်ဖိုးသာ ထည့်ပါ။ ပို့ခကို ဒီနေရာမှာ မပေါင်းပါနှင့်။';
-                label.append(hint);
-            }
             grid.append(label);
         });
         section.append(heading, grid);
