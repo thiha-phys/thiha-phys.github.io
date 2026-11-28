@@ -688,6 +688,9 @@ export default async function handler(req, res) {
     }
     if (route === '/admin/orders' && req.method === 'GET') {
       const orders=await db`SELECT o.*,c.english AS city_english,c.label AS city_label FROM orders o JOIN delivery_cities c ON c.id=o.city_id ORDER BY o.created_at DESC`;
+      const serviceFeeRows=await db`SELECT value FROM app_settings WHERE key='royalServiceFee' LIMIT 1`;
+      const configuredServiceFee=Number(serviceFeeRows[0]?.value ?? 300);
+      const royalServiceFee=Number.isFinite(configuredServiceFee)&&configuredServiceFee>=0?configuredServiceFee:300;
       const paymentNotices=await db`SELECT user_id,body FROM discussion_messages WHERE sender_role='admin' AND body LIKE '%အတွက် ငွေလက်ခံရရှိပါပြီ၊%'`;
       const paymentNoticeKeys=new Set(paymentNotices.map((message)=>`${message.user_id}:${message.body.split(' အတွက် ငွေလက်ခံရရှိပါပြီ၊')[0]}`));
       const items=await db`SELECT oi.order_id,oi.book_id,oi.quantity,oi.amount,b.quantity_header,b.amount_header FROM order_items oi LEFT JOIN books b ON b.id=oi.book_id ORDER BY oi.book_name`;
@@ -697,9 +700,22 @@ export default async function handler(req, res) {
         const extra={...merged};
         delete extra['Delivery Notes'];
         const orderItems=items.filter((item)=>item.order_id===order.id);
+        const deliveryService=String(order.delivery_service||'');
+        const totalWeight=Number(order.total_weight_kg||0);
         const complete=order.complete===true||['complete','received'].includes(String(order.status));
         const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(order.status))?'delivered':'pending';
-        const carInfo=extra['car inform']||(order.delivery_service==='Car'?(legacyDeliveryNotes||order.car_details):'');
+        const carInfo=[extra['car inform'],order.car_details,deliveryService==='Car'?legacyDeliveryNotes:'']
+          .map((value)=>String(value??'').trim()).find(Boolean)||'';
+        const shipmentServiceStored=String(extra['Royal Shipment Service Charge']??'').trim();
+        const shipmentServiceCharge=deliveryService==='Car'
+          ? '0'
+          : shipmentServiceStored||String(totalWeight>0?Math.max(1,Math.ceil(totalWeight/5-0.000000001))*royalServiceFee:0);
+        const shipmentCodStored=String(extra['Royal Shipment COD Amount']??'').trim();
+        const shipmentCodAmount=deliveryService==='Car'
+          ? '0'
+          : shipmentCodStored||String(Math.max(0,Number(order.delivery_fee||0)-Number(shipmentServiceCharge||0)));
+        const shipmentWeight=String(extra['Royal Shipment Weight']??'').trim()||
+          (deliveryService==='Royal'?String(order.total_weight_kg||0):'');
         const received=receivedBooksOnly(extra.Received||extra['Amount Received'],Number(order.subtotal),Number(order.delivery_fee));
         return {
           ...extra,
@@ -718,12 +734,15 @@ export default async function handler(req, res) {
           status:deliveryStatus,
           hasCustomerAccount:Boolean(order.user_id),
           paymentNoticeSent:Boolean(order.user_id&&paymentNoticeKeys.has(`${order.user_id}:${order.voucher_no}`)),
-          'Delivery Service':order.delivery_service,
+          'Delivery Service':deliveryService,
           'Delivery Fees':String(order.delivery_fee),
           'Total KG':String(order.total_weight_kg),
           'Cash Collection':String(order.cash_collection),
           'car inform':carInfo,
-          'Royal Shipment State':extra['Royal Shipment State']||(order.delivery_service!=='Car'?legacyDeliveryNotes||'':''),
+          'Royal Shipment Service Charge':shipmentServiceCharge,
+          'Royal Shipment COD Amount':shipmentCodAmount,
+          'Royal Shipment Weight':shipmentWeight,
+          'Royal Shipment State':extra['Royal Shipment State']||(deliveryService!=='Car'?legacyDeliveryNotes||'':''),
           ...Object.fromEntries(orderItems.flatMap((item)=>[
             [item.quantity_header||`${item.book_id} Qty`,String(item.quantity)],
             [item.amount_header||`${item.book_id} Amount`,String(item.amount)]

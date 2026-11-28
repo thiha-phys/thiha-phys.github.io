@@ -105,14 +105,9 @@ async function openRequestedVoucher() {
     }
     status.textContent = 'ရွေးထားသော ဘောက်ချာကို ဖွင့်နေသည်…';
     try {
-        const cached = await AdminApi.getCachedOrders();
-        if (cached) orders = cached.data;
-        let order = orders.find((item) => String(item['Voucher No'] || '').trim() === voucher.trim());
-        if (!order) {
-            const refreshed = await AdminApi.refreshOrders();
-            orders = refreshed.data;
-            order = orders.find((item) => String(item['Voucher No'] || '').trim() === voucher.trim());
-        }
+        const refreshed = await AdminApi.refreshOrders();
+        orders = refreshed.data;
+        const order = orders.find((item) => String(item['Voucher No'] || '').trim() === voucher.trim());
         if (!order) {
             status.textContent = `Voucher ${voucher} was not found.`;
             status.classList.add('error');
