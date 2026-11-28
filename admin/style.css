@@ -743,15 +743,9 @@ body.feedback-chat-open .feedback-reply-composer textarea { resize: none; }
 }
 .edit-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
 .edit-field { display: grid; gap: 5px; font-size: 11px; color: var(--muted); }
-.edit-field-choice { grid-column: 1 / -1; }
-.edit-radio-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
-.edit-radio-options .payment-option { min-width: 0; cursor: pointer; }
-.edit-radio-options .payment-option input { flex: 0 0 18px; width: 18px; min-height: 18px; height: 18px; padding: 0; border: 0; border-radius: 50%; background: transparent; box-shadow: none; appearance: auto; }
 .edit-field input, .edit-field select { min-height: 41px; width: 100%; border: 1px solid #dce3ed; border-radius: 9px; padding: 8px 10px; color: var(--ink); background: #fff; }
 .edit-field input.edit-checkbox { width: 20px; min-height: 20px; padding: 0; accent-color: #2867cf; }
 .edit-field-checkbox { grid-template-columns: 1fr auto; align-items: center; min-height: 41px; padding: 8px 10px; border: 1px solid #dce3ed; border-radius: 9px; background: #fff; }
-.edit-complete-checkbox { grid-column: 1 / -1; display: flex; justify-content: flex-start; align-items: flex-start; gap: 10px; line-height: 1.55; }
-.edit-complete-checkbox input.edit-checkbox { flex: 0 0 20px; margin: 2px 0 0; }
 .edit-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin: 12px 0; }
 .edit-tab { min-width: 0; min-height: 49px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 7px; border: 1px solid #dce3ed; border-radius: 10px; color: #56647b; background: #f7f9fc; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
 .edit-tab[aria-selected="true"] { border-color: #2867cf; color: #fff; background: #2867cf; box-shadow: 0 4px 11px rgba(40, 103, 207, .2); }
