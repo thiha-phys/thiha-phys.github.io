@@ -37,6 +37,9 @@
 
     function normalizeOrder(order) {
         const normalized = { ...order };
+        if (!String(normalized['car inform'] || '').trim()) {
+            normalized['car inform'] = normalized.carInfo || normalized.carDetails || '';
+        }
         Object.entries(ORDER_FIELD_ALIASES).forEach(([alias, canonical]) => {
             if (!Object.prototype.hasOwnProperty.call(normalized, canonical) &&
                 Object.prototype.hasOwnProperty.call(normalized, alias)) {

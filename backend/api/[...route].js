@@ -1,6 +1,7 @@
 import { neon } from '@neondatabase/serverless';
 import { randomBytes, scrypt as scryptCallback, timingSafeEqual, createHash } from 'node:crypto';
 import { promisify } from 'node:util';
+import { royalShipmentCharges } from '../lib/order-delivery.js';
 
 const scrypt = promisify(scryptCallback);
 const MAX_DISCUSSION_MESSAGE_LENGTH = 4000;
@@ -352,11 +353,11 @@ export default async function handler(req, res) {
       const packages=Math.max(1,Math.ceil(kg/5-0.000000001));
       const lastPackageWeight=kg-5*(packages-1);
       const extraKg=Math.ceil(Math.max(0,lastPackageWeight-2)-0.000000001);
-      const royalShipmentServiceCharge=service==='Royal'?packages*serviceFee:0;
+      const {serviceCharge:royalShipmentServiceCharge}=royalShipmentCharges(service,kg,0,serviceFee);
       const baseFee=service==='Royal'?(packages-1)*(Number(city.up_to_2kg)+3*Number(city.next_kg))+Number(city.up_to_2kg)+extraKg*Number(city.next_kg)+royalShipmentServiceCharge:0;
       const deliveryFee=service==='Royal'?Math.ceil(baseFee/500-0.000000001)*500:0;
       const total=subtotal+deliveryFee;
-      const royalShipmentCodAmount=service==='Royal'?Math.max(0,deliveryFee-royalShipmentServiceCharge):0;
+      const {codCharge:royalShipmentCodAmount}=royalShipmentCharges(service,kg,deliveryFee,serviceFee);
       const royalShipmentWeight=service==='Royal'?kg:0;
       if(payment==='COD' && total>=Number(settings.codMaxTotal ?? 150000)) return send(res,400,{ok:false,code:'COD_LIMIT',message:'စုစုပေါင်းပမာဏအတွက် KBZ Pay ကိုသာ ရွေးချယ်နိုင်ပါသည်။'});
       const customerName=String(order.name||user?.name||'').trim(), customerPhone=String(order.phone||user?.phone||'').trim();
@@ -706,14 +707,11 @@ export default async function handler(req, res) {
         const deliveryStatus=complete?'complete':['delivered','on_the_way'].includes(String(order.status))?'delivered':'pending';
         const carInfo=[extra['car inform'],order.car_details,deliveryService==='Car'?legacyDeliveryNotes:'']
           .map((value)=>String(value??'').trim()).find(Boolean)||'';
+        const calculatedCharges=royalShipmentCharges(deliveryService,totalWeight,Number(order.delivery_fee||0),royalServiceFee);
         const shipmentServiceStored=String(extra['Royal Shipment Service Charge']??'').trim();
-        const shipmentServiceCharge=deliveryService==='Car'
-          ? '0'
-          : shipmentServiceStored||String(totalWeight>0?Math.max(1,Math.ceil(totalWeight/5-0.000000001))*royalServiceFee:0);
+        const shipmentServiceCharge=shipmentServiceStored||String(calculatedCharges.serviceCharge);
         const shipmentCodStored=String(extra['Royal Shipment COD Amount']??'').trim();
-        const shipmentCodAmount=deliveryService==='Car'
-          ? '0'
-          : shipmentCodStored||String(Math.max(0,Number(order.delivery_fee||0)-Number(shipmentServiceCharge||0)));
+        const shipmentCodAmount=shipmentCodStored||String(calculatedCharges.codCharge);
         const shipmentWeight=String(extra['Royal Shipment Weight']??'').trim()||
           (deliveryService==='Royal'?String(order.total_weight_kg||0):'');
         const received=receivedBooksOnly(extra.Received||extra['Amount Received'],Number(order.subtotal),Number(order.delivery_fee));
@@ -739,6 +737,8 @@ export default async function handler(req, res) {
           'Total KG':String(order.total_weight_kg),
           'Cash Collection':String(order.cash_collection),
           'car inform':carInfo,
+          carInfo,
+          carDetails:carInfo,
           'Royal Shipment Service Charge':shipmentServiceCharge,
           'Royal Shipment COD Amount':shipmentCodAmount,
           'Royal Shipment Weight':shipmentWeight,
@@ -805,6 +805,11 @@ export default async function handler(req, res) {
       const payment=String(adminData['Payment Method']||prior.payment_method);
       const service=String(adminData['Delivery Service']||prior.delivery_service);
       if(service==='Car'&&payment!=='KBZ Pay')return send(res,400,{ok:false,code:'CAR_REQUIRES_KBZ',message:'ကားတင်ရန်အတွက် KBZ Pay ကိုသာ ရွေးနိုင်ပါသည်။'});
+      for(const field of ['Royal Shipment Service Charge','Royal Shipment COD Amount']){
+        const value=String(adminData[field]??'').trim();
+        if(value!==''&&(!Number.isSafeInteger(Number(value))||Number(value)<0))return send(res,400,{ok:false,message:`${field} အချက်အလက်ကို စစ်ဆေးပါ။`});
+        if(value!=='')adminData[field]=String(Number(value));
+      }
       const cashValue=Number(String(adminData['Cash Collection']??(payment==='COD'?subtotalValue+feeValue:0)).replaceAll(',',''));
       const books=await db`SELECT id,name,quantity_header,amount_header,weight FROM books ORDER BY sort_order,id`;
       const itemRows=[];

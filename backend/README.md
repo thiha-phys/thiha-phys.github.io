@@ -14,8 +14,9 @@ Customer and Admin remain separate Vercel projects. Create one additional Vercel
 8. Before deploying the three-state delivery flow, run `migrations/008_order_completion.sql` in Neon SQL Editor after the existing migrations. It adds the independent `orders.complete` column and converts legacy delivery states to `pending`, `delivered`, and `complete`. Do not store the customer confirmation flag in the numeric `admin_data.Received` payment amount.
 9. Run `migrations/009_received_amount_books_only.sql` in Neon SQL Editor to remove delivery fees from legacy `admin_data.Received` values that stored books plus delivery together.
 10. Run `migrations/010_backfill_order_delivery_metadata.sql` in Neon SQL Editor to fill missing legacy `car inform` and Royal shipment fields from the existing order details and configured Royal service fee.
-11. In **Connect**, select the default database and role, turn on the pooled connection option, and copy the connection string. Keep it private.
-12. After the migrations succeed, deploy the **API Vercel project** (Root Directory = `backend`) as well as the Customer/Admin projects. Confirm `GET /api/health` reports `discussionMessaging`, `conversationMessageDeletion`, `passwordChange`, and `passwordReset` as enabled before testing those screens.
+11. Run `migrations/011_backfill_order_delivery_metadata.sql` in Neon SQL Editor to backfill any car information and Royal shipment charges still missing from existing orders.
+12. In **Connect**, select the default database and role, turn on the pooled connection option, and copy the connection string. Keep it private.
+13. After the migrations succeed, deploy the **API Vercel project** (Root Directory = `backend`) as well as the Customer/Admin projects. Confirm `GET /api/health` reports `discussionMessaging`, `conversationMessageDeletion`, `passwordChange`, and `passwordReset` as enabled before testing those screens.
 
 ## Vercel API environment variables
 

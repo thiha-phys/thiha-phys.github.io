@@ -17,7 +17,8 @@ const fieldGroups = [
         title: 'Payment and Delivery Status',
         fields: [
             'Payment Method', 'Amount Received', 'KPay Account', 'Pay Date',
-            'Delivered Date', 'Delivery', 'car inform', 'Royal VOC No',
+            'Delivered Date', 'Delivery', 'car inform',
+            'Royal Shipment Service Charge', 'Royal Shipment COD Amount', 'Royal VOC No',
             'Royal Statement COD Charge', 'Royal Statement Paid Charge', 'Royal Statement Paid Date'
         ]
     },
@@ -164,7 +165,8 @@ function openOrder(order, { scroll = true } = {}) {
                 input.value = dateInputValue(orderField(order, field));
             } else if (field.endsWith('Qty') || field === 'Total' ||
                 field === 'Amount Received' || field.endsWith('Amount') ||
-                ['Royal Statement COD Charge', 'Royal Statement Paid Charge'].includes(field)) {
+                ['Royal Shipment Service Charge', 'Royal Shipment COD Amount',
+                    'Royal Statement COD Charge', 'Royal Statement Paid Charge'].includes(field)) {
                 input.type = 'number';
                 input.min = '0';
                 input.step = '1';
