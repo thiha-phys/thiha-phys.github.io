@@ -331,6 +331,8 @@ export default async function handler(req, res) {
       const payment=String(order.paymentMethod || '');
       if(!['Royal','Car'].includes(service) || !['COD','KBZ Pay'].includes(payment)) return send(res,400,{ok:false,code:'INVALID_DELIVERY_OR_PAYMENT',message:'ပို့ဆောင်ရေး သို့မဟုတ် ငွေပေးချေမှု ရွေးချယ်မှု မမှန်ပါ။'});
       if(service==='Car' && payment!=='KBZ Pay') return send(res,400,{ok:false,code:'CAR_REQUIRES_KBZ',message:'ကားတင်ရန်အတွက် KBZ Pay ကိုသာ ရွေးနိုင်ပါသည်။'});
+      const carInfo=service==='Car'?String(order.carDetails||'').trim():'';
+      if(service==='Car'&&!carInfo) return send(res,400,{ok:false,code:'CAR_DETAILS_REQUIRED',message:'ကားဂိတ်နှင့် ကားအမည်ကို ဖြည့်ပါ။'});
       if(ids.some((item)=>Number(item.quantity)>10000)) return send(res,400,{ok:false,code:'QUANTITY_LIMIT',message:'စာအုပ်အရေအတွက် များလွန်းနေပါသည်။'});
       const preparedItems=[];
       let subtotal=0, actualWeight=0;
@@ -361,16 +363,17 @@ export default async function handler(req, res) {
       if(!String(order.address||'').trim() || !customerName || !customerPhone) return send(res,400,{ok:false,code:'MISSING_ORDER_DETAILS',message:'အမည်၊ ဖုန်းနှင့် လိပ်စာ ဖြည့်ပါ။'});
       const created = await db`WITH next_number AS (SELECT nextval('orders_order_no_seq') AS order_no)
         INSERT INTO orders (order_no,voucher_no,user_id,customer_name,phone,phone2,city_id,address,delivery_service,payment_method,car_details,status)
-        SELECT order_no,lpad(order_no::text,3,'0'),${user?.id || null},${customerName},${customerPhone},${String(order.phone2 || '').trim()},${city.id},${String(order.address || '').trim()},${service},${payment},${String(order.carDetails || '').trim()},'pending' FROM next_number
+        SELECT order_no,lpad(order_no::text,3,'0'),${user?.id || null},${customerName},${customerPhone},${String(order.phone2 || '').trim()},${city.id},${String(order.address || '').trim()},${service},${payment},${carInfo},'pending' FROM next_number
         RETURNING id, voucher_no,order_no`;
       for(const item of preparedItems) await db`INSERT INTO order_items(order_id,book_id,book_name,quantity,unit_price,amount,weight_kg) VALUES (${created[0].id},${item.book.id},${item.book.name},${item.quantity},${item.unitPrice},${item.amount},${Number(item.book.weight)})`;
       const royalOrderData={
-        'Royal Shipment Service Charge':service==='Royal'?String(royalShipmentServiceCharge):'',
-        'Royal Shipment COD Amount':service==='Royal'?String(royalShipmentCodAmount):'',
+        'car inform':carInfo,
+        'Royal Shipment Service Charge':String(royalShipmentServiceCharge),
+        'Royal Shipment COD Amount':String(royalShipmentCodAmount),
         'Royal Shipment Weight':service==='Royal'?String(royalShipmentWeight):''
       };
       await db`UPDATE orders SET subtotal=${subtotal},delivery_fee=${deliveryFee},total=${total},total_weight_kg=${kg},cash_collection=${payment==='COD'?total:0},admin_data=${JSON.stringify(royalOrderData)}::jsonb WHERE id=${created[0].id}`;
-      const resultOrder={voucherNo:created[0].voucher_no,name:customerName,phone:customerPhone,phone2:String(order.phone2 || ''),city:city.label,address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,'Royal Shipment Service Charge':royalOrderData['Royal Shipment Service Charge'],'Royal Shipment COD Amount':royalOrderData['Royal Shipment COD Amount'],'Royal Shipment Weight':royalOrderData['Royal Shipment Weight'],carInfo:String(order.carDetails || ''),items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))};
+      const resultOrder={voucherNo:created[0].voucher_no,name:customerName,phone:customerPhone,phone2:String(order.phone2 || ''),city:city.label,address:`${city.label}, ${String(order.address || '').trim()}`,orderDate:new Date().toISOString(),paymentMethod:payment,total:subtotal,deliveryService:service,deliveryFees:deliveryFee,payableTotal:total,totalKg:kg,cashCollection:payment==='COD'?total:0,'Royal Shipment Service Charge':royalOrderData['Royal Shipment Service Charge'],'Royal Shipment COD Amount':royalOrderData['Royal Shipment COD Amount'],'Royal Shipment Weight':royalOrderData['Royal Shipment Weight'],carInfo,items:preparedItems.map((item)=>({id:item.book.id,name:item.book.name,quantity:item.quantity,unitPrice:item.unitPrice,amount:item.amount}))};
       const telegramNotified=await notifyTelegram(resultOrder);
       return send(res, 201, { ok:true, orderId:created[0].voucher_no, order:resultOrder,telegramNotified });
     }
