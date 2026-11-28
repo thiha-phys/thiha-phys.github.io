@@ -215,6 +215,8 @@ document.getElementById('edit-form').addEventListener('submit', async (event) =>
 const requestedVoucher = new URLSearchParams(window.location.search).get('voucher');
 const editEntryStatus = document.getElementById('edit-entry-status');
 if (requestedVoucher) {
+    document.getElementById('edit-order-hint').textContent =
+        `ဘောက်ချာ ${requestedVoucher} ကို ရွေးချယ်ပြီးပါပြီ။ ပြင်ဆင်ပြီး Save Changes ကို နှိပ်ပါ။`;
     (async () => {
         try {
             const cached = await AdminApi.refreshOrders();

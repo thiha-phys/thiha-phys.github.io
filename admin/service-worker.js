@@ -1,6 +1,6 @@
 // Bump the shell cache whenever a cached app file changes. Cache-first fetches
 // can otherwise keep older scripts after deployment.
-const CACHE_NAME = 'uthk-admin-shell-v61';
+const CACHE_NAME = 'uthk-admin-shell-v62';
 const APP_FILES = [
     './index.html',
     './style.css',
