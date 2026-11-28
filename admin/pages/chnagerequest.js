@@ -79,14 +79,6 @@ function openOrder(order, { scroll = true } = {}) {
     const tabsContainer = document.getElementById('edit-tabs');
     container.replaceChildren();
     tabsContainer.replaceChildren();
-    const voucherLabel = document.createElement('label');
-    voucherLabel.className = 'edit-field';
-    voucherLabel.textContent = 'Voucher No. (Cannot be changed)';
-    const voucherInput = document.createElement('input');
-    voucherInput.value = order['Voucher No'];
-    voucherInput.disabled = true;
-    voucherLabel.append(voucherInput);
-    container.append(voucherLabel);
     fieldGroups.forEach((group, groupIndex) => {
         const tab = document.createElement('button');
         tab.type = 'button';
