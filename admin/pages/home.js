@@ -53,13 +53,17 @@ function orderAmount(value) {
     return Number.isFinite(amount) && amount >= 0 ? amount : 0;
 }
 
+function formatOverviewAmount(value) {
+    return orderAmount(value).toLocaleString('en-US');
+}
+
 function renderDashboard(orders) {
     const received = orders.reduce((sum, order) => sum + orderAmount(order['Amount Received']), 0);
     const outstanding = orders.reduce((sum, order) =>
         sum + Math.max(0, orderAmount(order.Total) - orderAmount(order['Amount Received'])), 0);
     document.getElementById('stat-orders').textContent = Number(orders.length).toLocaleString('en-US');
-    document.getElementById('stat-received').textContent = formatKyats(received);
-    document.getElementById('stat-outstanding').textContent = formatKyats(outstanding);
+    document.getElementById('stat-received').textContent = formatOverviewAmount(received);
+    document.getElementById('stat-outstanding').textContent = formatOverviewAmount(outstanding);
     document.getElementById('stat-undelivered').textContent =
         Number(orders.filter((order) => order.status === 'pending').length).toLocaleString('en-US');
     renderOrdersChart(orders);
@@ -104,8 +108,8 @@ async function loadStoreOverview(button) {
         const overview = await AdminApi.getShopOverview();
         document.getElementById('store-stat-orders').textContent =
             Number(overview.totalOrders).toLocaleString('en-US');
-        document.getElementById('store-stat-received').textContent = formatKyats(overview.amountReceived);
-        document.getElementById('store-stat-outstanding').textContent = formatKyats(overview.outstanding);
+        document.getElementById('store-stat-received').textContent = formatOverviewAmount(overview.amountReceived);
+        document.getElementById('store-stat-outstanding').textContent = formatOverviewAmount(overview.outstanding);
         document.getElementById('store-stat-undelivered').textContent =
             Number(overview.undelivered).toLocaleString('en-US');
         update.textContent = `Updated · ${new Intl.DateTimeFormat('en-GB', {

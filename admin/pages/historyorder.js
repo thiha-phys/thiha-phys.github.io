@@ -1,5 +1,17 @@
 const listElement = document.getElementById('order-list');
 const statusElement = document.getElementById('history-status');
+const ORDER_EXPORT_COLUMNS = [
+    'Voucher No', 'Name', 'Address', 'Phone 2', 'Phone 1', 'Ordered Date', 'Deliver Date',
+    'Special Qty', 'Special Amount', 'Practice Qty', 'Practice Amount', 'OQ Qty', 'OQ Amount',
+    'Solution Qty', 'Solution Amount', 'G11 Handbook Qty', 'G11 Handbook Amount',
+    'G11 Objective Qty', 'G11 Objective Amount', 'G10 Handbook Qty', 'G10 Handbook Amount',
+    'Total', 'Received', 'KPay Account', 'Pay Date', 'Payment Method', 'Delivery Service',
+    'Delivery Fees', 'Total KG', 'Cash Collection', 'Facebook Name', 'Facebook Link',
+    'car inform', 'Delivery Notes', 'Royal Voucher', 'Royal Shipment Service Charge',
+    'Royal Shipment COD Amount', 'Royal Shipment Weight', 'Royal Statement COD Charge',
+    'Royal Statement Paid Charge', 'Royal Statement Paid Date',
+    'Complete', 'Delivery Status', 'Confirm Date'
+];
 let orderItems = [];
 let allOrders = [];
 let visibleOrders = [];
@@ -245,7 +257,8 @@ function exportOrdersToExcel() {
         statusElement.textContent = 'ရွေးထားသော ရက်စွဲအတွင်း order မရှိပါ။';
         return;
     }
-    const columns = [...new Set(exportRows.flatMap((order) => Object.keys(order)))];
+    const columns = ORDER_EXPORT_COLUMNS;
+    const valueForColumn = (order, column) => column === 'Delivery Status' ? order.status : order[column];
     const escapeCell = (value) => {
         const text = value == null
             ? ''
@@ -255,7 +268,7 @@ function exportOrdersToExcel() {
         const safeText = /^[=+@\-]/.test(text) ? `'${text}` : text;
         return `"${safeText.replace(/"/g, '""')}"`;
     };
-    const csv = [columns, ...exportRows.map((order) => columns.map((column) => order[column]))]
+    const csv = [columns, ...exportRows.map((order) => columns.map((column) => valueForColumn(order, column)))]
         .map((row) => row.map(escapeCell).join(','))
         .join('\r\n');
     const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' });

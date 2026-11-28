@@ -7,16 +7,6 @@
         window.location.replace(new URL('../login.html', document.currentScript.src).href);
         return;
     }
-    document.addEventListener('click', (event) => {
-        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-        const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
-        if (!link || link.target || link.hasAttribute('download')) return;
-        const destination = new URL(link.href, window.location.href);
-        if (destination.origin !== window.location.origin) return;
-        if (destination.pathname === window.location.pathname && destination.search === window.location.search) return;
-        event.preventDefault();
-        window.location.replace(destination.href);
-    });
     const currentPath = window.location.pathname;
     const pageName = currentPath.split('/').pop();
     const isHome = pageName === '' || pageName === 'index.html';
