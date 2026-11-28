@@ -547,7 +547,7 @@ function openFeedbackThread(threadKey) {
 
 function closeFeedbackThread() {
     if (requestedUserId) {
-        window.location.href = 'profiles.html';
+        window.location.replace('profiles.html');
         return;
     }
     activeThreadKey = null;

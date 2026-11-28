@@ -45,10 +45,18 @@ function renderOrdersChart(orders) {
     });
 }
 
+function orderAmount(value) {
+    const normalized = String(value ?? '').trim()
+        .replace(/[၀-၉]/g, (digit) => String(digit.charCodeAt(0) - '၀'.charCodeAt(0)))
+        .replace(/[ ,٬]/g, '');
+    const amount = Number(normalized);
+    return Number.isFinite(amount) && amount >= 0 ? amount : 0;
+}
+
 function renderDashboard(orders) {
-    const received = orders.reduce((sum, order) => sum + Number(order['Amount Received'] || 0), 0);
+    const received = orders.reduce((sum, order) => sum + orderAmount(order['Amount Received']), 0);
     const outstanding = orders.reduce((sum, order) =>
-        sum + Math.max(0, Number(order.Total || 0) - Number(order['Amount Received'] || 0)), 0);
+        sum + Math.max(0, orderAmount(order.Total) - orderAmount(order['Amount Received'])), 0);
     document.getElementById('stat-orders').textContent = Number(orders.length).toLocaleString('en-US');
     document.getElementById('stat-received').textContent = formatKyats(received);
     document.getElementById('stat-outstanding').textContent = formatKyats(outstanding);
