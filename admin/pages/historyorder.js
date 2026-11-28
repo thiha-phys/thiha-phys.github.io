@@ -172,12 +172,16 @@ function renderOrders() {
         editLink.className = 'order-edit-button';
         editLink.href = `chnagerequest.html?voucher=${encodeURIComponent(String(order['Voucher No'] || ''))}`;
         editLink.innerHTML = '<i class="fa-solid fa-pen-to-square" aria-hidden="true"></i><span>Edit</span>';
+        const voucherLink = document.createElement('a');
+        voucherLink.className = 'order-voucher-button';
+        voucherLink.href = `createvoucher.html?voucher=${encodeURIComponent(String(order['Voucher No'] || ''))}`;
+        voucherLink.innerHTML = '<i class="fa-solid fa-receipt" aria-hidden="true"></i><span>VOC</span>';
         const details = card.querySelector('.order-details');
         const amountReceived = Number(String(order['Amount Received'] || '0').replaceAll(',', ''));
         const payDate = String(order['Pay Date'] || order['pay date'] || '').trim();
         const kpayAccount = String(order['KPay Account'] || order['Kpay acc'] || order['Kpay account'] || '').trim();
         const orderTotal = Number(String(order.Total || '0').replaceAll(',', ''));
-        if (order.hasCustomerAccount && orderTotal > 0 && amountReceived >= orderTotal && payDate && kpayAccount) {
+        if (order.hasCustomerAccount && !order.paymentNoticeSent && orderTotal > 0 && amountReceived >= orderTotal && payDate && kpayAccount) {
             const noticeButton = document.createElement('button');
             noticeButton.type = 'button';
             noticeButton.className = 'payment-notice-button';
@@ -190,8 +194,7 @@ function renderOrders() {
                 noticeStatus.textContent = 'Customer ထံ စာပို့နေသည်…';
                 try {
                     const result = await AdminApi.sendOrderPaymentNotice(order['Voucher No']);
-                    noticeButton.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i><span>စာပို့ပြီးပါပြီ</span>';
-                    noticeButton.classList.add('is-sent');
+                    noticeButton.remove();
                     noticeStatus.textContent = result.alreadySent ? 'တူညီသောအကြောင်းကြားစာ ပို့ပြီးသားဖြစ်သည်။' : 'Customer Discussion ထဲသို့ ပို့ပြီးပါပြီ။';
                 } catch (error) {
                     noticeButton.disabled = false;
@@ -201,7 +204,10 @@ function renderOrders() {
             });
             details.append(noticeButton, noticeStatus);
         }
-        details.append(editLink);
+        const actions = document.createElement('div');
+        actions.className = 'order-card-actions';
+        actions.append(editLink, voucherLink);
+        details.append(actions);
         listElement.append(card);
     });
     statusElement.textContent = `${matches.length.toLocaleString('en-US')} orders shown`;

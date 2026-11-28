@@ -157,3 +157,29 @@ attachReceiptActions({
     shareButtonId: 'share-voucher',
     statusId: 'voucher-action-status'
 });
+
+async function openRequestedVoucher() {
+    const voucher = new URLSearchParams(window.location.search).get('voucher');
+    if (!voucher) return;
+    const status = document.getElementById('voucher-status');
+    status.textContent = 'Loading selected voucher…';
+    try {
+        const cached = await AdminApi.refreshOrders();
+        orders = cached.data;
+        document.getElementById('voucher-cache-status').textContent = formatVoucherCacheTime(cached.updatedAt);
+        const order = orders.find((item) => String(item['Voucher No'] || '').trim() === voucher.trim());
+        if (!order) {
+            status.textContent = `Voucher ${voucher} was not found.`;
+            status.classList.add('error');
+            return;
+        }
+        await masterDataReady;
+        document.getElementById('voucher-search-panel').hidden = true;
+        displayVoucher(order);
+    } catch (error) {
+        console.error('Unable to load the requested voucher.', error);
+        status.textContent = 'Unable to load the selected voucher.';
+        status.classList.add('error');
+    }
+}
+openRequestedVoucher();

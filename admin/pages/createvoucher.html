@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body><main class="page-shell">
-    <header class="page-top no-print"><a class="back-button" href="tools.html" aria-label="Back to Workspace"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">Reprint Voucher</h1><p class="page-subtitle">Search for an order by voucher number, name, or phone.</p></div></header>
-    <section class="panel no-print">
+    <header class="page-top no-print"><a class="back-button" href="historyorder.html" aria-label="Back to Order History"><i class="fa-solid fa-arrow-left"></i></a><div><h1 class="page-title">Reprint Voucher</h1><p class="page-subtitle">Open or print the selected order voucher.</p></div></header>
+    <section id="voucher-search-panel" class="panel no-print">
         <form id="voucher-search-form" class="search-row"><input id="voucher-query" class="search-input" type="search" placeholder="Voucher number, name, or phone" required><button class="primary-button" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button></form>
         <div class="history-refresh-row"><span id="voucher-cache-status" class="muted small">Orders load from the database when searched.</span></div>
         <p id="voucher-status" class="status-message" role="status"></p><div id="voucher-results" class="result-list"></div>
